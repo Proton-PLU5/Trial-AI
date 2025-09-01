@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206;
 
 import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -104,6 +105,7 @@ public class App extends Application {
     SceneManager.addUi(AppUi.witnessHuman, loadFxml("witnessHuman"));
     SceneManager.addUi(AppUi.defendantMemory, loadFxml("defendantMemory"));
     SceneManager.addUi(AppUi.humanMemory, loadFxml("humanMemory"));
+    SceneManager.addUi(AppUi.aiMemory, loadFxml("aiMemory"));
     Parent root = SceneManager.getUiRoot(AppUi.room);
 
     SceneManager.initializeChats();
