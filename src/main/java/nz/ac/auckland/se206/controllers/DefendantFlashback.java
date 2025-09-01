@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -26,6 +24,7 @@ public class DefendantFlashback {
   @FXML private Button chatBtn;
   @FXML private Label timerLabel;
   @FXML private Pane chatPanel;
+  @FXML private Button memoryBtn;
 
   private List<String> imagePaths;
   private int currentDrawingIndex = 0;
@@ -92,18 +91,6 @@ public class DefendantFlashback {
     stage.setScene(new Scene(finalRoot));
   }
 
-  @FXML
-  private void returnToRoom() {
-    Stage stage = (Stage) backBtn.getScene().getWindow();
-    Parent roomRoot = SceneManager.getUiRoot(SceneManager.AppUi.room);
-    stage.getScene().setRoot(roomRoot);
-  }
-
-  @FXML
-  private void handleBackButton() {
-    returnToRoom();
-  }
-
   private void setupImagePaths() {
     imagePaths = new ArrayList<>();
     imagePaths.add("/images/defendant1.png");
@@ -138,16 +125,9 @@ public class DefendantFlashback {
   }
 
   @FXML
-  private void handleOpenChatButtonClick(MouseEvent event) throws IOException {
-    if (chatPanel.getChildren().isEmpty()) {
-      Parent chatContent = SceneManager.getChatView("defendant");
-      ChatController chatController = SceneManager.getChatController("defendant");
-
-      chatController.setChatPanelContainer(chatPanel);
-
-      chatPanel.getChildren().add(chatContent);
-    }
-
-    chatPanel.setVisible(true);
+  private void handleMemoryButton() {
+    Stage stage = (Stage) nextBtn.getScene().getWindow();
+    Parent roomRoot = SceneManager.getUiRoot(SceneManager.AppUi.defendantMemory);
+    stage.getScene().setRoot(roomRoot);
   }
 }

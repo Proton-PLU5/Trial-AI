@@ -8,11 +8,10 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.DefendantFlashback">
    <children>
-      <Button fx:id="backBtn" layoutX="14.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#returnToRoom" text="Go back" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="14.0" />
+      <Button fx:id="memoryBtn" layoutX="14.0" layoutY="566.0" mnemonicParsing="false" onMouseClicked="#handleMemoryButton" text="Go to memory" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="14.0" />
       <ImageView fx:id="drawingImageView" fitHeight="554.0" fitWidth="900.0" layoutX="-1.0" layoutY="-3.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Button fx:id="nextBtn" layoutX="293.0" layoutY="346.0" mnemonicParsing="false" onMouseClicked="#nextDrawing" text="Next person" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="300.0" />
       <Button fx:id="prevBtn" layoutX="192.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#previousDrawing" text="Previous person" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="180.0" />
-      <Button fx:id="chatBtn" layoutX="96.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#handleOpenChatButtonClick" text="Open chat" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="90.0" />
       <Label fx:id="timerLabel" layoutX="1230.0" layoutY="825.0" text="Label" AnchorPane.bottomAnchor="12.0" AnchorPane.rightAnchor="66.0" />
       <Pane fx:id="chatPanel" layoutX="539.0" layoutY="262.0" prefHeight="400.0" prefWidth="300.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="576.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="130.0" />
    </children>
