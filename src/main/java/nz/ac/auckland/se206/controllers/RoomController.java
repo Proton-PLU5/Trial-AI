@@ -1,15 +1,22 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
-import javafx.event.ActionEvent;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
-import nz.ac.auckland.se206.GameStateContext;
-import nz.ac.auckland.se206.speech.TextToSpeech;
+import javafx.stage.Stage;
 
 /**
  * Controller class for the room view. Handles user interactions within the room where the user can
@@ -17,16 +24,18 @@ import nz.ac.auckland.se206.speech.TextToSpeech;
  */
 public class RoomController {
 
-  @FXML private Rectangle rectCashier;
-  @FXML private Rectangle rectPerson1;
-  @FXML private Rectangle rectPerson2;
-  @FXML private Rectangle rectPerson3;
-  @FXML private Rectangle rectWaitress;
-  @FXML private Label lblProfession;
-  @FXML private Button btnGuess;
-
   private static boolean isFirstTimeInit = true;
-  private static GameStateContext context = new GameStateContext();
+
+  @FXML private Rectangle witnessAi;
+  @FXML private Rectangle witnessHuman;
+  @FXML private Rectangle defendant;
+  @FXML private Button btnGuess;
+  @FXML private Label timerLabel;
+  @FXML private Pane chatPanel;
+  private String currentChatCharacter = null;
+  private Map<String, Boolean> characterInteracted = new HashMap<>();
+  private TimerService timerService;
+  private boolean finalSceneLoaded = false;
 
   /**
    * Initializes the room view. If it's the first time initialization, it will provide instructions
@@ -34,13 +43,66 @@ public class RoomController {
    */
   @FXML
   public void initialize() {
-    if (isFirstTimeInit) {
-      TextToSpeech.speak(
-          "Chat with the three customers, and guess who is the "
-              + context.getProfessionToGuess());
-      isFirstTimeInit = false;
+
+    timerService = TimerService.getInstance();
+
+    // Bind timer display to label
+    if (timerLabel != null) {
+      timerLabel.textProperty().bind(timerService.timeDisplayProperty());
+
+      // Update timer style based on remaining time
+      timerService
+          .secondsRemainingProperty()
+          .addListener(
+              (obs, oldVal, newVal) -> {
+                updateTimerStyle(newVal.intValue());
+              });
+
+      // Handle game over when time runs out
+      timerService
+          .timeUpProperty()
+          .addListener(
+              (obs, wasTimeUp, isTimeUp) -> {
+                if (isTimeUp) {
+                  try {
+                    handleGameOver();
+                  } catch (IOException e) {
+                    e.printStackTrace();
+                  }
+                }
+              });
     }
-    lblProfession.setText(context.getProfessionToGuess());
+
+    if (isFirstTimeInit) {
+      Media media = new Media(getClass().getResource("/sounds/startAudio.mp3").toExternalForm());
+      MediaPlayer mediaPlayer = new MediaPlayer(media);
+      mediaPlayer.play();
+    }
+  }
+
+  private void handleGameOver() throws IOException {
+    if (!finalSceneLoaded) {
+      finalSceneLoaded = true;
+      Stage stage = (Stage) btnGuess.getScene().getWindow();
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/final.fxml"));
+      Parent finalRoot = loader.load();
+      timerService.startTimer();
+      stage.setScene(new Scene(finalRoot));
+    }
+  }
+
+  private void updateTimerStyle(int secondsRemaining) {
+    if (timerLabel == null) {
+      return;
+    }
+
+    if (secondsRemaining <= 10) {
+      timerLabel.setStyle("-fx-text-fill: red; -fx-font-size: 24px; -fx-font-weight: bold;");
+    } else if (secondsRemaining <= 30) {
+      timerLabel.setStyle("-fx-text-fill: orange; -fx-font-size: 20px; -fx-font-weight: bold;");
+    } else {
+      timerLabel.setStyle("-fx-text-fill: green; -fx-font-size: 18px; -fx-font-weight: bold;");
+    }
   }
 
   /**
@@ -72,7 +134,46 @@ public class RoomController {
   @FXML
   private void handleRectangleClick(MouseEvent event) throws IOException {
     Rectangle clickedRectangle = (Rectangle) event.getSource();
-    context.handleRectangleClick(event, clickedRectangle.getId());
+    String characterId = clickedRectangle.getId();
+
+    boolean hasInteracted = characterInteracted.getOrDefault(characterId, false);
+
+    if (!hasInteracted) {
+      characterInteracted.put(characterId, true);
+
+      Scene currentScene = ((Node) event.getSource()).getScene();
+      Stage stage = (Stage) currentScene.getWindow();
+      stage.getProperties().put("roomScene", currentScene);
+      SceneManager.AppUi flashbackScene = getFlashbackScene(characterId);
+      Parent flashbackRoot = SceneManager.getUiRoot(flashbackScene);
+      currentScene.setRoot(flashbackRoot);
+
+    } else {
+      if (chatPanel.getChildren().isEmpty() || !characterId.equals(currentChatCharacter)) {
+        chatPanel.getChildren().clear();
+
+        Parent chatContent = SceneManager.getChatView(characterId);
+        ChatController chatController = SceneManager.getChatController(characterId);
+
+        chatController.setChatPanelContainer(chatPanel);
+        chatPanel.getChildren().add(chatContent);
+      }
+
+      chatPanel.setVisible(true);
+    }
+  }
+
+  private SceneManager.AppUi getFlashbackScene(String characterId) {
+    switch (characterId) {
+      case "defendantAi":
+        return SceneManager.AppUi.defendant;
+      case "witnessAi":
+        return SceneManager.AppUi.witnessAi;
+      case "witnessHuman":
+        return SceneManager.AppUi.witnessHuman;
+      default:
+        return SceneManager.AppUi.defendant;
+    }
   }
 
   /**
@@ -82,7 +183,7 @@ public class RoomController {
    * @throws IOException if there is an I/O error
    */
   @FXML
-  private void handleGuessClick(ActionEvent event) throws IOException {
-    context.handleGuessClick();
+  private void handleGuessClick(MouseEvent event) throws IOException {
+    handleGameOver();
   }
 }
