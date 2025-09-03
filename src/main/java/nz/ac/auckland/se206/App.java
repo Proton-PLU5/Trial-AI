@@ -1,14 +1,17 @@
 package nz.ac.auckland.se206;
 
 import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import nz.ac.auckland.se206.controllers.ChatController;
+import nz.ac.auckland.se206.controllers.SceneManager;
+import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 /**
  * This is the entry point of the JavaFX application. This class initializes and runs the JavaFX
@@ -57,16 +60,35 @@ public class App extends Application {
    * @throws IOException if the FXML file is not found
    */
   public static void openChat(MouseEvent event, String profession) throws IOException {
-    FXMLLoader loader = new FXMLLoader(App.class.getResource("/fxml/chat.fxml"));
-    Parent root = loader.load();
-
-    ChatController chatController = loader.getController();
-    chatController.setProfession(profession);
-
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    scene = new Scene(root);
-    stage.setScene(scene);
-    stage.show();
+    Parent currentRoot = stage.getScene().getRoot();
+
+    if (currentRoot.lookup("#chatPanel") != null) {
+      return; // Chat already open
+    }
+
+    Parent chatRoot = SceneManager.getChatView(profession);
+
+    if (currentRoot instanceof Pane) {
+      Pane parentPane = (Pane) currentRoot;
+
+      double scale = 0.4;
+      chatRoot.setScaleX(scale);
+      chatRoot.setScaleY(scale);
+
+      Scene scene = stage.getScene();
+      double chatWidth = 789 * scale;
+
+      // Position in top-right corner of the scene
+      chatRoot.setLayoutX(scene.getWidth() - chatWidth - 20);
+      chatRoot.setLayoutY(20);
+
+      chatRoot.setStyle(
+          chatRoot.getStyle()
+              + "; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);");
+
+      parentPane.getChildren().add(chatRoot);
+    }
   }
 
   /**
@@ -77,9 +99,21 @@ public class App extends Application {
    */
   @Override
   public void start(final Stage stage) throws IOException {
-    Parent root = loadFxml("room");
+    SceneManager.addUi(AppUi.room, loadFxml("room"));
+    SceneManager.addUi(AppUi.defendant, loadFxml("defendant"));
+    SceneManager.addUi(AppUi.witnessAi, loadFxml("witnessAi"));
+    SceneManager.addUi(AppUi.witnessHuman, loadFxml("witnessHuman"));
+    SceneManager.addUi(AppUi.defendantMemory, loadFxml("defendantMemory"));
+    SceneManager.addUi(AppUi.humanMemory, loadFxml("humanMemory"));
+    SceneManager.addUi(AppUi.aiMemory, loadFxml("aiMemory"));
+    Parent root = SceneManager.getUiRoot(AppUi.room);
+
+    SceneManager.initializeChats();
+    stage.setWidth(900);
+    stage.setHeight(600);
     scene = new Scene(root);
     stage.setScene(scene);
+    // stage.setFullScreen(true);
     stage.show();
     root.requestFocus();
   }
