@@ -1,124 +1,191 @@
-/* Basic Button Styles */
+/* Base Button Style - Futuristic Cyber Blue Theme */
 .button {
-    -fx-background-color: #2196F3;
-    -fx-text-fill: white;
+    -fx-background-color: linear-gradient(to bottom right, #0a1a2f, #1a237e);
+    -fx-text-fill: #E0F7FA;
+    -fx-font-family: 'Segoe UI', 'Roboto', sans-serif;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-padding: 10px 20px;
-    -fx-background-radius: 8px;
-    -fx-border-radius: 8px;
+    -fx-padding: 12px 24px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-border-color: #4FC3F7;
+    -fx-border-width: 1.5px;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 3, 0, 0, 2);
+    -fx-effect: dropshadow(gaussian, rgba(13, 71, 161, 0.6), 10, 0, 0, 2);
+    -fx-transition-duration: 0.3s;
 }
 
 .button:hover {
-    -fx-background-color: #1976D2;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 3);
-    -fx-scale-x: 1.02;
-    -fx-scale-y: 1.02;
+    -fx-background-color: linear-gradient(to bottom right, #1565C0, #2979FF);
+    -fx-border-color: #40C4FF;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(33, 150, 243, 0.8), 15, 0, 0, 0),
+                innershadow(gaussian, rgba(64, 196, 255, 0.4), 10, 0, 0, 0);
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
 }
 
 .button:pressed {
-    -fx-background-color: #0D47A1;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 1, 0, 0, 1);
+    -fx-background-color: linear-gradient(to bottom right, #0D47A1, #1565C0);
+    -fx-border-color: #00B0FF;
+    -fx-effect: dropshadow(gaussian, rgba(33, 150, 243, 0.4), 8, 0, 0, 0);
     -fx-scale-x: 0.98;
     -fx-scale-y: 0.98;
 }
 
-/* Specific Button Styles */
+/* Navigation Buttons */
 #backBtn, #roomBtn {
-    -fx-background-color: #FF5722;
+    -fx-background-color: linear-gradient(to bottom right, #0277BD, #0288D1);
+    -fx-border-color: #29B6F6;
 }
 
-#backBtn:hover, #roomBtn:hover {
-    -fx-background-color: #E64A19;
-}
-
+/* Chat Button */
 #chatBtn {
-    -fx-background-color: #4CAF50;
+    -fx-background-color: linear-gradient(to bottom right, #006064, #00838F);
+    -fx-border-color: #00B8D4;
+    -fx-text-fill: #E0F7FA;
+}
+
+/* Guess Button */
+#btnGuess {
+    -fx-background-color: linear-gradient(to bottom right, #01579B, #0277BD);
+    -fx-border-color: #40C4FF;
+    -fx-font-size: 16px;
+    -fx-font-weight: 800;
+}
+
+/* Memory Button */
+#memoryBtn {
+    -fx-background-color: linear-gradient(to bottom right, #0D47A1, #1565C0);
+    -fx-border-color: #29B6F6;
+}
+
+/* Hover Effects for Specific Buttons */
+#backBtn:hover, #roomBtn:hover {
+    -fx-background-color: linear-gradient(to bottom right, #0288D1, #03A9F4);
+    -fx-effect: dropshadow(gaussian, rgba(41, 182, 246, 0.9), 20, 0, 0, 0);
 }
 
 #chatBtn:hover {
-    -fx-background-color: #388E3C;
-}
-
-#btnGuess {
-    -fx-background-color: #FF9800;
-    -fx-font-size: 16px;
+    -fx-background-color: linear-gradient(to bottom right, #00838F, #00ACC1);
+    -fx-effect: dropshadow(gaussian, rgba(0, 184, 212, 0.9), 20, 0, 0, 0);
 }
 
 #btnGuess:hover {
-    -fx-background-color: #F57C00;
-}
-
-#memoryBtn {
-    -fx-background-color: #9C27B0;
+    -fx-background-color: linear-gradient(to bottom right, #0277BD, #039BE5);
+    -fx-effect: dropshadow(gaussian, rgba(64, 196, 255, 0.9), 20, 0, 0, 0);
 }
 
 #memoryBtn:hover {
-    -fx-background-color: #7B1FA2;
+    -fx-background-color: linear-gradient(to bottom right, #1565C0, #1976D2);
+    -fx-effect: dropshadow(gaussian, rgba(41, 182, 246, 0.9), 20, 0, 0, 0);
 }
 
-/* Label Styles */
-.label {
-    -fx-font-family: "System";
-    -fx-font-size: 14px;
-    -fx-text-fill: #333333;
-    -fx-font-weight: normal;
+/* Disabled State */
+.button:disabled {
+    -fx-background-color: linear-gradient(to bottom right, #263238, #37474F);
+    -fx-text-fill: #90A4AE;
+    -fx-border-color: #546E7A;
+    -fx-effect: none;
+    -fx-opacity: 0.7;
 }
 
-/* Timer Label - Special styling */
-#timerLabel {
-    -fx-font-family: "Monospace", "Courier New";
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #4CAF50;
-    -fx-background-color: rgba(255, 255, 255, 0.9);
-    -fx-background-radius: 5px;
-    -fx-padding: 5px 10px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 2, 0, 0, 1);
-}
-
-/* Text Field Styles (if you have any) */
-.text-field {
-    -fx-background-color: white;
-    -fx-border-color: #CCCCCC;
-    -fx-border-width: 1px;
-    -fx-border-radius: 4px;
-    -fx-background-radius: 4px;
-    -fx-padding: 8px 12px;
-    -fx-font-size: 14px;
-}
-
-.text-field:focused {
-    -fx-border-color: #2196F3;
+/* Focus State */
+.button:focused {
+    -fx-border-color: #40C4FF;
     -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(64, 196, 255, 0.6), 12, 0, 0, 0);
 }
 
-/* Chat Panel Styling */
-#chatPanel {
-    -fx-background-color: rgba(255, 255, 255, 0.95);
-    -fx-background-radius: 10px;
-    -fx-border-color: #DDDDDD;
-    -fx-border-width: 1px;
-    -fx-border-radius: 10px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 8, 0, 0, 4);
+/* Replace the existing keyframes and hover effects with these new ones */
+
+@keyframes lightning {
+    0% {
+        -fx-effect: dropshadow(gaussian, rgba(0, 229, 255, 0.1), 10, 0, 0, 0);
+        -fx-border-color: #4FC3F7;
+    }
+    20% {
+        -fx-effect: dropshadow(gaussian, rgba(0, 229, 255, 0.9), 30, 0.5, 0, 0);
+        -fx-border-color: white;
+    }
+    25% {
+        -fx-effect: dropshadow(gaussian, rgba(0, 229, 255, 0.3), 15, 0, 0, 0);
+        -fx-border-color: #4FC3F7;
+    }
+    30% {
+        -fx-effect: dropshadow(gaussian, rgba(0, 229, 255, 1), 25, 1, 0, 0);
+        -fx-border-color: white;
+    }
+    70% {
+        -fx-effect: dropshadow(gaussian, rgba(0, 229, 255, 0.2), 12, 0, 0, 0);
+        -fx-border-color: #4FC3F7;
+    }
+    85% {
+        -fx-effect: dropshadow(gaussian, rgba(0, 229, 255, 0.8), 20, 0.8, 0, 0);
+        -fx-border-color: white;
+    }
+    100% {
+        -fx-effect: dropshadow(gaussian, rgba(0, 229, 255, 0.1), 10, 0, 0, 0);
+        -fx-border-color: #4FC3F7;
+    }
 }
 
-/* Rectangle (Character) hover effects */
-.rectangle:hover {
-    -fx-stroke: #2196F3;
-    -fx-stroke-width: 3px;
-    -fx-effect: dropshadow(three-pass-box, rgba(33, 150, 243, 0.5), 10, 0, 0, 0);
+@keyframes borderLightning {
+    0% { -fx-border-width: 1.5px; }
+    20% { -fx-border-width: 3px; }
+    25% { -fx-border-width: 1.5px; }
+    30% { -fx-border-width: 3px; }
+    70% { -fx-border-width: 1.5px; }
+    85% { -fx-border-width: 3px; }
+    100% { -fx-border-width: 1.5px; }
 }
 
-/* General Pane styling */
-.pane {
-    -fx-background-color: #F5F5F5;
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #1565C0, #2979FF);
+    -fx-border-color: #40C4FF;
+    -fx-effect: dropshadow(gaussian, rgba(33, 150, 243, 0.8), 15, 0, 0, 0);
+    -fx-cursor: hand;
+    animation: lightning 1.5s infinite, borderLightning 1.5s infinite;
 }
 
-/* Root styling for better overall appearance */
-.root {
-    -fx-font-family: "System";
-    -fx-background-color: linear-gradient(to bottom, #E3F2FD, #BBDEFB);
+#backBtn:hover, #roomBtn:hover {
+    -fx-background-color: linear-gradient(to bottom right, #0288D1, #03A9F4);
+    animation: lightning 1s infinite, borderLightning 1s infinite;
+}
+
+#chatBtn:hover {
+    -fx-background-color: linear-gradient(to bottom right, #00838F, #00ACC1);
+    animation: lightning 2s infinite, borderLightning 2s infinite;
+}
+
+#btnGuess:hover {
+    -fx-background-color: linear-gradient(to bottom right, #0277BD, #039BE5);
+    animation: lightning 1.2s infinite, borderLightning 1.2s infinite;
+}
+
+#memoryBtn:hover {
+    -fx-background-color: linear-gradient(to bottom right, #1565C0, #1976D2);
+    animation: lightning 1.8s infinite, borderLightning 1.8s infinite;
+}
+
+/* Add this new style for extra lightning effect on buttons */
+.button::after {
+    -fx-content: "";
+    -fx-position: absolute;
+    -fx-top: 0;
+    -fx-left: 0;
+    -fx-right: 0;
+    -fx-bottom: 0;
+    -fx-background-color: linear-gradient(45deg, transparent 45%, rgba(0, 229, 255, 0.8) 50%, transparent 55%);
+    -fx-background-size: 200% 200%;
+    animation: lightningStripe 2s infinite;
+}
+
+@keyframes lightningStripe {
+    0% {
+        -fx-background-position: 200% 200%;
+    }
+    100% {
+        -fx-background-position: -200% -200%;
+    }
 }
