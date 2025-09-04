@@ -12,13 +12,32 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" onContextMenuRequested="#initialize" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.FlashbackController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" onContextMenuRequested="#initialize" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.memory.MemoryController">
    <children>
       <ImageView fx:id="backgroundImage" fitHeight="517.0" fitWidth="985.0" layoutX="-4.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/cafe.png" />
          </image>
       </ImageView>
+      <AnchorPane fx:id="chatPane" layoutX="-4.0" layoutY="85.0" prefHeight="516.0" prefWidth="907.0">
+         <children>
+      
+                        <TextArea fx:id="textArea" editable="false" layoutX="246.0" layoutY="94.0" prefHeight="318.0" prefWidth="381.0" wrapText="true" />
+            <GridPane layoutX="245.0" layoutY="414.0" prefHeight="30.0" prefWidth="385.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="344.55548095703125" minWidth="10.0" prefWidth="335.66668701171875" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="189.888916015625" minWidth="10.0" prefWidth="50.33331298828125" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                <TextField fx:id="textField" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="147.0" promptText="Enter Message Here" />
+                <Button fx:id="sendButton" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="25.0" prefWidth="48.0" text="Send" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
 
       <Button fx:id="goBackButton" layoutX="14.0" layoutY="560.0" mnemonicParsing="false" onAction="#onGoBackButtonPressed" onMouseClicked="#handleMemoryButton" text="Go Back" />
       <Label fx:id="titleLabel" alignment="CENTER" layoutX="1.0" prefHeight="56.0" prefWidth="900.0" text="Title" textAlignment="CENTER">
@@ -42,24 +61,5 @@
          </font>
       </Label>
       <Button fx:id="chatButton" layoutX="83.0" layoutY="561.0" mnemonicParsing="false" onAction="#onChatButtonPressed" onMouseClicked="#handleMemoryButton" text="Open Chat" />
-      <AnchorPane fx:id="chatPane" layoutX="-4.0" layoutY="85.0" prefHeight="516.0" prefWidth="907.0">
-         <children>
-      
-                        <TextArea fx:id="txtaChat" editable="false" layoutX="246.0" layoutY="94.0" prefHeight="318.0" prefWidth="381.0" wrapText="true" />
-            <GridPane layoutX="245.0" layoutY="414.0" prefHeight="30.0" prefWidth="385.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="344.55548095703125" minWidth="10.0" prefWidth="335.66668701171875" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="189.888916015625" minWidth="10.0" prefWidth="50.33331298828125" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                <TextField fx:id="txtInput" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="147.0" promptText="Enter Message Here" />
-                <Button fx:id="buttonSend" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="25.0" prefWidth="48.0" text="Send" GridPane.columnIndex="1" />
-               </children>
-            </GridPane>
-         </children>
-      </AnchorPane>
    </children>
 </AnchorPane>
