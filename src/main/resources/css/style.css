@@ -1,0 +1,124 @@
+/* Basic Button Styles */
+.button {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 3, 0, 0, 2);
+}
+
+.button:hover {
+    -fx-background-color: #1976D2;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 3);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.button:pressed {
+    -fx-background-color: #0D47A1;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 1, 0, 0, 1);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* Specific Button Styles */
+#backBtn, #roomBtn {
+    -fx-background-color: #FF5722;
+}
+
+#backBtn:hover, #roomBtn:hover {
+    -fx-background-color: #E64A19;
+}
+
+#chatBtn {
+    -fx-background-color: #4CAF50;
+}
+
+#chatBtn:hover {
+    -fx-background-color: #388E3C;
+}
+
+#btnGuess {
+    -fx-background-color: #FF9800;
+    -fx-font-size: 16px;
+}
+
+#btnGuess:hover {
+    -fx-background-color: #F57C00;
+}
+
+#memoryBtn {
+    -fx-background-color: #9C27B0;
+}
+
+#memoryBtn:hover {
+    -fx-background-color: #7B1FA2;
+}
+
+/* Label Styles */
+.label {
+    -fx-font-family: "System";
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+    -fx-font-weight: normal;
+}
+
+/* Timer Label - Special styling */
+#timerLabel {
+    -fx-font-family: "Monospace", "Courier New";
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4CAF50;
+    -fx-background-color: rgba(255, 255, 255, 0.9);
+    -fx-background-radius: 5px;
+    -fx-padding: 5px 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 2, 0, 0, 1);
+}
+
+/* Text Field Styles (if you have any) */
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #CCCCCC;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 8px 12px;
+    -fx-font-size: 14px;
+}
+
+.text-field:focused {
+    -fx-border-color: #2196F3;
+    -fx-border-width: 2px;
+}
+
+/* Chat Panel Styling */
+#chatPanel {
+    -fx-background-color: rgba(255, 255, 255, 0.95);
+    -fx-background-radius: 10px;
+    -fx-border-color: #DDDDDD;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 8, 0, 0, 4);
+}
+
+/* Rectangle (Character) hover effects */
+.rectangle:hover {
+    -fx-stroke: #2196F3;
+    -fx-stroke-width: 3px;
+    -fx-effect: dropshadow(three-pass-box, rgba(33, 150, 243, 0.5), 10, 0, 0, 0);
+}
+
+/* General Pane styling */
+.pane {
+    -fx-background-color: #F5F5F5;
+}
+
+/* Root styling for better overall appearance */
+.root {
+    -fx-font-family: "System";
+    -fx-background-color: linear-gradient(to bottom, #E3F2FD, #BBDEFB);
+}
