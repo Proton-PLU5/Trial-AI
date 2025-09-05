@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -96,9 +95,9 @@ public class DefendantFlashback {
 
   private void setupImagePaths() {
     imagePaths = new ArrayList<>();
-    imagePaths.add("/images/defendant1.png");
-    imagePaths.add("/images/defendant2.png");
-    imagePaths.add("/images/defendant3.png");
+    imagePaths.add("/images/defendantFlash1.png");
+    imagePaths.add("/images/defendantFlash2.png");
+    imagePaths.add("/images/defendantFlash3.png");
   }
 
   @FXML

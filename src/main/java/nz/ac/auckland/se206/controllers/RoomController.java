@@ -14,8 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -75,9 +73,9 @@ public class RoomController {
     }
 
     if (isFirstTimeInit) {
-      Media media = new Media(getClass().getResource("/sounds/startAudio.mp3").toExternalForm());
-      MediaPlayer mediaPlayer = new MediaPlayer(media);
-      mediaPlayer.play();
+      // Media media = new Media(getClass().getResource("/sounds/startAudio.mp3").toExternalForm());
+      // MediaPlayer mediaPlayer = new MediaPlayer(media);
+      // mediaPlayer.play();
     }
   }
 
