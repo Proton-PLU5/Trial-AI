@@ -1,7 +1,6 @@
 package nz.ac.auckland.se206;
 
 import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -109,8 +108,8 @@ public class App extends Application {
     Parent root = SceneManager.getUiRoot(AppUi.room);
 
     SceneManager.initializeChats();
-    stage.setWidth(900);
-    stage.setHeight(600);
+    stage.setWidth(1408);
+    stage.setHeight(736);
     scene = new Scene(root);
     scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
     stage.setScene(scene);
