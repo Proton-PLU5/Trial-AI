@@ -1,191 +1,353 @@
-/* Base Button Style - Futuristic Cyber Blue Theme */
+/* ===== FUTURISTIC HIGH-CONTRAST THEME ===== */
+/* Optimized for cyan/teal holographic backgrounds */
+
+/* ===== BASE BUTTON STYLING ===== */
 .button {
-    -fx-background-color: linear-gradient(to bottom right, #0a1a2f, #1a237e);
-    -fx-text-fill: #E0F7FA;
-    -fx-font-family: 'Segoe UI', 'Roboto', sans-serif;
+    -fx-background-color: linear-gradient(to bottom, 
+        rgba(5, 15, 35, 0.95), 
+        rgba(0, 5, 15, 0.98));
+    -fx-border-color: #00e6ff;
+    -fx-border-width: 2px;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Consolas", "Courier New", monospace;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-padding: 12px 24px;
-    -fx-background-radius: 6px;
-    -fx-border-radius: 6px;
-    -fx-border-color: #4FC3F7;
-    -fx-border-width: 1.5px;
+    -fx-padding: 12 24 12 24;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(13, 71, 161, 0.6), 10, 0, 0, 2);
-    -fx-transition-duration: 0.3s;
+    -fx-effect: dropshadow(gaussian, rgba(0, 230, 255, 0.8), 12, 0, 0, 0),
+                innershadow(gaussian, rgba(255, 255, 255, 0.1), 2, 0, 0, 1);
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    /* Strong contrast outline */
+    -fx-background-image: linear-gradient(90deg, 
+        transparent 0%, 
+        transparent 40%, 
+        rgba(0, 230, 255, 0.15) 45%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        rgba(0, 230, 255, 0.15) 55%, 
+        transparent 60%, 
+        transparent 100%);
+    -fx-background-size: 200% 100%;
+    -fx-background-position: -200% 0%;
 }
 
+/* ===== BUTTON HOVER STATE ===== */
 .button:hover {
-    -fx-background-color: linear-gradient(to bottom right, #1565C0, #2979FF);
-    -fx-border-color: #40C4FF;
-    -fx-border-width: 2px;
-    -fx-effect: dropshadow(gaussian, rgba(33, 150, 243, 0.8), 15, 0, 0, 0),
-                innershadow(gaussian, rgba(64, 196, 255, 0.4), 10, 0, 0, 0);
-    -fx-scale-x: 1.03;
-    -fx-scale-y: 1.03;
+    -fx-background-color: linear-gradient(to bottom, 
+        rgba(10, 25, 50, 0.98), 
+        rgba(5, 15, 35, 0.98));
+    -fx-border-color: #ffffff;
+    -fx-border-width: 3px;
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 1.0), 18, 0, 0, 0),
+                innershadow(gaussian, rgba(0, 230, 255, 0.3), 4, 0, 0, 0);
+    -fx-scale-x: 1.08;
+    -fx-scale-y: 1.08;
+    /* Bright lightning scan animation */
+    -fx-background-position: 200% 0%;
+    -fx-background-image: linear-gradient(90deg, 
+        transparent 0%, 
+        transparent 35%, 
+        rgba(255, 255, 255, 0.3) 40%, 
+        rgba(255, 255, 255, 0.6) 50%, 
+        rgba(255, 255, 255, 0.3) 60%, 
+        transparent 65%, 
+        transparent 100%);
 }
 
+/* ===== BUTTON PRESSED STATE ===== */
 .button:pressed {
-    -fx-background-color: linear-gradient(to bottom right, #0D47A1, #1565C0);
-    -fx-border-color: #00B0FF;
-    -fx-effect: dropshadow(gaussian, rgba(33, 150, 243, 0.4), 8, 0, 0, 0);
-    -fx-scale-x: 0.98;
-    -fx-scale-y: 0.98;
+    -fx-background-color: linear-gradient(to bottom, 
+        rgba(0, 5, 15, 0.98), 
+        rgba(5, 15, 35, 0.95));
+    -fx-border-color: #00b3cc;
+    -fx-border-width: 1px;
+    -fx-text-fill: #cccccc;
+    -fx-effect: innershadow(gaussian, rgba(0, 230, 255, 0.6), 10, 0, 0, 0);
+    -fx-scale-x: 0.96;
+    -fx-scale-y: 0.96;
+    -fx-background-image: none;
 }
 
-/* Navigation Buttons */
-#backBtn, #roomBtn {
-    -fx-background-color: linear-gradient(to bottom right, #0277BD, #0288D1);
-    -fx-border-color: #29B6F6;
-}
-
-/* Chat Button */
-#chatBtn {
-    -fx-background-color: linear-gradient(to bottom right, #006064, #00838F);
-    -fx-border-color: #00B8D4;
-    -fx-text-fill: #E0F7FA;
-}
-
-/* Guess Button */
-#btnGuess {
-    -fx-background-color: linear-gradient(to bottom right, #01579B, #0277BD);
-    -fx-border-color: #40C4FF;
-    -fx-font-size: 16px;
-    -fx-font-weight: 800;
-}
-
-/* Memory Button */
-#memoryBtn {
-    -fx-background-color: linear-gradient(to bottom right, #0D47A1, #1565C0);
-    -fx-border-color: #29B6F6;
-}
-
-/* Hover Effects for Specific Buttons */
-#backBtn:hover, #roomBtn:hover {
-    -fx-background-color: linear-gradient(to bottom right, #0288D1, #03A9F4);
-    -fx-effect: dropshadow(gaussian, rgba(41, 182, 246, 0.9), 20, 0, 0, 0);
-}
-
-#chatBtn:hover {
-    -fx-background-color: linear-gradient(to bottom right, #00838F, #00ACC1);
-    -fx-effect: dropshadow(gaussian, rgba(0, 184, 212, 0.9), 20, 0, 0, 0);
-}
-
-#btnGuess:hover {
-    -fx-background-color: linear-gradient(to bottom right, #0277BD, #039BE5);
-    -fx-effect: dropshadow(gaussian, rgba(64, 196, 255, 0.9), 20, 0, 0, 0);
-}
-
-#memoryBtn:hover {
-    -fx-background-color: linear-gradient(to bottom right, #1565C0, #1976D2);
-    -fx-effect: dropshadow(gaussian, rgba(41, 182, 246, 0.9), 20, 0, 0, 0);
-}
-
-/* Disabled State */
-.button:disabled {
-    -fx-background-color: linear-gradient(to bottom right, #263238, #37474F);
-    -fx-text-fill: #90A4AE;
-    -fx-border-color: #546E7A;
-    -fx-effect: none;
-    -fx-opacity: 0.7;
-}
-
-/* Focus State */
+/* ===== BUTTON FOCUS STATE ===== */
 .button:focused {
-    -fx-border-color: #40C4FF;
+    -fx-border-color: #ffffff;
     -fx-border-width: 2px;
-    -fx-effect: dropshadow(gaussian, rgba(64, 196, 255, 0.6), 12, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 1.0), 15, 0, 0, 0),
+                innershadow(gaussian, rgba(255, 255, 255, 0.2), 3, 0, 0, 0);
 }
 
-/* Replace the existing keyframes and hover effects with these new ones */
-
-@keyframes lightning {
-    0% {
-        -fx-effect: dropshadow(gaussian, rgba(0, 229, 255, 0.1), 10, 0, 0, 0);
-        -fx-border-color: #4FC3F7;
-    }
-    20% {
-        -fx-effect: dropshadow(gaussian, rgba(0, 229, 255, 0.9), 30, 0.5, 0, 0);
-        -fx-border-color: white;
-    }
-    25% {
-        -fx-effect: dropshadow(gaussian, rgba(0, 229, 255, 0.3), 15, 0, 0, 0);
-        -fx-border-color: #4FC3F7;
-    }
-    30% {
-        -fx-effect: dropshadow(gaussian, rgba(0, 229, 255, 1), 25, 1, 0, 0);
-        -fx-border-color: white;
-    }
-    70% {
-        -fx-effect: dropshadow(gaussian, rgba(0, 229, 255, 0.2), 12, 0, 0, 0);
-        -fx-border-color: #4FC3F7;
-    }
-    85% {
-        -fx-effect: dropshadow(gaussian, rgba(0, 229, 255, 0.8), 20, 0.8, 0, 0);
-        -fx-border-color: white;
-    }
-    100% {
-        -fx-effect: dropshadow(gaussian, rgba(0, 229, 255, 0.1), 10, 0, 0, 0);
-        -fx-border-color: #4FC3F7;
-    }
-}
-
-@keyframes borderLightning {
-    0% { -fx-border-width: 1.5px; }
-    20% { -fx-border-width: 3px; }
-    25% { -fx-border-width: 1.5px; }
-    30% { -fx-border-width: 3px; }
-    70% { -fx-border-width: 1.5px; }
-    85% { -fx-border-width: 3px; }
-    100% { -fx-border-width: 1.5px; }
+/* ===== LIGHTNING SCAN ANIMATION ===== */
+@keyframes lightning-scan {
+    0% { -fx-background-position: -200% 0%; }
+    100% { -fx-background-position: 200% 0%; }
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(to bottom right, #1565C0, #2979FF);
-    -fx-border-color: #40C4FF;
-    -fx-effect: dropshadow(gaussian, rgba(33, 150, 243, 0.8), 15, 0, 0, 0);
-    -fx-cursor: hand;
-    animation: lightning 1.5s infinite, borderLightning 1.5s infinite;
+    -fx-animation: lightning-scan 1.5s infinite linear;
 }
 
-#backBtn:hover, #roomBtn:hover {
-    -fx-background-color: linear-gradient(to bottom right, #0288D1, #03A9F4);
-    animation: lightning 1s infinite, borderLightning 1s infinite;
-}
-
-#chatBtn:hover {
-    -fx-background-color: linear-gradient(to bottom right, #00838F, #00ACC1);
-    animation: lightning 2s infinite, borderLightning 2s infinite;
-}
-
-#btnGuess:hover {
-    -fx-background-color: linear-gradient(to bottom right, #0277BD, #039BE5);
-    animation: lightning 1.2s infinite, borderLightning 1.2s infinite;
-}
-
-#memoryBtn:hover {
-    -fx-background-color: linear-gradient(to bottom right, #1565C0, #1976D2);
-    animation: lightning 1.8s infinite, borderLightning 1.8s infinite;
-}
-
-/* Add this new style for extra lightning effect on buttons */
-.button::after {
-    -fx-content: "";
-    -fx-position: absolute;
-    -fx-top: 0;
-    -fx-left: 0;
-    -fx-right: 0;
-    -fx-bottom: 0;
-    -fx-background-color: linear-gradient(45deg, transparent 45%, rgba(0, 229, 255, 0.8) 50%, transparent 55%);
-    -fx-background-size: 200% 200%;
-    animation: lightningStripe 2s infinite;
-}
-
-@keyframes lightningStripe {
-    0% {
-        -fx-background-position: 200% 200%;
+/* ===== ELECTRIC PULSE ANIMATION ===== */
+@keyframes electric-pulse {
+    0% { 
+        -fx-effect: dropshadow(gaussian, rgba(0, 230, 255, 0.8), 12, 0, 0, 0);
+        -fx-border-color: #00e6ff;
     }
-    100% {
-        -fx-background-position: -200% -200%;
+    25% { 
+        -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 1.0), 16, 0, 0, 0);
+        -fx-border-color: #ffffff;
     }
+    50% { 
+        -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 1.2), 20, 0, 0, 0);
+        -fx-border-color: #ffffff;
+    }
+    75% { 
+        -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 1.0), 16, 0, 0, 0);
+        -fx-border-color: #ffffff;
+    }
+    100% { 
+        -fx-effect: dropshadow(gaussian, rgba(0, 230, 255, 0.8), 12, 0, 0, 0);
+        -fx-border-color: #00e6ff;
+    }
+}
+
+/* ===== SPECIAL BUTTON VARIANTS ===== */
+
+/* Primary Action Buttons (Next, Back, etc.) */
+.primary-button {
+    -fx-background-color: linear-gradient(to bottom, 
+        rgba(0, 50, 100, 0.9), 
+        rgba(0, 25, 75, 0.95));
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.8), 15, 0, 0, 0);
+    -fx-animation: electric-pulse 4s infinite ease-in-out;
+}
+
+.primary-button:hover {
+    -fx-background-color: linear-gradient(to bottom, 
+        rgba(0, 80, 150, 0.95), 
+        rgba(0, 50, 120, 0.98));
+    -fx-border-color: #ffffff;
+    -fx-border-width: 3px;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 1.2), 22, 0, 0, 0);
+    -fx-animation: electric-pulse 2s infinite ease-in-out;
+}
+
+/* Navigation Arrow Buttons */
+.arrow-button {
+    -fx-font-size: 20px;
+    -fx-min-width: 55px;
+    -fx-min-height: 45px;
+    -fx-padding: 10 15 10 15;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
+    -fx-background-color: linear-gradient(to bottom, 
+        rgba(0, 10, 30, 0.95), 
+        rgba(0, 5, 20, 0.98));
+    -fx-border-color: #00e6ff;
+    -fx-border-width: 2px;
+}
+
+.arrow-button:hover {
+    -fx-font-size: 22px;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #ffffff;
+    -fx-border-width: 3px;
+    -fx-rotate: 3;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 1.0), 20, 0, 0, 0);
+}
+
+.arrow-button:pressed {
+    -fx-rotate: -2;
+    -fx-font-size: 18px;
+}
+
+/* ===== TIMER LABEL STYLING ===== */
+.timer-label {
+    -fx-background-color: linear-gradient(to right, 
+        rgba(0, 5, 20, 0.98), 
+        rgba(0, 15, 40, 0.95), 
+        rgba(0, 5, 20, 0.98));
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2px;
+    -fx-border-radius: 18px;
+    -fx-background-radius: 18px;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20 10 20;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.8), 12, 0, 0, 0),
+                innershadow(gaussian, rgba(0, 230, 255, 0.3), 4, 0, 0, 0);
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-alignment: center;
+    -fx-min-width: 100px;
+}
+
+/* Timer Warning State (≤ 30 seconds) */
+.timer-warning {
+    -fx-background-color: linear-gradient(to right, 
+        rgba(20, 10, 0, 0.95), 
+        rgba(40, 25, 0, 0.98), 
+        rgba(20, 10, 0, 0.95));
+    -fx-border-color: #ffaa00;
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(255, 170, 0, 1.0), 15, 0, 0, 0),
+                innershadow(gaussian, rgba(255, 255, 255, 0.2), 3, 0, 0, 0);
+    -fx-font-size: 22px;
+    -fx-animation: timer-warning-pulse 2.5s infinite ease-in-out;
+}
+
+/* Timer Critical State (≤ 10 seconds) */
+.timer-critical {
+    -fx-background-color: linear-gradient(to right, 
+        rgba(40, 0, 0, 0.98), 
+        rgba(60, 10, 10, 0.98), 
+        rgba(40, 0, 0, 0.98));
+    -fx-border-color: #ff3333;
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(255, 51, 51, 1.2), 20, 0, 0, 0),
+                innershadow(gaussian, rgba(255, 255, 255, 0.3), 5, 0, 0, 0);
+    -fx-font-size: 26px;
+    -fx-scale-x: 1.15;
+    -fx-scale-y: 1.15;
+    -fx-animation: timer-critical-pulse 0.6s infinite ease-in-out;
+}
+
+/* Timer Normal State (> 30 seconds) */
+.timer-normal {
+    -fx-background-color: linear-gradient(to right, 
+        rgba(0, 5, 20, 0.98), 
+        rgba(0, 15, 40, 0.95), 
+        rgba(0, 5, 20, 0.98));
+    -fx-border-color: #ffffff;
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.8), 12, 0, 0, 0);
+    -fx-font-size: 20px;
+    -fx-scale-x: 1.0;
+    -fx-scale-y: 1.0;
+}
+
+/* Warning timer animation */
+@keyframes timer-warning-pulse {
+    0% { 
+        -fx-effect: dropshadow(gaussian, rgba(255, 170, 0, 1.0), 15, 0, 0, 0);
+        -fx-border-color: #ffaa00;
+    }
+    50% { 
+        -fx-effect: dropshadow(gaussian, rgba(255, 170, 0, 1.4), 22, 0, 0, 0);
+        -fx-border-color: #ffcc44;
+    }
+    100% { 
+        -fx-effect: dropshadow(gaussian, rgba(255, 170, 0, 1.0), 15, 0, 0, 0);
+        -fx-border-color: #ffaa00;
+    }
+}
+
+/* Critical timer pulsing animation */
+@keyframes timer-critical-pulse {
+    0% { 
+        -fx-effect: dropshadow(gaussian, rgba(255, 51, 51, 1.2), 20, 0, 0, 0);
+        -fx-scale-x: 1.15;
+        -fx-scale-y: 1.15;
+        -fx-border-color: #ff3333;
+    }
+    50% { 
+        -fx-effect: dropshadow(gaussian, rgba(255, 51, 51, 1.6), 30, 0, 0, 0);
+        -fx-scale-x: 1.25;
+        -fx-scale-y: 1.25;
+        -fx-border-color: #ff6666;
+    }
+    100% { 
+        -fx-effect: dropshadow(gaussian, rgba(255, 51, 51, 1.2), 20, 0, 0, 0);
+        -fx-scale-x: 1.15;
+        -fx-scale-y: 1.15;
+        -fx-border-color: #ff3333;
+    }
+}
+
+/* ===== FUTURISTIC PANEL/BACKGROUND STYLING ===== */
+.futuristic-panel {
+    -fx-background-color: linear-gradient(135deg, 
+        rgba(0, 5, 15, 0.98), 
+        rgba(5, 15, 35, 0.95), 
+        rgba(0, 5, 15, 0.98));
+    -fx-border-color: rgba(255, 255, 255, 0.6);
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.4), 8, 0, 0, 0),
+                innershadow(gaussian, rgba(0, 230, 255, 0.2), 3, 0, 0, 0);
+}
+
+/* ===== CHAT/DIALOG PANEL ===== */
+.chat-panel {
+    -fx-background-color: linear-gradient(to bottom, 
+        rgba(0, 10, 25, 0.95), 
+        rgba(0, 5, 20, 0.98));
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.6), 10, 0, 0, 0);
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+.high-contrast .button {
+    -fx-background-color: rgba(0, 0, 0, 0.98);
+    -fx-border-color: #ffffff;
+    -fx-border-width: 3px;
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 1.0), 12, 0, 0, 0);
+}
+
+.high-contrast .button:hover {
+    -fx-background-color: rgba(20, 20, 20, 0.98);
+    -fx-border-color: #ffffff;
+    -fx-border-width: 4px;
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 1.4), 18, 0, 0, 0);
+}
+
+.high-contrast .timer-label {
+    -fx-background-color: rgba(0, 0, 0, 0.98);
+    -fx-border-color: #ffffff;
+    -fx-border-width: 3px;
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 1.0), 15, 0, 0, 0);
+}
+
+.high-contrast .timer-warning {
+    -fx-background-color: rgba(40, 20, 0, 0.98);
+    -fx-border-color: #ffaa00;
+    -fx-text-fill: #ffffff;
+}
+
+.high-contrast .timer-critical {
+    -fx-background-color: rgba(40, 0, 0, 0.98);
+    -fx-border-color: #ff3333;
+    -fx-text-fill: #ffffff;
+}
+
+/* ===== ADDITIONAL HIGH-CONTRAST EFFECTS ===== */
+
+/* Strong outline for maximum visibility */
+.max-contrast {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 1.0), 3, 0, 1, 1),
+                dropshadow(gaussian, rgba(0, 0, 0, 1.0), 3, 0, -1, -1),
+                dropshadow(gaussian, rgba(255, 255, 255, 1.0), 15, 0, 0, 0);
+}
+
+/* Holographic interference pattern (subtle) */
+.holographic-effect {
+    -fx-background-image: linear-gradient(45deg, 
+        transparent 70%, 
+        rgba(255, 255, 255, 0.05) 71%, 
+        rgba(255, 255, 255, 0.05) 72%, 
+        transparent 73%);
+    -fx-background-size: 20px 20px;
 }

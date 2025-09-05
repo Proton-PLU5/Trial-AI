@@ -10,8 +10,8 @@
    <children>
       <Button fx:id="memoryBtn" layoutX="14.0" layoutY="566.0" mnemonicParsing="false" onMouseClicked="#handleMemoryButton" text="Go to memory" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="14.0" />
       <ImageView fx:id="drawingImageView" fitHeight="554.0" fitWidth="900.0" layoutX="-1.0" layoutY="-3.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Button fx:id="nextBtn" layoutX="293.0" layoutY="346.0" mnemonicParsing="false" onMouseClicked="#nextDrawing" text="Next person" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="300.0" />
-      <Button fx:id="prevBtn" layoutX="192.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#previousDrawing" text="Previous person" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="180.0" />
+      <Button fx:id="nextBtn" layoutX="458.0" layoutY="556.0" mnemonicParsing="false" onMouseClicked="#nextDrawing" text="▶" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="458.0" />
+      <Button fx:id="prevBtn" layoutX="417.0" layoutY="555.0" mnemonicParsing="false" onMouseClicked="#previousDrawing" text="◀" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="417.0" />
       <Label fx:id="timerLabel" layoutX="1230.0" layoutY="825.0" text="Label" AnchorPane.bottomAnchor="12.0" AnchorPane.rightAnchor="66.0" />
       <Pane fx:id="chatPanel" layoutX="539.0" layoutY="262.0" prefHeight="400.0" prefWidth="300.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="576.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="130.0" />
    </children>

@@ -10,9 +10,9 @@
 
 <Pane fx:id="room" focusTraversable="true" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.RoomController">
    <children>
-      <ImageView fitHeight="445.0" fitWidth="875.0" layoutX="41.0" layoutY="155.0" nodeOrientation="INHERIT" preserveRatio="true">
+      <ImageView fitHeight="697.0" fitWidth="987.0" layoutX="-1.0" layoutY="-1.0" nodeOrientation="INHERIT" preserveRatio="true">
          <image>
-            <Image url="@../images/Gemini_Generated_Image_36xsk136xsk136xs.png" />
+            <Image url="@../images/courtroom2.png" />
          </image>
       </ImageView>
       <Rectangle fx:id="defendant" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="306.0" layoutX="283.0" layoutY="294.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="351.0" />
