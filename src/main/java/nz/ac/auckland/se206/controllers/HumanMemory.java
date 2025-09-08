@@ -1,7 +1,6 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -59,17 +58,12 @@ public class HumanMemory {
     if (timerLabel == null) {
       return;
     }
-
     timerLabel.getStyleClass().removeAll("timer-normal", "timer-warning", "timer-critical");
-
     if (secondsRemaining <= 10) {
-
       timerLabel.getStyleClass().addAll("timer-label", "timer-critical");
     } else if (secondsRemaining <= 30) {
-
       timerLabel.getStyleClass().addAll("timer-label", "timer-warning");
     } else {
-
       timerLabel.getStyleClass().addAll("timer-label", "timer-normal");
     }
   }

@@ -71,17 +71,12 @@ public class DefendantFlashback {
     if (timerLabel == null) {
       return;
     }
-
     timerLabel.getStyleClass().removeAll("timer-normal", "timer-warning", "timer-critical");
-
     if (secondsRemaining <= 10) {
-
       timerLabel.getStyleClass().addAll("timer-label", "timer-critical");
     } else if (secondsRemaining <= 30) {
-
       timerLabel.getStyleClass().addAll("timer-label", "timer-warning");
     } else {
-
       timerLabel.getStyleClass().addAll("timer-label", "timer-normal");
     }
   }
