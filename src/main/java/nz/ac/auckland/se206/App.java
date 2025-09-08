@@ -108,7 +108,7 @@ public class App extends Application {
     Parent root = SceneManager.getUiRoot(AppUi.room);
 
     SceneManager.initializeChats();
-    stage.setWidth(1408);
+    stage.setWidth(1308);
     stage.setHeight(736);
     scene = new Scene(root);
     scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
