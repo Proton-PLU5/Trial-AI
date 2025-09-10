@@ -2,6 +2,8 @@ package nz.ac.auckland.se206.controllers.memory;
 
 import java.io.IOException;
 
+import javafx.animation.PathTransition;
+import javafx.animation.Transition;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,6 +25,9 @@ public abstract class MemoryController {
   @FXML private TextArea textArea;
   @FXML private TextField textField;
 
+  // Title Pane
+  @FXML private AnchorPane titleBlock;
+
   // Navigation
   @FXML private Button goBackButton;
 
@@ -34,6 +39,21 @@ public abstract class MemoryController {
 
   protected void initialize() {
     chatPane.setVisible(false);
+
+    // Animate title block to disappear after 3 seconds
+    titleBlock.setVisible(true);
+    Transition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(3));
+    delay.setOnFinished(event -> hideTitleBlock());
+    delay.play();
+  }
+
+  private void hideTitleBlock() {
+    PathTransition transition = new PathTransition();
+    transition.setNode(titleBlock);
+    transition.setDuration(javafx.util.Duration.seconds(1));
+    transition.setPath(new javafx.scene.shape.Line(0, -100, 0, 0));
+    transition.setCycleCount(1);
+    transition.setOnFinished(event -> titleBlock.setVisible(false));
   }
 
   /**
