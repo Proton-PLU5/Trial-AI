@@ -8,21 +8,25 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-public class FinalController {
+public class VerdictController {
 
   @FXML private Button yesBtn;
   @FXML private Button noBtn;
-  @FXML private Label textLabel;
+  @FXML private Button submitButton;
+  @FXML private Label verdictTitleLabel1;
+  @FXML private Label verdictTitleLabel2;
   @FXML private Label correctLabel;
   @FXML private Label incorrectLabel;
   @FXML private Label timeoutLabel;
   @FXML private Label timerLabel;
   @FXML private ImageView imageView;
+  @FXML private TextArea rationaleTextArea;
 
   private ScheduledExecutorService finalTimerExecutor;
   private int finalSecondsRemaining = 10;
@@ -30,12 +34,6 @@ public class FinalController {
 
   @FXML
   private void initialize() {
-    correctLabel.setVisible(false);
-    incorrectLabel.setVisible(false);
-    textLabel.setVisible(true);
-    imageView.setVisible(false);
-    timeoutLabel.setVisible(false);
-
     Media media = new Media(getClass().getResource("/sounds/decisionAudio.mp3").toExternalForm());
     MediaPlayer mediaPlayer = new MediaPlayer(media);
     mediaPlayer.play();
@@ -101,11 +99,11 @@ public class FinalController {
         throw new IllegalArgumentException("Image not found: " + path);
       }
       choiceMade = true;
-      textLabel.setVisible(false);
       Image image = new Image(stream);
       imageView.setImage(image);
       imageView.setVisible(true);
       incorrectLabel.setVisible(true);
+      verdictTitleLabel1.setVisible(false);
       yesBtn.setVisible(false);
       noBtn.setVisible(false);
       timerLabel.setVisible(false);
@@ -123,11 +121,11 @@ public class FinalController {
         throw new IllegalArgumentException("Image not found: " + path);
       }
       choiceMade = true;
-      textLabel.setVisible(false);
       Image image = new Image(stream);
       imageView.setImage(image);
       imageView.setVisible(true);
       timeoutLabel.setVisible(true);
+      verdictTitleLabel1.setVisible(false);
       yesBtn.setVisible(false);
       noBtn.setVisible(false);
       timerLabel.setVisible(false);
@@ -142,11 +140,11 @@ public class FinalController {
       String path = "/images/tick.png";
       InputStream stream = getClass().getResourceAsStream(path);
       choiceMade = true;
-      textLabel.setVisible(false);
       Image image = new Image(stream);
       imageView.setImage(image);
       imageView.setVisible(true);
       correctLabel.setVisible(true);
+      verdictTitleLabel1.setVisible(false);
       yesBtn.setVisible(false);
       noBtn.setVisible(false);
       timerLabel.setVisible(false);

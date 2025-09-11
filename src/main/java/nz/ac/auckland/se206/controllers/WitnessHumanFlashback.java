@@ -49,7 +49,7 @@ public class WitnessHumanFlashback {
 
   private void handleGameOver() throws IOException {
     Stage stage = (Stage) memoryBtn.getScene().getWindow();
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/final.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/verdict.fxml"));
     Parent finalRoot = loader.load();
     stage.setScene(new Scene(finalRoot));
   }
