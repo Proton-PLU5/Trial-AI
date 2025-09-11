@@ -289,3 +289,59 @@
 .text-field {
   -fx-transition: border-color 0.2s ease-in-out;
 }
+
+/* ===== RECTANGLE (Memory BOXES) STYLING ===== */
+/* Transparent blue boxes for defendant memory interface */
+
+#rec1, #rec2, #rec3, #rec4 {
+  -fx-fill: rgba(30, 58, 138, 0.3); /* Semi-transparent blue background */
+  -fx-stroke: #3b82f6; /* Blue border matching theme */
+  -fx-stroke-width: 2px;
+  -fx-stroke-type: inside;
+  -fx-arc-height: 12px; /* Rounded corners to match theme */
+  -fx-arc-width: 12px;
+  -fx-opacity: 0.85; /* Additional transparency control */
+  -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.4), 8, 0.3, 0, 0); /* Subtle glow */
+}
+
+/* Hover effect for interactive rectangles */
+#rec1:hover, #rec2:hover, #rec3:hover, #rec4:hover {
+  -fx-fill: rgba(37, 99, 235, 0.4); /* Slightly more opaque on hover */
+  -fx-stroke: #60a5fa; /* Lighter blue border on hover */
+  -fx-stroke-width: 3px;
+  -fx-effect: dropshadow(three-pass-box, rgba(96, 165, 250, 0.6), 12, 0.4, 0, 0); /* Enhanced glow on hover */
+}
+
+/* Active/Selected state for rectangles */
+#rec1:pressed, #rec2:pressed, #rec3:pressed, #rec4:pressed {
+  -fx-fill: rgba(29, 78, 216, 0.5); /* More solid when pressed/selected */
+  -fx-stroke: #3b82f6;
+  -fx-stroke-width: 2px;
+  -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.8), 16, 0.5, 0, 0); /* Strong glow when active */
+}
+
+/* Alternative styling for different rectangle states if needed */
+.memory-box-normal {
+  -fx-fill: rgba(30, 58, 138, 0.25); /* Default transparent blue */
+  -fx-stroke: #1e3a8a;
+  -fx-stroke-width: 2px;
+}
+
+.memory-box-highlighted {
+  -fx-fill: rgba(37, 99, 235, 0.4); /* Highlighted state */
+  -fx-stroke: #3b82f6;
+  -fx-stroke-width: 3px;
+  -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.5), 10, 0.3, 0, 0);
+}
+
+.memory-box-selected {
+  -fx-fill: rgba(59, 130, 246, 0.6); /* Selected state */
+  -fx-stroke: #60a5fa;
+  -fx-stroke-width: 3px;
+  -fx-effect: dropshadow(three-pass-box, rgba(96, 165, 250, 0.7), 14, 0.4, 0, 0);
+}
+
+/* Animation transition for smooth state changes */
+#rec1, #rec2, #rec3, #rec4 {
+  -fx-transition: all 0.3s ease-in-out;
+}

@@ -5,6 +5,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="1408.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.DefendantMemory">
    <children>
@@ -13,6 +14,10 @@
             <Image url="@../images/defendantMemory.png" />
          </image>
       </ImageView>
+      <Rectangle fx:id="rec1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="359.0" layoutX="222.0" layoutY="283.0" stroke="BLACK" strokeType="INSIDE" width="128.0" />
+      <Rectangle fx:id="rec2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="382.0" layoutX="429.0" layoutY="260.0" stroke="BLACK" strokeType="INSIDE" width="137.0" />
+      <Rectangle fx:id="rec3" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="340.0" layoutX="645.0" layoutY="283.0" stroke="BLACK" strokeType="INSIDE" width="113.0" />
+      <Rectangle fx:id="rec4" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" height="373.0" layoutX="894.0" layoutY="268.0" stroke="BLACK" strokeType="INSIDE" width="113.0" />
       <Button fx:id="chatBtn" layoutX="348.0" layoutY="652.0" mnemonicParsing="false" onMouseClicked="#handleOpenChatButtonClick" text="Open chat" />
       <Button fx:id="roomBtn" layoutX="472.0" layoutY="646.0" mnemonicParsing="false" onMouseClicked="#handleBackButton" text="Back to courtoom" />
       <Label fx:id="timerLabel" layoutX="736.0" layoutY="656.0" text="Label" />

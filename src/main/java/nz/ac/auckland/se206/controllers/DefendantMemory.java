@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class DefendantMemory {
@@ -17,6 +19,10 @@ public class DefendantMemory {
   @FXML private Button chatBtn;
   @FXML private Label timerLabel;
   @FXML private Pane chatPanel;
+  @FXML private Rectangle rec1;
+  @FXML private Rectangle rec2;
+  @FXML private Rectangle rec3;
+  @FXML private Rectangle rec4;
 
   private TimerService timerService;
 
