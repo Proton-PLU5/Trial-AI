@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
@@ -25,8 +26,11 @@ public class VerdictController {
   @FXML private Label incorrectLabel;
   @FXML private Label timeoutLabel;
   @FXML private Label timerLabel;
+  @FXML private Label verdictCorrectLabel;
+  @FXML private Label rationaleCorrectLabel;
   @FXML private ImageView imageView;
   @FXML private TextArea rationaleTextArea;
+  @FXML private TextField rationaleJudgementTextField;
 
   private ScheduledExecutorService finalTimerExecutor;
   private int finalSecondsRemaining = 10;
@@ -161,5 +165,15 @@ public class VerdictController {
     } catch (Exception e) {
       System.err.println("Failed to load image: " + e.getMessage());
     }
+  }
+
+  @FXML
+  private void handleRationaleSubmitted() {
+    verdictTitleLabel2.setVisible(false);
+    submitButton.setVisible(false);
+    rationaleTextArea.setVisible(false);
+    verdictCorrectLabel.setVisible(true);
+    rationaleCorrectLabel.setVisible(true);
+    rationaleJudgementTextField.setVisible(true);
   }
 }
