@@ -16,8 +16,8 @@ import javafx.scene.media.MediaPlayer;
 
 public class VerdictController {
 
-  @FXML private Button yesBtn;
-  @FXML private Button noBtn;
+  @FXML private Button yesButton;
+  @FXML private Button noButton;
   @FXML private Button submitButton;
   @FXML private Label verdictTitleLabel1;
   @FXML private Label verdictTitleLabel2;
@@ -66,7 +66,7 @@ public class VerdictController {
                   updateFinalTimerDisplay();
                   // Otherwise say they got the answer wrong and they lost the game
                 } else {
-                  wrongOption();
+                  handleNoClicked();
                 }
               });
         },
@@ -91,7 +91,17 @@ public class VerdictController {
   }
 
   @FXML
-  private void wrongOption() {
+  private void handleVerdictMade() {
+    verdictTitleLabel1.setVisible(false);
+    yesButton.setVisible(false);
+    noButton.setVisible(false);
+    verdictTitleLabel2.setVisible(true);
+    submitButton.setVisible(true);
+    rationaleTextArea.setVisible(true);
+  }
+
+  @FXML
+  private void handleNoClicked() {
     try {
       String path = "/images/wrong.png";
       InputStream stream = getClass().getResourceAsStream(path);
@@ -104,8 +114,8 @@ public class VerdictController {
       imageView.setVisible(true);
       incorrectLabel.setVisible(true);
       verdictTitleLabel1.setVisible(false);
-      yesBtn.setVisible(false);
-      noBtn.setVisible(false);
+      yesButton.setVisible(false);
+      noButton.setVisible(false);
       timerLabel.setVisible(false);
     } catch (Exception e) {
       System.err.println("Failed to load image: " + e.getMessage());
@@ -126,8 +136,8 @@ public class VerdictController {
       imageView.setVisible(true);
       timeoutLabel.setVisible(true);
       verdictTitleLabel1.setVisible(false);
-      yesBtn.setVisible(false);
-      noBtn.setVisible(false);
+      yesButton.setVisible(false);
+      noButton.setVisible(false);
       timerLabel.setVisible(false);
     } catch (Exception e) {
       System.err.println("Failed to load image: " + e.getMessage());
@@ -135,7 +145,7 @@ public class VerdictController {
   }
 
   @FXML
-  private void correctOption() {
+  private void handleYesClicked() {
     try {
       String path = "/images/tick.png";
       InputStream stream = getClass().getResourceAsStream(path);
@@ -145,8 +155,8 @@ public class VerdictController {
       imageView.setVisible(true);
       correctLabel.setVisible(true);
       verdictTitleLabel1.setVisible(false);
-      yesBtn.setVisible(false);
-      noBtn.setVisible(false);
+      yesButton.setVisible(false);
+      noButton.setVisible(false);
       timerLabel.setVisible(false);
     } catch (Exception e) {
       System.err.println("Failed to load image: " + e.getMessage());
