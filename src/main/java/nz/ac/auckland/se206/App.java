@@ -21,6 +21,7 @@ public class App extends Application {
 
   private static Scene scene;
   public static Stage primaryStage;
+  public static StringBuilder chatHistory = new StringBuilder();
 
   /**
    * The main method that launches the JavaFX application.
