@@ -207,7 +207,7 @@ public abstract class MemoryController {
       return message.getContent();
     } catch (ApiProxyException e) {
       e.printStackTrace();
-      return null;
+      throw new RuntimeException("Failed to get response from GPT");
     }
   }
 
@@ -243,7 +243,7 @@ public abstract class MemoryController {
       return String.join("\n", promptStrings);
     } catch (IOException | URISyntaxException e) {
       e.printStackTrace();
-      return "";
+      throw new IllegalStateException(promptId + " not found");
     }
   }
 }
