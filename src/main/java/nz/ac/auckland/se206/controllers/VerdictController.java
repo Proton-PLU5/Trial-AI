@@ -33,8 +33,9 @@ public class VerdictController {
   @FXML private TextField rationaleJudgementTextField;
 
   private ScheduledExecutorService finalTimerExecutor;
-  private int finalSecondsRemaining = 10;
+  private int finalSecondsRemaining = 60;
   private boolean choiceMade;
+  private String rationale = "";
 
   @FXML
   private void initialize() {
@@ -106,24 +107,8 @@ public class VerdictController {
 
   @FXML
   private void handleNoClicked() {
-    try {
-      String path = "/images/wrong.png";
-      InputStream stream = getClass().getResourceAsStream(path);
-      if (stream == null) {
-        throw new IllegalArgumentException("Image not found: " + path);
-      }
-      choiceMade = true;
-      Image image = new Image(stream);
-      imageView.setImage(image);
-      imageView.setVisible(true);
-      incorrectLabel.setVisible(true);
-      verdictTitleLabel1.setVisible(false);
-      yesButton.setVisible(false);
-      noButton.setVisible(false);
-      timerLabel.setVisible(false);
-    } catch (Exception e) {
-      System.err.println("Failed to load image: " + e.getMessage());
-    }
+    rationale += "The player selected the 'No' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
+    handleVerdictMade();
   }
 
   @FXML
@@ -150,21 +135,8 @@ public class VerdictController {
 
   @FXML
   private void handleYesClicked() {
-    try {
-      String path = "/images/tick.png";
-      InputStream stream = getClass().getResourceAsStream(path);
-      choiceMade = true;
-      Image image = new Image(stream);
-      imageView.setImage(image);
-      imageView.setVisible(true);
-      correctLabel.setVisible(true);
-      verdictTitleLabel1.setVisible(false);
-      yesButton.setVisible(false);
-      noButton.setVisible(false);
-      timerLabel.setVisible(false);
-    } catch (Exception e) {
-      System.err.println("Failed to load image: " + e.getMessage());
-    }
+    rationale += "The player selected the 'Yes' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
+    handleVerdictMade();
   }
 
   @FXML
@@ -175,5 +147,9 @@ public class VerdictController {
     verdictCorrectLabel.setVisible(true);
     rationaleCorrectLabel.setVisible(true);
     rationaleJudgementTextField.setVisible(true);
+
+    // Read the rationale from the TextArea
+    rationale += rationaleTextArea.getText();
+    System.out.println(rationale); // Debugging
   }
 }

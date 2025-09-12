@@ -10,8 +10,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.VerdictController">
    <children>
-      <Button fx:id="yesButton" layoutX="382.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleVerdictMade" onMouseClicked="#handleVerdictMade" text="Yes" />
-      <Button fx:id="noButton" layoutX="472.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleVerdictMade" onMouseClicked="#handleVerdictMade" text="No" />
+      <Button fx:id="yesButton" layoutX="382.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleYesClicked" text="Yes" />
+      <Button fx:id="noButton" layoutX="472.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleNoClicked" text="No" />
       <Button fx:id="submitButton" layoutX="425.0" layoutY="524.0" mnemonicParsing="false" onAction="#handleRationaleSubmitted" text="Submit" visible="false" />
       <Label fx:id="verdictTitleLabel1" layoutX="32.0" layoutY="67.0" text="Was the AI defendant guilty's AI’s decision-making process ethical, reasonable and justified?">
          <font>
@@ -26,7 +26,7 @@
       <Label fx:id="correctLabel" layoutX="410.0" layoutY="292.0" text="You are correct" visible="false" />
       <Label fx:id="incorrectLabel" layoutX="405.0" layoutY="292.0" text="You are incorrect" visible="false" />
       <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="350.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" visible="false" />
-      <Label fx:id="timerLabel" layoutX="436.0" layoutY="413.0" text="Label" visible="false" />
+      <Label fx:id="timerLabel" layoutX="818.0" layoutY="541.0" text="Label" />
       <Label fx:id="timeoutLabel" layoutX="357.0" layoutY="292.0" text="You have run out of time. You lose." visible="false" />
       <TextArea fx:id="rationaleTextArea" layoutX="140.0" layoutY="166.0" prefHeight="333.0" prefWidth="612.0" visible="false" />
       <Label fx:id="verdictCorrectLabel" layoutX="363.0" layoutY="66.0" text="Your verdict was..." visible="false">
