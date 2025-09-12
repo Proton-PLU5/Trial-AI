@@ -1,6 +1,5 @@
 package nz.ac.auckland.se206.controllers;
 
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -11,8 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -43,13 +40,13 @@ public class VerdictController {
   @FXML private TextArea rationaleJudgementTextArea;
 
   private ScheduledExecutorService finalTimerExecutor;
-  private int finalSecondsRemaining = 60;
-  private boolean choiceMade;
-  private boolean isVerdictChosenYes;
+  private int finalSecondsRemaining = 5;
+  private boolean choiceMade = false;
   private String optionChose = "";
   private String rationale = "";
   private String rationalePrompt = "";
   private ChatCompletionRequest chatCompletionRequest = null;
+  private boolean rationaleSubmitted = false;
 
   @FXML
   private void initialize() {
@@ -96,7 +93,7 @@ public class VerdictController {
         () -> {
           Platform.runLater(
               () -> {
-                if (choiceMade) {
+                if (rationaleSubmitted) {
                   return;
                 }
 
@@ -106,7 +103,7 @@ public class VerdictController {
                   updateFinalTimerDisplay();
                   // Otherwise say they got the answer wrong and they lost the game
                 } else {
-                  handleNoClicked();
+                  timeOutOption();
                 }
               });
         },
@@ -132,15 +129,17 @@ public class VerdictController {
 
   @FXML
   private void handleYesClicked() {
-    isVerdictChosenYes = true;
+    choiceMade = true;
     optionChose = "The player selected the 'Yes' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
+    verdictCorrectLabel.setText("You made the correct decision.");
     handleVerdictMade();
   }
 
   @FXML
   private void handleNoClicked() {
-    isVerdictChosenYes = false;
+    choiceMade = true;
     optionChose = "The player selected the 'No' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
+    verdictCorrectLabel.setText("You made the wrong decision.");
     handleVerdictMade();
   }
 
@@ -156,40 +155,30 @@ public class VerdictController {
 
   @FXML
   private void timeOutOption() {
-    try {
-      String path = "/images/wrong.png";
-      InputStream stream = getClass().getResourceAsStream(path);
-      if (stream == null) {
-        throw new IllegalArgumentException("Image not found: " + path);
-      }
-      choiceMade = true;
-      Image image = new Image(stream);
-      imageView.setImage(image);
-      imageView.setVisible(true);
-      timeoutLabel.setVisible(true);
+    if (!choiceMade) { // For when the user is on the choice button screen
       verdictTitleLabel1.setVisible(false);
       yesButton.setVisible(false);
       noButton.setVisible(false);
-      timerLabel.setVisible(false);
-    } catch (Exception e) {
-      System.err.println("Failed to load image: " + e.getMessage());
+      verdictCorrectLabel.setText("You didn't make a decision in time.");
+    }
+
+    // Continue to rationale submission screen regardless of if the user made a verdict
+    try {
+      handleRationaleSubmitted();
+    } catch (ApiProxyException e) {
+        e.printStackTrace();
     }
   }
 
   @FXML
   private void handleRationaleSubmitted() throws ApiProxyException {
+    rationaleSubmitted = true;
     verdictTitleLabel2.setVisible(false);
     submitButton.setVisible(false);
     rationaleTextArea.setVisible(false);
     verdictCorrectLabel.setVisible(true);
     rationaleCorrectLabel.setVisible(true);
     rationaleJudgementTextArea.setVisible(true);
-
-    if (isVerdictChosenYes) {
-      verdictCorrectLabel.setText("You made the correct decision.");
-    } else {
-      verdictCorrectLabel.setText("You made the wrong decision.");
-    }
 
     rationalePrompt += optionChose;
     // Read the rationale from the TextArea
