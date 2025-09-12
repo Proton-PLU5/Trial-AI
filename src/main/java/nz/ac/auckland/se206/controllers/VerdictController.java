@@ -40,7 +40,7 @@ public class VerdictController {
   @FXML private Label rationaleCorrectLabel;
   @FXML private ImageView imageView;
   @FXML private TextArea rationaleTextArea;
-  @FXML private TextField rationaleJudgementTextField;
+  @FXML private TextArea rationaleJudgementTextArea;
 
   private ScheduledExecutorService finalTimerExecutor;
   private int finalSecondsRemaining = 60;
@@ -59,8 +59,7 @@ public class VerdictController {
 
     startFinalTimer();
 
-    // Create new ChatCompletionRequest for now.
-    // TODO: Transfer the previous ChatCompletionRequest over so GPT has context
+    // Create new ChatCompletionRequest
     Thread setupThread =
           new Thread(
               () -> {
@@ -191,7 +190,7 @@ public class VerdictController {
     rationaleTextArea.setVisible(false);
     verdictCorrectLabel.setVisible(true);
     rationaleCorrectLabel.setVisible(true);
-    rationaleJudgementTextField.setVisible(true);
+    rationaleJudgementTextArea.setVisible(true);
 
     if (isVerdictChosenYes) {
       verdictCorrectLabel.setText("You made the correct decision.");
@@ -229,7 +228,7 @@ public class VerdictController {
                     () -> {
                       // Display GPT's response on screen
                       String content = gptResponse.getContent();
-                      rationaleJudgementTextField.setText(content);
+                      rationaleJudgementTextArea.setText(content);
                     });
 
               } catch (ApiProxyException e) {
