@@ -59,36 +59,27 @@ public class VerdictController {
 
     startFinalTimer();
 
-    // Create new ChatCompletionRequest
-    Thread setupThread =
-          new Thread(
-              () -> {
-                try {
-                  ApiProxyConfig config = ApiProxyConfig.readConfig();
-
-                  // Back to main thread to set up chat and make API call
-                  Platform.runLater(
-                      () -> {
-                        chatCompletionRequest =
-                            new ChatCompletionRequest(config)
-                                .setN(1)
-                                .setTemperature(0.2)
-                                .setTopP(0.5)
-                                .setModel(Model.GPT_4_1_MINI)
-                                .setMaxTokens(100);
-                      });
-
-                } catch (ApiProxyException e) {
-                  Platform.runLater(
-                      () -> {
-                        e.printStackTrace();
-                      });
-                }
-              });
-
-      setupThread.setDaemon(true);
-      setupThread.start();
+    createChatCompletionResult();
   }
+
+  
+  /**
+   * Creates and configures the ChatCompletionRequest object.
+   */
+  public void createChatCompletionResult() {
+    try {
+      ApiProxyConfig config = ApiProxyConfig.readConfig();
+      chatCompletionRequest = new ChatCompletionRequest(
+          config)
+          .setN(1)
+          .setTemperature(0.2)
+          .setModel(Model.GPT_4_1_MINI)
+          .setMaxTokens(500);
+    } catch (ApiProxyException e) {
+      e.printStackTrace();
+    }
+  }
+
 
   private void startFinalTimer() {
     // Start and use the timer as another thread and then when the time ends it says the user lost
