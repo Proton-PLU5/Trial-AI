@@ -1,6 +1,8 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -14,6 +16,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
+import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest.Model;
+import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionResult;
+import nz.ac.auckland.apiproxy.chat.openai.ChatMessage;
+import nz.ac.auckland.apiproxy.chat.openai.Choice;
+import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
+import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
+import nz.ac.auckland.se206.prompts.PromptEngineering;
 
 public class VerdictController {
 
@@ -37,6 +47,7 @@ public class VerdictController {
   private boolean choiceMade;
   private boolean isVerdictChosenYes;
   private String rationale = "";
+  private ChatCompletionRequest chatCompletionRequest = null;
 
   @FXML
   private void initialize() {
@@ -47,6 +58,37 @@ public class VerdictController {
     updateFinalTimerDisplay();
 
     startFinalTimer();
+
+    // Create new ChatCompletionRequest for now.
+    // TODO: Transfer the previous ChatCompletionRequest over so GPT has context
+    Thread setupThread =
+          new Thread(
+              () -> {
+                try {
+                  ApiProxyConfig config = ApiProxyConfig.readConfig();
+
+                  // Back to main thread to set up chat and make API call
+                  Platform.runLater(
+                      () -> {
+                        chatCompletionRequest =
+                            new ChatCompletionRequest(config)
+                                .setN(1)
+                                .setTemperature(0.2)
+                                .setTopP(0.5)
+                                .setModel(Model.GPT_4_1_MINI)
+                                .setMaxTokens(100);
+                      });
+
+                } catch (ApiProxyException e) {
+                  Platform.runLater(
+                      () -> {
+                        e.printStackTrace();
+                      });
+                }
+              });
+
+      setupThread.setDaemon(true);
+      setupThread.start();
   }
 
   private void startFinalTimer() {
@@ -143,7 +185,7 @@ public class VerdictController {
   }
 
   @FXML
-  private void handleRationaleSubmitted() {
+  private void handleRationaleSubmitted() throws ApiProxyException {
     verdictTitleLabel2.setVisible(false);
     submitButton.setVisible(false);
     rationaleTextArea.setVisible(false);
@@ -160,5 +202,44 @@ public class VerdictController {
     // Read the rationale from the TextArea
     rationale += rationaleTextArea.getText();
     System.out.println(rationale); // Debugging
+
+    // Send the prompt and rationale to gpt
+    String verdict = "verdict";
+    Map<String, String> map = new HashMap<>();
+    map.put("verdict", verdict);
+    String promptFile = verdict + ".txt";
+    String verdictPrompt = PromptEngineering.getPrompt(promptFile, map);
+    ChatMessage msg = new ChatMessage("user", verdictPrompt + rationale);
+    runGpt(msg);
+  }
+
+  private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
+
+    Thread gptThread =
+        new Thread(
+            () -> {
+              try {
+                chatCompletionRequest.addMessage(msg);
+                ChatCompletionResult chatCompletionResult = chatCompletionRequest.execute();
+                Choice result = chatCompletionResult.getChoices().iterator().next();
+                ChatMessage gptResponse = result.getChatMessage();
+                chatCompletionRequest.addMessage(gptResponse);
+
+                Platform.runLater(
+                    () -> {
+                      // Display GPT's response on screen
+                      String content = gptResponse.getContent();
+                      rationaleJudgementTextField.setText(content);
+                    });
+
+              } catch (ApiProxyException e) {
+                e.printStackTrace();
+                Platform.runLater(() -> {});
+              }
+            });
+
+    gptThread.setDaemon(true);
+    gptThread.start();
+    return null;
   }
 }
