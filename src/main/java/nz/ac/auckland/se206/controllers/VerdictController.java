@@ -46,7 +46,9 @@ public class VerdictController {
   private int finalSecondsRemaining = 60;
   private boolean choiceMade;
   private boolean isVerdictChosenYes;
+  private String optionChose = "";
   private String rationale = "";
+  private String rationalePrompt = "";
   private ChatCompletionRequest chatCompletionRequest = null;
 
   @FXML
@@ -131,14 +133,14 @@ public class VerdictController {
   @FXML
   private void handleYesClicked() {
     isVerdictChosenYes = true;
-    rationale += "The player selected the 'Yes' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
+    optionChose = "The player selected the 'Yes' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
     handleVerdictMade();
   }
 
   @FXML
   private void handleNoClicked() {
     isVerdictChosenYes = false;
-    rationale += "The player selected the 'No' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
+    optionChose = "The player selected the 'No' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
     handleVerdictMade();
   }
 
@@ -189,18 +191,26 @@ public class VerdictController {
       verdictCorrectLabel.setText("You made the wrong decision.");
     }
 
+    rationalePrompt += optionChose;
     // Read the rationale from the TextArea
-    rationale += rationaleTextArea.getText();
-    System.out.println(rationale); // Debugging
+    rationale = rationaleTextArea.getText().strip();
 
-    // Send the prompt and rationale to gpt
-    String verdict = "verdict";
-    Map<String, String> map = new HashMap<>();
-    map.put("verdict", verdict);
-    String promptFile = verdict + ".txt";
-    String verdictPrompt = PromptEngineering.getPrompt(promptFile, map);
-    ChatMessage msg = new ChatMessage("user", verdictPrompt + rationale);
-    runGpt(msg);
+    if (rationale.isEmpty()) {
+      rationaleCorrectLabel.setText("You didn't give a rationale."); 
+    } else {
+      // Add the rationale to the prompt
+      rationalePrompt += rationale;
+      System.out.println(rationalePrompt); // Debugging
+
+      // Send the prompt and rationale to gpt
+      String verdict = "verdict";
+      Map<String, String> map = new HashMap<>();
+      map.put("verdict", verdict);
+      String promptFile = verdict + ".txt";
+      String verdictPrompt = PromptEngineering.getPrompt(promptFile, map);
+      ChatMessage msg = new ChatMessage("user", verdictPrompt + rationalePrompt);
+      runGpt(msg);
+    }
   }
 
   private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
