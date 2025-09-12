@@ -17,4 +17,12 @@ public class ChatMessage {
   public String getContent() {
     return content;
   }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public void setRole(String role) {
+    this.role = role;
+  }
 }
