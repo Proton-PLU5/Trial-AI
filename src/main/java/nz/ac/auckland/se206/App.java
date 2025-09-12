@@ -20,6 +20,8 @@ import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 public class App extends Application {
 
   private static Scene scene;
+  public static Stage primaryStage;
+  public static StringBuilder chatHistory = new StringBuilder();
 
   /**
    * The main method that launches the JavaFX application.
@@ -48,7 +50,7 @@ public class App extends Application {
    * @return the root node of the FXML file
    * @throws IOException if the FXML file is not found
    */
-  private static Parent loadFxml(final String fxml) throws IOException {
+  public static Parent loadFxml(final String fxml) throws IOException {
     return new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml")).load();
   }
 
@@ -109,13 +111,14 @@ public class App extends Application {
     SceneManager.addUi(AppUi.verdict, loadFxml("verdict"));
     Parent root = SceneManager.getUiRoot(AppUi.room);
 
+    primaryStage = stage;
+
     SceneManager.initializeChats();
-    stage.setWidth(900);
-    stage.setHeight(600);
+    primaryStage.setWidth(900);
+    primaryStage.setHeight(600);
     scene = new Scene(root);
-    stage.setScene(scene);
-    // stage.setFullScreen(true);
-    stage.show();
+    primaryStage.setScene(scene);
+    primaryStage.show();
     root.requestFocus();
   }
 }
