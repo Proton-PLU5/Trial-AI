@@ -29,7 +29,7 @@
       <Label fx:id="timerLabel" layoutX="818.0" layoutY="541.0" text="Label" />
       <Label fx:id="timeoutLabel" layoutX="357.0" layoutY="292.0" text="You have run out of time. You lose." visible="false" />
       <TextArea fx:id="rationaleTextArea" layoutX="140.0" layoutY="166.0" prefHeight="333.0" prefWidth="612.0" visible="false" />
-      <Label fx:id="verdictCorrectLabel" layoutX="363.0" layoutY="66.0" text="Your verdict was..." visible="false">
+      <Label fx:id="verdictCorrectLabel" layoutX="306.0" layoutY="67.0" text="Your verdict was..." visible="false">
          <font>
             <Font size="21.0" />
          </font>

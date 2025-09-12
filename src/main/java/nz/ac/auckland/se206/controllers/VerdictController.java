@@ -35,6 +35,7 @@ public class VerdictController {
   private ScheduledExecutorService finalTimerExecutor;
   private int finalSecondsRemaining = 60;
   private boolean choiceMade;
+  private boolean isVerdictChosenYes;
   private String rationale = "";
 
   @FXML
@@ -96,6 +97,20 @@ public class VerdictController {
   }
 
   @FXML
+  private void handleYesClicked() {
+    isVerdictChosenYes = true;
+    rationale += "The player selected the 'Yes' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
+    handleVerdictMade();
+  }
+
+  @FXML
+  private void handleNoClicked() {
+    isVerdictChosenYes = false;
+    rationale += "The player selected the 'No' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
+    handleVerdictMade();
+  }
+
+  @FXML
   private void handleVerdictMade() {
     verdictTitleLabel1.setVisible(false);
     yesButton.setVisible(false);
@@ -103,12 +118,6 @@ public class VerdictController {
     verdictTitleLabel2.setVisible(true);
     submitButton.setVisible(true);
     rationaleTextArea.setVisible(true);
-  }
-
-  @FXML
-  private void handleNoClicked() {
-    rationale += "The player selected the 'No' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
-    handleVerdictMade();
   }
 
   @FXML
@@ -134,12 +143,6 @@ public class VerdictController {
   }
 
   @FXML
-  private void handleYesClicked() {
-    rationale += "The player selected the 'Yes' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
-    handleVerdictMade();
-  }
-
-  @FXML
   private void handleRationaleSubmitted() {
     verdictTitleLabel2.setVisible(false);
     submitButton.setVisible(false);
@@ -147,6 +150,12 @@ public class VerdictController {
     verdictCorrectLabel.setVisible(true);
     rationaleCorrectLabel.setVisible(true);
     rationaleJudgementTextField.setVisible(true);
+
+    if (isVerdictChosenYes) {
+      verdictCorrectLabel.setText("You made the correct decision.");
+    } else {
+      verdictCorrectLabel.setText("You made the wrong decision.");
+    }
 
     // Read the rationale from the TextArea
     rationale += rationaleTextArea.getText();
