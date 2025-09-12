@@ -106,6 +106,7 @@ public class App extends Application {
     SceneManager.addUi(AppUi.defendantMemory, loadFxml("defendantMemory"));
     SceneManager.addUi(AppUi.humanMemory, loadFxml("humanMemory"));
     SceneManager.addUi(AppUi.aiMemory, loadFxml("aiMemory"));
+    SceneManager.addUi(AppUi.verdict, loadFxml("verdict"));
     Parent root = SceneManager.getUiRoot(AppUi.room);
 
     SceneManager.initializeChats();
