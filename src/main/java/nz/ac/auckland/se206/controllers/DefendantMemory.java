@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class DefendantMemory {
@@ -17,6 +19,10 @@ public class DefendantMemory {
   @FXML private Button chatBtn;
   @FXML private Label timerLabel;
   @FXML private Pane chatPanel;
+  @FXML private Rectangle rec1;
+  @FXML private Rectangle rec2;
+  @FXML private Rectangle rec3;
+  @FXML private Rectangle rec4;
 
   private TimerService timerService;
 
@@ -58,16 +64,13 @@ public class DefendantMemory {
     if (timerLabel == null) {
       return;
     }
-
+    timerLabel.getStyleClass().removeAll("timer-normal", "timer-warning", "timer-critical");
     if (secondsRemaining <= 10) {
-      // Critical time - red
-      timerLabel.setStyle("-fx-text-fill: red; -fx-font-size: 24px; -fx-font-weight: bold;");
+      timerLabel.getStyleClass().addAll("timer-label", "timer-critical");
     } else if (secondsRemaining <= 30) {
-      // Warning time - orange
-      timerLabel.setStyle("-fx-text-fill: orange; -fx-font-size: 20px; -fx-font-weight: bold;");
+      timerLabel.getStyleClass().addAll("timer-label", "timer-warning");
     } else {
-      // Normal time - green
-      timerLabel.setStyle("-fx-text-fill: green; -fx-font-size: 18px; -fx-font-weight: bold;");
+      timerLabel.getStyleClass().addAll("timer-label", "timer-normal");
     }
   }
 

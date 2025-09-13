@@ -71,16 +71,13 @@ public class DefendantFlashback {
     if (timerLabel == null) {
       return;
     }
-
+    timerLabel.getStyleClass().removeAll("timer-normal", "timer-warning", "timer-critical");
     if (secondsRemaining <= 10) {
-      // Critical time - red
-      timerLabel.setStyle("-fx-text-fill: red; -fx-font-size: 24px; -fx-font-weight: bold;");
+      timerLabel.getStyleClass().addAll("timer-label", "timer-critical");
     } else if (secondsRemaining <= 30) {
-      // Warning time - orange
-      timerLabel.setStyle("-fx-text-fill: orange; -fx-font-size: 20px; -fx-font-weight: bold;");
+      timerLabel.getStyleClass().addAll("timer-label", "timer-warning");
     } else {
-      // Normal time - green
-      timerLabel.setStyle("-fx-text-fill: green; -fx-font-size: 18px; -fx-font-weight: bold;");
+      timerLabel.getStyleClass().addAll("timer-label", "timer-normal");
     }
   }
 
@@ -93,9 +90,9 @@ public class DefendantFlashback {
 
   private void setupImagePaths() {
     imagePaths = new ArrayList<>();
-    imagePaths.add("/images/defendant1.png");
-    imagePaths.add("/images/defendant2.png");
-    imagePaths.add("/images/defendant3.png");
+    imagePaths.add("/images/defendantFlash1.png");
+    imagePaths.add("/images/defendantFlash2.png");
+    imagePaths.add("/images/defendantFlash3.png");
   }
 
   @FXML
