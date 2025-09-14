@@ -3,6 +3,7 @@ package nz.ac.auckland.se206.controllers;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,8 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -74,9 +73,9 @@ public class RoomController {
     }
 
     if (isFirstTimeInit) {
-      Media media = new Media(getClass().getResource("/sounds/startAudio.mp3").toExternalForm());
-      MediaPlayer mediaPlayer = new MediaPlayer(media);
-      mediaPlayer.play();
+      // Media media = new Media(getClass().getResource("/sounds/startAudio.mp3").toExternalForm());
+      // MediaPlayer mediaPlayer = new MediaPlayer(media);
+      // mediaPlayer.play();
     }
   }
 
@@ -96,12 +95,17 @@ public class RoomController {
       return;
     }
 
+    timerLabel.getStyleClass().removeAll("timer-normal", "timer-warning", "timer-critical");
+
     if (secondsRemaining <= 10) {
-      timerLabel.setStyle("-fx-text-fill: red; -fx-font-size: 24px; -fx-font-weight: bold;");
+
+      timerLabel.getStyleClass().addAll("timer-label", "timer-critical");
     } else if (secondsRemaining <= 30) {
-      timerLabel.setStyle("-fx-text-fill: orange; -fx-font-size: 20px; -fx-font-weight: bold;");
+
+      timerLabel.getStyleClass().addAll("timer-label", "timer-warning");
     } else {
-      timerLabel.setStyle("-fx-text-fill: green; -fx-font-size: 18px; -fx-font-weight: bold;");
+
+      timerLabel.getStyleClass().addAll("timer-label", "timer-normal");
     }
   }
 
