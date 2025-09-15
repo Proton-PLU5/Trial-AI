@@ -3,7 +3,6 @@ package nz.ac.auckland.se206.controllers;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -30,7 +28,6 @@ public class RoomController {
   @FXML private Rectangle defendant;
   @FXML private Button btnGuess;
   @FXML private Label timerLabel;
-  @FXML private Pane chatPanel;
   private String currentChatCharacter = null;
   private Map<String, Boolean> characterInteracted = new HashMap<>();
   private TimerService timerService;
@@ -153,17 +150,7 @@ public class RoomController {
       currentScene.setRoot(flashbackRoot);
 
     } else {
-      if (chatPanel.getChildren().isEmpty() || !characterId.equals(currentChatCharacter)) {
-        chatPanel.getChildren().clear();
-
-        Parent chatContent = SceneManager.getChatView(characterId);
-        ChatController chatController = SceneManager.getChatController(characterId);
-
-        chatController.setChatPanelContainer(chatPanel);
-        chatPanel.getChildren().add(chatContent);
-      }
-
-      chatPanel.setVisible(true);
+      // insert code to switch to respective memory scene
     }
   }
 

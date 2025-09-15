@@ -100,6 +100,7 @@ public class App extends Application {
    */
   @Override
   public void start(final Stage stage) throws IOException {
+    SceneManager.addUi(AppUi.start, loadFxml("start"));
     SceneManager.addUi(AppUi.room, loadFxml("room"));
     SceneManager.addUi(AppUi.defendant, loadFxml("defendant"));
     SceneManager.addUi(AppUi.witnessAi, loadFxml("witnessAi"));
@@ -107,7 +108,7 @@ public class App extends Application {
     SceneManager.addUi(AppUi.defendantMemory, loadFxml("defendantMemory"));
     SceneManager.addUi(AppUi.humanMemory, loadFxml("humanMemory"));
     SceneManager.addUi(AppUi.aiMemory, loadFxml("aiMemory"));
-    Parent root = SceneManager.getUiRoot(AppUi.room);
+    Parent root = SceneManager.getUiRoot(AppUi.start);
 
     primaryStage = stage;
 

@@ -3,6 +3,7 @@ package nz.ac.auckland.se206.controllers;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import nz.ac.auckland.se206.App;
@@ -10,6 +11,7 @@ import nz.ac.auckland.se206.App;
 public class SceneManager {
 
   public enum AppUi {
+    start,
     chat,
     defendant,
     room,
