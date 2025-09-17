@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.WitnessAiFlashback">
    <children>
-      <Button fx:id="memoryBtn" layoutX="23.0" layoutY="561.0" mnemonicParsing="false" onMouseClicked="#handleMemoryButton" text="Go to memory" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="14.0" />
+      <Button fx:id="nextButton" layoutX="438.0" layoutY="558.0" mnemonicParsing="false" onMouseClicked="#handleMemoryButton" text="▶" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="438.0" />
       <Label fx:id="timerLabel" layoutX="832.0" layoutY="565.0" text="Label" AnchorPane.bottomAnchor="12.0" AnchorPane.rightAnchor="66.0" />
       <ImageView fitHeight="548.0" fitWidth="738.0" layoutX="83.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="52.0">
          <image>

@@ -20,17 +20,15 @@ public abstract class FlashbackController {
   @FXML private Button conversationNextButton;
 
   // Navigation
-  @FXML private Button goToMemoryButton;
+  @FXML private Button nextButton;
   @FXML private Button goBackButton;
 
   // Timer
   @FXML private Label timerLabel;
 
   /**
-   * Method executed during the initialization of the flashback scene.
-   * Update UI elements with the current flashback data here.
+   * Method executed during the initialization of the flashback scene. Update UI elements with the
+   * current flashback data here.
    */
-  protected void initialize() {
-    
-  }
+  protected void initialize() {}
 }
