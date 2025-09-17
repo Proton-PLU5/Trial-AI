@@ -83,7 +83,7 @@ public class RoomController {
     if (!finalSceneLoaded) {
       finalSceneLoaded = true;
       Stage stage = (Stage) btnGuess.getScene().getWindow();
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/final.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/verdict.fxml"));
       Parent finalRoot = loader.load();
       timerService.startTimer();
       stage.setScene(new Scene(finalRoot));
