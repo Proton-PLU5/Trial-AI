@@ -1,5 +1,6 @@
 package nz.ac.auckland.se206.utils;
 
+import java.util.ArrayList;
 import java.util.function.Consumer;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -12,8 +13,10 @@ import javafx.scene.control.Label;
  */
 public class Timer {
   private Thread timerThread;
-  private Label timerLabel;
-  private Consumer<Void> consumer;
+
+  // A list of consumers which will be used to update individual timer labels.
+  private ArrayList<Consumer<String>> consumers;
+
   private boolean countDown;
   private int length;
 
@@ -30,26 +33,37 @@ public class Timer {
    * @param timerLabel The label to update during the
    *                   counting process.
    */
-  public Timer(int length, Label timerLabel) {
-    this.timerLabel = timerLabel;
-    this.consumer = null;
+  public Timer(int length) {
+    this.consumers = new ArrayList<>();
     this.countDown = false;
     this.length = length;
   }
 
-  public Timer setConsumer(Consumer<Void> consumer) {
-    this.consumer = consumer;
+  /**
+   * Add a consumer to be executed when the timer to update timer labels.
+   * @param consumer
+   * @return The current timer instance.
+   */
+  public Timer addConsumer(Consumer<String> consumer) {
+    this.consumers.add(consumer);
     return this;
   }
 
+  /**
+   * Set whether the timer counts down or up.
+   * @param countDown
+   * @return The current timer instance.
+   */
   public Timer setCountDown(boolean countDown) {
     this.countDown = countDown;
     return this;
   }
 
+  /**
+   * Build and start the timer.
+   */
   public void buildTimer() {
-    Task<Void> task = this.createTimerTask(length,
-        timerLabel, consumer, countDown);
+    Task<Void> task = this.createTimerTask(length, countDown);
     this.timerThread = new Thread(task);
 
     // Set the thread to be a daemon thread so that it does
@@ -92,14 +106,18 @@ public class Timer {
     builder.append(String.format("%02.0f", seconds));
 
     Platform.runLater(
-        () -> timerLabel.setText(builder.toString()));
+        () -> {
+          for (Consumer<String> consumer : consumers) {
+            consumer.accept(builder.toString());
+          }
+    });
   }
 
   private Task<Void> createTimerTask(int length,
-      Label timerLabel, Consumer<Void> consumer,
       boolean countDown) {
+
     Task<Void> timerTask = new Task<Void>() {
-      private boolean shouldRunConsumer = true;
+
 
       private void count() {
         if (count < length) {
@@ -115,7 +133,6 @@ public class Timer {
           } catch (InterruptedException exception) {
             exception.printStackTrace();
             // Break out of the loop if the timer runs out.
-            shouldRunConsumer = false;
             return;
           }
           count();
@@ -126,12 +143,12 @@ public class Timer {
       protected Void call() throws Exception {
         count();
         System.out.println("Finished Counting!");
-        ;
+
         Platform.runLater(() -> {
           // If a consumer has been provided, accept the
           // consumer.
-          if (consumer != null && shouldRunConsumer) {
-            consumer.accept(null);
+          for (Consumer<String> consumer : consumers) {
+            consumer.accept("Finished");
           }
         });
         return null;
