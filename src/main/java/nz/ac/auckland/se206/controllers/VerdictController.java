@@ -218,7 +218,19 @@ public class VerdictController {
                     () -> {
                       // Display GPT's response on screen
                       String content = gptResponse.getContent();
-                      rationaleJudgementTextArea.setText(content);
+                      String [] arr = content.split("\\s+"); 
+                      String rationaleJudgement="";
+
+                      // Take first 4 words from GPT response
+                      for(int i=0; i<4 ; i++){
+                          rationaleJudgement = rationaleJudgement + " " + arr[i] ;         
+                      }
+
+                      // Remove first 4 words from GPT response
+                      String rationaleSummary = content.replaceFirst("^(\\S+\\s+){4}", "");
+
+                      rationaleCorrectLabel.setText(rationaleJudgement);
+                      rationaleJudgementTextArea.setText(rationaleSummary);
                     });
 
               } catch (ApiProxyException e) {

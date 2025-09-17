@@ -33,7 +33,7 @@
             <Font size="21.0" />
          </font>
       </Label>
-      <Label fx:id="rationaleCorrectLabel" layoutX="354.0" layoutY="119.0" text="Your rationale was..." visible="false">
+      <Label fx:id="rationaleCorrectLabel" layoutX="306.0" layoutY="119.0" text="Your rationale was...">
          <font>
             <Font size="21.0" />
          </font>
