@@ -43,34 +43,6 @@ public class RoomController {
   @FXML
   public void initialize() {
 
-    timerService = TimerService.getInstance();
-
-    // Bind timer display to label
-    if (timerLabel != null) {
-      timerLabel.textProperty().bind(timerService.timeDisplayProperty());
-
-      // Update timer style based on remaining time
-      timerService
-          .secondsRemainingProperty()
-          .addListener(
-              (obs, oldVal, newVal) -> {
-                updateTimerStyle(newVal.intValue());
-              });
-
-      // Handle game over when time runs out
-      timerService
-          .timeUpProperty()
-          .addListener(
-              (obs, wasTimeUp, isTimeUp) -> {
-                if (isTimeUp) {
-                  try {
-                    handleGameOver();
-                  } catch (IOException e) {
-                    e.printStackTrace();
-                  }
-                }
-              });
-    }
 
     if (isFirstTimeInit) {
       // Media media = new Media(getClass().getResource("/sounds/startAudio.mp3").toExternalForm());
