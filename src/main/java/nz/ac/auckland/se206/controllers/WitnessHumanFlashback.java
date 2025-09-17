@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import nz.ac.auckland.se206.utils.SceneManager;
 
 public class WitnessHumanFlashback {
   @FXML private Button memoryBtn;
