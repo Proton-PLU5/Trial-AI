@@ -1,77 +1,41 @@
 package nz.ac.auckland.se206.controllers;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import nz.ac.auckland.se206.controllers.flashback.FlashbackController;
 
-public class WitnessHumanFlashback {
-  @FXML private Button memoryBtn;
+public class WitnessHumanFlashback extends FlashbackController {
+  @FXML private ImageView backgroundImage;
+  @FXML private Button nextBtn;
   @FXML private Label timerLabel;
-  private TimerService timerService;
+
+  private List<String> imagePaths;
+  private int currentDrawingIndex = 0;
 
   @FXML
-  private void initialize() {
-
-    timerService = TimerService.getInstance();
-
-    // Bind timer display to label
-    if (timerLabel != null) {
-      timerLabel.textProperty().bind(timerService.timeDisplayProperty());
-
-      // Update timer style based on remaining time
-      timerService
-          .secondsRemainingProperty()
-          .addListener(
-              (obs, oldVal, newVal) -> {
-                updateTimerStyle(newVal.intValue());
-              });
-
-      // Handle game over when time runs out
-      timerService
-          .timeUpProperty()
-          .addListener(
-              (obs, wasTimeUp, isTimeUp) -> {
-                if (isTimeUp) {
-                  try {
-                    handleGameOver();
-                  } catch (IOException e) {
-                    e.printStackTrace();
-                  }
-                }
-              });
-    }
+  protected void initialize() {
+    super.initialize();
   }
 
-  private void handleGameOver() throws IOException {
-    Stage stage = (Stage) memoryBtn.getScene().getWindow();
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/final.fxml"));
-    Parent finalRoot = loader.load();
-    stage.setScene(new Scene(finalRoot));
-  }
-
-  private void updateTimerStyle(int secondsRemaining) {
-    if (timerLabel == null) {
-      return;
-    }
-    timerLabel.getStyleClass().removeAll("timer-normal", "timer-warning", "timer-critical");
-    if (secondsRemaining <= 10) {
-      timerLabel.getStyleClass().addAll("timer-label", "timer-critical");
-    } else if (secondsRemaining <= 30) {
-      timerLabel.getStyleClass().addAll("timer-label", "timer-warning");
-    } else {
-      timerLabel.getStyleClass().addAll("timer-label", "timer-normal");
-    }
+  @Override
+  protected void setupImages() {
+    imagePaths = new ArrayList<>();
+    imagePaths.add("/images/defendantFlash1.png");
+    imagePaths.add("/images/defendantFlash2.png");
+    imagePaths.add("/images/defendantFlash3.png");
+    addImagesToStack(imagePaths);
   }
 
   @FXML
-  private void handleMemoryButton() {
-    Stage stage = (Stage) memoryBtn.getScene().getWindow();
-    Parent roomRoot = SceneManager.getUiRoot(SceneManager.AppUi.humanMemory);
+  protected void handleMemoryButton() {
+    Stage stage = (Stage) nextBtn.getScene().getWindow();
+    Parent roomRoot = SceneManager.getUiRoot(SceneManager.AppUi.defendantMemory);
     stage.getScene().setRoot(roomRoot);
   }
 }
