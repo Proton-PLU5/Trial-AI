@@ -191,6 +191,8 @@ public class VerdictController {
       rationalePrompt += rationale;
       System.out.println(rationalePrompt); // Debugging
 
+      rationaleJudgementTextArea.setText("Loading assessment of your rationale...");
+
       // Send the prompt and rationale to gpt
       String verdict = "verdict";
       Map<String, String> map = new HashMap<>();
