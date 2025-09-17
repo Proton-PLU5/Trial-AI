@@ -16,12 +16,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.utils.TimableScene;
 
 /**
  * Controller class for the room view. Handles user interactions within the room where the user can
  * chat with customers and guess their profession.
  */
-public class RoomController {
+public class RoomController implements TimableScene {
 
   private static boolean isFirstTimeInit = true;
 
@@ -42,7 +44,7 @@ public class RoomController {
    */
   @FXML
   public void initialize() {
-
+    App.timer.addConsumer(this.getTimerConsumer());
 
     if (isFirstTimeInit) {
       // Media media = new Media(getClass().getResource("/sounds/startAudio.mp3").toExternalForm());
@@ -161,5 +163,10 @@ public class RoomController {
   @FXML
   private void handleGuessClick(MouseEvent event) throws IOException {
     handleGameOver();
+  }
+
+  @Override
+  public Label getTimerLabel() {
+    return timerLabel;
   }
 }

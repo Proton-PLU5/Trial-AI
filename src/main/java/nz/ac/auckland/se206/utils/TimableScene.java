@@ -1,11 +1,16 @@
 package nz.ac.auckland.se206.utils;
 
-import javafx.fxml.FXML;
+import java.util.function.Consumer;
+
 import javafx.scene.control.Label;
 
 public interface TimableScene {
   
   Label getTimerLabel();
+
+  default Consumer<String> getTimerConsumer() {
+    return this::updateTimerLabel;
+  }
 
   default void updateTimerLabel(String timeString) {
     Label timerLabel = getTimerLabel();

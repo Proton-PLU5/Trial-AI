@@ -125,7 +125,7 @@ public class App extends Application {
 
     // Timer Setup
     timer.setCountDown(true);
-    timer.addConsumer(timeString -> scene.lookup("#timerLabel"));
+    timer.buildTimer();
 
     root.requestFocus();
   }
