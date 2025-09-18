@@ -63,24 +63,28 @@ public abstract class FlashbackController implements TimableScene {
   /** Abstract method to handle navigation to memory scene */
   protected abstract void handleMemoryButton();
 
+  /**
+   * Add image path to the image stack
+   * @param imagePath The path of the image to be added
+   */
+  protected void addImage(String imagePath) {
+    imageStack.push(imagePath);
+  }
+  
   protected void onBackButtonPressed() {
     // Default implementation does nothing
   }
 
-  /** Add images to the stack from a list */
-  protected void addImagesToStack(List<String> imagePaths) {
-    imageStack.clear();
-    for (String imagePath : imagePaths) {
-      imageStack.push(imagePath);
-    }
+  /**
+   * Add text to the text stack
+   * @param text The text to be added
+   */
+  protected void addText(String text) {
+    textStack.push(text);
   }
 
-  protected void addTextToStack(String Role, List<String> conversationText) {
-    textStack.clear();
-    conversationRoleLabel.setText(Role);
-    for (String conversation : conversationText) {
-      textStack.push(conversation);
-    }
+  protected void setRole(String role) {
+    conversationRoleLabel.setText(role);
   }
 
   /** Navigate to next image */
