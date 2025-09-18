@@ -58,10 +58,18 @@ public abstract class FlashbackController {
   /** Abstract method to handle navigation to memory scene */
   protected abstract void handleMemoryButton();
 
+  /**
+   * Add image path to the image stack
+   * @param imagePath The path of the image to be added
+   */
   protected void addImage(String imagePath) {
     imageStack.push(imagePath);
   }
 
+  /**
+   * Add text to the text stack
+   * @param text The text to be added
+   */
   protected void addText(String text) {
     textStack.push(text);
   }
