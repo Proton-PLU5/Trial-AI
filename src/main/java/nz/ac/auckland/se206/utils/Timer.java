@@ -5,7 +5,6 @@ import java.util.function.Consumer;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
-import nz.ac.auckland.se206.controllers.SceneManager;
 
 /**
  * A custom timer class that is able to count to a specific

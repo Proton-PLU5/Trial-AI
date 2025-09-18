@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.controllers.flashback.FlashbackController;
+import nz.ac.auckland.se206.utils.SceneManager;
 
 public class WitnessAiFlashback extends FlashbackController {
   @FXML private ImageView backgroundImage;
@@ -50,8 +51,6 @@ public class WitnessAiFlashback extends FlashbackController {
 
   @FXML
   protected void handleMemoryButton() {
-    Stage stage = (Stage) memoryButton.getScene().getWindow();
-    Parent roomRoot = SceneManager.getUiRoot(SceneManager.AppUi.defendantMemory);
-    stage.getScene().setRoot(roomRoot);
+    SceneManager.switchScene(SceneManager.Scenes.aiMemory);
   }
 }

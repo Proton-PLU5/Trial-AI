@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.controllers.flashback.FlashbackController;
+import nz.ac.auckland.se206.utils.SceneManager;
+import nz.ac.auckland.se206.utils.SceneManager.Scenes;
 
 public class DefendantFlashback extends FlashbackController {
 
@@ -54,9 +56,7 @@ public class DefendantFlashback extends FlashbackController {
 
   @FXML
   protected void handleMemoryButton() {
-    Stage stage = (Stage) memoryButton.getScene().getWindow();
-    Parent roomRoot = SceneManager.getUiRoot(SceneManager.AppUi.defendantMemory);
-    stage.getScene().setRoot(roomRoot);
+    SceneManager.switchScene(Scenes.defendantMemory);
   }
 
   

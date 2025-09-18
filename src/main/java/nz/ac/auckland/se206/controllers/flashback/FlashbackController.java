@@ -63,6 +63,10 @@ public abstract class FlashbackController implements TimableScene {
   /** Abstract method to handle navigation to memory scene */
   protected abstract void handleMemoryButton();
 
+  protected void onBackButtonPressed() {
+    // Default implementation does nothing
+  }
+
   /** Add images to the stack from a list */
   protected void addImagesToStack(List<String> imagePaths) {
     imageStack.clear();
