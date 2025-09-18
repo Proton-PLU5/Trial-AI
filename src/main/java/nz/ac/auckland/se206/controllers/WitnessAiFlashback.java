@@ -27,15 +27,15 @@ public class WitnessAiFlashback extends FlashbackController {
   @Override
   protected void setupImages() {
     imagePaths = new ArrayList<>();
-    imagePaths.add("/images/aiFlash1.png");
-    imagePaths.add("/images/aiFlash2.png");
     imagePaths.add("/images/aiFlash3.png");
+    imagePaths.add("/images/aiFlash2.png");
+    imagePaths.add("/images/aiFlash1.png");
     addImagesToStack(imagePaths);
   }
 
   @FXML
   protected void handleMemoryButton() {
-    Stage stage = (Stage) nextBtn.getScene().getWindow();
+    Stage stage = (Stage) memoryButton.getScene().getWindow();
     Parent roomRoot = SceneManager.getUiRoot(SceneManager.AppUi.defendantMemory);
     stage.getScene().setRoot(roomRoot);
   }
