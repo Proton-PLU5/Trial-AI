@@ -11,27 +11,30 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 public abstract class FlashbackController {
-  @FXML private ImageView backgroundImage;
+  @FXML protected ImageView backgroundImage;
 
-  @FXML private Label titleLabel;
-  @FXML private Label descriptionLabel;
+  @FXML protected Label titleLabel;
+  @FXML protected Label descriptionLabel;
 
   /// Conversation Elements
   // Conversation Pane (The parent object of all the conversation elements)
-  @FXML private AnchorPane conversationPane;
-  @FXML private Label conversationRoleLabel;
-  @FXML private Label conversationTextLabel;
-  @FXML private Button conversationNextButton;
+  @FXML protected AnchorPane conversationPane;
+  @FXML protected Label conversationRoleLabel;
+  @FXML protected Label conversationTextLabel;
+  @FXML protected Button conversationNextButton;
 
   // Navigation
-  @FXML private Button nextButton;
-  @FXML private Button memoryButton;
+  @FXML protected Button nextButton;
+  @FXML protected Button memoryButton;
 
   // Timer
-  @FXML private Label timerLabel;
+  @FXML protected Label timerLabel;
 
   // Image Drawings Elements
   protected Stack<String> imageStack;
+
+  // Text elements
+  protected Stack<String> textStack;
 
   /**
    * Method executed during the initialization of the flashback scene. Update UI elements with the
@@ -39,13 +42,17 @@ public abstract class FlashbackController {
    */
   protected void initialize() {
     imageStack = new Stack<>();
+    textStack = new Stack<>();
     memoryButton.setVisible(false);
     setupImages();
+    setupText();
     showCurrentImage();
   }
 
   /** Abstract method to be implemented by child classes to setup their specific images */
   protected abstract void setupImages();
+
+  protected abstract void setupText();
 
   /** Abstract method to handle navigation to memory scene */
   protected abstract void handleMemoryButton();
@@ -58,15 +65,25 @@ public abstract class FlashbackController {
     }
   }
 
+  protected void addTextToStack(String Role, List<String> conversationText) {
+    textStack.clear();
+    conversationRoleLabel.setText(Role);
+    for (String conversation : conversationText) {
+      textStack.push(conversation);
+    }
+  }
+
   /** Navigate to next image */
   @FXML
   protected void nextDrawing() {
     if (imageStack.size() == 1) {
       showCurrentImage();
+      showCurrentText();
       nextButton.setVisible(false);
       memoryButton.setVisible(true);
     } else if (!imageStack.isEmpty()) {
       showCurrentImage();
+      showCurrentText();
     }
   }
 
@@ -81,6 +98,14 @@ public abstract class FlashbackController {
       }
       Image image = new Image(stream);
       backgroundImage.setImage(image);
+    }
+  }
+
+  @FXML
+  protected void showCurrentText() {
+    if (!textStack.isEmpty()) {
+      String text = imageStack.pop();
+      conversationTextLabel.setText(text);
     }
   }
 }

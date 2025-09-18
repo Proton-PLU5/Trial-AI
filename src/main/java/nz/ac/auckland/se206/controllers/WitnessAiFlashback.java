@@ -2,6 +2,7 @@ package nz.ac.auckland.se206.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -16,7 +17,12 @@ public class WitnessAiFlashback extends FlashbackController {
   @FXML private Label timerLabel;
   @FXML private Button memoryButton;
 
+  @FXML private Label conversationRoleLabel;
+  @FXML private Label conversationTextLabel;
+
   private List<String> imagePaths;
+  private List<String> conversationText;
+
   private int currentDrawingIndex = 0;
 
   @FXML
@@ -31,6 +37,15 @@ public class WitnessAiFlashback extends FlashbackController {
     imagePaths.add("/images/aiFlash2.png");
     imagePaths.add("/images/aiFlash1.png");
     addImagesToStack(imagePaths);
+  }
+
+  @Override
+  protected void setupText() {
+    conversationText = new ArrayList<>();
+    conversationText.add("Paragraph 3: dahdasidgaiudhauih");
+    conversationText.add("Paragraph 2: hdiuwhdiuadihadi");
+    conversationText.add("Paragraph 1: dhauhdiuhdiudh");
+    addTextToStack("aiWitness", conversationText);
   }
 
   @FXML

@@ -16,7 +16,12 @@ public class WitnessHumanFlashback extends FlashbackController {
   @FXML private Label timerLabel;
   @FXML private Button memoryButton;
 
+  @FXML private Label conversationRoleLabel;
+  @FXML private Label conversationTextLabel;
+
   private List<String> imagePaths;
+  private List<String> conversationText;
+
   private int currentDrawingIndex = 0;
 
   @FXML
@@ -31,6 +36,15 @@ public class WitnessHumanFlashback extends FlashbackController {
     imagePaths.add("/images/defendantFlash2.png");
     imagePaths.add("/images/defendantFlash3.png");
     addImagesToStack(imagePaths);
+  }
+
+  @Override
+  protected void setupText() {
+    conversationText = new ArrayList<>();
+    conversationText.add("Paragraph 3: dahdasidgaiudhauih");
+    conversationText.add("Paragraph 2: hdiuwhdiuadihadi");
+    conversationText.add("Paragraph 1: dhauhdiuhdiudh");
+    addTextToStack("Human Witness", conversationText);
   }
 
   @FXML
