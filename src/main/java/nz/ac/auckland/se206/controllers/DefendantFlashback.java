@@ -2,7 +2,6 @@ package nz.ac.auckland.se206.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -16,6 +15,7 @@ public class DefendantFlashback extends FlashbackController {
   @FXML private ImageView backgroundImage;
   @FXML private Button nextBtn;
   @FXML private Label timerLabel;
+  @FXML private Button memoryButton;
 
   private List<String> imagePaths;
   private int currentDrawingIndex = 0;
@@ -28,9 +28,9 @@ public class DefendantFlashback extends FlashbackController {
   @Override
   protected void setupImages() {
     imagePaths = new ArrayList<>();
-    imagePaths.add("/images/defendantFlash1.png");
-    imagePaths.add("/images/defendantFlash2.png");
     imagePaths.add("/images/defendantFlash3.png");
+    imagePaths.add("/images/defendantFlash2.png");
+    imagePaths.add("/images/defendantFlash1.png");
     addImagesToStack(imagePaths);
   }
 

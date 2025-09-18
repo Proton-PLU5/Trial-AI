@@ -25,7 +25,7 @@ public abstract class FlashbackController {
 
   // Navigation
   @FXML private Button nextButton;
-  @FXML private Button goBackButton;
+  @FXML private Button memoryButton;
 
   // Timer
   @FXML private Label timerLabel;
@@ -39,6 +39,7 @@ public abstract class FlashbackController {
    */
   protected void initialize() {
     imageStack = new Stack<>();
+    memoryButton.setVisible(false);
     setupImages();
     showCurrentImage();
   }
@@ -60,11 +61,16 @@ public abstract class FlashbackController {
   /** Navigate to next image */
   @FXML
   protected void nextDrawing() {
-    if (!imageStack.isEmpty()) {
+    if (imageStack.size() == 1) {
+      showCurrentImage();
+      nextButton.setVisible(false);
+      memoryButton.setVisible(true);
+    } else if (!imageStack.isEmpty()) {
       showCurrentImage();
     }
   }
 
+  /** Show the currnt image at the top of the stack */
   @FXML
   protected void showCurrentImage() {
     if (!imageStack.isEmpty()) {

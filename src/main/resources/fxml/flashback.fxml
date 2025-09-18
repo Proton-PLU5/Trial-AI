@@ -16,5 +16,6 @@
             <Label fx:id="conversationTextLabel" layoutX="13.0" layoutY="101.0" prefHeight="102.0" prefWidth="1161.0" text="Label" AnchorPane.leftAnchor="13.0" />
          </children>
       </AnchorPane>
+      <Button fx:id="memoryButton" layoutX="677.0" layoutY="673.0" mnemonicParsing="false" onMouseClicked="#handleMemoryButton" text="Go to memory" />
    </children>
 </AnchorPane>

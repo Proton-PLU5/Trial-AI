@@ -14,6 +14,7 @@ public class WitnessHumanFlashback extends FlashbackController {
   @FXML private ImageView backgroundImage;
   @FXML private Button nextBtn;
   @FXML private Label timerLabel;
+  @FXML private Button memoryButton;
 
   private List<String> imagePaths;
   private int currentDrawingIndex = 0;
