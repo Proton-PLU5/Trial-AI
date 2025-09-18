@@ -16,12 +16,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.utils.TimableScene;
 
 /**
  * Controller class for the room view. Handles user interactions within the room where the user can
  * chat with customers and guess their profession.
  */
-public class RoomController {
+public class RoomController implements TimableScene {
 
   private static boolean isFirstTimeInit = true;
 
@@ -42,35 +44,7 @@ public class RoomController {
    */
   @FXML
   public void initialize() {
-
-    timerService = TimerService.getInstance();
-
-    // Bind timer display to label
-    if (timerLabel != null) {
-      timerLabel.textProperty().bind(timerService.timeDisplayProperty());
-
-      // Update timer style based on remaining time
-      timerService
-          .secondsRemainingProperty()
-          .addListener(
-              (obs, oldVal, newVal) -> {
-                updateTimerStyle(newVal.intValue());
-              });
-
-      // Handle game over when time runs out
-      timerService
-          .timeUpProperty()
-          .addListener(
-              (obs, wasTimeUp, isTimeUp) -> {
-                if (isTimeUp) {
-                  try {
-                    handleGameOver();
-                  } catch (IOException e) {
-                    e.printStackTrace();
-                  }
-                }
-              });
-    }
+    App.timer.addConsumer(this.getTimerConsumer());
 
     if (isFirstTimeInit) {
       // Media media = new Media(getClass().getResource("/sounds/startAudio.mp3").toExternalForm());
@@ -83,7 +57,7 @@ public class RoomController {
     if (!finalSceneLoaded) {
       finalSceneLoaded = true;
       Stage stage = (Stage) btnGuess.getScene().getWindow();
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/final.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/verdict.fxml"));
       Parent finalRoot = loader.load();
       timerService.startTimer();
       stage.setScene(new Scene(finalRoot));
@@ -189,5 +163,10 @@ public class RoomController {
   @FXML
   private void handleGuessClick(MouseEvent event) throws IOException {
     handleGameOver();
+  }
+
+  @Override
+  public Label getTimerLabel() {
+    return timerLabel;
   }
 }

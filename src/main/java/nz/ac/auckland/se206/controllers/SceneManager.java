@@ -18,7 +18,8 @@ public class SceneManager {
     witnessHuman,
     defendantMemory,
     humanMemory,
-    aiMemory
+    aiMemory,
+    verdict
   }
 
   private static Map<String, ChatController> chatControllers = new HashMap<>();

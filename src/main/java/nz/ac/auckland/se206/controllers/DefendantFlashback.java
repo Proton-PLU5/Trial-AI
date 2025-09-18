@@ -26,7 +26,7 @@ public class DefendantFlashback extends FlashbackController {
   private List<String> conversationText;
 
   private int currentDrawingIndex = 0;
-
+  
   @FXML
   protected void initialize() {
     conversationRoleLabel.setText("Defendant");
