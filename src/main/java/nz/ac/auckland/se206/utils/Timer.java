@@ -108,6 +108,11 @@ public class Timer {
     Platform.runLater(
         () -> {
           for (Consumer<String> consumer : consumers) {
+            // Check if the consumer is still valid
+            if (consumer == null) {
+              consumers.remove(consumer);
+              continue;
+            }
             consumer.accept(builder.toString());
           }
     });
@@ -132,7 +137,7 @@ public class Timer {
             Thread.sleep(1000);
           } catch (InterruptedException exception) {
             exception.printStackTrace();
-            // Break out of the loop if the timer runs out.
+            // If the thread is interrupted, we stop the timer.
             return;
           }
           count();
@@ -145,11 +150,7 @@ public class Timer {
         System.out.println("Finished Counting!");
 
         Platform.runLater(() -> {
-          // If a consumer has been provided, accept the
-          // consumer.
-          for (Consumer<String> consumer : consumers) {
-            consumer.accept("Finished");
-          }
+          // Switch to the final scene
         });
         return null;
       }

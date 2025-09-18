@@ -10,8 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import nz.ac.auckland.se206.controllers.SceneManager;
-import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
+import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.Timer;
 
 /**
@@ -57,45 +56,6 @@ public class App extends Application {
   }
 
   /**
-   * Opens the chat view and sets the profession in the chat controller.
-   *
-   * @param event the mouse event that triggered the method
-   * @param profession the profession to set in the chat controller
-   * @throws IOException if the FXML file is not found
-   */
-  public static void openChat(MouseEvent event, String profession) throws IOException {
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    Parent currentRoot = stage.getScene().getRoot();
-
-    if (currentRoot.lookup("#chatPanel") != null) {
-      return; // Chat already open
-    }
-
-    Parent chatRoot = SceneManager.getChatView(profession);
-
-    if (currentRoot instanceof Pane) {
-      Pane parentPane = (Pane) currentRoot;
-
-      double scale = 0.4;
-      chatRoot.setScaleX(scale);
-      chatRoot.setScaleY(scale);
-
-      Scene scene = stage.getScene();
-      double chatWidth = 789 * scale;
-
-      // Position in top-right corner of the scene
-      chatRoot.setLayoutX(scene.getWidth() - chatWidth - 20);
-      chatRoot.setLayoutY(20);
-
-      chatRoot.setStyle(
-          chatRoot.getStyle()
-              + "; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);");
-
-      parentPane.getChildren().add(chatRoot);
-    }
-  }
-
-  /**
    * This method is invoked when the application starts. It loads and shows the "room" scene.
    *
    * @param stage the primary stage of the application
@@ -103,31 +63,21 @@ public class App extends Application {
    */
   @Override
   public void start(final Stage stage) throws IOException {
-    SceneManager.addUi(AppUi.room, loadFxml("room"));
-    SceneManager.addUi(AppUi.defendant, loadFxml("defendant"));
-    SceneManager.addUi(AppUi.witnessAi, loadFxml("witnessAi"));
-    SceneManager.addUi(AppUi.witnessHuman, loadFxml("witnessHuman"));
-    SceneManager.addUi(AppUi.defendantMemory, loadFxml("defendantMemory"));
-    SceneManager.addUi(AppUi.humanMemory, loadFxml("humanMemory"));
-    SceneManager.addUi(AppUi.aiMemory, loadFxml("aiMemory"));
-    SceneManager.addUi(AppUi.verdict, loadFxml("verdict"));
-    Parent root = SceneManager.getUiRoot(AppUi.room);
+
 
     primaryStage = stage;
 
-    SceneManager.initializeChats();
 
     primaryStage.setWidth(1308);
     primaryStage.setHeight(736);
-    scene = new Scene(root);
-    scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
-    primaryStage.setScene(scene);
+    SceneManager.switchScene(SceneManager.Scenes.room);
+    SceneManager.setStyleSheet("/css/style.css");
     primaryStage.show();
 
     // Timer Setup
     timer.setCountDown(true);
     timer.buildTimer();
 
-    root.requestFocus();
+    primaryStage.requestFocus();
   }
 }
