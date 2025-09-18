@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
 
 /**
@@ -57,7 +58,7 @@ public class RoomController implements TimableScene {
     if (!finalSceneLoaded) {
       finalSceneLoaded = true;
       Stage stage = (Stage) btnGuess.getScene().getWindow();
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/final.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/verdict.fxml"));
       Parent finalRoot = loader.load();
       timerService.startTimer();
       stage.setScene(new Scene(finalRoot));

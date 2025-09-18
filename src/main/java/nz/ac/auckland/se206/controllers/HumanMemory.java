@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import nz.ac.auckland.se206.utils.SceneManager;
 
 public class HumanMemory {
 
@@ -70,7 +71,7 @@ public class HumanMemory {
 
   private void handleGameOver() throws IOException {
     Stage stage = (Stage) chatBtn.getScene().getWindow();
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/final.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/verdict.fxml"));
     Parent finalRoot = loader.load();
     stage.setScene(new Scene(finalRoot));
   }

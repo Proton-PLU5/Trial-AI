@@ -3,6 +3,7 @@ package nz.ac.auckland.se206.utils;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import nz.ac.auckland.se206.App;
@@ -18,7 +19,8 @@ public class SceneManager {
     witnessHuman,
     defendantMemory,
     humanMemory,
-    aiMemory
+    aiMemory,
+    verdict
   }
 
   private static Map<String, ChatController> chatControllers = new HashMap<>();
