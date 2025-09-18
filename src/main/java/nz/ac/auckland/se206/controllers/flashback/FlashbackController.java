@@ -47,6 +47,7 @@ public abstract class FlashbackController {
     setupImages();
     setupText();
     showCurrentImage();
+    showCurrentText();
   }
 
   /** Abstract method to be implemented by child classes to setup their specific images */
@@ -90,22 +91,15 @@ public abstract class FlashbackController {
   /** Show the currnt image at the top of the stack */
   @FXML
   protected void showCurrentImage() {
-    if (!imageStack.isEmpty()) {
-      String path = imageStack.pop();
-      InputStream stream = getClass().getResourceAsStream(path);
-      if (stream == null) {
-        throw new IllegalArgumentException("Image not found: " + path);
-      }
-      Image image = new Image(stream);
-      backgroundImage.setImage(image);
-    }
+    String path = imageStack.pop();
+    InputStream stream = getClass().getResourceAsStream(path);
+    Image image = new Image(stream);
+    backgroundImage.setImage(image);
   }
 
   @FXML
   protected void showCurrentText() {
-    if (!textStack.isEmpty()) {
-      String text = imageStack.pop();
-      conversationTextLabel.setText(text);
-    }
+    String text = textStack.pop();
+    conversationTextLabel.setText(text);
   }
 }

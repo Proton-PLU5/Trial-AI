@@ -2,7 +2,6 @@ package nz.ac.auckland.se206.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
