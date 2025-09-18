@@ -78,22 +78,11 @@ public class HumanMemory {
 
   @FXML
   private void handleBackButton() {
-    Stage stage = (Stage) roomBtn.getScene().getWindow();
-    Parent roomRoot = SceneManager.getUiRoot(SceneManager.AppUi.room);
-    stage.getScene().setRoot(roomRoot);
+    SceneManager.switchScene(SceneManager.Scenes.room);
   }
 
   @FXML
   private void handleOpenChatButtonClick(MouseEvent event) throws IOException {
-    if (chatPanel.getChildren().isEmpty()) {
-      Parent chatContent = SceneManager.getChatView("witnessHuman");
-      ChatController chatController = SceneManager.getChatController("witnessHuman");
-
-      chatController.setChatPanelContainer(chatPanel);
-
-      chatPanel.getChildren().add(chatContent);
-    }
-
     chatPanel.setVisible(true);
   }
 }

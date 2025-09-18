@@ -124,9 +124,6 @@ public class ChatController {
       displayName = ROLE_DISPLAY_NAMES.get(profession);
     }
     txtaChat.appendText(displayName + ": " + msg.getContent() + "\n\n");
-    if ("assistant".equals(msg.getRole())) {
-      SceneManager.notifyOtherChats(profession, content);
-    }
   }
 
   public void receiveContextUpdate(String fromProfession, String message) {

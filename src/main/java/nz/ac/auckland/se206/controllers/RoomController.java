@@ -119,39 +119,31 @@ public class RoomController implements TimableScene {
 
     if (!hasInteracted) {
       characterInteracted.put(characterId, true);
-
-      Scene currentScene = ((Node) event.getSource()).getScene();
-      Stage stage = (Stage) currentScene.getWindow();
-      stage.getProperties().put("roomScene", currentScene);
-      SceneManager.AppUi flashbackScene = getFlashbackScene(characterId);
-      Parent flashbackRoot = SceneManager.getUiRoot(flashbackScene);
-      currentScene.setRoot(flashbackRoot);
-
+      SceneManager.switchScene(getFlashbackScene(characterId));
     } else {
-      if (chatPanel.getChildren().isEmpty() || !characterId.equals(currentChatCharacter)) {
-        chatPanel.getChildren().clear();
-
-        Parent chatContent = SceneManager.getChatView(characterId);
-        ChatController chatController = SceneManager.getChatController(characterId);
-
-        chatController.setChatPanelContainer(chatPanel);
-        chatPanel.getChildren().add(chatContent);
-      }
-
-      chatPanel.setVisible(true);
+      SceneManager.switchScene(getMemoryScene(characterId));
     }
   }
 
-  private SceneManager.AppUi getFlashbackScene(String characterId) {
+  private SceneManager.Scenes getMemoryScene(String characterId) {
     switch (characterId) {
-      case "defendantAi":
-        return SceneManager.AppUi.defendant;
       case "witnessAi":
-        return SceneManager.AppUi.witnessAi;
+        return SceneManager.Scenes.aiMemory;
       case "witnessHuman":
-        return SceneManager.AppUi.witnessHuman;
+        return SceneManager.Scenes.humanMemory;
       default:
-        return SceneManager.AppUi.defendant;
+        return SceneManager.Scenes.defendantMemory;
+    }
+  }
+
+  private SceneManager.Scenes getFlashbackScene(String characterId) {
+    switch (characterId) {
+      case "witnessAi":
+        return SceneManager.Scenes.witnessAi;
+      case "witnessHuman":
+        return SceneManager.Scenes.witnessHuman;
+      default:
+        return SceneManager.Scenes.defendant;
     }
   }
 

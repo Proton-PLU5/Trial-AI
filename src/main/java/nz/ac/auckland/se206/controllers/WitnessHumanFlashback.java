@@ -50,8 +50,6 @@ public class WitnessHumanFlashback extends FlashbackController {
 
   @FXML
   protected void handleMemoryButton() {
-    Stage stage = (Stage) memoryButton.getScene().getWindow();
-    Parent roomRoot = SceneManager.getUiRoot(SceneManager.AppUi.defendantMemory);
-    stage.getScene().setRoot(roomRoot);
+    SceneManager.switchScene(SceneManager.Scenes.humanMemory);
   }
 }
