@@ -230,4 +230,8 @@ public abstract class MemoryController {
       throw new IllegalStateException(promptId + " not found");
     }
   }
+
+  public Label getTimerLabel() {
+    return timerLabel;
+  }
 }
