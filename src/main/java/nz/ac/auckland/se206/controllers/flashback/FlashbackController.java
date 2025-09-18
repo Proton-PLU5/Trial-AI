@@ -58,20 +58,16 @@ public abstract class FlashbackController {
   /** Abstract method to handle navigation to memory scene */
   protected abstract void handleMemoryButton();
 
-  /** Add images to the stack from a list */
-  protected void addImagesToStack(List<String> imagePaths) {
-    imageStack.clear();
-    for (String imagePath : imagePaths) {
-      imageStack.push(imagePath);
-    }
+  protected void addImage(String imagePath) {
+    imageStack.push(imagePath);
   }
 
-  protected void addTextToStack(String Role, List<String> conversationText) {
-    textStack.clear();
-    conversationRoleLabel.setText(Role);
-    for (String conversation : conversationText) {
-      textStack.push(conversation);
-    }
+  protected void addText(String text) {
+    textStack.push(text);
+  }
+
+  protected void setRole(String role) {
+    conversationRoleLabel.setText(role);
   }
 
   /** Navigate to next image */
