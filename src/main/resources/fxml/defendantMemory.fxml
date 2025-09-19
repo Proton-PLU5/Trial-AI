@@ -116,7 +116,12 @@
                         </Button>
                      </children>
                   </GridPane>
-                  <Button layoutX="162.0" layoutY="281.0" mnemonicParsing="false" onAction="#onSubmitPinPressed" prefHeight="44.0" prefWidth="82.0" style="-fx-background-radius: 100;" text="OK">
+                  <Button layoutX="113.0" layoutY="283.0" mnemonicParsing="false" onAction="#onSubmitPinPressed" prefHeight="51.0" prefWidth="97.0" style="-fx-background-radius: 100;" text="OK">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="219.0" layoutY="283.0" mnemonicParsing="false" onAction="#onSubmitPinPressed" prefHeight="51.0" prefWidth="70.0" style="-fx-background-radius: 100;" text="⌫ ">
                      <font>
                         <Font size="24.0" />
                      </font>

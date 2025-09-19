@@ -77,6 +77,12 @@ public class DefendantMemory extends MemoryController implements TimableScene{
   }
 
   @FXML
+  private void onClearButtonPressed(ActionEvent event) {
+    pin = "_ _ _ _";
+    pinLabel.setText(pin);
+  }
+
+  @FXML
   private void loginButtonPressed(ActionEvent event) {
     initialPane.setVisible(false);
     keypadPane.setVisible(true);
