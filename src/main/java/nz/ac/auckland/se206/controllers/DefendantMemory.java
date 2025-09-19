@@ -97,8 +97,8 @@ public class DefendantMemory extends MemoryController implements TimableScene{
       });
     });
 
-    createTitleDisappearAnimation();
     App.timer.addConsumer(getTimerConsumer());
+    createTitleDisappearAnimation();
 
     super.initialize();
   }
@@ -252,8 +252,4 @@ public class DefendantMemory extends MemoryController implements TimableScene{
     pause.play();
   }
 
-  @Override
-  public Label getTimerLabel() {
-    return super.getTimerLabel();
-  }
 }
