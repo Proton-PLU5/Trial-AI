@@ -32,9 +32,9 @@ public class WitnessHumanFlashback extends FlashbackController {
   @Override
   protected void setupImages() {
     imagePaths = new ArrayList<>();
-    imagePaths.add("/images/defendantFlash1.png");
-    imagePaths.add("/images/defendantFlash2.png");
     imagePaths.add("/images/defendantFlash3.png");
+    imagePaths.add("/images/humanFlash2.png");
+    imagePaths.add("/images/humanFlash1.png");
     addImagesToStack(imagePaths);
   }
 
