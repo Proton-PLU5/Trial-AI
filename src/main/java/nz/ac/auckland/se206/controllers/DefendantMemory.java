@@ -63,6 +63,10 @@ public class DefendantMemory extends MemoryController implements TimableScene{
     }
   }
 
+  /**
+   * Handles the "Submit PIN" button press event to check the entered pin.
+   * @param event The action event triggered by clicking the submit pin button
+   */
   @FXML
   private void onSubmitPinPressed(ActionEvent event) {
     if (pin.equals(correctPin)) {
@@ -76,6 +80,10 @@ public class DefendantMemory extends MemoryController implements TimableScene{
     }
   }
 
+  /**
+   * Handles the "Clear" button press event to reset the pin.
+   * @param event The action event triggered by clicking the clear button
+   */
   @FXML
   private void onClearButtonPressed(ActionEvent event) {
     pin = "_ _ _ _";
