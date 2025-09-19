@@ -2,10 +2,13 @@ package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,8 +16,11 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
@@ -27,6 +33,7 @@ public class DefendantMemory extends MemoryController implements TimableScene{
   @FXML private Rectangle rec2;
   @FXML private Rectangle rec3;
   @FXML private Rectangle rec4;
+  @FXML private Arc progressArc;
   @FXML private Label pinLabel;
   
   // Login Sequence
@@ -35,10 +42,19 @@ public class DefendantMemory extends MemoryController implements TimableScene{
   @FXML private AnchorPane loginPane;
   @FXML private AnchorPane cctvPane;
 
+  // Customer Details 
+  @FXML private StackPane customerDetailsPane;
+  @FXML private Label customerIDLabel;
+  @FXML private Label customerStatusLabel;
+  @FXML private Label customerAgeLabel;
+  @FXML private Label customerCriminalRecordLabel;
+  
+
 
   private String pin = "_ _ _ _";
   private final String correctPin = "1 2 3 4";
   private static AudioClip keyPadAudioClip;
+  private AnimationTimer progressArcAnimationTimer;
 
   static {
     var resource = DefendantMemory.class.getResource("/sounds/keypad.mp3");
@@ -64,7 +80,15 @@ public class DefendantMemory extends MemoryController implements TimableScene{
     keypadPane.setVisible(false);
     cctvPane.setVisible(false);
 
-    
+    Platform.runLater(() -> {
+      progressArc.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+          progressArc.setLayoutX(event.getSceneX());
+          progressArc.setLayoutY(event.getSceneY());
+        }
+      });
+    });
 
     super.initialize();
   }
@@ -113,10 +137,59 @@ public class DefendantMemory extends MemoryController implements TimableScene{
     pinLabel.setText(pin);
   }
 
+  /**
+   * Handles the "Login" button press event to show the keypad pane.
+   * @param event The action event triggered by clicking the login button
+   */
   @FXML
   private void loginButtonPressed(ActionEvent event) {
     initialPane.setVisible(false);
     keypadPane.setVisible(true);
+  }
+
+  /**
+   * Handles mouse press on a character in the CCTV pane.
+   * Creates the progress bar for the "scanning" feature.
+   * @param event The mouse event triggered by pressing a character
+   */
+  @FXML
+  private void onTargetMousePressed(MouseEvent event) {
+    progressArc.setVisible(true);
+    progressArc.setLength(0);
+
+    progressArcAnimationTimer = new AnimationTimer() {
+      @Override
+      public void handle(long now) {
+        // Update the length of the arc to create a progress effect
+        progressArc.setLength(progressArc.getLength() + 3);
+
+        // Display person info after progress completes a full circle.
+        if (progressArc.getLength() >= 370) {
+          progressArc.setLength(0);
+          progressArcAnimationTimer.stop();
+          progressArc.setVisible(false);
+        }
+      };
+    };
+    progressArcAnimationTimer.start();
+  }
+
+  /**
+   * Handles mouse release on a character in the CCTV pane.
+   * Stops the progress bar for the "scanning" feature.
+   * @param event The mouse event triggered by releasing a character
+   */
+  @FXML
+  private void onTargetMouseReleased(MouseEvent event) {
+    // Stop the progress arc animation and reset the arc
+    progressArcAnimationTimer.stop();
+    progressArc.setVisible(false);
+    progressArc.setLength(0);
+  }
+
+  @FXML
+  private void onCustomerDetailsButtonPressed(ActionEvent event) {
+    customerDetailsPane.setVisible(false);
   }
 
   @Override
