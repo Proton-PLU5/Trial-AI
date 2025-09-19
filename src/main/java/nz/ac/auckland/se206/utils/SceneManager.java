@@ -1,6 +1,8 @@
 package nz.ac.auckland.se206.utils;
 
 import java.io.IOException;
+
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import nz.ac.auckland.se206.App;
@@ -25,7 +27,7 @@ public class SceneManager {
       Parent root = FXMLLoader.load(
           SceneManager.class.getResource("/fxml/" + scene.toString() + ".fxml"));
       App.primaryStage.setScene(new javafx.scene.Scene(root));
-      SceneManager.setStyleSheet("/css/style.css");
+      Platform.runLater(() -> App.primaryStage.sizeToScene());
     } catch (IOException e) {
       e.printStackTrace();
     }
