@@ -21,10 +21,6 @@ public class WitnessAiFlashback extends FlashbackController {
   @FXML private Label conversationRoleLabel;
   @FXML private Label conversationTextLabel;
 
-  private List<String> imagePaths;
-  private List<String> conversationText;
-
-  private int currentDrawingIndex = 0;
 
   @FXML
   protected void initialize() {
@@ -33,20 +29,16 @@ public class WitnessAiFlashback extends FlashbackController {
 
   @Override
   protected void setupImages() {
-    imagePaths = new ArrayList<>();
-    imagePaths.add("/images/aiFlash3.png");
-    imagePaths.add("/images/aiFlash2.png");
-    imagePaths.add("/images/aiFlash1.png");
-    addImagesToStack(imagePaths);
+    addImage("/images/aiFlash3.png");
+    addImage("/images/aiFlash2.png");
+    addImage("/images/aiFlash1.png");
   }
 
   @Override
   protected void setupText() {
-    conversationText = new ArrayList<>();
-    conversationText.add("Paragraph 3: dahdasidgaiudhauih");
-    conversationText.add("Paragraph 2: hdiuwhdiuadihadi");
-    conversationText.add("Paragraph 1: dhauhdiuhdiudh");
-    addTextToStack("aiWitness", conversationText);
+    addText("Paragraph 3: dahdasidgaiudhauih");
+    addText("Paragraph 2: hdiuwhdiuadihadi");
+    addText("Paragraph 1: dhauhdiuhdiudh");
   }
 
   @FXML

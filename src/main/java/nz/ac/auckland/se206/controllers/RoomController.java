@@ -3,7 +3,6 @@ package nz.ac.auckland.se206.controllers;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,7 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.App;
@@ -33,7 +32,10 @@ public class RoomController implements TimableScene {
   @FXML private Rectangle defendant;
   @FXML private Button btnGuess;
   @FXML private Label timerLabel;
-  @FXML private Pane chatPanel;
+  @FXML private Button nextButton;
+  @FXML private Label conversationRoleLabel;
+  @FXML private Label chaconversationTextLabel;
+  @FXML private AnchorPane conversationPanel;
   private String currentChatCharacter = null;
   private Map<String, Boolean> characterInteracted = new HashMap<>();
   private TimerService timerService;
@@ -124,6 +126,15 @@ public class RoomController implements TimableScene {
       SceneManager.switchScene(getMemoryScene(characterId));
     }
   }
+  
+  @FXML
+  void handleNextButton() {
+    nextButton.setVisible(false);
+    conversationPanel.setVisible(false);
+    conversationRoleLabel.setVisible(false);
+    chaconversationTextLabel.setVisible(false);
+  }
+
 
   private SceneManager.Scenes getMemoryScene(String characterId) {
     switch (characterId) {
