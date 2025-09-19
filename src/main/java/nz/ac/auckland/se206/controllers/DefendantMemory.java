@@ -2,6 +2,7 @@ package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
@@ -35,7 +38,19 @@ public class DefendantMemory extends MemoryController implements TimableScene{
 
   private String pin = "_ _ _ _";
   private final String correctPin = "1 2 3 4";
-  
+  private static AudioClip keyPadAudioClip;
+
+  static {
+    var resource = DefendantMemory.class.getResource("/sounds/keypad.mp3");
+    System.out.println("[DEBUG] keypad.mp3 resource: " + resource);
+    if (resource != null) {
+      keyPadAudioClip = new AudioClip(resource.toExternalForm());
+      keyPadAudioClip.setVolume(1.0); // Set volume to max
+      Platform.runLater(() -> keyPadAudioClip.play());
+    } else {
+      System.out.println("[ERROR] Could not find keypad.mp3 resource!");
+    }
+  }
 
   public DefendantMemory() {
     super("prompts/defendant.txt");
@@ -48,6 +63,9 @@ public class DefendantMemory extends MemoryController implements TimableScene{
     initialPane.setVisible(true);
     keypadPane.setVisible(false);
     cctvPane.setVisible(false);
+
+    
+
     super.initialize();
   }
 
@@ -60,6 +78,11 @@ public class DefendantMemory extends MemoryController implements TimableScene{
     if (buttonText.matches("[0-9]")) {
       pin = pin.replaceFirst("_", buttonText);
       pinLabel.setText(pin);
+      // Set the pitch of the audio clip based on the button pressed
+      // For numbers 1-9, set pitch from 1.0 to 1.8
+      double pitch = 1.0 + (Integer.parseInt(buttonText)) * 0.1;
+      //keyPadAudioClip.setRate(pitch);
+      keyPadAudioClip.play();
     }
   }
 
