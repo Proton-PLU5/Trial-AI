@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 
@@ -19,5 +20,12 @@
       <Button fx:id="btnGuess" layoutX="661.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#handleGuessClick" text="Make your choice" />
       <Label fx:id="timerLabel" layoutX="871.0" layoutY="64.0" text="Label" />
       <Rectangle fx:id="witnessAi" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="379.0" layoutX="122.0" layoutY="233.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="294.0" />
+      <AnchorPane fx:id="conversationPane" layoutX="73.0" layoutY="521.0" prefHeight="150.0" prefWidth="1288.0" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0">
+         <children>
+            <Button fx:id="nextButton" layoutX="629.0" layoutY="131.0" mnemonicParsing="false" onMouseClicked="#handleNextButton" text="▶" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="100.0" />
+            <Label fx:id="conversationRoleLabel" layoutX="38.0" layoutY="20.0" prefHeight="47.0" prefWidth="161.0" text="Judge" AnchorPane.leftAnchor="13.0" />
+            <Label fx:id="conversationTextLabel" layoutX="13.0" layoutY="101.0" prefHeight="102.0" prefWidth="964.0" text="This is the situation, your task is to figure out whether the ai decision was ethical..." AnchorPane.leftAnchor="13.0" />
+         </children>
+      </AnchorPane>
    </children>
 </Pane>

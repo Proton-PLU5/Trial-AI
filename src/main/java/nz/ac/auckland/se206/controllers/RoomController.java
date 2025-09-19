@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -28,6 +29,10 @@ public class RoomController {
   @FXML private Rectangle defendant;
   @FXML private Button btnGuess;
   @FXML private Label timerLabel;
+  @FXML private Button nextButton;
+  @FXML private Label conversationRoleLabel;
+  @FXML private Label chaconversationTextLabel;
+  @FXML private AnchorPane conversationPanel;
   private String currentChatCharacter = null;
   private Map<String, Boolean> characterInteracted = new HashMap<>();
   private TimerService timerService;
@@ -152,6 +157,14 @@ public class RoomController {
     } else {
       // insert code to switch to respective memory scene
     }
+  }
+
+  @FXML
+  void handleNextButton() {
+    nextButton.setVisible(false);
+    conversationPanel.setVisible(false);
+    conversationRoleLabel.setVisible(false);
+    chaconversationTextLabel.setVisible(false);
   }
 
   private SceneManager.AppUi getFlashbackScene(String characterId) {
