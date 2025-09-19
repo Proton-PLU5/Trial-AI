@@ -168,6 +168,36 @@ public class DefendantMemory extends MemoryController implements TimableScene{
           progressArc.setLength(0);
           progressArcAnimationTimer.stop();
           progressArc.setVisible(false);
+
+          // Show customer details pane
+          customerDetailsPane.setVisible(true);
+          Node sourceNode = (Node) event.getSource();
+          customerDetailsPane.setLayoutX(sourceNode.getLayoutX());
+          customerDetailsPane.setLayoutY(sourceNode.getLayoutY());
+          
+          // Check if the source of the event is one of the rectangles
+          // Check by getting the ID of the source
+          if (sourceNode.getId().equals(rec1.getId())) {
+            customerIDLabel.setText("Customer 1");
+            customerStatusLabel.setText("New Shopper");
+            customerAgeLabel.setText("Age: 25");
+            customerCriminalRecordLabel.setText("No Record");
+          } else if (sourceNode.getId().equals(rec2.getId())) {
+            customerIDLabel.setText("Customer 2");
+            customerStatusLabel.setText("Returning Shopper");
+            customerAgeLabel.setText("Age: 40");
+            customerCriminalRecordLabel.setText("No Record");
+          } else if (sourceNode.getId().equals(rec3.getId())) {
+            customerIDLabel.setText("Customer 3");
+            customerStatusLabel.setText("New Shopper");
+            customerAgeLabel.setText("Age: 30");
+            customerCriminalRecordLabel.setText("Shoplifting");
+          } else if (sourceNode.getId().equals(rec4.getId())) {
+            customerIDLabel.setText("Customer 4");
+            customerStatusLabel.setText("Loyal Shopper");
+            customerAgeLabel.setText("Age: 35");
+            customerCriminalRecordLabel.setText("No Record");
+          }
         }
       };
     };
