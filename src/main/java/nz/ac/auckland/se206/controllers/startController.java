@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +12,7 @@ import javafx.stage.Stage;
 
 public class startController {
   @FXML Label timerLabel;
+  @FXML Label title_label;
   @FXML private Button playBtn;
   // could add like volume dragger or sound button etc
 
