@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Arc?>
+<?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -231,5 +232,21 @@
             </Label>
          </children>
       </GridPane>
+      <AnchorPane fx:id="titleBlock" layoutX="14.0" layoutY="14.0" prefHeight="110.0" prefWidth="563.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5599d9" height="95.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="481.0" />
+            <Polygon fill="#5599d9" layoutX="483.0" layoutY="10.0" points="-3.666656494140625, -10.666666984558105, -3.666656494140625, 85.00000762939453, 79.33331298828125, 40.00000762939453" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Label fx:id="titleLabel" alignment="TOP_LEFT" layoutX="14.0" prefHeight="56.0" prefWidth="440.0" text="Login">
+               <font>
+                  <Font name="System Bold" size="39.0" />
+               </font>
+            </Label>
+            <Label fx:id="descriptionLabel" alignment="BASELINE_LEFT" layoutX="14.0" layoutY="48.0" prefHeight="37.0" prefWidth="523.0" text="Use the password to login to the CCTV network." textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </Pane>

@@ -3,6 +3,8 @@ package nz.ac.auckland.se206.controllers;
 import java.io.IOException;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.PauseTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,6 +25,8 @@ import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
@@ -48,8 +52,11 @@ public class DefendantMemory extends MemoryController implements TimableScene{
   @FXML private Label customerStatusLabel;
   @FXML private Label customerAgeLabel;
   @FXML private Label customerCriminalRecordLabel;
-  
 
+  // Title
+  @FXML private AnchorPane titleBlock;
+  @FXML private Label titleLabel;
+  @FXML private Label descriptionLabel;
 
   private String pin = "_ _ _ _";
   private final String correctPin = "1 2 3 4";
@@ -90,6 +97,9 @@ public class DefendantMemory extends MemoryController implements TimableScene{
       });
     });
 
+    createTitleDisappearAnimation();
+    App.timer.addConsumer(getTimerConsumer());
+
     super.initialize();
   }
 
@@ -120,6 +130,10 @@ public class DefendantMemory extends MemoryController implements TimableScene{
       // Correct pin entered, proceed to next pane
       loginPane.setVisible(false);
       cctvPane.setVisible(true);
+      titleBlock.setVisible(true);
+      descriptionLabel.setText("Click on the different characters to view their details.");
+      titleLabel.setText("View Character Details");
+      createTitleDisappearAnimation();
     } else {
       // Incorrect pin, reset
       pin = "_ _ _ _";
@@ -220,6 +234,22 @@ public class DefendantMemory extends MemoryController implements TimableScene{
   @FXML
   private void onCustomerDetailsButtonPressed(ActionEvent event) {
     customerDetailsPane.setVisible(false);
+  }
+
+  private void createTitleDisappearAnimation() {
+    // Move the title block to the right
+    TranslateTransition transition = new TranslateTransition(Duration.seconds(3), titleBlock);
+    transition.setFromX(0);
+    transition.setToX(-700);
+    transition.setOnFinished(event -> titleBlock.setVisible(false));
+    
+    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+    pause.setOnFinished(event -> {
+      transition.play();
+    });
+
+    titleBlock.setTranslateX(0);
+    pause.play();
   }
 
   @Override

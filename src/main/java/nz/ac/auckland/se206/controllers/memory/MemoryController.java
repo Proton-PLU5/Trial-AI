@@ -30,8 +30,9 @@ import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.utils.SceneManager;
+import nz.ac.auckland.se206.utils.TimableScene;
 
-public abstract class MemoryController {
+public abstract class MemoryController implements TimableScene {
 
   protected ChatCompletionRequest chatCompletionRequest;
 
