@@ -251,5 +251,4 @@ public class DefendantMemory extends MemoryController implements TimableScene{
     titleBlock.setTranslateX(0);
     pause.play();
   }
-
 }
