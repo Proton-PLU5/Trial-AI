@@ -64,17 +64,20 @@ public abstract class MemoryController implements TimableScene {
     }
   }
 
+  @FXML
   protected void initialize() {
     chatPane.setVisible(false);
   }
 
   /** Handles the "Chat" button press event to toggle chat visibility. */
+  @FXML
   protected void onChatButtonPressed() {
     isChatVisible = !isChatVisible;
     chatPane.setVisible(isChatVisible);
   }
 
   /** Handles the "Send" button press event to send a message. */
+  @FXML
   protected void onSendButtonPressed() {
     String userInput = textField.getText();
     // Clear the text field

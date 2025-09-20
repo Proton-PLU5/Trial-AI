@@ -31,7 +31,7 @@ import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
 
-public class DefendantMemory extends MemoryController implements TimableScene{
+public class DefendantMemory extends MemoryController {
 
   @FXML private Rectangle rec1;
   @FXML private Rectangle rec2;
@@ -243,7 +243,7 @@ public class DefendantMemory extends MemoryController implements TimableScene{
     transition.setToX(-700);
     transition.setOnFinished(event -> titleBlock.setVisible(false));
     
-    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+    PauseTransition pause = new PauseTransition(Duration.seconds(4));
     pause.setOnFinished(event -> {
       transition.play();
     });
