@@ -32,9 +32,6 @@ public class VerdictController implements TimableScene {
   @FXML private Button submitButton;
   @FXML private Label verdictTitleLabel1;
   @FXML private Label verdictTitleLabel2;
-  @FXML private Label correctLabel;
-  @FXML private Label incorrectLabel;
-  @FXML private Label timeoutLabel;
   @FXML private Label timerLabel;
   @FXML private Label verdictCorrectLabel;
   @FXML private Label rationaleCorrectLabel;
@@ -198,6 +195,7 @@ public class VerdictController implements TimableScene {
 
     if (rationale.isEmpty()) {
       rationaleCorrectLabel.setText("You didn't give a rationale."); 
+      rationaleCorrectLabel.setLayoutX(515);
     } else {
       // Add the rationale to the prompt
       rationalePrompt += rationale;
@@ -242,6 +240,7 @@ public class VerdictController implements TimableScene {
                       String rationaleSummary = content.replaceFirst("^(\\S+\\s+){4}", "");
 
                       rationaleCorrectLabel.setText(rationaleJudgement);
+                      rationaleCorrectLabel.setLayoutX(501);
                       rationaleJudgementTextArea.setText(rationaleSummary);
                     });
 
