@@ -58,10 +58,8 @@ public class RoomController implements TimableScene {
   private void handleGameOver() throws IOException {
     if (!finalSceneLoaded) {
       finalSceneLoaded = true;
-      Stage stage = (Stage) btnGuess.getScene().getWindow();
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/verdict.fxml"));
-      Parent finalRoot = loader.load();
-      stage.setScene(new Scene(finalRoot));
+      SceneManager.switchScene(SceneManager.Scenes.verdict);
+      SceneManager.setStyleSheet("/css/style.css");
     }
   }
 
