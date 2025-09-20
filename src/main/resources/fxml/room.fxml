@@ -4,9 +4,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
 
 <Pane fx:id="room" focusTraversable="true" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="736.0" prefWidth="1408.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.RoomController">
    <children>
@@ -15,21 +15,17 @@
             <Image url="@../images/courtroom2.png" />
          </image>
       </ImageView>
-      <Rectangle fx:id="defendant" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="306.0" layoutX="283.0" layoutY="294.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="351.0" />
-      <Rectangle fx:id="witnessHuman" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="162.0" layoutX="101.0" layoutY="294.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="151.0" />
-      <Label layoutX="386.0" layoutY="14.0" text=" Trial Ai">
-         <font>
-            <Font size="38.0" />
-         </font>
-      </Label>
-      <Button fx:id="btnGuess" layoutX="395.0" layoutY="121.0" mnemonicParsing="false" onMouseClicked="#handleGuessClick" text="Make your choice" />
-      <Label layoutX="4.0" layoutY="69.0" prefHeight="27.0" prefWidth="893.0" text="Interact with the defendant and witnesses to determine whether the AI’s decision-making process was ethical, reasonable and justified">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <Label fx:id="timerLabel" layoutX="805.0" layoutY="125.0" text="Label" />
-      <Pane fx:id="chatPanel" layoutX="565.0" layoutY="155.0" prefHeight="400.0" prefWidth="300.0" />
-      <Rectangle fx:id="witnessAi" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="289.0" layoutX="633.0" layoutY="134.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="284.0" />
+      <Rectangle fx:id="defendant" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="381.0" layoutX="592.0" layoutY="130.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="254.0" />
+      <Rectangle fx:id="witnessHuman" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="448.0" layoutX="978.0" layoutY="119.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="331.0" />
+      <Button fx:id="btnGuess" layoutX="661.0" layoutY="72.0" mnemonicParsing="false" onMouseClicked="#handleGuessClick" text="Make your choice" />
+      <Label fx:id="timerLabel" layoutX="871.0" layoutY="64.0" text="Label" />
+      <Rectangle fx:id="witnessAi" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="379.0" layoutX="122.0" layoutY="233.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="294.0" />
+      <AnchorPane fx:id="conversationPane" layoutX="73.0" layoutY="521.0" prefHeight="150.0" prefWidth="1288.0" AnchorPane.leftAnchor="73.0" AnchorPane.rightAnchor="73.0">
+         <children>
+            <Button fx:id="nextButton" layoutX="629.0" layoutY="131.0" mnemonicParsing="false" onMouseClicked="#handleNextButton" text="▶" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="100.0" />
+            <Label fx:id="conversationRoleLabel" layoutX="38.0" layoutY="20.0" prefHeight="47.0" prefWidth="161.0" text="Judge" AnchorPane.leftAnchor="13.0" />
+            <Label fx:id="conversationTextLabel" layoutX="13.0" layoutY="101.0" prefHeight="102.0" prefWidth="964.0" text="This is the situation, your task is to figure out whether the ai decision was ethical..." AnchorPane.leftAnchor="13.0" />
+         </children>
+      </AnchorPane>
    </children>
 </Pane>

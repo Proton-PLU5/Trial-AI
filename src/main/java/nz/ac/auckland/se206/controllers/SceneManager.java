@@ -10,6 +10,7 @@ import nz.ac.auckland.se206.App;
 public class SceneManager {
 
   public enum AppUi {
+    start,
     chat,
     defendant,
     room,
@@ -17,8 +18,7 @@ public class SceneManager {
     witnessHuman,
     defendantMemory,
     humanMemory,
-    aiMemory,
-    verdict
+    aiMemory
   }
 
   private static Map<String, ChatController> chatControllers = new HashMap<>();

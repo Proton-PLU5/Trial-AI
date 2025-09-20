@@ -8,24 +8,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import nz.ac.auckland.se206.utils.SceneManager;
 
-public class aiMemory {
-
-  @FXML private Button roomBtn;
-  @FXML private Button chatBtn;
-  @FXML private Label timerLabel;
-  @FXML private Pane chatPanel;
+public class startController {
+  @FXML Label timerLabel;
+  @FXML Label title_label;
+  @FXML private Button playBtn;
+  // could add like volume dragger or sound button etc
 
   private TimerService timerService;
 
   @FXML
   private void initialize() {
-    chatPanel.setVisible(false);
-
     timerService = TimerService.getInstance();
 
     // Bind timer display to label
@@ -46,11 +40,7 @@ public class aiMemory {
           .addListener(
               (obs, wasTimeUp, isTimeUp) -> {
                 if (isTimeUp) {
-                  try {
-                    handleGameOver();
-                  } catch (IOException e) {
-                    e.printStackTrace();
-                  }
+                  handleGameOver();
                 }
               });
     }
@@ -70,20 +60,28 @@ public class aiMemory {
     }
   }
 
-  private void handleGameOver() throws IOException {
-    Stage stage = (Stage) chatBtn.getScene().getWindow();
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/verdict.fxml"));
-    Parent finalRoot = loader.load();
-    stage.setScene(new Scene(finalRoot));
+  private void handleGameOver() {
+    try {
+      Stage stage = (Stage) playBtn.getScene().getWindow();
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/final.fxml"));
+      Parent finalRoot = loader.load();
+      stage.setScene(new Scene(finalRoot));
+    } catch (IOException e) {
+      e.printStackTrace();
+      // Optionally show an error dialog to the user
+    }
   }
 
   @FXML
-  private void handleBackButton() {
-    SceneManager.switchScene(SceneManager.Scenes.room);
-  }
-
-  @FXML
-  private void handleOpenChatButtonClick(MouseEvent event) throws IOException {
-    chatPanel.setVisible(true);
+  private void handlePlayButton() {
+    try {
+      Stage stage = (Stage) playBtn.getScene().getWindow();
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/room.fxml"));
+      Parent finalRoot = loader.load();
+      timerService.startTimer();
+      stage.setScene(new Scene(finalRoot));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

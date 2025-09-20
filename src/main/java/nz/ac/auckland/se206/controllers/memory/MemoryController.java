@@ -6,8 +6,9 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.management.RuntimeErrorException;
 
 import javafx.animation.PathTransition;
 import javafx.animation.Transition;
@@ -28,13 +29,12 @@ import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.utils.SceneManager;
+import nz.ac.auckland.se206.utils.TimableScene;
 
-public abstract class MemoryController {
+public abstract class MemoryController implements TimableScene {
 
   protected ChatCompletionRequest chatCompletionRequest;
-
-  @FXML private Label titleLabel;
-  @FXML private Label descriptionLabel;
 
   // Chat Elements
   @FXML private AnchorPane chatPane;
@@ -42,9 +42,6 @@ public abstract class MemoryController {
   @FXML private Button chatButton;
   @FXML private TextArea textArea;
   @FXML private TextField textField;
-
-  // Title Pane
-  @FXML private AnchorPane titleBlock;
 
   // Navigation
   @FXML private Button goBackButton;
@@ -59,44 +56,25 @@ public abstract class MemoryController {
 
   // Constructor
   public MemoryController(String promptId) {
-    createChatCompletionResult();
-    loadInitialMessages(promptId);
+    try {
+      createChatCompletionResult();
+      loadInitialMessages(promptId);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   protected void initialize() {
     chatPane.setVisible(false);
-
-    // Animate title block to disappear after 3 seconds
-    titleBlock.setVisible(true);
-    Transition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(3));
-    delay.setOnFinished(event -> hideTitleBlock());
-    delay.play();
   }
 
-  /**
-   * Hides the title block with a slide-left animation.
-   */
-  private void hideTitleBlock() {
-    PathTransition transition = new PathTransition();
-    transition.setNode(titleBlock);
-    transition.setDuration(javafx.util.Duration.seconds(1));
-    transition.setPath(new javafx.scene.shape.Line(0, 0, -100, 0));
-    transition.setCycleCount(1);
-    transition.setOnFinished(event -> titleBlock.setVisible(false));
-  }
-
-  /**
-   * Handles the "Chat" button press event to toggle chat visibility.
-   */
+  /** Handles the "Chat" button press event to toggle chat visibility. */
   protected void onChatButtonPressed() {
     isChatVisible = !isChatVisible;
     chatPane.setVisible(isChatVisible);
   }
 
-  /**
-   * Handles the "Send" button press event to send a message.
-   * 
-   */
+  /** Handles the "Send" button press event to send a message. */
   protected void onSendButtonPressed() {
     String userInput = textField.getText();
     // Clear the text field
@@ -104,27 +82,28 @@ public abstract class MemoryController {
 
     if (!userInput.isEmpty()) {
       appendMessageToChat("User", userInput);
-      
+
       // Create a new thread to handle the GPT request
-      Task<Void> task = new Task<Void>() {
-        @Override
-        protected Void call() throws Exception {
-          String output = sendGPTRequest(userInput);
+      Task<Void> task =
+          new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+              String output = sendGPTRequest(userInput);
 
-          // Update the chat area with the AI's response
-          appendMessageToChat(roleOfCharacter, output);
+              // Update the chat area with the AI's response
+              appendMessageToChat(roleOfCharacter, output);
 
-          // Update chat history in App class
-          App.chatHistory.append(roleOfCharacter + ":\n" + output + "\n");
+              // Update chat history in App class
+              App.chatHistory.append(roleOfCharacter + ":\n" + output + "\n");
 
-          // Re-enable the text field and send button after processing
-          textField.setDisable(false);
-          textField.setPromptText("Enter your message.");
-          sendButton.setDisable(false);
+              // Re-enable the text field and send button after processing
+              textField.setDisable(false);
+              textField.setPromptText("Enter your message.");
+              sendButton.setDisable(false);
 
-          return null;
-        }
-      };
+              return null;
+            }
+          };
       Thread gptRequestThread = new Thread(task);
       gptRequestThread.setDaemon(true);
       gptRequestThread.start();
@@ -138,7 +117,7 @@ public abstract class MemoryController {
 
   /**
    * Appends a message to the chat area.
-   * 
+   *
    * @param message The message to append.
    */
   protected void appendMessageToChat(String role, String message) {
@@ -146,31 +125,23 @@ public abstract class MemoryController {
     App.chatHistory.append(role + ":\n" + message + "\n");
   }
 
-  /**
-   * Handles the "Go Back" button press event.
-   */
+  /** Handles the "Go Back" button press event. */
   @FXML
   protected void onGoBackButtonPressed() {
-    try {
-      Parent root = App.loadFxml("room.fxml");
-      App.primaryStage.setScene(new Scene(root));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    SceneManager.switchScene(SceneManager.Scenes.room);
+    SceneManager.setStyleSheet("/css/style.css");
   }
 
-  /**
-   * Creates and configures the ChatCompletionRequest object.
-   */
+  /** Creates and configures the ChatCompletionRequest object. */
   public void createChatCompletionResult() {
     try {
       ApiProxyConfig config = ApiProxyConfig.readConfig();
-      chatCompletionRequest = new ChatCompletionRequest(
-          config)
-          .setN(1)
-          .setTemperature(0.2)
-          .setModel(Model.GPT_4_1_MINI)
-          .setMaxTokens(500);
+      chatCompletionRequest =
+          new ChatCompletionRequest(config)
+              .setN(1)
+              .setTemperature(0.2)
+              .setModel(Model.GPT_4_1_MINI)
+              .setMaxTokens(500);
     } catch (ApiProxyException e) {
       e.printStackTrace();
     }
@@ -178,7 +149,7 @@ public abstract class MemoryController {
 
   /**
    * Sends a GPT request with the user's input and returns the AI's response.
-   * 
+   *
    * @param userInput The user's input message.
    * @return The AI's response message.
    */
@@ -186,21 +157,19 @@ public abstract class MemoryController {
     this.chatCompletionRequest.addMessage("User", userInput);
 
     try {
-      ChatCompletionResult chatCompletionResult = this.chatCompletionRequest
-          .execute();
-      Choice result = chatCompletionResult.getChoices()
-          .iterator().next();
+      ChatCompletionResult chatCompletionResult = this.chatCompletionRequest.execute();
+      Choice result = chatCompletionResult.getChoices().iterator().next();
       ChatMessage message = result.getChatMessage();
 
       // Replace what role the AI generated:
       int index = message.getContent().indexOf(":");
       if (index != -1) {
-        message.setContent(roleOfCharacter + ":\n"
-            + message.getContent().substring(index + 1)
-                .replaceFirst("\n", ""));
+        message.setContent(
+            roleOfCharacter
+                + ":\n"
+                + message.getContent().substring(index + 1).replaceFirst("\n", ""));
       } else {
-        message.setContent(roleOfCharacter + ":\n"
-            + message.getContent().replaceFirst("\n", ""));
+        message.setContent(roleOfCharacter + ":\n" + message.getContent().replaceFirst("\n", ""));
       }
 
       this.chatCompletionRequest.addMessage(message);
@@ -213,7 +182,7 @@ public abstract class MemoryController {
 
   /**
    * Loads the initial messages including the system prompt.
-   * 
+   *
    * @param promptId The ID of the prompt to load.
    */
   protected void loadInitialMessages(String promptId) {
@@ -235,15 +204,17 @@ public abstract class MemoryController {
    */
   protected String loadPrompt(String promptId) {
     try {
-      URL promptUrl = this.getClass().getClassLoader()
-          .getResource(promptId);
-      List<String> promptStrings = Files.readAllLines(
-          Paths.get(promptUrl.toURI()),
-          Charset.defaultCharset());
+      URL promptUrl = this.getClass().getClassLoader().getResource(promptId);
+      List<String> promptStrings =
+          Files.readAllLines(Paths.get(promptUrl.toURI()), Charset.defaultCharset());
       return String.join("\n", promptStrings);
     } catch (IOException | URISyntaxException e) {
       e.printStackTrace();
       throw new IllegalStateException(promptId + " not found");
     }
+  }
+
+  public Label getTimerLabel() {
+    return timerLabel;
   }
 }
