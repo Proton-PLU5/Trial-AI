@@ -32,9 +32,9 @@ public class WitnessHumanFlashback extends FlashbackController {
 
   @Override
   protected void setupImages() {
-    addImage("/images/defendantFlash1.png");
-    addImage("/images/defendantFlash2.png");
-    addImage("/images/defendantFlash3.png");
+    addImage("/images/humanFlash3.png");
+    addImage("/images/humanFlash2.png");
+    addImage("/images/humanFlash1.png");
   }
 
   @Override
