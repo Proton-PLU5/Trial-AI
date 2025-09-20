@@ -21,17 +21,17 @@ import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
+import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.utils.TimableScene;
+import nz.ac.auckland.se206.utils.Timer;
 
-public class VerdictController {
+public class VerdictController implements TimableScene {
 
   @FXML private Button yesButton;
   @FXML private Button noButton;
   @FXML private Button submitButton;
   @FXML private Label verdictTitleLabel1;
   @FXML private Label verdictTitleLabel2;
-  @FXML private Label correctLabel;
-  @FXML private Label incorrectLabel;
-  @FXML private Label timeoutLabel;
   @FXML private Label timerLabel;
   @FXML private Label verdictCorrectLabel;
   @FXML private Label rationaleCorrectLabel;
@@ -40,13 +40,14 @@ public class VerdictController {
   @FXML private TextArea rationaleJudgementTextArea;
 
   private ScheduledExecutorService finalTimerExecutor;
-  private int finalSecondsRemaining = 5;
+  private int finalSecondsRemaining = 60;
   private boolean choiceMade = false;
   private String optionChose = "";
   private String rationale = "";
   private String rationalePrompt = "";
   private ChatCompletionRequest chatCompletionRequest = null;
   private boolean rationaleSubmitted = false;
+  public Timer verdictTimer = null;
 
   @FXML
   private void initialize() {
@@ -54,11 +55,18 @@ public class VerdictController {
     MediaPlayer mediaPlayer = new MediaPlayer(media);
     mediaPlayer.play();
 
-    updateFinalTimerDisplay();
+    // updateFinalTimerDisplay();
 
-    startFinalTimer();
+    // startFinalTimer();
 
     createChatCompletionResult();
+
+    // Add ourselves to the timer service
+    App.timer.stopTimer();
+    verdictTimer = new Timer(2*60);
+    verdictTimer.addConsumer(getTimerConsumer());
+    verdictTimer.setCountDown(true);
+    verdictTimer.buildTimer();
   }
 
   
@@ -172,6 +180,7 @@ public class VerdictController {
 
   @FXML
   private void handleRationaleSubmitted() throws ApiProxyException {
+    verdictTimer.stopTimer();
     rationaleSubmitted = true;
     verdictTitleLabel2.setVisible(false);
     submitButton.setVisible(false);
@@ -186,6 +195,7 @@ public class VerdictController {
 
     if (rationale.isEmpty()) {
       rationaleCorrectLabel.setText("You didn't give a rationale."); 
+      rationaleCorrectLabel.setLayoutX(515);
     } else {
       // Add the rationale to the prompt
       rationalePrompt += rationale;
@@ -230,6 +240,7 @@ public class VerdictController {
                       String rationaleSummary = content.replaceFirst("^(\\S+\\s+){4}", "");
 
                       rationaleCorrectLabel.setText(rationaleJudgement);
+                      rationaleCorrectLabel.setLayoutX(501);
                       rationaleJudgementTextArea.setText(rationaleSummary);
                     });
 
@@ -242,5 +253,10 @@ public class VerdictController {
     gptThread.setDaemon(true);
     gptThread.start();
     return null;
+  }
+
+  @Override
+  public Label getTimerLabel() {
+    return timerLabel;
   }
 }

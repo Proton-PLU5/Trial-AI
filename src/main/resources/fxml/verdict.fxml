@@ -7,37 +7,46 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.VerdictController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="1408.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.VerdictController">
    <children>
-      <Button fx:id="yesButton" layoutX="382.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleYesClicked" text="Yes" />
-      <Button fx:id="noButton" layoutX="472.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleNoClicked" text="No" />
-      <Button fx:id="submitButton" layoutX="425.0" layoutY="524.0" mnemonicParsing="false" onAction="#handleRationaleSubmitted" text="Submit" visible="false" />
-      <Label fx:id="verdictTitleLabel1" layoutX="32.0" layoutY="67.0" text="Was the AI defendant guilty's AI’s decision-making process ethical, reasonable and justified?">
+      <Button fx:id="yesButton" layoutX="556.0" layoutY="432.0" mnemonicParsing="false" onAction="#handleYesClicked" text="Yes">
          <font>
-            <Font size="21.0" />
+            <Font size="25.0" />
+         </font></Button>
+      <Button fx:id="noButton" layoutX="792.0" layoutY="432.0" mnemonicParsing="false" onAction="#handleNoClicked" text="No">
+         <font>
+            <Font size="25.0" />
+         </font></Button>
+      <Button fx:id="submitButton" layoutX="648.0" layoutY="623.0" mnemonicParsing="false" onAction="#handleRationaleSubmitted" text="Submit" visible="false">
+         <font>
+            <Font size="25.0" />
+         </font></Button>
+      <Label fx:id="verdictTitleLabel1" layoutX="35.0" layoutY="47.0" prefHeight="43.0" prefWidth="1352.0" text="Was the AI defendant guilty's AI’s decision-making process ethical, reasonable and justified?">
+         <font>
+            <Font size="35.0" />
          </font>
       </Label>
-      <Label fx:id="verdictTitleLabel2" layoutX="265.0" layoutY="66.0" text="Explain the reasoning for your choice below." visible="false">
+      <Label fx:id="verdictTitleLabel2" layoutX="404.0" layoutY="47.0" text="Explain the reasoning for your choice below." visible="false">
          <font>
-            <Font size="21.0" />
+            <Font size="35.0" />
          </font>
       </Label>
-      <Label fx:id="correctLabel" layoutX="410.0" layoutY="292.0" text="You are correct" visible="false" />
-      <Label fx:id="incorrectLabel" layoutX="405.0" layoutY="292.0" text="You are incorrect" visible="false" />
       <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="350.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" visible="false" />
-      <Label fx:id="timerLabel" layoutX="818.0" layoutY="541.0" text="Label" />
-      <Label fx:id="timeoutLabel" layoutX="357.0" layoutY="292.0" text="You have run out of time. You lose." visible="false" />
-      <TextArea fx:id="rationaleTextArea" layoutX="140.0" layoutY="166.0" prefHeight="333.0" prefWidth="612.0" visible="false" wrapText="true" />
-      <Label fx:id="verdictCorrectLabel" layoutX="306.0" layoutY="67.0" text="Your verdict was..." visible="false">
+      <Label fx:id="timerLabel" layoutX="1215.0" layoutY="593.0" text="Label">
          <font>
-            <Font size="21.0" />
+            <Font size="35.0" />
+         </font></Label>
+      <TextArea fx:id="rationaleTextArea" layoutX="279.0" layoutY="148.0" prefHeight="442.0" prefWidth="838.0" visible="false" wrapText="true" />
+      <Label fx:id="verdictCorrectLabel" layoutX="475.0" layoutY="38.0" text="Your verdict was..." visible="false">
+         <font>
+            <Font size="35.0" />
          </font>
       </Label>
-      <Label fx:id="rationaleCorrectLabel" layoutX="306.0" layoutY="119.0" text="Your rationale was...">
+      <Label fx:id="rationaleCorrectLabel" layoutX="515.0" layoutY="90.0" text="You didn't give a rationale." visible="false">
          <font>
-            <Font size="21.0" />
+            <Font size="35.0" />
          </font>
       </Label>
-      <TextArea fx:id="rationaleJudgementTextArea" layoutX="140.0" layoutY="166.0" prefHeight="333.0" prefWidth="612.0" visible="false" wrapText="true" />
+      <TextArea fx:id="rationaleJudgementTextArea" layoutX="279.0" layoutY="148.0" prefHeight="442.0" prefWidth="838.0" visible="false" wrapText="true" />
    </children>
 </AnchorPane>
