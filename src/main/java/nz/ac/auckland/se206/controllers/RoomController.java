@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -35,7 +34,7 @@ public class RoomController implements TimableScene {
   @FXML private Button nextButton;
   @FXML private Label conversationRoleLabel;
   @FXML private Label chaconversationTextLabel;
-  @FXML private AnchorPane conversationPanel;
+  @FXML private AnchorPane conversationPane;
   private String currentChatCharacter = null;
   private Map<String, Boolean> characterInteracted = new HashMap<>();
   private TimerService timerService;
@@ -126,15 +125,14 @@ public class RoomController implements TimableScene {
       SceneManager.switchScene(getMemoryScene(characterId));
     }
   }
-  
+
   @FXML
   void handleNextButton() {
     nextButton.setVisible(false);
-    conversationPanel.setVisible(false);
+    conversationPane.setVisible(false);
     conversationRoleLabel.setVisible(false);
     chaconversationTextLabel.setVisible(false);
   }
-
 
   private SceneManager.Scenes getMemoryScene(String characterId) {
     switch (characterId) {
