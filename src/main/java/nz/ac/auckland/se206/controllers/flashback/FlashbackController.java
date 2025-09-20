@@ -9,8 +9,10 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.utils.TimableScene;
 
-public abstract class FlashbackController {
+public abstract class FlashbackController implements TimableScene {
   @FXML protected ImageView backgroundImage;
 
   @FXML protected Label titleLabel;
@@ -48,6 +50,9 @@ public abstract class FlashbackController {
     setupText();
     showCurrentImage();
     showCurrentText();
+
+    // Add ourselves to the timer service
+    App.timer.addConsumer(getTimerConsumer());
   }
 
   /** Abstract method to be implemented by child classes to setup their specific images */
@@ -58,20 +63,28 @@ public abstract class FlashbackController {
   /** Abstract method to handle navigation to memory scene */
   protected abstract void handleMemoryButton();
 
-  /** Add images to the stack from a list */
-  protected void addImagesToStack(List<String> imagePaths) {
-    imageStack.clear();
-    for (String imagePath : imagePaths) {
-      imageStack.push(imagePath);
-    }
+  /**
+   * Add image path to the image stack
+   * @param imagePath The path of the image to be added
+   */
+  protected void addImage(String imagePath) {
+    imageStack.push(imagePath);
+  }
+  
+  protected void onBackButtonPressed() {
+    // Default implementation does nothing
   }
 
-  protected void addTextToStack(String Role, List<String> conversationText) {
-    textStack.clear();
-    conversationRoleLabel.setText(Role);
-    for (String conversation : conversationText) {
-      textStack.push(conversation);
-    }
+  /**
+   * Add text to the text stack
+   * @param text The text to be added
+   */
+  protected void addText(String text) {
+    textStack.push(text);
+  }
+
+  protected void setRole(String role) {
+    conversationRoleLabel.setText(role);
   }
 
   /** Navigate to next image */
@@ -101,5 +114,10 @@ public abstract class FlashbackController {
   protected void showCurrentText() {
     String text = textStack.pop();
     conversationTextLabel.setText(text);
+  }
+
+  @Override
+  public Label getTimerLabel() {
+    return timerLabel;
   }
 }

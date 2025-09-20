@@ -18,6 +18,7 @@ import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
+import nz.ac.auckland.se206.utils.SceneManager;
 
 /**
  * Controller class for the chat view. Handles user interactions and communication with the GPT
@@ -123,9 +124,6 @@ public class ChatController {
       displayName = ROLE_DISPLAY_NAMES.get(profession);
     }
     txtaChat.appendText(displayName + ": " + msg.getContent() + "\n\n");
-    if ("assistant".equals(msg.getRole())) {
-      SceneManager.notifyOtherChats(profession, content);
-    }
   }
 
   public void receiveContextUpdate(String fromProfession, String message) {

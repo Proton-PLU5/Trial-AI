@@ -3,7 +3,6 @@ package nz.ac.auckland.se206.controllers;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,15 +12,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.utils.SceneManager;
+import nz.ac.auckland.se206.utils.TimableScene;
 
 /**
  * Controller class for the room view. Handles user interactions within the room where the user can
  * chat with customers and guess their profession.
  */
-public class RoomController {
+public class RoomController implements TimableScene {
 
   private static boolean isFirstTimeInit = true;
 
@@ -30,7 +32,10 @@ public class RoomController {
   @FXML private Rectangle defendant;
   @FXML private Button btnGuess;
   @FXML private Label timerLabel;
-  @FXML private Pane chatPanel;
+  @FXML private Button nextButton;
+  @FXML private Label conversationRoleLabel;
+  @FXML private Label chaconversationTextLabel;
+  @FXML private AnchorPane conversationPanel;
   private String currentChatCharacter = null;
   private Map<String, Boolean> characterInteracted = new HashMap<>();
   private TimerService timerService;
@@ -42,35 +47,7 @@ public class RoomController {
    */
   @FXML
   public void initialize() {
-
-    timerService = TimerService.getInstance();
-
-    // Bind timer display to label
-    if (timerLabel != null) {
-      timerLabel.textProperty().bind(timerService.timeDisplayProperty());
-
-      // Update timer style based on remaining time
-      timerService
-          .secondsRemainingProperty()
-          .addListener(
-              (obs, oldVal, newVal) -> {
-                updateTimerStyle(newVal.intValue());
-              });
-
-      // Handle game over when time runs out
-      timerService
-          .timeUpProperty()
-          .addListener(
-              (obs, wasTimeUp, isTimeUp) -> {
-                if (isTimeUp) {
-                  try {
-                    handleGameOver();
-                  } catch (IOException e) {
-                    e.printStackTrace();
-                  }
-                }
-              });
-    }
+    App.timer.addConsumer(this.getTimerConsumer());
 
     if (isFirstTimeInit) {
       // Media media = new Media(getClass().getResource("/sounds/startAudio.mp3").toExternalForm());
@@ -83,7 +60,7 @@ public class RoomController {
     if (!finalSceneLoaded) {
       finalSceneLoaded = true;
       Stage stage = (Stage) btnGuess.getScene().getWindow();
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/final.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/verdict.fxml"));
       Parent finalRoot = loader.load();
       timerService.startTimer();
       stage.setScene(new Scene(finalRoot));
@@ -144,39 +121,41 @@ public class RoomController {
 
     if (!hasInteracted) {
       characterInteracted.put(characterId, true);
-
-      Scene currentScene = ((Node) event.getSource()).getScene();
-      Stage stage = (Stage) currentScene.getWindow();
-      stage.getProperties().put("roomScene", currentScene);
-      SceneManager.AppUi flashbackScene = getFlashbackScene(characterId);
-      Parent flashbackRoot = SceneManager.getUiRoot(flashbackScene);
-      currentScene.setRoot(flashbackRoot);
-
+      SceneManager.switchScene(getFlashbackScene(characterId));
+      SceneManager.setStyleSheet("/css/style.css");
     } else {
-      if (chatPanel.getChildren().isEmpty() || !characterId.equals(currentChatCharacter)) {
-        chatPanel.getChildren().clear();
+      SceneManager.switchScene(getMemoryScene(characterId));
+    }
+  }
+  
+  @FXML
+  void handleNextButton() {
+    nextButton.setVisible(false);
+    conversationPanel.setVisible(false);
+    conversationRoleLabel.setVisible(false);
+    chaconversationTextLabel.setVisible(false);
+  }
 
-        Parent chatContent = SceneManager.getChatView(characterId);
-        ChatController chatController = SceneManager.getChatController(characterId);
 
-        chatController.setChatPanelContainer(chatPanel);
-        chatPanel.getChildren().add(chatContent);
-      }
-
-      chatPanel.setVisible(true);
+  private SceneManager.Scenes getMemoryScene(String characterId) {
+    switch (characterId) {
+      case "witnessAi":
+        return SceneManager.Scenes.aiMemory;
+      case "witnessHuman":
+        return SceneManager.Scenes.humanMemory;
+      default:
+        return SceneManager.Scenes.defendantMemory;
     }
   }
 
-  private SceneManager.AppUi getFlashbackScene(String characterId) {
+  private SceneManager.Scenes getFlashbackScene(String characterId) {
     switch (characterId) {
-      case "defendantAi":
-        return SceneManager.AppUi.defendant;
       case "witnessAi":
-        return SceneManager.AppUi.witnessAi;
+        return SceneManager.Scenes.witnessAi;
       case "witnessHuman":
-        return SceneManager.AppUi.witnessHuman;
+        return SceneManager.Scenes.witnessHuman;
       default:
-        return SceneManager.AppUi.defendant;
+        return SceneManager.Scenes.defendant;
     }
   }
 
@@ -189,5 +168,10 @@ public class RoomController {
   @FXML
   private void handleGuessClick(MouseEvent event) throws IOException {
     handleGameOver();
+  }
+
+  @Override
+  public Label getTimerLabel() {
+    return timerLabel;
   }
 }

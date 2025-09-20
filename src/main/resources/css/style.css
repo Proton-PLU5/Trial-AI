@@ -120,17 +120,24 @@
 /* ===== CONVERSATION PANEL STYLING ===== */
 /* Main conversation container with futuristic styling */
 #conversationPane {
-  -fx-background-color: rgba(15, 23, 42, 0.92); /* Semi-transparent dark blue */
-  -fx-border-color: #3b82f6; /* Bright blue border */
+  -fx-background-color: rgba(15, 23, 42, 0.92);
+  /* Semi-transparent dark blue */
+  -fx-border-color: #3b82f6;
+  /* Bright blue border */
   -fx-border-width: 2px;
   -fx-border-radius: 16px;
   -fx-background-radius: 16px;
-  -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.5), 10, 0.3, 0, 1); /* Subtle glow */
+  -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.5), 10, 0.3, 0, 1);
+  /* Subtle glow */
   -fx-padding: 15;
-  -fx-pref-height: -1; /* Allow height to expand with content */
-  -fx-min-height: 150px; /* Minimum height to accommodate buttons */
-  -fx-background-insets: 0; /* Ensure background stays within bounds */
-  -fx-border-insets: 0; /* Ensure border stays within bounds */
+  -fx-pref-height: -1;
+  /* Allow height to expand with content */
+  -fx-min-height: 150px;
+  /* Minimum height to accommodate buttons */
+  -fx-background-insets: 0;
+  /* Ensure background stays within bounds */
+  -fx-border-insets: 0;
+  /* Ensure border stays within bounds */
 }
 
 /* Force all children to stay within bounds */
@@ -140,7 +147,8 @@
 
 /* Alternative solid background version */
 .conversation-panel-solid {
-  -fx-background-color: #0f172a; /* Solid dark background */
+  -fx-background-color: #0f172a;
+  /* Solid dark background */
   -fx-border-color: #3b82f6;
   -fx-border-width: 3px;
   -fx-border-radius: 20px;
@@ -151,11 +159,13 @@
 
 /* ===== CONVERSATION ROLE LABEL ===== */
 #conversationRoleLabel {
-  -fx-text-fill: #60a5fa; /* Bright blue text */
+  -fx-text-fill: #60a5fa;
+  /* Bright blue text */
   -fx-font-family: "Consolas", "Courier New", monospace;
   -fx-font-size: 16px;
   -fx-font-weight: bold;
-  -fx-background-color: rgba(30, 58, 138, 0.25); /* Subtle background */
+  -fx-background-color: rgba(30, 58, 138, 0.25);
+  /* Subtle background */
   -fx-background-radius: 6px;
   -fx-padding: 6 12 6 12;
   -fx-border-color: #1e3a8a;
@@ -168,20 +178,26 @@
 
 /* ===== CONVERSATION TEXT LABEL ===== */
 #conversationTextLabel {
-  -fx-text-fill: #e2e8f0; /* Light gray text for readability */
+  -fx-text-fill: #e2e8f0;
+  /* Light gray text for readability */
   -fx-font-family: "Consolas", "Courier New", monospace;
   -fx-font-size: 13px;
   -fx-line-spacing: 1px;
-  -fx-background-color: rgba(30, 41, 59, 0.3); /* Subtle text background */
+  -fx-background-color: rgba(30, 41, 59, 0.3);
+  /* Subtle text background */
   -fx-background-radius: 8px;
   -fx-padding: 10 14 10 14;
   -fx-border-color: #334155;
   -fx-border-width: 1px;
   -fx-border-radius: 8px;
-  -fx-wrap-text: true; /* Enable text wrapping */
-  -fx-pref-height: -1; /* Allow height to expand as needed */
-  -fx-min-height: -1; /* Allow natural minimum height */
-  -fx-max-height: -1; /* Remove height restriction to show all text */
+  -fx-wrap-text: true;
+  /* Enable text wrapping */
+  -fx-pref-height: -1;
+  /* Allow height to expand as needed */
+  -fx-min-height: -1;
+  /* Allow natural minimum height */
+  -fx-max-height: -1;
+  /* Remove height restriction to show all text */
 }
 
 /* Enhanced conversation text with better contrast */
@@ -399,142 +415,90 @@
 /* ===== RECTANGLE (Memory BOXES) STYLING ===== */
 /* Transparent blue boxes for defendant memory interface */
 
-#rec1, #rec2, #rec3, #rec4 {
-  -fx-fill: rgba(30, 58, 138, 0.3); /* Semi-transparent blue background */
-  -fx-stroke: #3b82f6; /* Blue border matching theme */
+#rec1,
+#rec2,
+#rec3,
+#rec4 {
+  -fx-fill: rgba(30, 58, 138, 0.3);
+  /* Semi-transparent blue background */
+  -fx-stroke: #3b82f6;
+  /* Blue border matching theme */
   -fx-stroke-width: 2px;
   -fx-stroke-type: inside;
-  -fx-arc-height: 12px; /* Rounded corners to match theme */
+  -fx-arc-height: 12px;
+  /* Rounded corners to match theme */
   -fx-arc-width: 12px;
-  -fx-opacity: 0.85; /* Additional transparency control */
-  -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.4), 8, 0.3, 0, 0); /* Subtle glow */
+  -fx-opacity: 0.85;
+  /* Additional transparency control */
+  -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.4), 8, 0.3, 0, 0);
+  /* Subtle glow */
 }
 
 /* Hover effect for interactive rectangles */
-#rec1:hover, #rec2:hover, #rec3:hover, #rec4:hover {
-  -fx-fill: rgba(37, 99, 235, 0.4); /* Slightly more opaque on hover */
-  -fx-stroke: #60a5fa; /* Lighter blue border on hover */
+#rec1:hover,
+#rec2:hover,
+#rec3:hover,
+#rec4:hover {
+  -fx-fill: rgba(37, 99, 235, 0.4);
+  /* Slightly more opaque on hover */
+  -fx-stroke: #60a5fa;
+  /* Lighter blue border on hover */
   -fx-stroke-width: 3px;
-  -fx-effect: dropshadow(three-pass-box, rgba(96, 165, 250, 0.6), 12, 0.4, 0, 0); /* Enhanced glow on hover */
+  -fx-effect: dropshadow(three-pass-box, rgba(96, 165, 250, 0.6), 12, 0.4, 0, 0);
+  /* Enhanced glow on hover */
 }
 
 /* Active/Selected state for rectangles */
-#rec1:pressed, #rec2:pressed, #rec3:pressed, #rec4:pressed {
-  -fx-fill: rgba(29, 78, 216, 0.5); /* More solid when pressed/selected */
+#rec1:pressed,
+#rec2:pressed,
+#rec3:pressed,
+#rec4:pressed {
+  -fx-fill: rgba(29, 78, 216, 0.5);
+  /* More solid when pressed/selected */
   -fx-stroke: #3b82f6;
   -fx-stroke-width: 2px;
-  -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.8), 16, 0.5, 0, 0); /* Strong glow when active */
+  -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.8), 16, 0.5, 0, 0);
+  /* Strong glow when active */
 }
 
 /* Alternative styling for different rectangle states if needed */
 .memory-box-normal {
-  -fx-fill: rgba(30, 58, 138, 0.25); /* Default transparent blue */
+  -fx-fill: rgba(30, 58, 138, 0.25);
+  /* Default transparent blue */
   -fx-stroke: #1e3a8a;
   -fx-stroke-width: 2px;
 }
 
 .memory-box-highlighted {
-  -fx-fill: rgba(37, 99, 235, 0.4); /* Highlighted state */
+  -fx-fill: rgba(37, 99, 235, 0.4);
+  /* Highlighted state */
   -fx-stroke: #3b82f6;
   -fx-stroke-width: 3px;
   -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.5), 10, 0.3, 0, 0);
 }
 
 .memory-box-selected {
-  -fx-fill: rgba(59, 130, 246, 0.6); /* Selected state */
+  -fx-fill: rgba(59, 130, 246, 0.6);
+  /* Selected state */
   -fx-stroke: #60a5fa;
   -fx-stroke-width: 3px;
   -fx-effect: dropshadow(three-pass-box, rgba(96, 165, 250, 0.7), 14, 0.4, 0, 0);
 }
 
-/* ===== BUTTON POSITIONING ===== */
-/* Next Button - positioned at bottom right inside conversation panel */
-#conversationPane #nextButton {
-  -fx-background-color: #1e3a8a;
-  -fx-border-color: #3b82f6;
-  -fx-border-width: 2px;
-  -fx-border-radius: 12px;
-  -fx-background-radius: 12px;
-  -fx-text-fill: #ffffff;
+/* Animation transition for smooth state changes */
+#rec1,
+#rec2,
+#rec3,
+#rec4 {
+  -fx-transition: all 0.3s ease-in-out;
+}
+
+.title_label {
+  -fx-text-fill: linear-gradient(from 0% 0% to 100% 100%, #ffffff 0%, #e2e8f0 50%, #60a5fa 100%);
   -fx-font-family: "Consolas", "Courier New", monospace;
-  -fx-font-size: 14px;
+  -fx-font-size: 42px;
   -fx-font-weight: bold;
-  -fx-padding: 8 16 8 16;
-  -fx-cursor: hand;
-  -fx-min-width: 60px;
-  -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.3), 5, 0.2, 0, 1);
-}
-
-#conversationPane #nextButton:hover {
-  -fx-background-color: #2563eb;
-  -fx-border-color: #60a5fa;
-  -fx-effect: dropshadow(three-pass-box, rgba(96, 165, 250, 0.5), 8, 0.3, 0, 1);
-}
-
-#conversationPane #nextButton:pressed {
-  -fx-background-color: #1d4ed8;
-  -fx-border-color: #3b82f6;
-}
-
-/* Memory Button - positioned at bottom right inside conversation panel */
-#conversationPane #memoryButton {
-  -fx-background-color: #1e3a8a;
-  -fx-border-color: #3b82f6;
-  -fx-border-width: 2px;
-  -fx-border-radius: 12px;
-  -fx-background-radius: 12px;
-  -fx-text-fill: #ffffff;
-  -fx-font-family: "Consolas", "Courier New", monospace;
-  -fx-font-size: 14px;
-  -fx-font-weight: bold;
-  -fx-padding: 8 16 8 16;
-  -fx-cursor: hand;
-  -fx-min-width: 120px;
-  -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.3), 5, 0.2, 0, 1);
-}
-
-#conversationPane #memoryButton:hover {
-  -fx-background-color: #2563eb;
-  -fx-border-color: #60a5fa;
-  -fx-effect: dropshadow(three-pass-box, rgba(96, 165, 250, 0.5), 8, 0.3, 0, 1);
-}
-
-#conversationPane #memoryButton:pressed {
-  -fx-background-color: #1d4ed8;
-  -fx-border-color: #3b82f6;
-}
-
-/* Alternative standalone button styling if buttons are outside the conversation panel */
-#nextButton, #memoryButton {
-  -fx-background-color: #1e3a8a;
-  -fx-border-color: #3b82f6;
-  -fx-border-width: 2px;
-  -fx-border-radius: 12px;
-  -fx-background-radius: 12px;
-  -fx-text-fill: #ffffff;
-  -fx-font-family: "Consolas", "Courier New", monospace;
-  -fx-font-size: 14px;
-  -fx-font-weight: bold;
-  -fx-padding: 8 16 8 16;
-  -fx-cursor: hand;
-  -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.3), 5, 0.2, 0, 1);
-}
-
-#nextButton:hover, #memoryButton:hover {
-  -fx-background-color: #2563eb;
-  -fx-border-color: #60a5fa;
-  -fx-effect: dropshadow(three-pass-box, rgba(96, 165, 250, 0.5), 8, 0.3, 0, 1);
-}
-
-#nextButton:pressed, #memoryButton:pressed {
-  -fx-background-color: #1d4ed8;
-  -fx-border-color: #3b82f6;
-}
-
-#nextButton {
-  -fx-min-width: 60px;
-}
-
-#memoryButton {
-  -fx-min-width: 120px;
+  -fx-alignment: center;
+  -fx-effect: dropshadow(three-pass-box, rgba(96, 165, 250, 0.6), 12, 0.4, 0, 2);
+  -fx-padding: 20 40 20 40;
 }

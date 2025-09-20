@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.controllers.flashback.FlashbackController;
+import nz.ac.auckland.se206.utils.SceneManager;
+import nz.ac.auckland.se206.utils.SceneManager.Scenes;
 
 public class DefendantFlashback extends FlashbackController {
 
@@ -26,7 +28,7 @@ public class DefendantFlashback extends FlashbackController {
   private List<String> conversationText;
 
   private int currentDrawingIndex = 0;
-
+  
   @FXML
   protected void initialize() {
     conversationRoleLabel.setText("Defendant");
@@ -36,26 +38,20 @@ public class DefendantFlashback extends FlashbackController {
 
   @Override
   protected void setupImages() {
-    imagePaths = new ArrayList<>();
-    imagePaths.add("/images/defendantFlash3.png");
-    imagePaths.add("/images/defendantFlash2.png");
-    imagePaths.add("/images/defendantFlash1.png");
-    addImagesToStack(imagePaths);
+    addImage("/images/defendantFlash3.png");
+    addImage("/images/defendantFlash2.png");
+    addImage("/images/defendantFlash1.png");
   }
 
   @Override
   protected void setupText() {
-    conversationText = new ArrayList<>();
-    conversationText.add("Paragraph 3: dahdasidgaiudhauih");
-    conversationText.add("Paragraph 2: hdiuwhdiuadihadi");
-    conversationText.add("Paragraph 1: dhauhdiuhdiudh");
-    addTextToStack("defendant", conversationText);
+    addText("Paragraph 3: dahdasidgaiudhauih");
+    addText("Paragraph 2: hdiuwhdiuadihadi");
+    addText("Paragraph 1: dhauhdiuhdiudh");
   }
 
   @FXML
   protected void handleMemoryButton() {
-    Stage stage = (Stage) memoryButton.getScene().getWindow();
-    Parent roomRoot = SceneManager.getUiRoot(SceneManager.AppUi.defendantMemory);
-    stage.getScene().setRoot(roomRoot);
+    SceneManager.switchScene(Scenes.defendantMemory);
   }
 }
