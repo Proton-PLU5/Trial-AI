@@ -46,6 +46,7 @@ public class Timer {
    */
   public Timer addConsumer(Consumer<String> consumer) {
     this.consumers.add(consumer);
+    updateTimerLabel(this.count);
     return this;
   }
 

@@ -54,6 +54,4 @@ public class DefendantFlashback extends FlashbackController {
   protected void handleMemoryButton() {
     SceneManager.switchScene(Scenes.defendantMemory);
   }
-
-  
 }

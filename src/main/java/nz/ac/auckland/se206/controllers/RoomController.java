@@ -122,6 +122,7 @@ public class RoomController implements TimableScene {
     if (!hasInteracted) {
       characterInteracted.put(characterId, true);
       SceneManager.switchScene(getFlashbackScene(characterId));
+      SceneManager.setStyleSheet("/css/style.css");
     } else {
       SceneManager.switchScene(getMemoryScene(characterId));
     }

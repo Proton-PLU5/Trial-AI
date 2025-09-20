@@ -7,6 +7,9 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+
+import javax.management.RuntimeErrorException;
+
 import javafx.animation.PathTransition;
 import javafx.animation.Transition;
 import javafx.concurrent.Task;
@@ -26,13 +29,12 @@ import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.utils.SceneManager;
+import nz.ac.auckland.se206.utils.TimableScene;
 
-public abstract class MemoryController {
+public abstract class MemoryController implements TimableScene {
 
   protected ChatCompletionRequest chatCompletionRequest;
-
-  @FXML private Label titleLabel;
-  @FXML private Label descriptionLabel;
 
   // Chat Elements
   @FXML private AnchorPane chatPane;
@@ -40,9 +42,6 @@ public abstract class MemoryController {
   @FXML private Button chatButton;
   @FXML private TextArea textArea;
   @FXML private TextField textField;
-
-  // Title Pane
-  @FXML private AnchorPane titleBlock;
 
   // Navigation
   @FXML private Button goBackButton;
@@ -57,28 +56,16 @@ public abstract class MemoryController {
 
   // Constructor
   public MemoryController(String promptId) {
-    createChatCompletionResult();
-    loadInitialMessages(promptId);
+    try {
+      createChatCompletionResult();
+      loadInitialMessages(promptId);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   protected void initialize() {
     chatPane.setVisible(false);
-
-    // Animate title block to disappear after 3 seconds
-    titleBlock.setVisible(true);
-    Transition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(3));
-    delay.setOnFinished(event -> hideTitleBlock());
-    delay.play();
-  }
-
-  /** Hides the title block with a slide-left animation. */
-  private void hideTitleBlock() {
-    PathTransition transition = new PathTransition();
-    transition.setNode(titleBlock);
-    transition.setDuration(javafx.util.Duration.seconds(1));
-    transition.setPath(new javafx.scene.shape.Line(0, 0, -100, 0));
-    transition.setCycleCount(1);
-    transition.setOnFinished(event -> titleBlock.setVisible(false));
   }
 
   /** Handles the "Chat" button press event to toggle chat visibility. */
@@ -141,12 +128,8 @@ public abstract class MemoryController {
   /** Handles the "Go Back" button press event. */
   @FXML
   protected void onGoBackButtonPressed() {
-    try {
-      Parent root = App.loadFxml("room.fxml");
-      App.primaryStage.setScene(new Scene(root));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    SceneManager.switchScene(SceneManager.Scenes.room);
+    SceneManager.setStyleSheet("/css/style.css");
   }
 
   /** Creates and configures the ChatCompletionRequest object. */
@@ -229,5 +212,9 @@ public abstract class MemoryController {
       e.printStackTrace();
       throw new IllegalStateException(promptId + " not found");
     }
+  }
+
+  public Label getTimerLabel() {
+    return timerLabel;
   }
 }
