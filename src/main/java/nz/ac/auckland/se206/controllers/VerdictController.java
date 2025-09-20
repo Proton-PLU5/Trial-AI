@@ -21,8 +21,11 @@ import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
+import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.utils.TimableScene;
+import nz.ac.auckland.se206.utils.Timer;
 
-public class VerdictController {
+public class VerdictController implements TimableScene {
 
   @FXML private Button yesButton;
   @FXML private Button noButton;
@@ -40,13 +43,14 @@ public class VerdictController {
   @FXML private TextArea rationaleJudgementTextArea;
 
   private ScheduledExecutorService finalTimerExecutor;
-  private int finalSecondsRemaining = 5;
+  private int finalSecondsRemaining = 60;
   private boolean choiceMade = false;
   private String optionChose = "";
   private String rationale = "";
   private String rationalePrompt = "";
   private ChatCompletionRequest chatCompletionRequest = null;
   private boolean rationaleSubmitted = false;
+  public Timer verdictTimer = null;
 
   @FXML
   private void initialize() {
@@ -54,11 +58,18 @@ public class VerdictController {
     MediaPlayer mediaPlayer = new MediaPlayer(media);
     mediaPlayer.play();
 
-    updateFinalTimerDisplay();
+    // updateFinalTimerDisplay();
 
-    startFinalTimer();
+    // startFinalTimer();
 
     createChatCompletionResult();
+
+    // Add ourselves to the timer service
+    App.timer.stopTimer();
+    verdictTimer = new Timer(2*60);
+    verdictTimer.addConsumer(getTimerConsumer());
+    verdictTimer.setCountDown(true);
+    verdictTimer.buildTimer();
   }
 
   
@@ -172,6 +183,7 @@ public class VerdictController {
 
   @FXML
   private void handleRationaleSubmitted() throws ApiProxyException {
+    verdictTimer.stopTimer();
     rationaleSubmitted = true;
     verdictTitleLabel2.setVisible(false);
     submitButton.setVisible(false);
@@ -190,8 +202,6 @@ public class VerdictController {
       // Add the rationale to the prompt
       rationalePrompt += rationale;
       System.out.println(rationalePrompt); // Debugging
-
-      rationaleJudgementTextArea.setText("Loading assessment of your rationale...");
 
       // Send the prompt and rationale to gpt
       String verdict = "verdict";
@@ -244,5 +254,10 @@ public class VerdictController {
     gptThread.setDaemon(true);
     gptThread.start();
     return null;
+  }
+
+  @Override
+  public Label getTimerLabel() {
+    return timerLabel;
   }
 }
