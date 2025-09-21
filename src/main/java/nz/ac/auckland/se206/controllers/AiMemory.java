@@ -13,7 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.utils.SceneManager;
 
-public class AiMemory_temp {
+public class AiMemory {
 
   @FXML private Button roomBtn;
   @FXML private Button chatBtn;
