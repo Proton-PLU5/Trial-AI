@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.controllers.flashback.FlashbackController;
 
-public class WitnessHumanFlashback extends FlashbackController {
+public class HumanFlashback extends FlashbackController {
   @FXML private ImageView backgroundImage;
   @FXML private Button nextBtn;
   @FXML private Label timerLabel;
