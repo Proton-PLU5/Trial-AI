@@ -12,10 +12,10 @@ public class SceneManager {
 
   public enum Scenes {
     chat,
-    defendant,
     room,
-    witnessAi,
-    witnessHuman,
+    defendantFlashback,
+    humanFlashback,
+    aiFlashback,
     defendantMemory,
     humanMemory,
     aiMemory,

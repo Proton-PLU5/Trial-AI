@@ -146,11 +146,11 @@ public class RoomController implements TimableScene {
   private SceneManager.Scenes getFlashbackScene(String characterId) {
     switch (characterId) {
       case "witnessAi":
-        return SceneManager.Scenes.witnessAi;
+        return SceneManager.Scenes.aiFlashback;
       case "witnessHuman":
-        return SceneManager.Scenes.witnessHuman;
+        return SceneManager.Scenes.humanFlashback;
       default:
-        return SceneManager.Scenes.defendant;
+        return SceneManager.Scenes.defendantFlashback;
     }
   }
 
