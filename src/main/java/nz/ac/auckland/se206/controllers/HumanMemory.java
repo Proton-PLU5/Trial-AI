@@ -33,6 +33,12 @@ public class HumanMemory extends MemoryController {
   @FXML private Label titleLabel;
   @FXML private Label descriptionLabel;
 
+  // Shopping List
+  @FXML private Label shoppingListItem1Label;
+  @FXML private Label shoppingListItem2Label;
+  @FXML private Label shoppingListItem3Label;
+  @FXML private Label shoppingListItem4Label;
+
   public HumanMemory() {
     super("prompts/witnessHuman.txt");
   }
