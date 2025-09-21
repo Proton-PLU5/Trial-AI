@@ -45,9 +45,9 @@ public class DefendantFlashback extends FlashbackController {
 
   @Override
   protected void setupText() {
-    addText("Paragraph 3: dahdasidgaiudhauih");
-    addText("Paragraph 2: hdiuwhdiuadihadi");
-    addText("Paragraph 1: dhauhdiuhdiudh");
+    addText("Upon seeing the individual in court with us today, I immediately contacted the local authorities after reading their database profile.");
+    addText("Since all our customers have a membership with us, I can access information on them from our database.");
+    addText("My job is to surveil the customers when they first walk into our store.");
   }
 
   @FXML

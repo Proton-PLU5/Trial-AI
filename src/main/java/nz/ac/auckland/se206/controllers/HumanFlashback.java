@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.controllers.flashback.FlashbackController;
 
-public class WitnessHumanFlashback extends FlashbackController {
+public class HumanFlashback extends FlashbackController {
   @FXML private ImageView backgroundImage;
   @FXML private Button nextBtn;
   @FXML private Label timerLabel;
@@ -39,9 +39,9 @@ public class WitnessHumanFlashback extends FlashbackController {
 
   @Override
   protected void setupText() {
-    addText("Paragraph 3: dahdasidgaiudhauih");
-    addText("Paragraph 2: hdiuwhdiuadihadi");
-    addText("Paragraph 1: dhauhdiuhdiudh");
+    addText("But when I was about to leave the store, the police suddenly showed up to arrest me, and I had no idea why.");
+    addText("After I finished getting everything I needed, I went to purchase it all at the self-checkout.");
+    addText("I was just shopping at the supermarket normally, with nothing out of the usual.");
   }
 
   @FXML
