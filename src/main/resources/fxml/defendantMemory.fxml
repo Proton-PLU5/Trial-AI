@@ -208,7 +208,7 @@
                   </GridPane>
                </children>
             </StackPane>
-            <AnchorPane fx:id="chatPane" layoutX="358.0" layoutY="131.0" prefHeight="510.0" prefWidth="548.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" visible="false">
+            <AnchorPane fx:id="chatPane" layoutX="358.0" layoutY="131.0" prefHeight="510.0" prefWidth="548.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">
                <children>
                   <Label layoutX="14.0" layoutY="8.0" text="Conversation">
                      <font>
@@ -217,7 +217,7 @@
                   </Label>
                   <TextArea fx:id="textArea" layoutX="17.0" layoutY="46.0" prefHeight="414.0" prefWidth="515.0" />
                   <TextField fx:id="textField" layoutX="17.0" layoutY="471.0" prefHeight="25.0" prefWidth="419.0" />
-                  <Button layoutX="446.0" layoutY="471.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Send" />
+                  <Button fx:id="sendButton" layoutX="446.0" layoutY="471.0" mnemonicParsing="false" onAction="#onSendButtonPressed" prefHeight="25.0" prefWidth="87.0" text="Send" />
                </children>
             </AnchorPane>
          </children></AnchorPane>
