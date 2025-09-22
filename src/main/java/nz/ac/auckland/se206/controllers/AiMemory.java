@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.SceneManager;
@@ -25,11 +26,13 @@ public class AiMemory extends MemoryController {
   @FXML private Pane rootPane;
   @FXML private ImageView mainImageView;
   @FXML private ImageView xrayImageView;
+  @FXML private Rectangle overlayRectangle;
 
   private TimerService timerService;
   private Circle clipCircle;
   private static final double CIRCLE_RADIUS = 75.0;
   private boolean isXrayMode = false;
+  private boolean isFirstTime = true;
 
   public AiMemory() {
     super("prompts/witnessAi.txt");
@@ -89,9 +92,13 @@ public class AiMemory extends MemoryController {
     xrayImageView.setVisible(false);
   }
 
+  // Add interaction event when concealed item is detected here
   @FXML
-  private void interactableHovered() {
-    System.out.println("Identified conceled item");
+  private void interactableComplete() {
+    if (isXrayMode && isFirstTime) {
+      System.out.println("Identified conceled item");
+      isFirstTime = false;
+    }
   }
 
   private void updateClipPosition(double mouseX, double mouseY) {
