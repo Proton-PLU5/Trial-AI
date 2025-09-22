@@ -17,14 +17,14 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="736.0" prefWidth="1408.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.HumanMemory">
    <children>
-      <AnchorPane fx:id="aisle1Pane" prefHeight="736.0" prefWidth="1416.0" visible="false">
+      <AnchorPane fx:id="aisle1Pane" prefHeight="736.0" prefWidth="1416.0">
          <children>
             <ImageView fitHeight="756.0" fitWidth="1416.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/humanMemoryAisle1.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="73.0" layoutX="974.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="aisle1Item" fitHeight="80.0" fitWidth="73.0" layoutX="974.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/humanMemoryAisle1Item.png" />
                </image>
@@ -38,7 +38,7 @@
                   <Image url="@../images/humanMemoryDefault.png" />
                </image>
             </ImageView>
-            <Rectangle fx:id="aisle1Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="347.0" layoutX="79.0" layoutY="108.0" stroke="TRANSPARENT" strokeType="INSIDE" width="249.0" />
+            <Rectangle fx:id="aisle1Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="347.0" layoutX="79.0" layoutY="108.0" onMouseClicked="#handleAisle1RectangleClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="249.0" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="shoppingListPane" layoutX="1077.0" layoutY="9.0" prefHeight="200.0" prefWidth="200.0">

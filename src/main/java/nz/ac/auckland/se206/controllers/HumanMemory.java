@@ -12,9 +12,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.utils.SceneManager;
@@ -38,6 +41,14 @@ public class HumanMemory extends MemoryController {
   @FXML private Label shoppingListItem2Label;
   @FXML private Label shoppingListItem3Label;
   @FXML private Label shoppingListItem4Label;
+
+  // Main Aisle
+  @FXML private AnchorPane mainAislePane;
+  @FXML private Rectangle aisle1Rectangle;
+
+  // Aisle 1
+  @FXML private AnchorPane aisle1Pane;
+  @FXML private ImageView aisle1Item;
 
   public HumanMemory() {
     super("prompts/witnessHuman.txt");
@@ -66,5 +77,11 @@ public class HumanMemory extends MemoryController {
   @FXML
   private void handleOpenChatButtonClick(MouseEvent event) throws IOException {
     chatPanel.setVisible(true);
+  }
+
+  @FXML
+  private void handleAisle1RectangleClicked(MouseEvent event) throws IOException {
+    mainAislePane.setVisible(false);
+    aisle1Pane.setVisible(true);
   }
 }
