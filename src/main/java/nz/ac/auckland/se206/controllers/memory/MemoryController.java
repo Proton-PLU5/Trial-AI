@@ -11,7 +11,9 @@ import java.util.List;
 import javax.management.RuntimeErrorException;
 
 import javafx.animation.PathTransition;
+import javafx.animation.PauseTransition;
 import javafx.animation.Transition;
+import javafx.animation.TranslateTransition;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -21,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest.Model;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionResult;
@@ -48,6 +51,11 @@ public abstract class MemoryController implements TimableScene {
 
   // Timer
   @FXML private Label timerLabel;
+
+  // Title 
+  @FXML protected AnchorPane titleBlock;
+  @FXML protected Label titleLabel;
+  @FXML protected Label descriptionLabel;
 
   // Chat visibility state
   private boolean isChatVisible = false;
@@ -157,7 +165,7 @@ public abstract class MemoryController implements TimableScene {
    * @return The AI's response message.
    */
   protected String sendGPTRequest(String userInput) {
-    this.chatCompletionRequest.addMessage("User", userInput);
+    this.chatCompletionRequest.addMessage("user", userInput);
 
     try {
       ChatCompletionResult chatCompletionResult = this.chatCompletionRequest.execute();
@@ -165,15 +173,7 @@ public abstract class MemoryController implements TimableScene {
       ChatMessage message = result.getChatMessage();
 
       // Replace what role the AI generated:
-      int index = message.getContent().indexOf(":");
-      if (index != -1) {
-        message.setContent(
-            roleOfCharacter
-                + ":\n"
-                + message.getContent().substring(index + 1).replaceFirst("\n", ""));
-      } else {
-        message.setContent(roleOfCharacter + ":\n" + message.getContent().replaceFirst("\n", ""));
-      }
+      message.setContent("\n" + roleOfCharacter + ":\n" + message.getContent());
 
       this.chatCompletionRequest.addMessage(message);
       return message.getContent();
@@ -215,6 +215,22 @@ public abstract class MemoryController implements TimableScene {
       e.printStackTrace();
       throw new IllegalStateException(promptId + " not found");
     }
+  }
+
+  protected void createTitleDisappearAnimation() {
+    // Move the title block to the right
+    TranslateTransition transition = new TranslateTransition(Duration.seconds(1), titleBlock);
+    transition.setFromX(0);
+    transition.setToX(-700);
+    transition.setOnFinished(event -> titleBlock.setVisible(false));
+    
+    PauseTransition pause = new PauseTransition(Duration.seconds(4));
+    pause.setOnFinished(event -> {
+      transition.play();
+    });
+
+    titleBlock.setTranslateX(0);
+    pause.play();
   }
 
   public Label getTimerLabel() {

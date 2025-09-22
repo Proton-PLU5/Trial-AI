@@ -53,14 +53,12 @@ public class DefendantMemory extends MemoryController {
   @FXML private Label customerAgeLabel;
   @FXML private Label customerCriminalRecordLabel;
 
-  // Title
-  @FXML private AnchorPane titleBlock;
-  @FXML private Label titleLabel;
-  @FXML private Label descriptionLabel;
+
 
   private String pin = "_ _ _ _";
   private final String correctPin = "1 2 3 4";
   private static AudioClip keyPadAudioClip;
+  private static boolean loginSequenceCompleted = false;
   private AnimationTimer progressArcAnimationTimer;
 
   static {
@@ -86,6 +84,19 @@ public class DefendantMemory extends MemoryController {
     initialPane.setVisible(true);
     keypadPane.setVisible(false);
     cctvPane.setVisible(false);
+
+
+    if (loginSequenceCompleted) {
+      loginPane.setVisible(false);
+      cctvPane.setVisible(true);
+      titleBlock.setVisible(true);
+      descriptionLabel.setText("Click on the different characters to view their details.");
+      titleLabel.setText("View Character Details");
+    } else {
+      titleBlock.setVisible(true);
+      descriptionLabel.setText("Please login to access the CCTV footage.");
+      titleLabel.setText("Login Required");
+    }
 
     Platform.runLater(() -> {
       progressArc.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
@@ -127,6 +138,9 @@ public class DefendantMemory extends MemoryController {
   @FXML
   private void onSubmitPinPressed(ActionEvent event) {
     if (pin.equals(correctPin)) {
+      // Mark login sequence as completed
+      loginSequenceCompleted = true;
+
       // Correct pin entered, proceed to next pane
       loginPane.setVisible(false);
       cctvPane.setVisible(true);
@@ -236,19 +250,5 @@ public class DefendantMemory extends MemoryController {
     customerDetailsPane.setVisible(false);
   }
 
-  private void createTitleDisappearAnimation() {
-    // Move the title block to the right
-    TranslateTransition transition = new TranslateTransition(Duration.seconds(3), titleBlock);
-    transition.setFromX(0);
-    transition.setToX(-700);
-    transition.setOnFinished(event -> titleBlock.setVisible(false));
-    
-    PauseTransition pause = new PauseTransition(Duration.seconds(4));
-    pause.setOnFinished(event -> {
-      transition.play();
-    });
-
-    titleBlock.setTranslateX(0);
-    pause.play();
-  }
+  
 }
