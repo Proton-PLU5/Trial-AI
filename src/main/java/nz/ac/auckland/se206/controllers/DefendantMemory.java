@@ -61,6 +61,7 @@ public class DefendantMemory extends MemoryController {
   private String pin = "_ _ _ _";
   private final String correctPin = "1 2 3 4";
   private static AudioClip keyPadAudioClip;
+  private static boolean loginSequenceCompleted = false;
   private AnimationTimer progressArcAnimationTimer;
 
   static {
@@ -86,6 +87,18 @@ public class DefendantMemory extends MemoryController {
     initialPane.setVisible(true);
     keypadPane.setVisible(false);
     cctvPane.setVisible(false);
+
+    if (loginSequenceCompleted) {
+      loginPane.setVisible(false);
+      cctvPane.setVisible(true);
+      titleBlock.setVisible(true);
+      descriptionLabel.setText("Click on the different characters to view their details.");
+      titleLabel.setText("View Character Details");
+    } else {
+      titleBlock.setVisible(false);
+      descriptionLabel.setText("Please login to access the CCTV footage.");
+      titleLabel.setText("Login Required");
+    }
 
     Platform.runLater(() -> {
       progressArc.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
@@ -127,6 +140,9 @@ public class DefendantMemory extends MemoryController {
   @FXML
   private void onSubmitPinPressed(ActionEvent event) {
     if (pin.equals(correctPin)) {
+      // Mark login sequence as completed
+      loginSequenceCompleted = true;
+
       // Correct pin entered, proceed to next pane
       loginPane.setVisible(false);
       cctvPane.setVisible(true);
