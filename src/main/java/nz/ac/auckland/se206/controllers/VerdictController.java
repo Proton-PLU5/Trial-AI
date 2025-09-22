@@ -27,27 +27,38 @@ import nz.ac.auckland.se206.utils.Timer;
 
 public class VerdictController implements TimableScene {
 
-  @FXML private Button yesButton;
-  @FXML private Button noButton;
-  @FXML private Button submitButton;
-  @FXML private Label verdictTitleLabel1;
-  @FXML private Label verdictTitleLabel2;
-  @FXML private Label timerLabel;
-  @FXML private Label verdictCorrectLabel;
-  @FXML private Label rationaleCorrectLabel;
-  @FXML private ImageView imageView;
-  @FXML private TextArea rationaleTextArea;
-  @FXML private TextArea rationaleJudgementTextArea;
+  @FXML
+  private Button yesButton;
+  @FXML
+  private Button noButton;
+  @FXML
+  private Button submitButton;
+  @FXML
+  private Label verdictTitleLabel1;
+  @FXML
+  private Label verdictTitleLabel2;
+  @FXML
+  private Label timerLabel;
+  @FXML
+  private Label verdictCorrectLabel;
+  @FXML
+  private Label rationaleCorrectLabel;
+  @FXML
+  private ImageView imageView;
+  @FXML
+  private TextArea rationaleTextArea;
+  @FXML
+  private TextArea rationaleJudgementTextArea;
 
-  private ScheduledExecutorService finalTimerExecutor;
-  private int finalSecondsRemaining = 60;
   private boolean choiceMade = false;
+  private boolean isChoiceMadeCorrect = false;
   private String optionChose = "";
   private String rationale = "";
   private String rationalePrompt = "";
   private ChatCompletionRequest chatCompletionRequest = null;
   private boolean rationaleSubmitted = false;
   public Timer verdictTimer = null;
+  private StringBuilder gameOverText = new StringBuilder("");
 
   @FXML
   private void initialize() {
@@ -63,13 +74,12 @@ public class VerdictController implements TimableScene {
 
     // Add ourselves to the timer service
     App.timer.stopTimer();
-    verdictTimer = new Timer(2*60);
+    verdictTimer = new Timer(2 * 60);
     verdictTimer.addConsumer(getTimerConsumer());
     verdictTimer.setCountDown(true);
     verdictTimer.buildTimer();
   }
 
-  
   /**
    * Creates and configures the ChatCompletionRequest object.
    */
@@ -87,67 +97,21 @@ public class VerdictController implements TimableScene {
     }
   }
 
-
-  private void startFinalTimer() {
-    // Start and use the timer as another thread and then when the time ends it says the user lost
-    finalTimerExecutor =
-        Executors.newSingleThreadScheduledExecutor(
-            r -> {
-              Thread t = new Thread(r);
-              t.setDaemon(true);
-              return t;
-            });
-    finalTimerExecutor.scheduleAtFixedRate(
-        () -> {
-          Platform.runLater(
-              () -> {
-                if (rationaleSubmitted) {
-                  return;
-                }
-
-                // If the time/seconds are still greater than 0 update it
-                if (finalSecondsRemaining > 0) {
-                  finalSecondsRemaining--;
-                  updateFinalTimerDisplay();
-                  // Otherwise say they got the answer wrong and they lost the game
-                } else {
-                  timeOutOption();
-                }
-              });
-        },
-        1,
-        1,
-        TimeUnit.SECONDS);
-  }
-
-  private void updateFinalTimerDisplay() {
-    if (timerLabel != null) {
-      timerLabel.setText("00:" + String.format("%02d", finalSecondsRemaining));
-
-      // Change color based on time remaining
-      if (finalSecondsRemaining <= 3) {
-        timerLabel.setStyle("-fx-text-fill: red; -fx-font-size: 24px; -fx-font-weight: bold;");
-      } else if (finalSecondsRemaining <= 5) {
-        timerLabel.setStyle("-fx-text-fill: orange; -fx-font-size: 20px; -fx-font-weight: bold;");
-      } else {
-        timerLabel.setStyle("-fx-text-fill: green; -fx-font-size: 18px; -fx-font-weight: bold;");
-      }
-    }
-  }
-
   @FXML
   private void handleYesClicked() {
     choiceMade = true;
+    isChoiceMadeCorrect = false;
     optionChose = "The player selected the 'Yes' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
-    verdictCorrectLabel.setText("You made the correct decision.");
+    gameOverText.append("You made the wrong verdict.");
     handleVerdictMade();
   }
 
   @FXML
   private void handleNoClicked() {
     choiceMade = true;
+    isChoiceMadeCorrect = true;
     optionChose = "The player selected the 'No' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
-    verdictCorrectLabel.setText("You made the wrong decision.");
+    gameOverText.append("You made the correct verdict");
     handleVerdictMade();
   }
 
@@ -167,14 +131,15 @@ public class VerdictController implements TimableScene {
       verdictTitleLabel1.setVisible(false);
       yesButton.setVisible(false);
       noButton.setVisible(false);
-      verdictCorrectLabel.setText("You didn't make a decision in time.");
+      verdictCorrectLabel.setText("You didn't make a decision in time. Try again.");
     }
 
-    // Continue to rationale submission screen regardless of if the user made a verdict
+    // Continue to rationale submission screen regardless of if the user made a
+    // verdict
     try {
       handleRationaleSubmitted();
     } catch (ApiProxyException e) {
-        e.printStackTrace();
+      e.printStackTrace();
     }
   }
 
@@ -186,7 +151,7 @@ public class VerdictController implements TimableScene {
     submitButton.setVisible(false);
     rationaleTextArea.setVisible(false);
     verdictCorrectLabel.setVisible(true);
-    rationaleCorrectLabel.setVisible(true);
+    // rationaleCorrectLabel.setVisible(true);
     rationaleJudgementTextArea.setVisible(true);
 
     rationalePrompt += optionChose;
@@ -194,8 +159,9 @@ public class VerdictController implements TimableScene {
     rationale = rationaleTextArea.getText().strip();
 
     if (rationale.isEmpty()) {
-      rationaleCorrectLabel.setText("You didn't give a rationale."); 
-      rationaleCorrectLabel.setLayoutX(515);
+      gameOverText.setLength(0);
+      gameOverText.append("You didn't give a rationale. Try again.");
+      verdictCorrectLabel.setText(gameOverText.toString());
     } else {
       // Add the rationale to the prompt
       rationalePrompt += rationale;
@@ -214,41 +180,44 @@ public class VerdictController implements TimableScene {
 
   private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
 
-    Thread gptThread =
-        new Thread(
-            () -> {
-              try {
-                chatCompletionRequest.addMessage(msg);
-                ChatCompletionResult chatCompletionResult = chatCompletionRequest.execute();
-                Choice result = chatCompletionResult.getChoices().iterator().next();
-                ChatMessage gptResponse = result.getChatMessage();
-                chatCompletionRequest.addMessage(gptResponse);
+    Thread gptThread = new Thread(
+        () -> {
+          try {
+            chatCompletionRequest.addMessage(msg);
+            ChatCompletionResult chatCompletionResult = chatCompletionRequest.execute();
+            Choice result = chatCompletionResult.getChoices().iterator().next();
+            ChatMessage gptResponse = result.getChatMessage();
+            chatCompletionRequest.addMessage(gptResponse);
 
-                Platform.runLater(
-                    () -> {
-                      // Display GPT's response on screen
-                      String content = gptResponse.getContent();
-                      String [] arr = content.split("\\s+"); 
-                      String rationaleJudgement="";
+            Platform.runLater(
+                () -> {
+                  // Display GPT's response on screen
+                  String content = gptResponse.getContent();
+                  String[] arr = content.split("\\s+");
 
-                      // Take first 4 words from GPT response
-                      for(int i=0; i<4 ; i++){
-                          rationaleJudgement = rationaleJudgement + " " + arr[i] ;         
-                      }
+                  if (isChoiceMadeCorrect) {
+                    // Take first 5 words from GPT response and add it to gameOverText
+                    for (int i = 0; i < 5; i++) {
+                      gameOverText.append(" " + arr[i]);
+                    }
 
-                      // Remove first 4 words from GPT response
-                      String rationaleSummary = content.replaceFirst("^(\\S+\\s+){4}", "");
+                    // Remove first 5 words from GPT response
+                    String rationaleSummary = content.replaceFirst("^(\\S+\\s+){5}", "");
+                    rationaleJudgementTextArea.setText(rationaleSummary);
+                    verdictCorrectLabel.setLayoutX(50);
+                  } else {
+                    rationaleJudgementTextArea.setText(content);
+                  }
 
-                      rationaleCorrectLabel.setText(rationaleJudgement);
-                      rationaleCorrectLabel.setLayoutX(501);
-                      rationaleJudgementTextArea.setText(rationaleSummary);
-                    });
+                  verdictCorrectLabel.setText(gameOverText.toString());
+                });
 
-              } catch (ApiProxyException e) {
-                e.printStackTrace();
-                Platform.runLater(() -> {});
-              }
+          } catch (ApiProxyException e) {
+            e.printStackTrace();
+            Platform.runLater(() -> {
             });
+          }
+        });
 
     gptThread.setDaemon(true);
     gptThread.start();
