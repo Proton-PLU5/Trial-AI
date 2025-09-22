@@ -67,20 +67,4 @@ public class HumanMemory extends MemoryController {
   private void handleOpenChatButtonClick(MouseEvent event) throws IOException {
     chatPanel.setVisible(true);
   }
-
-  private void createTitleDisappearAnimation() {
-    // Move the title block to the left
-    TranslateTransition transition = new TranslateTransition(Duration.seconds(3), titleBlock);
-    transition.setFromX(0);
-    transition.setToX(-700);
-    transition.setOnFinished(event -> titleBlock.setVisible(false));
-    
-    PauseTransition pause = new PauseTransition(Duration.seconds(4));
-    pause.setOnFinished(event -> {
-      transition.play();
-    });
-
-    titleBlock.setTranslateX(0);
-    pause.play();
-  }
 }
