@@ -78,6 +78,12 @@ public class HumanMemory extends MemoryController {
   private void handleOpenChatButtonClick(MouseEvent event) throws IOException {
     chatPanel.setVisible(true);
   }
+  
+  @FXML
+  private void onBackToAislesButtonPressed() throws IOException {
+    mainAislePane.setVisible(true);
+    aisle1Pane.setVisible(false);
+  }
 
   @FXML
   private void handleAisle1RectangleClicked(MouseEvent event) throws IOException {
