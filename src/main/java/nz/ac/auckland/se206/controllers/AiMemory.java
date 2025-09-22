@@ -28,7 +28,7 @@ public class AiMemory extends MemoryController {
 
   private TimerService timerService;
   private Circle clipCircle;
-  private static final double CIRCLE_RADIUS = 75.0; // Adjust size as needed
+  private static final double CIRCLE_RADIUS = 75.0;
   private boolean isXrayMode = false;
 
   public AiMemory() {
@@ -87,6 +87,11 @@ public class AiMemory extends MemoryController {
     isXrayMode = false;
     rootPane.setCursor(Cursor.DEFAULT);
     xrayImageView.setVisible(false);
+  }
+
+  @FXML
+  private void interactableHovered() {
+    System.out.println("Identified conceled item");
   }
 
   private void updateClipPosition(double mouseX, double mouseY) {
