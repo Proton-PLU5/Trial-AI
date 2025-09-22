@@ -88,6 +88,7 @@ public class DefendantMemory extends MemoryController {
     keypadPane.setVisible(false);
     cctvPane.setVisible(false);
 
+
     if (loginSequenceCompleted) {
       loginPane.setVisible(false);
       cctvPane.setVisible(true);
@@ -95,7 +96,7 @@ public class DefendantMemory extends MemoryController {
       descriptionLabel.setText("Click on the different characters to view their details.");
       titleLabel.setText("View Character Details");
     } else {
-      titleBlock.setVisible(false);
+      titleBlock.setVisible(true);
       descriptionLabel.setText("Please login to access the CCTV footage.");
       titleLabel.setText("Login Required");
     }
@@ -254,7 +255,7 @@ public class DefendantMemory extends MemoryController {
 
   private void createTitleDisappearAnimation() {
     // Move the title block to the right
-    TranslateTransition transition = new TranslateTransition(Duration.seconds(3), titleBlock);
+    TranslateTransition transition = new TranslateTransition(Duration.seconds(1), titleBlock);
     transition.setFromX(0);
     transition.setToX(-700);
     transition.setOnFinished(event -> titleBlock.setVisible(false));
