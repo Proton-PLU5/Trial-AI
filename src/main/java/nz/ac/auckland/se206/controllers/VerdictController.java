@@ -42,8 +42,6 @@ public class VerdictController implements TimableScene {
   @FXML
   private Label verdictCorrectLabel;
   @FXML
-  private Label rationaleCorrectLabel;
-  @FXML
   private ImageView imageView;
   @FXML
   private TextArea rationaleTextArea;
@@ -151,7 +149,6 @@ public class VerdictController implements TimableScene {
     submitButton.setVisible(false);
     rationaleTextArea.setVisible(false);
     verdictCorrectLabel.setVisible(true);
-    // rationaleCorrectLabel.setVisible(true);
     rationaleJudgementTextArea.setVisible(true);
 
     rationalePrompt += optionChose;

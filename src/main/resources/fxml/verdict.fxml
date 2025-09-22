@@ -51,11 +51,6 @@
             <Font size="35.0" />
          </font>
       </Label>
-      <Label fx:id="rationaleCorrectLabel" layoutX="515.0" layoutY="90.0" text="You didn't give a rationale." visible="false">
-         <font>
-            <Font size="35.0" />
-         </font>
-      </Label>
       <TextArea fx:id="rationaleJudgementTextArea" layoutX="279.0" layoutY="148.0" prefHeight="442.0" prefWidth="838.0" visible="false" wrapText="true">
          <font>
             <Font size="30.0" />
