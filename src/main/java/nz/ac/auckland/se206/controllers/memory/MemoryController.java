@@ -157,7 +157,7 @@ public abstract class MemoryController implements TimableScene {
    * @return The AI's response message.
    */
   protected String sendGPTRequest(String userInput) {
-    this.chatCompletionRequest.addMessage("User", userInput);
+    this.chatCompletionRequest.addMessage("user", userInput);
 
     try {
       ChatCompletionResult chatCompletionResult = this.chatCompletionRequest.execute();
@@ -165,15 +165,7 @@ public abstract class MemoryController implements TimableScene {
       ChatMessage message = result.getChatMessage();
 
       // Replace what role the AI generated:
-      int index = message.getContent().indexOf(":");
-      if (index != -1) {
-        message.setContent(
-            roleOfCharacter
-                + ":\n"
-                + message.getContent().substring(index + 1).replaceFirst("\n", ""));
-      } else {
-        message.setContent(roleOfCharacter + ":\n" + message.getContent().replaceFirst("\n", ""));
-      }
+      message.setContent("\n" + roleOfCharacter + ":\n" + message.getContent());
 
       this.chatCompletionRequest.addMessage(message);
       return message.getContent();
