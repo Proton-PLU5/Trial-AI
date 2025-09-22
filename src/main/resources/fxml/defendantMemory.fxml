@@ -263,7 +263,7 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <TextArea fx:id="textArea" layoutX="17.0" layoutY="46.0" prefHeight="414.0" prefWidth="515.0" />
+            <TextArea fx:id="textArea" editable="false" layoutX="17.0" layoutY="46.0" prefHeight="414.0" prefWidth="515.0" wrapText="true" />
             <TextField fx:id="textField" layoutX="17.0" layoutY="471.0" prefHeight="25.0" prefWidth="419.0" />
             <Button fx:id="sendButton" layoutX="446.0" layoutY="471.0" mnemonicParsing="false" onAction="#onSendButtonPressed" prefHeight="25.0" prefWidth="87.0" text="Send" />
          </children>
