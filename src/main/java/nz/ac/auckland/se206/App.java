@@ -1,14 +1,10 @@
 package nz.ac.auckland.se206;
 
 import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.Timer;
@@ -22,7 +18,7 @@ public class App extends Application {
   private static Scene scene;
   public static Stage primaryStage;
   public static StringBuilder chatHistory = new StringBuilder();
-  public static Timer timer = new Timer(5*60); // 5 minutes
+  public static Timer timer = new Timer(5 * 60); // 5 minutes
 
   /**
    * The main method that launches the JavaFX application.
@@ -66,10 +62,9 @@ public class App extends Application {
 
     primaryStage = stage;
 
-
     primaryStage.setWidth(1308);
     primaryStage.setHeight(736);
-    SceneManager.switchScene(SceneManager.Scenes.room);
+    SceneManager.switchScene(SceneManager.Scenes.start);
     SceneManager.setStyleSheet("/css/style.css");
     primaryStage.show();
 

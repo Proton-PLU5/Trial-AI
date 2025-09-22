@@ -9,6 +9,6 @@
    <children>
       <Button fx:id="playBtn" layoutX="613.0" layoutY="560.0" mnemonicParsing="false" onAction="#handlePlayButton" text="Play" />
       <Label fx:id = "timer_label" layoutX="607.0" layoutY="54.0" prefHeight="113.0" prefWidth="45.0" text="Trial AI" />
-      <Label fx:id="timerLabel" layoutX="611.0" layoutY="232.0" text="Label" />
+      <Label fx:id="timerLabel" layoutX="611.0" layoutY="232.0" />
    </children>
 </Pane>
