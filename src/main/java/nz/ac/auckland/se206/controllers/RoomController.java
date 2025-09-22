@@ -36,7 +36,7 @@ public class RoomController implements TimableScene {
   @FXML private Label chaconversationTextLabel;
   @FXML private AnchorPane conversationPane;
   private String currentChatCharacter = null;
-  private Map<String, Boolean> characterInteracted = new HashMap<>();
+  private static Map<String, Boolean> characterInteracted = new HashMap<>();
   private TimerService timerService;
   private boolean finalSceneLoaded = false;
 
