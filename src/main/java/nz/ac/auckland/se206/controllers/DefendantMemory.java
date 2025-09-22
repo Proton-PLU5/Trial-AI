@@ -53,10 +53,7 @@ public class DefendantMemory extends MemoryController {
   @FXML private Label customerAgeLabel;
   @FXML private Label customerCriminalRecordLabel;
 
-  // Title
-  @FXML private AnchorPane titleBlock;
-  @FXML private Label titleLabel;
-  @FXML private Label descriptionLabel;
+
 
   private String pin = "_ _ _ _";
   private final String correctPin = "1 2 3 4";
@@ -253,19 +250,5 @@ public class DefendantMemory extends MemoryController {
     customerDetailsPane.setVisible(false);
   }
 
-  private void createTitleDisappearAnimation() {
-    // Move the title block to the right
-    TranslateTransition transition = new TranslateTransition(Duration.seconds(1), titleBlock);
-    transition.setFromX(0);
-    transition.setToX(-700);
-    transition.setOnFinished(event -> titleBlock.setVisible(false));
-    
-    PauseTransition pause = new PauseTransition(Duration.seconds(4));
-    pause.setOnFinished(event -> {
-      transition.play();
-    });
-
-    titleBlock.setTranslateX(0);
-    pause.play();
-  }
+  
 }
