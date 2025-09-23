@@ -76,10 +76,14 @@ public class HumanMemory extends MemoryController {
     createTitleDisappearAnimation();
     super.initialize();
 
+    // Initial UI setup
+    aisle1Item.setVisible(true);
+
     // Load shopping list items, if collected, then make invisible
-    // if (itemCollected.getOrDefault(aisle1Item.getId(), true)) {
-    //   aisle1Item.setVisible(false);
-    // }
+    if (itemCollected.getOrDefault(aisle1Item.getId(), false)) {
+      aisle1Item.setVisible(false);
+      markerLine1.setVisible(true);
+    }
 
     setupDraggableItem(aisle1Item, "aisle1Item");
   }
@@ -131,7 +135,7 @@ public class HumanMemory extends MemoryController {
   @FXML
   private void setupDraggableItem(Node item, String itemName) {
       draggableMaker.makeDraggable(item, shoppingCartHitbox);
-      itemCollected.put(item.getId(), false);
+      itemCollected.put(item.getId(), true);
       // Check if released on shopping cart hitbox
       item.setOnMouseReleased(event -> {
           if (item.getBoundsInParent().intersects(shoppingCartHitbox.getBoundsInParent())) {
