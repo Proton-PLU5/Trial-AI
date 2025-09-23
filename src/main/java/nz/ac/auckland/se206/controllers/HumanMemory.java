@@ -84,6 +84,7 @@ public class HumanMemory extends MemoryController {
     itemToLabel.put("aisle1Item", markerLine1);
     itemToLabel.put("aisle2Item1", markerLine2);
     itemToLabel.put("aisle2Item2", markerLine3);
+    itemToLabel.put("aisle3Item", markerLine4);
   }
 
   @Override
@@ -97,9 +98,11 @@ public class HumanMemory extends MemoryController {
     aisleItems.add(aisle1Item);
     aisleItems.add(aisle2Item1);
     aisleItems.add(aisle2Item2);
+    aisleItems.add(aisle3Item);
     itemMarkers.add(markerLine1);
     itemMarkers.add(markerLine2);
     itemMarkers.add(markerLine3);
+    itemMarkers.add(markerLine4);
 
     // Initial UI setup
     for (ImageView item : aisleItems) {
@@ -137,7 +140,10 @@ public class HumanMemory extends MemoryController {
   private void onBackToAislesButtonPressed() throws IOException {
     mainAislePane.setVisible(true);
     aisle1Pane.setVisible(false);
+    aisle2Pane.setVisible(false);
+    aisle3Pane.setVisible(false);
     shoppingCartHitbox.setVisible(false);
+    purseHitbox.setVisible(false);
     backToAislesButton.setVisible(false);
   }
 
@@ -159,6 +165,15 @@ public class HumanMemory extends MemoryController {
     // checkIfItemHasBeenCollected();
   }
 
+  @FXML
+  private void handleAisle3RectangleClicked(MouseEvent event) throws IOException {
+    mainAislePane.setVisible(false);
+    aisle3Pane.setVisible(true);
+    purseHitbox.setVisible(true);
+    backToAislesButton.setVisible(true);
+    // checkIfItemHasBeenCollected();
+  }
+
   // @FXML
   // private void checkIfItemHasBeenCollected() {
   //   // Load shopping list items, if collected, then make invisible
@@ -171,11 +186,17 @@ public class HumanMemory extends MemoryController {
 
   @FXML
   private void setupDraggableItem(Node item, String itemName) {
-      draggableMaker.makeDraggable(item, shoppingCartHitbox);
+    final Node hitbox;
+    if (!"aisle3Item".equals(itemName)) {
+      hitbox = shoppingCartHitbox;
+    } else {
+      hitbox = purseHitbox;
+    }
+      draggableMaker.makeDraggable(item, hitbox);
       itemCollected.put(item.getId(), true);
       // Check if released on shopping cart hitbox
       item.setOnMouseReleased(event -> {
-          if (item.getBoundsInParent().intersects(shoppingCartHitbox.getBoundsInParent())) {
+          if (item.getBoundsInParent().intersects(hitbox.getBoundsInParent())) {
               handleItemInCart(itemName);
               // Hide the item once in cart
               item.setVisible(false);
@@ -202,6 +223,11 @@ public class HumanMemory extends MemoryController {
         System.out.println("Item 3 in cart!"); // Debugging
         // Check off the shopping list
         markerLine3.setVisible(true);
+        break;
+      case "aisle3Item":
+        System.out.println("Item 4 in cart!"); // Debugging
+        // Check off the shopping list
+        markerLine4.setVisible(true);
         break;
       default:
         // placeholder

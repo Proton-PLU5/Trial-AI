@@ -29,6 +29,7 @@
                   <Image url="@../images/candyBar.png" />
                </image>
             </ImageView>
+            <Rectangle fx:id="purseHitbox" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="248.0" layoutX="565.0" layoutY="531.0" onMouseClicked="#handleAisle1RectangleClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="304.0" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="aisle2Pane" prefHeight="736.0" prefWidth="1416.0" visible="false">
@@ -73,7 +74,7 @@
             </ImageView>
             <Rectangle fx:id="aisle1Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="347.0" layoutX="79.0" layoutY="108.0" onMouseClicked="#handleAisle1RectangleClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="249.0" />
             <Rectangle fx:id="aisle2Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="347.0" layoutX="423.0" layoutY="86.0" onMouseClicked="#handleAisle2RectangleClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="249.0" />
-            <Rectangle fx:id="aisle3Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="337.0" layoutX="750.0" layoutY="94.0" onMouseClicked="#handleAisle1RectangleClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="213.0" />
+            <Rectangle fx:id="aisle3Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="337.0" layoutX="750.0" layoutY="94.0" onMouseClicked="#handleAisle3RectangleClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="213.0" />
          </children>
       </AnchorPane>
       <Button fx:id="backToAislesButton" layoutX="607.0" layoutY="8.0" mnemonicParsing="false" onAction="#onBackToAislesButtonPressed" prefHeight="40.0" prefWidth="203.0" text="Back to Aisles" visible="false">
@@ -81,7 +82,6 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Rectangle fx:id="purseHitbox" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="248.0" onMouseClicked="#handleAisle1RectangleClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="304.0" />
       <Polygon fx:id="shoppingCartHitbox" fill="#1f93ff00" layoutX="445.0" layoutY="241.0" points="-88.0, 498.8046875, 621.0, 498.8046875, 404.0, 277.0, 135.0, 277.0" stroke="TRANSPARENT" strokeType="INSIDE" visible="false" />
       <AnchorPane fx:id="shoppingListPane" layoutX="1077.0" layoutY="9.0" prefHeight="200.0" prefWidth="200.0">
          <children>
