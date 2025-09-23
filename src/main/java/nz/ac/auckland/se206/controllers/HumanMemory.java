@@ -46,6 +46,7 @@ public class HumanMemory extends MemoryController {
   @FXML private ImageView markerLine1;
   @FXML private ImageView markerLine2;
   @FXML private ImageView markerLine3;
+  @FXML private ImageView markerLine4;
 
   // Main Aisle
   @FXML private AnchorPane mainAislePane;
@@ -65,6 +66,10 @@ public class HumanMemory extends MemoryController {
   @FXML private AnchorPane aisle2Pane;
   @FXML private ImageView aisle2Item1;
   @FXML private ImageView aisle2Item2;
+
+  // Aisle 3
+  @FXML private AnchorPane aisle3Pane;
+  @FXML private ImageView aisle3Item;
 
   public static Map<String, Boolean> itemCollected = new HashMap<>();
   public static Map<String, ImageView> itemToLabel = new HashMap<>();
