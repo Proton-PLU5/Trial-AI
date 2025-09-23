@@ -36,9 +36,11 @@ public class AiFlashback extends FlashbackController {
 
   @Override
   protected void setupText() {
-    addText("Paragraph 3: dahdasidgaiudhauih");
-    addText("Paragraph 2: hdiuwhdiuadihadi");
-    addText("Paragraph 1: dhauhdiuhdiudh");
+    addText(
+        "System output: subject detected exhibiting irregular behavior. Subject advanced toward exit carrying one unscanned item.");
+    addText("This operational pattern persisted throughout the cycle until anomaly data was registered.");
+    addText(
+        "System output: initial operations proceeded under standard parameters. All customers scanned items and exited with zero unscanned detections.");
   }
 
   @FXML
