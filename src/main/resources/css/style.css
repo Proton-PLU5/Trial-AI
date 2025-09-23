@@ -176,6 +176,24 @@
   -fx-text-overrun: ellipsis;
 }
 
+#timerLabel {
+  -fx-text-fill: #60a5fa;
+  /* Bright blue text */
+  -fx-font-family: "Consolas", "Courier New", monospace;
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-background-color: rgba(30, 58, 138, 0.25);
+  /* Subtle background */
+  -fx-background-radius: 6px;
+  -fx-padding: 6 12 6 12;
+  -fx-border-color: #1e3a8a;
+  -fx-border-width: 1px;
+  -fx-border-radius: 6px;
+  -fx-max-height: 35px;
+  -fx-wrap-text: true;
+  -fx-text-overrun: ellipsis;
+}
+
 /* ===== CONVERSATION TEXT LABEL ===== */
 #conversationTextLabel {
   -fx-text-fill: #e2e8f0;
