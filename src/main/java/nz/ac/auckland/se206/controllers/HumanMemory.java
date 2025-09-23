@@ -48,10 +48,13 @@ public class HumanMemory extends MemoryController {
   @FXML private AnchorPane mainAislePane;
   @FXML private Rectangle aisle1Rectangle;
 
+  // Misc
+  @FXML private Polygon shoppingCartHitbox;
+  @FXML private Button backToAislesButton;
+
   // Aisle 1
   @FXML private AnchorPane aisle1Pane;
   @FXML private ImageView aisle1Item;
-  @FXML private Polygon shoppingCartHitbox;
 
   DraggableMaker draggableMaker = new DraggableMaker();
 
@@ -89,11 +92,15 @@ public class HumanMemory extends MemoryController {
   private void onBackToAislesButtonPressed() throws IOException {
     mainAislePane.setVisible(true);
     aisle1Pane.setVisible(false);
+    shoppingCartHitbox.setVisible(false);
+    backToAislesButton.setVisible(false);
   }
 
   @FXML
   private void handleAisle1RectangleClicked(MouseEvent event) throws IOException {
     mainAislePane.setVisible(false);
     aisle1Pane.setVisible(true);
+    shoppingCartHitbox.setVisible(true);
+    backToAislesButton.setVisible(true);
   }
 }
