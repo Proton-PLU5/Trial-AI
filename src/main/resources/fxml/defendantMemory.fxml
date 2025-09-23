@@ -219,21 +219,21 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="goBackButton" mnemonicParsing="false" onAction="#onGoBackButtonPressed" prefHeight="40.0" prefWidth="203.0" text="Back to courtoom" GridPane.columnIndex="1">
+            <Button fx:id="goBackButton" mnemonicParsing="false" onAction="#onGoBackButtonPressed" prefHeight="40.0" prefWidth="203.0" stylesheets="@../css/style.css" text="Back to courtoom" GridPane.columnIndex="1">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font></Button>
-            <Button fx:id="chatButton" mnemonicParsing="false" onAction="#onChatButtonPressed" prefHeight="40.0" prefWidth="113.0" text="Open chat">
+            <Button fx:id="chatButton" mnemonicParsing="false" onAction="#onChatButtonPressed" prefHeight="46.0" prefWidth="144.0" stylesheets="@../css/style.css" text="Open chat">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font></Button>
-            <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="40.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="165.0" GridPane.columnIndex="2" />
-            <Label alignment="CENTER" prefHeight="40.0" prefWidth="87.0" text="Time:" textAlignment="CENTER" GridPane.columnIndex="2">
+            <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="40.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="172.0" GridPane.columnIndex="2" />
+            <Label alignment="CENTER" prefHeight="40.0" prefWidth="87.0" stylesheets="@../css/style.css" text="Time:" textAlignment="CENTER" GridPane.columnIndex="2">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label fx:id="timerLabel" prefHeight="40.0" prefWidth="73.0" text="00:00" translateX="85.0" GridPane.columnIndex="2">
+            <Label fx:id="timerLabel" prefHeight="35.0" prefWidth="80.0" stylesheets="@../css/style.css" text="00:00" translateX="85.0" GridPane.columnIndex="2">
                <font>
                   <Font size="24.0" />
                </font>
