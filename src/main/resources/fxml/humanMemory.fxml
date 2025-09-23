@@ -74,6 +74,26 @@
                   <Font size="30.0" />
                </font>
             </Label>
+            <ImageView fx:id="markerLine1" fitHeight="35.0" fitWidth="132.0" layoutX="48.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../images/markerLine.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="markerLine2" fitHeight="35.0" fitWidth="132.0" layoutX="48.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../images/markerLine.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="markerLine3" fitHeight="35.0" fitWidth="132.0" layoutX="48.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../images/markerLine.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="markerLine4" fitHeight="35.0" fitWidth="132.0" layoutX="48.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../images/markerLine.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="chatPane" layoutX="358.0" layoutY="131.0" prefHeight="510.0" prefWidth="548.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" visible="false">

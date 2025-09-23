@@ -46,6 +46,10 @@ public class HumanMemory extends MemoryController {
   @FXML private Label shoppingListItem2Label;
   @FXML private Label shoppingListItem3Label;
   @FXML private Label shoppingListItem4Label;
+  @FXML private ImageView markerLine1;
+  @FXML private ImageView markerLine2;
+  @FXML private ImageView markerLine3;
+  @FXML private ImageView markerLine4;
 
   // Main Aisle
   @FXML private AnchorPane mainAislePane;
@@ -150,6 +154,7 @@ public class HumanMemory extends MemoryController {
       case "aisle1Item":
         System.out.println("Item 1 in cart!"); // Debugging
         // Check off the shopping list
+        markerLine1.setVisible(true);
         break;
       default:
         // placeholder
