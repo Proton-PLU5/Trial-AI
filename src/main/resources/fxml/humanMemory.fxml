@@ -89,17 +89,17 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <ImageView fx:id="markerLine1" fitHeight="45.0" fitWidth="249.0" layoutX="43.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="markerLine1" fitHeight="45.0" fitWidth="249.0" layoutX="43.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../images/markerLine.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="markerLine2" fitHeight="40.0" fitWidth="182.0" layoutX="48.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="markerLine2" fitHeight="40.0" fitWidth="182.0" layoutX="48.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../images/markerLine.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="markerLine3" fitHeight="35.0" fitWidth="223.0" layoutX="44.0" layoutY="228.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="markerLine3" fitHeight="35.0" fitWidth="223.0" layoutX="44.0" layoutY="228.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../images/markerLine.png" />
                </image>

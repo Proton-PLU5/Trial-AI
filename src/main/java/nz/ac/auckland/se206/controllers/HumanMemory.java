@@ -106,7 +106,7 @@ public class HumanMemory extends MemoryController {
         aisleItems.get(i).setVisible(false);
         itemMarkers.get(i).setVisible(true);
       }
-      setupDraggableItem(aisleItems.get(i), "aisle" + (i + 1) + "Item");
+      setupDraggableItem(aisleItems.get(i), aisleItems.get(i).getId());
     }
   }
 
