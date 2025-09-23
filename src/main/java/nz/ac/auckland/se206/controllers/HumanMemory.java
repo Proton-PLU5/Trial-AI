@@ -1,6 +1,11 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+
+import javafx.animation.PauseTransition;
+import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,65 +13,42 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import nz.ac.auckland.se206.utils.SceneManager;
+import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.controllers.memory.MemoryController;
 
-public class HumanMemory {
+public class HumanMemory extends MemoryController {
 
   @FXML private Button roomBtn;
   @FXML private Button chatBtn;
   @FXML private Label timerLabel;
   @FXML private Pane chatPanel;
 
-  private TimerService timerService;
+  // Title
+  @FXML private AnchorPane titleBlock;
+  @FXML private Label titleLabel;
+  @FXML private Label descriptionLabel;
 
-  @FXML
-  private void initialize() {
-    chatPanel.setVisible(false);
+  // Shopping List
+  @FXML private Label shoppingListItem1Label;
+  @FXML private Label shoppingListItem2Label;
+  @FXML private Label shoppingListItem3Label;
+  @FXML private Label shoppingListItem4Label;
 
-    timerService = TimerService.getInstance();
-
-    // Bind timer display to label
-    if (timerLabel != null) {
-      timerLabel.textProperty().bind(timerService.timeDisplayProperty());
-
-      // Update timer style based on remaining time
-      timerService
-          .secondsRemainingProperty()
-          .addListener(
-              (obs, oldVal, newVal) -> {
-                updateTimerStyle(newVal.intValue());
-              });
-
-      // Handle game over when time runs out
-      timerService
-          .timeUpProperty()
-          .addListener(
-              (obs, wasTimeUp, isTimeUp) -> {
-                if (isTimeUp) {
-                  try {
-                    handleGameOver();
-                  } catch (IOException e) {
-                    e.printStackTrace();
-                  }
-                }
-              });
-    }
+  public HumanMemory() {
+    super("prompts/witnessHuman.txt");
   }
 
-  private void updateTimerStyle(int secondsRemaining) {
-    if (timerLabel == null) {
-      return;
-    }
-    timerLabel.getStyleClass().removeAll("timer-normal", "timer-warning", "timer-critical");
-    if (secondsRemaining <= 10) {
-      timerLabel.getStyleClass().addAll("timer-label", "timer-critical");
-    } else if (secondsRemaining <= 30) {
-      timerLabel.getStyleClass().addAll("timer-label", "timer-warning");
-    } else {
-      timerLabel.getStyleClass().addAll("timer-label", "timer-normal");
-    }
+  @Override
+  @FXML
+  protected void initialize() {
+    App.timer.addConsumer(getTimerConsumer());
+    createTitleDisappearAnimation();
+    super.initialize();
   }
 
   private void handleGameOver() throws IOException {

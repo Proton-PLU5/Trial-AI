@@ -6,16 +6,16 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.controllers.ChatController;
 
 public class SceneManager {
 
   public enum Scenes {
+    start,
     chat,
-    defendant,
     room,
-    witnessAi,
-    witnessHuman,
+    defendantFlashback,
+    humanFlashback,
+    aiFlashback,
     defendantMemory,
     humanMemory,
     aiMemory,

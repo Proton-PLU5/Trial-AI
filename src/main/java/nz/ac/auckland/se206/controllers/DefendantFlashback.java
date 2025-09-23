@@ -1,13 +1,11 @@
 package nz.ac.auckland.se206.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
+
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 import nz.ac.auckland.se206.controllers.flashback.FlashbackController;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.SceneManager.Scenes;
@@ -45,9 +43,9 @@ public class DefendantFlashback extends FlashbackController {
 
   @Override
   protected void setupText() {
-    addText("I need to call the police!");
-    addText("Hmm... Something doesn't look right.");
-    addText("Checking the CCTV footage... All seems normal.");
+    addText("Upon seeing the individual in court with us today, I immediately contacted the local authorities after reading their database profile.");
+    addText("Since all our customers have a membership with us, I can access information on them from our database.");
+    addText("My job is to surveil the customers when they first walk into our store.");
   }
 
   @FXML

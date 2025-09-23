@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -35,9 +34,9 @@ public class RoomController implements TimableScene {
   @FXML private Button nextButton;
   @FXML private Label conversationRoleLabel;
   @FXML private Label chaconversationTextLabel;
-  @FXML private AnchorPane conversationPanel;
+  @FXML private AnchorPane conversationPane;
   private String currentChatCharacter = null;
-  private Map<String, Boolean> characterInteracted = new HashMap<>();
+  private static Map<String, Boolean> characterInteracted = new HashMap<>();
   private TimerService timerService;
   private boolean finalSceneLoaded = false;
 
@@ -59,11 +58,8 @@ public class RoomController implements TimableScene {
   private void handleGameOver() throws IOException {
     if (!finalSceneLoaded) {
       finalSceneLoaded = true;
-      Stage stage = (Stage) btnGuess.getScene().getWindow();
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/verdict.fxml"));
-      Parent finalRoot = loader.load();
-      timerService.startTimer();
-      stage.setScene(new Scene(finalRoot));
+      SceneManager.switchScene(SceneManager.Scenes.verdict);
+      SceneManager.setStyleSheet("/css/style.css");
     }
   }
 
@@ -127,15 +123,14 @@ public class RoomController implements TimableScene {
       SceneManager.switchScene(getMemoryScene(characterId));
     }
   }
-  
+
   @FXML
   void handleNextButton() {
     nextButton.setVisible(false);
-    conversationPanel.setVisible(false);
+    conversationPane.setVisible(false);
     conversationRoleLabel.setVisible(false);
     chaconversationTextLabel.setVisible(false);
   }
-
 
   private SceneManager.Scenes getMemoryScene(String characterId) {
     switch (characterId) {
@@ -151,11 +146,11 @@ public class RoomController implements TimableScene {
   private SceneManager.Scenes getFlashbackScene(String characterId) {
     switch (characterId) {
       case "witnessAi":
-        return SceneManager.Scenes.witnessAi;
+        return SceneManager.Scenes.aiFlashback;
       case "witnessHuman":
-        return SceneManager.Scenes.witnessHuman;
+        return SceneManager.Scenes.humanFlashback;
       default:
-        return SceneManager.Scenes.defendant;
+        return SceneManager.Scenes.defendantFlashback;
     }
   }
 
