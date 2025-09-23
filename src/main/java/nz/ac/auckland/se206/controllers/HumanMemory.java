@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,14 +59,24 @@ public class HumanMemory extends MemoryController {
   @FXML private AnchorPane aisle1Pane;
   @FXML private ImageView aisle1Item;
 
+  // Aisle 2
+  @FXML private AnchorPane aisle2Pane;
+  @FXML private ImageView aisle2Item1;
+  @FXML private ImageView aisle2Item2;
+
   public static Map<String, Boolean> itemCollected = new HashMap<>();
   public static Map<String, ImageView> itemToLabel = new HashMap<>();
 
   DraggableMaker draggableMaker = new DraggableMaker();
 
+  private ArrayList<ImageView> aisleItems = new ArrayList<ImageView>();
+  private ArrayList<ImageView> itemMarkers = new ArrayList<ImageView>();
+
   public HumanMemory() {
     super("prompts/witnessHuman.txt");
     itemToLabel.put("aisle1Item", markerLine1);
+    itemToLabel.put("aisle2Item1", markerLine2);
+    itemToLabel.put("aisle2Item2", markerLine3);
   }
 
   @Override
@@ -75,16 +86,27 @@ public class HumanMemory extends MemoryController {
     createTitleDisappearAnimation();
     super.initialize();
 
-    // Initial UI setup
-    aisle1Item.setVisible(true);
+    // Add items to arraylists
+    aisleItems.add(aisle1Item);
+    aisleItems.add(aisle2Item1);
+    aisleItems.add(aisle2Item2);
+    itemMarkers.add(markerLine1);
+    itemMarkers.add(markerLine2);
+    itemMarkers.add(markerLine3);
 
-    // Load shopping list items, if collected, then make invisible
-    if (itemCollected.getOrDefault(aisle1Item.getId(), false)) {
-      aisle1Item.setVisible(false);
-      markerLine1.setVisible(true);
+    // Initial UI setup
+    for (ImageView item : aisleItems) {
+      item.setVisible(true);
     }
 
-    setupDraggableItem(aisle1Item, "aisle1Item");
+    // Load shopping list items, if collected, then make invisible
+    for (int i = 0; i < aisleItems.size(); i++) {
+      if (itemCollected.getOrDefault(aisleItems.get(i).getId(), false)) {
+        aisleItems.get(i).setVisible(false);
+        itemMarkers.get(i).setVisible(true);
+      }
+      setupDraggableItem(aisleItems.get(i), "aisle" + (i + 1) + "Item");
+    }
   }
 
   private void handleGameOver() throws IOException {
@@ -154,6 +176,16 @@ public class HumanMemory extends MemoryController {
         System.out.println("Item 1 in cart!"); // Debugging
         // Check off the shopping list
         markerLine1.setVisible(true);
+        break;
+      case "aisle2Item1":
+        System.out.println("Item 2 in cart!"); // Debugging
+        // Check off the shopping list
+        markerLine2.setVisible(true);
+        break;
+      case "aisle2Item2":
+        System.out.println("Item 3 in cart!"); // Debugging
+        // Check off the shopping list
+        markerLine3.setVisible(true);
         break;
       default:
         // placeholder
