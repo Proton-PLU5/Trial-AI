@@ -42,17 +42,19 @@ public class Timer {
 
   /**
    * Add a consumer to be executed when the timer to update timer labels.
+   * 
    * @param consumer
    * @return The current timer instance.
    */
   public Timer addConsumer(Consumer<String> consumer) {
     this.consumers.add(consumer);
-    updateTimerLabel(App.TIMER_DURATION-count);
+    updateTimerLabel(App.TIMER_DURATION - count);
     return this;
   }
 
   /**
    * Set whether the timer counts down or up.
+   * 
    * @param countDown
    * @return The current timer instance.
    */
@@ -117,14 +119,13 @@ public class Timer {
             }
             consumer.accept(builder.toString());
           }
-    });
+        });
   }
 
   private Task<Void> createTimerTask(int length,
       boolean countDown) {
 
     Task<Void> timerTask = new Task<Void>() {
-
 
       private void count() {
         if (count < length) {

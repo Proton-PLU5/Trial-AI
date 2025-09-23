@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.App;
@@ -19,37 +22,57 @@ import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
 
 /**
- * Controller class for the room view. Handles user interactions within the room where the user can
+ * Controller class for the room view. Handles user interactions within the room
+ * where the user can
  * chat with customers and guess their profession.
  */
 public class RoomController implements TimableScene {
 
   private static boolean isFirstTimeInit = true;
 
-  @FXML private Rectangle witnessAi;
-  @FXML private Rectangle witnessHuman;
-  @FXML private Rectangle defendant;
-  @FXML private Button btnGuess;
-  @FXML private Label timerLabel;
-  @FXML private Button nextButton;
-  @FXML private Label conversationRoleLabel;
-  @FXML private Label chaconversationTextLabel;
-  @FXML private AnchorPane conversationPane;
-  private String currentChatCharacter = null;
+  @FXML
+  private Rectangle witnessAi;
+  @FXML
+  private Rectangle witnessHuman;
+  @FXML
+  private Rectangle defendant;
+  @FXML
+  private Button btnGuess;
+  @FXML
+  private Label timerLabel;
+  @FXML
+  private Button nextButton;
+  @FXML
+  private Label conversationRoleLabel;
+  @FXML
+  private Label chaconversationTextLabel;
+  @FXML
+  private AnchorPane conversationPane;
+
   private static Map<String, Boolean> characterInteracted = new HashMap<>();
-  private TimerService timerService;
+
   private boolean finalSceneLoaded = false;
 
+  private AnchorPane conversationPane1;
+
+  private MediaPlayer startAudioMediaPlayer;
+
   /**
-   * Initializes the room view. If it's the first time initialization, it will provide instructions
+   * Initializes the room view. If it's the first time initialization, it will
+   * provide instructions
    * via text-to-speech.
    */
   @FXML
   public void initialize() {
+    startAudioMediaPlayer = new MediaPlayer(
+        new Media(getClass().getResource("/sounds/voiceover.mp3").toExternalForm()));
+    startAudioMediaPlayer.play();
+
     App.timer.addConsumer(this.getTimerConsumer());
 
     if (isFirstTimeInit) {
-      // Media media = new Media(getClass().getResource("/sounds/startAudio.mp3").toExternalForm());
+      // Media media = new
+      // Media(getClass().getResource("/sounds/startAudio.mp3").toExternalForm());
       // MediaPlayer mediaPlayer = new MediaPlayer(media);
       // mediaPlayer.play();
     }
@@ -60,25 +83,6 @@ public class RoomController implements TimableScene {
       finalSceneLoaded = true;
       SceneManager.switchScene(SceneManager.Scenes.verdict);
       SceneManager.setStyleSheet("/css/style.css");
-    }
-  }
-
-  private void updateTimerStyle(int secondsRemaining) {
-    if (timerLabel == null) {
-      return;
-    }
-
-    timerLabel.getStyleClass().removeAll("timer-normal", "timer-warning", "timer-critical");
-
-    if (secondsRemaining <= 10) {
-
-      timerLabel.getStyleClass().addAll("timer-label", "timer-critical");
-    } else if (secondsRemaining <= 30) {
-
-      timerLabel.getStyleClass().addAll("timer-label", "timer-warning");
-    } else {
-
-      timerLabel.getStyleClass().addAll("timer-label", "timer-normal");
     }
   }
 
@@ -115,6 +119,11 @@ public class RoomController implements TimableScene {
 
     boolean hasInteracted = characterInteracted.getOrDefault(characterId, false);
 
+    // Stop the audio if it's still playing
+    if (startAudioMediaPlayer != null) {
+      startAudioMediaPlayer.stop();
+    }
+
     if (!hasInteracted) {
       characterInteracted.put(characterId, true);
       SceneManager.switchScene(getFlashbackScene(characterId));
@@ -126,10 +135,7 @@ public class RoomController implements TimableScene {
 
   @FXML
   void handleNextButton() {
-    nextButton.setVisible(false);
-    conversationPane.setVisible(false);
-    conversationRoleLabel.setVisible(false);
-    chaconversationTextLabel.setVisible(false);
+    conversationPane1.setVisible(false);
   }
 
   private SceneManager.Scenes getMemoryScene(String characterId) {
