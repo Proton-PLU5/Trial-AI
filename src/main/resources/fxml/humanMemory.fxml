@@ -58,6 +58,7 @@
                </image>
             </ImageView>
             <Rectangle fx:id="aisle1Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="347.0" layoutX="79.0" layoutY="108.0" onMouseClicked="#handleAisle1RectangleClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="249.0" />
+            <Rectangle fx:id="aisle2Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="347.0" layoutX="423.0" layoutY="86.0" onMouseClicked="#handleAisle2RectangleClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="249.0" />
          </children>
       </AnchorPane>
       <Button fx:id="backToAislesButton" layoutX="607.0" layoutY="8.0" mnemonicParsing="false" onAction="#onBackToAislesButtonPressed" prefHeight="40.0" prefWidth="203.0" text="Back to Aisles" visible="false">

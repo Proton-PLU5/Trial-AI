@@ -50,6 +50,7 @@ public class HumanMemory extends MemoryController {
   // Main Aisle
   @FXML private AnchorPane mainAislePane;
   @FXML private Rectangle aisle1Rectangle;
+  @FXML private Rectangle aisle2Rectangle;
 
   // Misc
   @FXML private Polygon shoppingCartHitbox;
@@ -138,6 +139,15 @@ public class HumanMemory extends MemoryController {
   private void handleAisle1RectangleClicked(MouseEvent event) throws IOException {
     mainAislePane.setVisible(false);
     aisle1Pane.setVisible(true);
+    shoppingCartHitbox.setVisible(true);
+    backToAislesButton.setVisible(true);
+    // checkIfItemHasBeenCollected();
+  }
+
+  @FXML
+  private void handleAisle2RectangleClicked(MouseEvent event) throws IOException {
+    mainAislePane.setVisible(false);
+    aisle2Pane.setVisible(true);
     shoppingCartHitbox.setVisible(true);
     backToAislesButton.setVisible(true);
     // checkIfItemHasBeenCollected();
