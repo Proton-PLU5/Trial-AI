@@ -1,6 +1,8 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
@@ -56,10 +58,14 @@ public class HumanMemory extends MemoryController {
   @FXML private AnchorPane aisle1Pane;
   @FXML private ImageView aisle1Item;
 
+  public static Map<String, Boolean> itemCollected = new HashMap<>();
+  public static Map<String, Label> itemToLabel = new HashMap<>();
+
   DraggableMaker draggableMaker = new DraggableMaker();
 
   public HumanMemory() {
     super("prompts/witnessHuman.txt");
+    itemToLabel.put("aisle1Item", shoppingListItem1Label);
   }
 
   @Override
@@ -68,6 +74,15 @@ public class HumanMemory extends MemoryController {
     App.timer.addConsumer(getTimerConsumer());
     createTitleDisappearAnimation();
     super.initialize();
+
+    // Initial visibility
+    aisle1Item.setVisible(true);
+
+    // Load shopping list items
+    if (itemCollected.getOrDefault(aisle1Item.getId(), false)) {
+      aisle1Item.setVisible(false);
+    }
+
     draggableMaker.makeDraggable(aisle1Item, shoppingCartHitbox);
   }
 
