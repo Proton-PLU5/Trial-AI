@@ -59,7 +59,7 @@ public abstract class MemoryController implements TimableScene {
 
   // Chat visibility state
   private boolean isChatVisible = false;
-  private String roleOfCharacter = "";
+  protected String roleOfCharacter = "";
   private String systemPrompt = "";
 
   // Constructor

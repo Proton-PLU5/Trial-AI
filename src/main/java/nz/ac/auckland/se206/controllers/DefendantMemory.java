@@ -6,6 +6,7 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -111,6 +112,8 @@ public class DefendantMemory extends MemoryController {
     App.timer.addConsumer(getTimerConsumer());
     createTitleDisappearAnimation();
 
+    this.roleOfCharacter = "Defendant";
+
     super.initialize();
   }
 
@@ -199,6 +202,7 @@ public class DefendantMemory extends MemoryController {
 
           // Show customer details pane
           customerDetailsPane.setVisible(true);
+          customerCriminalRecordLabel.setStyle(""); // Reset style
           Node sourceNode = (Node) event.getSource();
           customerDetailsPane.setLayoutX(sourceNode.getLayoutX());
           customerDetailsPane.setLayoutY(sourceNode.getLayoutY());
@@ -209,7 +213,25 @@ public class DefendantMemory extends MemoryController {
             customerIDLabel.setText("Customer 1");
             customerStatusLabel.setText("New Shopper");
             customerAgeLabel.setText("Age: 25");
-            customerCriminalRecordLabel.setText("No Record");
+            customerCriminalRecordLabel.setText("Shoplifting");
+            // Highlight criminal record
+            customerCriminalRecordLabel.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+
+            // Send additional info to the AI
+            Task<Void> sendAdditionalInfoTask = new Task<Void>() {
+              @Override
+              protected Void call() throws Exception {
+                String output = sendGPTRequest(loadPrompt("prompts/defendant_additional.txt"));
+                appendMessageToChat(roleOfCharacter, output);
+                return null;
+              }
+            };
+
+            // Use a thread to perform the task concurrently
+            Thread additionalInfoThread = new Thread(sendAdditionalInfoTask);
+            additionalInfoThread.setDaemon(true);
+            additionalInfoThread.start();
+
           } else if (sourceNode.getId().equals(rec2.getId())) {
             customerIDLabel.setText("Customer 2");
             customerStatusLabel.setText("Returning Shopper");
@@ -219,7 +241,7 @@ public class DefendantMemory extends MemoryController {
             customerIDLabel.setText("Customer 3");
             customerStatusLabel.setText("New Shopper");
             customerAgeLabel.setText("Age: 30");
-            customerCriminalRecordLabel.setText("Shoplifting");
+            customerCriminalRecordLabel.setText("No Record");
           } else if (sourceNode.getId().equals(rec4.getId())) {
             customerIDLabel.setText("Customer 4");
             customerStatusLabel.setText("Loyal Shopper");
