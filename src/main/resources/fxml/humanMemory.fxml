@@ -72,27 +72,7 @@
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-         <children>
-            <Button fx:id="goBackButton" mnemonicParsing="false" onAction="#onGoBackButtonPressed" prefHeight="40.0" prefWidth="203.0" text="Back to courtoom" GridPane.columnIndex="1">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font></Button>
-            <Button fx:id="chatButton" mnemonicParsing="false" onAction="#onChatButtonPressed" prefHeight="40.0" prefWidth="113.0" text="Open chat">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font></Button>
-            <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="40.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="165.0" GridPane.columnIndex="2" />
-            <Label alignment="CENTER" prefHeight="40.0" prefWidth="87.0" text="Time:" textAlignment="CENTER" GridPane.columnIndex="2">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="timerLabel" prefHeight="40.0" prefWidth="73.0" text="00:00" translateX="85.0" GridPane.columnIndex="2">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-         </children>
+         git push --set-upstream origin design/css
       </GridPane>
       <AnchorPane fx:id="titleBlock" layoutX="14.0" layoutY="14.0" prefHeight="110.0" prefWidth="563.0">
          <children>
