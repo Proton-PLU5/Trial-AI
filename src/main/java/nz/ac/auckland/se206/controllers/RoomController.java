@@ -80,6 +80,10 @@ public class RoomController implements TimableScene {
 
   private void handleGameOver() throws IOException {
     if (!finalSceneLoaded) {
+      // Stop the audio if it's still playing
+      if (startAudioMediaPlayer != null) {
+        startAudioMediaPlayer.stop();
+      }
       finalSceneLoaded = true;
       SceneManager.switchScene(SceneManager.Scenes.verdict);
       SceneManager.setStyleSheet("/css/style.css");
