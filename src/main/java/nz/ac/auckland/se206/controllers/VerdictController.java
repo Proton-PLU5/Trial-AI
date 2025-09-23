@@ -60,7 +60,7 @@ public class VerdictController implements TimableScene {
 
   @FXML
   private void initialize() {
-    Media media = new Media(getClass().getResource("/sounds/decisionAudio.mp3").toExternalForm());
+    Media media = new Media(getClass().getResource("/sounds/verdict.mp3").toExternalForm());
     MediaPlayer mediaPlayer = new MediaPlayer(media);
     mediaPlayer.play();
 
