@@ -12,6 +12,7 @@ import javax.management.RuntimeErrorException;
 
 import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
 import javafx.animation.Transition;
 import javafx.animation.TranslateTransition;
 import javafx.concurrent.Task;
@@ -61,6 +62,8 @@ public abstract class MemoryController implements TimableScene {
   private boolean isChatVisible = false;
   protected String roleOfCharacter = "";
   private String systemPrompt = "";
+
+  private SequentialTransition hideLeftTransition;
 
   // Constructor
   public MemoryController(String promptId) {
@@ -218,19 +221,22 @@ public abstract class MemoryController implements TimableScene {
   }
 
   protected void createTitleDisappearAnimation() {
-    // Move the title block to the right
-    TranslateTransition transition = new TranslateTransition(Duration.seconds(1), titleBlock);
-    transition.setFromX(0);
-    transition.setToX(-700);
-    transition.setOnFinished(event -> titleBlock.setVisible(false));
+    TranslateTransition moveLeftTransition = new TranslateTransition(Duration.seconds(1), titleBlock);
+    moveLeftTransition = new TranslateTransition(Duration.seconds(1), titleBlock);
+    moveLeftTransition.setFromX(0);
+    moveLeftTransition.setToX(-700);
+    moveLeftTransition.setOnFinished(event -> titleBlock.setVisible(false));
     
     PauseTransition pause = new PauseTransition(Duration.seconds(4));
-    pause.setOnFinished(event -> {
-      transition.play();
-    });
 
     titleBlock.setTranslateX(0);
-    pause.play();
+    
+    hideLeftTransition = new SequentialTransition(pause, moveLeftTransition);
+    hideLeftTransition.play();
+  }
+
+  protected void stopTitleDisappearAnimation() {
+    hideLeftTransition.stop();
   }
 
   public Label getTimerLabel() {

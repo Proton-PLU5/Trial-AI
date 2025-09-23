@@ -81,6 +81,8 @@ public class DefendantMemory extends MemoryController {
   @Override
   @FXML
   protected void initialize() {
+    super.initialize();
+    
     loginPane.setVisible(true);
     initialPane.setVisible(true);
     keypadPane.setVisible(false);
@@ -113,8 +115,6 @@ public class DefendantMemory extends MemoryController {
     createTitleDisappearAnimation();
 
     this.roleOfCharacter = "Defendant";
-
-    super.initialize();
   }
 
   @FXML
@@ -143,6 +143,8 @@ public class DefendantMemory extends MemoryController {
     if (pin.equals(correctPin)) {
       // Mark login sequence as completed
       loginSequenceCompleted = true;
+      // Stop the previous animation
+      stopTitleDisappearAnimation();
 
       // Correct pin entered, proceed to next pane
       loginPane.setVisible(false);
