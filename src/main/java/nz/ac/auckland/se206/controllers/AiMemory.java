@@ -1,73 +1,114 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.SceneManager;
 
-public class AiMemory {
+public class AiMemory extends MemoryController {
 
   @FXML private Button roomBtn;
   @FXML private Button chatBtn;
   @FXML private Label timerLabel;
   @FXML private Pane chatPanel;
+  @FXML private Pane rootPane;
+  @FXML private ImageView mainImageView;
+  @FXML private ImageView xrayImageView;
+  @FXML private Rectangle overlayRectangle;
 
   private TimerService timerService;
+  private Circle clipCircle;
+  private static final double CIRCLE_RADIUS = 75.0;
+  private boolean isXrayMode = false;
+  private boolean isFirstTime = true;
+
+  public AiMemory() {
+    super("prompts/witnessAi.txt");
+  }
+
+  @Override
+  @FXML
+  protected void initialize() {
+    super.initialize();
+    setupXrayEffect();
+  }
+
+  private void setupXrayEffect() {
+    // Create the clipping circle
+    clipCircle = new Circle(CIRCLE_RADIUS);
+
+    // Initially hide the xray image
+    xrayImageView.setVisible(false);
+    xrayImageView.setClip(clipCircle);
+
+    // Add mouse event handlers to the root pane
+    rootPane.setOnMouseMoved(this::handleMouseMove);
+    rootPane.setOnMouseClicked(this::handleMouseClicked);
+    rootPane.setOnMouseExited(this::handleMouseExited);
+  }
 
   @FXML
-  private void initialize() {
-    chatPanel.setVisible(false);
-
-    timerService = TimerService.getInstance();
-
-    // Bind timer display to label
-    if (timerLabel != null) {
-      timerLabel.textProperty().bind(timerService.timeDisplayProperty());
-
-      // Update timer style based on remaining time
-      timerService
-          .secondsRemainingProperty()
-          .addListener(
-              (obs, oldVal, newVal) -> {
-                updateTimerStyle(newVal.intValue());
-              });
-
-      // Handle game over when time runs out
-      timerService
-          .timeUpProperty()
-          .addListener(
-              (obs, wasTimeUp, isTimeUp) -> {
-                if (isTimeUp) {
-                  try {
-                    handleGameOver();
-                  } catch (IOException e) {
-                    e.printStackTrace();
-                  }
-                }
-              });
+  private void handleMouseMove(MouseEvent event) {
+    // Only show effect if in xray mode
+    if (isXrayMode) {
+      updateClipPosition(event.getX(), event.getY());
     }
   }
 
-  private void updateTimerStyle(int secondsRemaining) {
-    if (timerLabel == null) {
-      return;
-    }
-    timerLabel.getStyleClass().removeAll("timer-normal", "timer-warning", "timer-critical");
-    if (secondsRemaining <= 10) {
-      timerLabel.getStyleClass().addAll("timer-label", "timer-critical");
-    } else if (secondsRemaining <= 30) {
-      timerLabel.getStyleClass().addAll("timer-label", "timer-warning");
+  @FXML
+  private void handleMouseClicked(MouseEvent event) {
+    // Toggle between xray mode and normal mode
+    isXrayMode = !isXrayMode;
+
+    if (isXrayMode) {
+      // Enter xray mode
+      rootPane.setCursor(Cursor.NONE);
+      xrayImageView.setVisible(true);
+      updateClipPosition(event.getX(), event.getY());
     } else {
-      timerLabel.getStyleClass().addAll("timer-label", "timer-normal");
+      // Exit xray mode
+      rootPane.setCursor(Cursor.DEFAULT);
+      xrayImageView.setVisible(false);
     }
+  }
+
+  @FXML
+  private void handleMouseExited(MouseEvent event) {
+    // Hide the xray effect when mouse leaves the pane and reset to normal mode
+    isXrayMode = false;
+    rootPane.setCursor(Cursor.DEFAULT);
+    xrayImageView.setVisible(false);
+  }
+
+  // Add interaction event when concealed item is detected here
+  @FXML
+  private void interactableComplete() {
+    if (isXrayMode && isFirstTime) {
+      System.out.println("Identified conceled item");
+      isFirstTime = false;
+    }
+  }
+
+  private void updateClipPosition(double mouseX, double mouseY) {
+    // Convert root pane coordinates to image coordinates
+    double imageX = mouseX - xrayImageView.getLayoutX();
+    double imageY = mouseY - xrayImageView.getLayoutY();
+
+    // Update the clip circle position
+    clipCircle.setCenterX(imageX);
+    clipCircle.setCenterY(imageY);
   }
 
   private void handleGameOver() throws IOException {
