@@ -74,10 +74,6 @@ public class App extends Application {
     SceneManager.setStyleSheet("/css/style.css");
     primaryStage.show();
 
-    // Timer Setup
-    timer.setCountDown(true);
-    timer.buildTimer();
-
     primaryStage.requestFocus();
   }
 }
