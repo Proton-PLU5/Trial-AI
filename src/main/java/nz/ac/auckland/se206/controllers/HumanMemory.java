@@ -54,6 +54,7 @@ public class HumanMemory extends MemoryController {
 
   // Misc
   @FXML private Polygon shoppingCartHitbox;
+  @FXML private Rectangle purseHitbox;
   @FXML private Button backToAislesButton;
 
   // Aisle 1
