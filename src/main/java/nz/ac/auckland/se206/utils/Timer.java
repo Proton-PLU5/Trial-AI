@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
+import nz.ac.auckland.se206.App;
 
 /**
  * A custom timer class that is able to count to a specific
@@ -46,7 +47,7 @@ public class Timer {
    */
   public Timer addConsumer(Consumer<String> consumer) {
     this.consumers.add(consumer);
-    updateTimerLabel(this.count);
+    updateTimerLabel(App.TIMER_DURATION-count);
     return this;
   }
 

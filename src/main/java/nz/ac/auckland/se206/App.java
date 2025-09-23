@@ -22,7 +22,8 @@ public class App extends Application {
   private static Scene scene;
   public static Stage primaryStage;
   public static StringBuilder chatHistory = new StringBuilder();
-  public static Timer timer = new Timer(5*60); // 5 minutes
+  public static final int TIMER_DURATION = 5 * 60; // 5 minutes in seconds
+  public static Timer timer = new Timer(TIMER_DURATION); // 5 minutes
 
   /**
    * The main method that launches the JavaFX application.
