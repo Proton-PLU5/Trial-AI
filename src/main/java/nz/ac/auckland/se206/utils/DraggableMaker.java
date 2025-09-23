@@ -24,6 +24,7 @@ public class DraggableMaker {
     node.setOnMouseReleased(mouseEvent -> {
       if (node.getBoundsInParent().intersects(hitbox.getBoundsInParent())) {
         node.setVisible(false);
+        // Mark item as collected once added to cart
         HumanMemory.itemCollected.put(node.getId(), true);
       }
     });

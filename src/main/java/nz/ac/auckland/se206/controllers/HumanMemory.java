@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -75,15 +76,12 @@ public class HumanMemory extends MemoryController {
     createTitleDisappearAnimation();
     super.initialize();
 
-    // Initial visibility
-    aisle1Item.setVisible(true);
+    // Load shopping list items, if collected, then make invisible
+    // if (itemCollected.getOrDefault(aisle1Item.getId(), true)) {
+    //   aisle1Item.setVisible(false);
+    // }
 
-    // Load shopping list items
-    if (itemCollected.getOrDefault(aisle1Item.getId(), false)) {
-      aisle1Item.setVisible(false);
-    }
-
-    draggableMaker.makeDraggable(aisle1Item, shoppingCartHitbox);
+    setupDraggableItem(aisle1Item, "aisle1Item");
   }
 
   private void handleGameOver() throws IOException {
@@ -117,5 +115,44 @@ public class HumanMemory extends MemoryController {
     aisle1Pane.setVisible(true);
     shoppingCartHitbox.setVisible(true);
     backToAislesButton.setVisible(true);
+    // checkIfItemHasBeenCollected();
+  }
+
+  // @FXML
+  // private void checkIfItemHasBeenCollected() {
+  //   // Load shopping list items, if collected, then make invisible
+  //   if (itemCollected.getOrDefault(aisle1Item.getId(), true)) {
+  //     aisle1Item.setVisible(true);
+  //   } else {
+  //     aisle1Item.setVisible(false);
+  //   }
+  // }
+
+  @FXML
+  private void setupDraggableItem(Node item, String itemName) {
+      draggableMaker.makeDraggable(item, shoppingCartHitbox);
+      itemCollected.put(item.getId(), false);
+      // Check if released on shopping cart hitbox
+      item.setOnMouseReleased(event -> {
+          if (item.getBoundsInParent().intersects(shoppingCartHitbox.getBoundsInParent())) {
+              handleItemInCart(itemName);
+              // Hide the item once in cart
+              item.setVisible(false);
+          } else {
+              return;
+          }
+      });
+  }
+
+  @FXML
+  private void handleItemInCart(String itemName) {
+    switch(itemName) {
+      case "aisle1Item":
+        System.out.println("Item 1 in cart!"); // Debugging
+        // Check off the shopping list
+        break;
+      default:
+        // placeholder
+    }
   }
 }
