@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -50,6 +51,7 @@ public class HumanMemory extends MemoryController {
   // Aisle 1
   @FXML private AnchorPane aisle1Pane;
   @FXML private ImageView aisle1Item;
+  @FXML private Polygon shoppingCartHitbox;
 
   DraggableMaker draggableMaker = new DraggableMaker();
 
