@@ -64,22 +64,23 @@ public class RoomController implements TimableScene {
    */
   @FXML
   public void initialize() {
-    startAudioMediaPlayer = new MediaPlayer(
-        new Media(getClass().getResource("/sounds/voiceover.mp3").toExternalForm()));
-    startAudioMediaPlayer.play();
 
     App.timer.addConsumer(this.getTimerConsumer());
 
     if (isFirstTimeInit) {
-      // Media media = new
-      // Media(getClass().getResource("/sounds/startAudio.mp3").toExternalForm());
-      // MediaPlayer mediaPlayer = new MediaPlayer(media);
-      // mediaPlayer.play();
+      startAudioMediaPlayer = new MediaPlayer(
+          new Media(getClass().getResource("/sounds/voiceover.mp3").toExternalForm()));
+      startAudioMediaPlayer.play();
+      isFirstTimeInit = false;
     }
   }
 
   private void handleGameOver() throws IOException {
     if (!finalSceneLoaded) {
+      // Stop the audio if it's still playing
+      if (startAudioMediaPlayer != null) {
+        startAudioMediaPlayer.stop();
+      }
       finalSceneLoaded = true;
       SceneManager.switchScene(SceneManager.Scenes.verdict);
       SceneManager.setStyleSheet("/css/style.css");
