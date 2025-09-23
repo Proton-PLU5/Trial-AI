@@ -13,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.App;
@@ -53,6 +55,8 @@ public class RoomController implements TimableScene {
 
   private AnchorPane conversationPane1;
 
+  private MediaPlayer startAudioMediaPlayer;
+
   /**
    * Initializes the room view. If it's the first time initialization, it will
    * provide instructions
@@ -60,6 +64,10 @@ public class RoomController implements TimableScene {
    */
   @FXML
   public void initialize() {
+    startAudioMediaPlayer = new MediaPlayer(
+        new Media(getClass().getResource("/sounds/voiceover.mp3").toExternalForm()));
+    startAudioMediaPlayer.play();
+
     App.timer.addConsumer(this.getTimerConsumer());
 
     if (isFirstTimeInit) {
@@ -110,6 +118,11 @@ public class RoomController implements TimableScene {
     String characterId = clickedRectangle.getId();
 
     boolean hasInteracted = characterInteracted.getOrDefault(characterId, false);
+
+    // Stop the audio if it's still playing
+    if (startAudioMediaPlayer != null) {
+      startAudioMediaPlayer.stop();
+    }
 
     if (!hasInteracted) {
       characterInteracted.put(characterId, true);
