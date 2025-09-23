@@ -65,7 +65,7 @@ public class HumanMemory extends MemoryController {
     App.timer.addConsumer(getTimerConsumer());
     createTitleDisappearAnimation();
     super.initialize();
-    draggableMaker.makeDraggable(aisle1Item);
+    draggableMaker.makeDraggable(aisle1Item, shoppingCartHitbox);
   }
 
   private void handleGameOver() throws IOException {
