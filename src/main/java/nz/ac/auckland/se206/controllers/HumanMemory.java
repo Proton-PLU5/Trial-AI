@@ -23,6 +23,7 @@ import javafx.util.Duration;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
+import nz.ac.auckland.se206.utils.DraggableMaker;
 
 public class HumanMemory extends MemoryController {
 
@@ -50,6 +51,8 @@ public class HumanMemory extends MemoryController {
   @FXML private AnchorPane aisle1Pane;
   @FXML private ImageView aisle1Item;
 
+  DraggableMaker draggableMaker = new DraggableMaker();
+
   public HumanMemory() {
     super("prompts/witnessHuman.txt");
   }
@@ -60,6 +63,7 @@ public class HumanMemory extends MemoryController {
     App.timer.addConsumer(getTimerConsumer());
     createTitleDisappearAnimation();
     super.initialize();
+    draggableMaker.makeDraggable(aisle1Item);
   }
 
   private void handleGameOver() throws IOException {
