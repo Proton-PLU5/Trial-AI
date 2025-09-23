@@ -54,22 +54,17 @@
                   <Image url="@../images/shoppingList.png" />
                </image>
             </ImageView>
-            <Label layoutX="61.0" layoutY="86.0" text="Item 1">
+            <Label layoutX="61.0" layoutY="86.0" text="Blueberry cereal">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label layoutX="61.0" layoutY="154.0" text="Item 2">
+            <Label layoutX="61.0" layoutY="154.0" text="Apple juice">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label layoutX="61.0" layoutY="223.0" text="Item 3">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Label>
-            <Label layoutX="61.0" layoutY="293.0" text="Item 4">
+            <Label layoutX="61.0" layoutY="223.0" text="Orange juice">
                <font>
                   <Font size="30.0" />
                </font>
@@ -85,11 +80,6 @@
                </image>
             </ImageView>
             <ImageView fx:id="markerLine3" fitHeight="35.0" fitWidth="132.0" layoutX="48.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../images/markerLine.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="markerLine4" fitHeight="35.0" fitWidth="132.0" layoutX="48.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@../images/markerLine.png" />
                </image>

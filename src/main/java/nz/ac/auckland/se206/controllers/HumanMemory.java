@@ -45,7 +45,6 @@ public class HumanMemory extends MemoryController {
   @FXML private ImageView markerLine1;
   @FXML private ImageView markerLine2;
   @FXML private ImageView markerLine3;
-  @FXML private ImageView markerLine4;
 
   // Main Aisle
   @FXML private AnchorPane mainAislePane;
