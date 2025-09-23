@@ -1,26 +1,26 @@
 package nz.ac.auckland.se206.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 import nz.ac.auckland.se206.controllers.flashback.FlashbackController;
 import nz.ac.auckland.se206.utils.SceneManager;
 
 public class AiFlashback extends FlashbackController {
-  @FXML private ImageView backgroundImage;
-  @FXML private Button nextBtn;
-  @FXML private Label timerLabel;
-  @FXML private Button memoryButton;
+  @FXML
+  private ImageView backgroundImage;
+  @FXML
+  private Button nextBtn;
+  @FXML
+  private Label timerLabel;
+  @FXML
+  private Button memoryButton;
 
-  @FXML private Label conversationRoleLabel;
-  @FXML private Label conversationTextLabel;
-
+  @FXML
+  private Label conversationRoleLabel;
+  @FXML
+  private Label conversationTextLabel;
 
   @FXML
   protected void initialize() {
@@ -36,9 +36,11 @@ public class AiFlashback extends FlashbackController {
 
   @Override
   protected void setupText() {
-    addText("Paragraph 3: dahdasidgaiudhauih");
-    addText("Paragraph 2: hdiuwhdiuadihadi");
-    addText("Paragraph 1: dhauhdiuhdiudh");
+    addText(
+        "System output: subject detected exhibiting irregular behavior. Subject advanced toward exit carrying one unscanned item.");
+    addText("This operational pattern persisted throughout the cycle until anomaly data was registered.");
+    addText(
+        "System output: initial operations proceeded under standard parameters. All customers scanned items and exited with zero unscanned detections.");
   }
 
   @FXML

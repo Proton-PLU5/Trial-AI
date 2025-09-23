@@ -75,12 +75,12 @@
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5599d9" height="95.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="481.0" />
             <Polygon fill="#5599d9" layoutX="483.0" layoutY="10.0" points="-3.666656494140625, -10.666666984558105, -3.666656494140625, 85.00000762939453, 79.33331298828125, 40.00000762939453" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-            <Label fx:id="titleLabel" alignment="TOP_LEFT" layoutX="14.0" prefHeight="56.0" prefWidth="440.0" text="Placeholder">
+            <Label fx:id="titleLabel" alignment="TOP_LEFT" layoutX="14.0" prefHeight="56.0" prefWidth="440.0" text="X-ray">
                <font>
                   <Font name="System Bold" size="39.0" />
                </font>
             </Label>
-            <Label fx:id="descriptionLabel" alignment="BASELINE_LEFT" layoutX="14.0" layoutY="48.0" prefHeight="37.0" prefWidth="523.0" text="Insert text here." textFill="WHITE">
+            <Label fx:id="descriptionLabel" alignment="BASELINE_LEFT" layoutX="14.0" layoutY="48.0" prefHeight="37.0" prefWidth="523.0" text="Click to use x-ray vision and find the unscanned item" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
