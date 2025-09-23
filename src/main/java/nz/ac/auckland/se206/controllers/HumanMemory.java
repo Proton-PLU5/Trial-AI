@@ -42,10 +42,6 @@ public class HumanMemory extends MemoryController {
   @FXML private Label descriptionLabel;
 
   // Shopping List
-  @FXML private Label shoppingListItem1Label;
-  @FXML private Label shoppingListItem2Label;
-  @FXML private Label shoppingListItem3Label;
-  @FXML private Label shoppingListItem4Label;
   @FXML private ImageView markerLine1;
   @FXML private ImageView markerLine2;
   @FXML private ImageView markerLine3;
@@ -64,13 +60,13 @@ public class HumanMemory extends MemoryController {
   @FXML private ImageView aisle1Item;
 
   public static Map<String, Boolean> itemCollected = new HashMap<>();
-  public static Map<String, Label> itemToLabel = new HashMap<>();
+  public static Map<String, ImageView> itemToLabel = new HashMap<>();
 
   DraggableMaker draggableMaker = new DraggableMaker();
 
   public HumanMemory() {
     super("prompts/witnessHuman.txt");
-    itemToLabel.put("aisle1Item", shoppingListItem1Label);
+    itemToLabel.put("aisle1Item", markerLine1);
   }
 
   @Override
