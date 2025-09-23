@@ -47,17 +47,7 @@ public class Timer {
    */
   public Timer addConsumer(Consumer<String> consumer) {
     this.consumers.add(consumer);
-
-
-    double minutes = Math.floor(this.count / 60.0);
-    double seconds = this.count % 60; // Remainder
-
-    StringBuilder builder = new StringBuilder();
-    builder.append(String.format("%02.0f", minutes));
-    builder.append(" : ");
-    builder.append(String.format("%02.0f", seconds));
-
-    consumer.accept(builder.toString());
+    updateTimerLabel(App.TIMER_DURATION-count);
     return this;
   }
 
