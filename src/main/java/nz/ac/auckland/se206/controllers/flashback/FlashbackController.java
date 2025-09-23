@@ -1,7 +1,6 @@
 package nz.ac.auckland.se206.controllers.flashback;
 
 import java.io.InputStream;
-import java.util.List;
 import java.util.Stack;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -65,18 +64,20 @@ public abstract class FlashbackController implements TimableScene {
 
   /**
    * Add image path to the image stack
+   *
    * @param imagePath The path of the image to be added
    */
   protected void addImage(String imagePath) {
     imageStack.push(imagePath);
   }
-  
+
   protected void onBackButtonPressed() {
     // Default implementation does nothing
   }
 
   /**
    * Add text to the text stack
+   *
    * @param text The text to be added
    */
   protected void addText(String text) {
