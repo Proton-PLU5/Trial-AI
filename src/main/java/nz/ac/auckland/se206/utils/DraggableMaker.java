@@ -15,8 +15,8 @@ public class DraggableMaker {
     });
 
     node.setOnMouseDragged(mouseEvent -> {
-      node.setLayoutX(mouseEvent.getX() - mouseAnchorX);
-      node.setLayoutX(mouseEvent.getY() - mouseAnchorY);
+      node.setLayoutX(mouseEvent.getSceneX() - mouseAnchorX);
+      node.setLayoutY(mouseEvent.getSceneY() - mouseAnchorY);
     });
   }
 }
