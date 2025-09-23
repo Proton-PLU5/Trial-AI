@@ -114,6 +114,9 @@ public class HumanMemory extends MemoryController {
       if (itemCollected.getOrDefault(aisleItems.get(i).getId(), false)) {
         aisleItems.get(i).setVisible(false);
         itemMarkers.get(i).setVisible(true);
+      } else {
+        aisleItems.get(i).setVisible(true);
+        itemMarkers.get(i).setVisible(false);
       }
       setupDraggableItem(aisleItems.get(i), aisleItems.get(i).getId());
     }
@@ -193,7 +196,6 @@ public class HumanMemory extends MemoryController {
       hitbox = purseHitbox;
     }
       draggableMaker.makeDraggable(item, hitbox);
-      itemCollected.put(item.getId(), true);
       // Check if released on shopping cart hitbox
       item.setOnMouseReleased(event -> {
           if (item.getBoundsInParent().intersects(hitbox.getBoundsInParent())) {
@@ -208,6 +210,7 @@ public class HumanMemory extends MemoryController {
 
   @FXML
   private void handleItemInCart(String itemName) {
+    itemCollected.put(itemName, true);
     switch(itemName) {
       case "aisle1Item":
         System.out.println("Item 1 in cart!"); // Debugging
