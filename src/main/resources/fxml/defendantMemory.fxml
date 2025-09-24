@@ -210,35 +210,36 @@
             </StackPane>
          </children></AnchorPane>
       <GridPane layoutX="10.0" layoutY="685.0" prefHeight="44.0" prefWidth="616.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.00004069010416" minWidth="10.0" prefWidth="115.66666666666667" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="375.999979654948" minWidth="10.0" prefWidth="206.33333333333331" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.66664632161456" minWidth="10.0" prefWidth="293.66664632161456" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Button fx:id="goBackButton" mnemonicParsing="false" onAction="#onGoBackButtonPressed" prefHeight="40.0" prefWidth="203.0" stylesheets="@../css/style.css" text="Back to courtoom" GridPane.columnIndex="1">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font></Button>
-            <Button fx:id="chatButton" mnemonicParsing="false" onAction="#onChatButtonPressed" prefHeight="46.0" prefWidth="144.0" stylesheets="@../css/style.css" text="Open chat">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font></Button>
-            <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="40.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="172.0" GridPane.columnIndex="2" />
-            <Label fx:id="timerLabelText" alignment="CENTER" prefHeight="40.0" prefWidth="87.0" stylesheets="@../css/style.css" text="Time:" textAlignment="CENTER" GridPane.columnIndex="2">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="timerLabel" prefHeight="35.0" prefWidth="80.0" stylesheets="@../css/style.css" text="00:00" translateX="85.0" GridPane.columnIndex="2">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-         </children>
+          <columnConstraints>
+              <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.00004069010416" minWidth="10.0" prefWidth="115.66666666666667" />
+              <ColumnConstraints hgrow="SOMETIMES" maxWidth="375.999979654948" minWidth="10.0" prefWidth="206.33333333333331" />
+              <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.66664632161456" minWidth="10.0" prefWidth="293.66664632161456" />
+          </columnConstraints>
+          <rowConstraints>
+              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          </rowConstraints>
+          <children>
+              <Button fx:id="chatButton" mnemonicParsing="false" onAction="#onChatButtonPressed" prefHeight="46.0" prefWidth="144.0" stylesheets="@../css/style.css" text="Open chat">
+                  <font>
+                      <Font name="System Bold" size="18.0" />
+                  </font>
+              </Button>
+              <Button fx:id="goBackButton" mnemonicParsing="false" onAction="#onGoBackButtonPressed" prefHeight="46.0" prefWidth="209.0" stylesheets="@../css/style.css" text="Back to courtoom" GridPane.columnIndex="1">
+                  <font>
+                      <Font name="System Bold" size="18.0" />
+                  </font>
+              </Button>
+              <Label fx:id="timerLabelText" alignment="CENTER" prefHeight="46.0" prefWidth="87.0" stylesheets="@../css/style.css" text="Time:" textAlignment="CENTER" GridPane.columnIndex="2">
+                  <font>
+                      <Font size="24.0" />
+                  </font>
+              </Label>
+              <Label fx:id="timerLabel" maxHeight="46.0" prefHeight="46.0" prefWidth="86.0" stylesheets="@../css/style.css" text="00:00" GridPane.columnIndex="2">
+                  <font>
+                      <Font size="24.0" />
+                  </font>
+              </Label>
+          </children>
       </GridPane>
       <AnchorPane fx:id="titleBlock" layoutX="14.0" layoutY="14.0" prefHeight="110.0" prefWidth="563.0">
          <children>
