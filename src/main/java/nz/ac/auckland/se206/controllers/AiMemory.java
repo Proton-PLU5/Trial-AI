@@ -43,6 +43,7 @@ public class AiMemory extends MemoryController {
   private static final double CIRCLE_RADIUS = 75.0;
   private boolean isXrayMode = false;
   private boolean isFirstTime = true;
+  public static boolean hasChattedWithAi;
 
   public AiMemory() {
     super("prompts/witnessAi.txt");
@@ -137,5 +138,10 @@ public class AiMemory extends MemoryController {
   @FXML
   private void handleOpenChatButtonClick(MouseEvent event) throws IOException {
     chatPanel.setVisible(true);
+  }
+
+  @Override
+  protected void markAsChatted() {
+    hasChattedWithAi = true;
   }
 }
