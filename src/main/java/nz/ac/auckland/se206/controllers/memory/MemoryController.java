@@ -33,6 +33,7 @@ import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.controllers.RoomController;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
 
@@ -59,8 +60,10 @@ public abstract class MemoryController implements TimableScene {
   // Timer
   @FXML
   private Label timerLabel;
+
   @FXML
   private Label timerLabelText;
+
 
   // Title
   @FXML
@@ -107,6 +110,7 @@ public abstract class MemoryController implements TimableScene {
     textField.clear();
 
     if (!userInput.isEmpty()) {
+      markAsChatted();
       appendMessageToChat("User", userInput);
 
       // Create a new thread to handle the GPT request
@@ -250,5 +254,9 @@ public abstract class MemoryController implements TimableScene {
 
   public Label getTimerLabel() {
     return timerLabel;
+  }
+
+  protected void markAsChatted() {
+    return;
   }
 }

@@ -74,6 +74,7 @@ public class DefendantMemory extends MemoryController {
   private static AudioClip keyPadAudioClip;
   private static boolean loginSequenceCompleted = false;
   private AnimationTimer progressArcAnimationTimer;
+  public static boolean hasChattedWithDefendant;
 
   static {
     var resource = DefendantMemory.class.getResource("/sounds/keypad.mp3");
@@ -291,4 +292,8 @@ public class DefendantMemory extends MemoryController {
     customerDetailsPane.setVisible(false);
   }
 
+  @Override
+  protected void markAsChatted() {
+    hasChattedWithDefendant = true;
+  }
 }
