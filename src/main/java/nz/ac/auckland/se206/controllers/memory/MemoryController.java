@@ -41,22 +41,34 @@ public abstract class MemoryController implements TimableScene {
   protected ChatCompletionRequest chatCompletionRequest;
 
   // Chat Elements
-  @FXML private AnchorPane chatPane;
-  @FXML private Button sendButton;
-  @FXML private Button chatButton;
-  @FXML private TextArea textArea;
-  @FXML private TextField textField;
+  @FXML
+  private AnchorPane chatPane;
+  @FXML
+  private Button sendButton;
+  @FXML
+  private Button chatButton;
+  @FXML
+  private TextArea textArea;
+  @FXML
+  private TextField textField;
 
   // Navigation
-  @FXML private Button goBackButton;
+  @FXML
+  private Button goBackButton;
 
   // Timer
-  @FXML private Label timerLabel;
+  @FXML
+  private Label timerLabel;
+  @FXML
+  private Label timerLabelText;
 
-  // Title 
-  @FXML protected AnchorPane titleBlock;
-  @FXML protected Label titleLabel;
-  @FXML protected Label descriptionLabel;
+  // Title
+  @FXML
+  protected AnchorPane titleBlock;
+  @FXML
+  protected Label titleLabel;
+  @FXML
+  protected Label descriptionLabel;
 
   // Chat visibility state
   private boolean isChatVisible = false;
@@ -98,26 +110,25 @@ public abstract class MemoryController implements TimableScene {
       appendMessageToChat("User", userInput);
 
       // Create a new thread to handle the GPT request
-      Task<Void> task =
-          new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-              String output = sendGPTRequest(userInput);
+      Task<Void> task = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+          String output = sendGPTRequest(userInput);
 
-              // Update the chat area with the AI's response
-              appendMessageToChat(roleOfCharacter, output);
+          // Update the chat area with the AI's response
+          appendMessageToChat(roleOfCharacter, output);
 
-              // Update chat history in App class
-              App.chatHistory.append(roleOfCharacter + ":\n" + output + "\n");
+          // Update chat history in App class
+          App.chatHistory.append(roleOfCharacter + ":\n" + output + "\n");
 
-              // Re-enable the text field and send button after processing
-              textField.setDisable(false);
-              textField.setPromptText("Enter your message.");
-              sendButton.setDisable(false);
+          // Re-enable the text field and send button after processing
+          textField.setDisable(false);
+          textField.setPromptText("Enter your message.");
+          sendButton.setDisable(false);
 
-              return null;
-            }
-          };
+          return null;
+        }
+      };
       Thread gptRequestThread = new Thread(task);
       gptRequestThread.setDaemon(true);
       gptRequestThread.start();
@@ -150,12 +161,11 @@ public abstract class MemoryController implements TimableScene {
   public void createChatCompletionResult() {
     try {
       ApiProxyConfig config = ApiProxyConfig.readConfig();
-      chatCompletionRequest =
-          new ChatCompletionRequest(config)
-              .setN(1)
-              .setTemperature(0.2)
-              .setModel(Model.GPT_4_1_MINI)
-              .setMaxTokens(500);
+      chatCompletionRequest = new ChatCompletionRequest(config)
+          .setN(1)
+          .setTemperature(0.2)
+          .setModel(Model.GPT_4_1_MINI)
+          .setMaxTokens(500);
     } catch (ApiProxyException e) {
       e.printStackTrace();
     }
@@ -211,8 +221,7 @@ public abstract class MemoryController implements TimableScene {
   protected String loadPrompt(String promptId) {
     try {
       URL promptUrl = this.getClass().getClassLoader().getResource(promptId);
-      List<String> promptStrings =
-          Files.readAllLines(Paths.get(promptUrl.toURI()), Charset.defaultCharset());
+      List<String> promptStrings = Files.readAllLines(Paths.get(promptUrl.toURI()), Charset.defaultCharset());
       return String.join("\n", promptStrings);
     } catch (IOException | URISyntaxException e) {
       e.printStackTrace();
@@ -226,11 +235,11 @@ public abstract class MemoryController implements TimableScene {
     moveLeftTransition.setFromX(0);
     moveLeftTransition.setToX(-700);
     moveLeftTransition.setOnFinished(event -> titleBlock.setVisible(false));
-    
+
     PauseTransition pause = new PauseTransition(Duration.seconds(4));
 
     titleBlock.setTranslateX(0);
-    
+
     hideLeftTransition = new SequentialTransition(pause, moveLeftTransition);
     hideLeftTransition.play();
   }

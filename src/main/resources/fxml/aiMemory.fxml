@@ -59,7 +59,7 @@
                   <Font name="System Bold" size="18.0" />
                </font></Button>
             <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="40.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="172.0" GridPane.columnIndex="2" />
-            <Label alignment="CENTER" prefHeight="40.0" prefWidth="87.0" stylesheets="@../css/style.css" text="Time:" textAlignment="CENTER" GridPane.columnIndex="2">
+            <Label fx:id="timerLabelText" alignment="CENTER" prefHeight="40.0" prefWidth="87.0" stylesheets="@../css/style.css" text="Time:" textAlignment="CENTER" GridPane.columnIndex="2">
                <font>
                   <Font size="24.0" />
                </font>

@@ -18,7 +18,7 @@
       <Rectangle fx:id="defendant" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="381.0" layoutX="534.0" layoutY="221.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="254.0" />
       <Rectangle fx:id="witnessHuman" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="448.0" layoutX="1071.0" layoutY="154.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="331.0" />
       <Button fx:id="btnGuess" layoutX="580.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#handleGuessClick" stylesheets="@../css/style.css" text="Make your choice" />
-      <Label fx:id="timerLabel" layoutX="632.0" layoutY="69.0" style="-fx-text-fill: #ffffff;" stylesheets="@../css/style.css" text="Label" textFill="WHITE" />
+      <Label fx:id="timerLabel" layoutX="632.0" layoutY="69.0" stylesheets="@../css/style.css" text="Label" />
       <Rectangle fx:id="witnessAi" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff" focusTraversable="true" height="379.0" layoutX="-45.0" layoutY="248.0" onMouseClicked="#handleRectangleClick" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="294.0" />
       <AnchorPane fx:id="conversationPane" layoutX="32.0" layoutY="499.0" minHeight="135.0" prefHeight="183.0" prefWidth="1165.0" stylesheets="@../css/style.css" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.333333333333485">
          <children>

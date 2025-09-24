@@ -3,11 +3,8 @@ package nz.ac.auckland.se206.controllers;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
@@ -16,7 +13,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
@@ -72,6 +68,8 @@ public class RoomController implements TimableScene {
           new Media(getClass().getResource("/sounds/voiceover.mp3").toExternalForm()));
       startAudioMediaPlayer.play();
       isFirstTimeInit = false;
+    } else {
+      conversationPane.setVisible(false);
     }
   }
 
@@ -136,7 +134,7 @@ public class RoomController implements TimableScene {
 
   @FXML
   void handleNextButton() {
-    conversationPane1.setVisible(false);
+    conversationPane.setVisible(false);
   }
 
   private SceneManager.Scenes getMemoryScene(String characterId) {
