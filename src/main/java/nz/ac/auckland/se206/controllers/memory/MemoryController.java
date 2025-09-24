@@ -61,6 +61,10 @@ public abstract class MemoryController implements TimableScene {
   @FXML
   private Label timerLabel;
 
+  @FXML
+  private Label timerLabelText;
+
+
   // Title
   @FXML
   protected AnchorPane titleBlock;

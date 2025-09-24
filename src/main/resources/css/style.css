@@ -87,36 +87,6 @@
   -fx-border-color: #3b82f6;
 }
 
-/* ===== TIMER LABEL STYLING (Status Labels) ===== */
-.timer-label {
-  -fx-background-color: #1e3a8a;
-  -fx-border-color: #3b82f6;
-  -fx-border-width: 2px;
-  -fx-border-radius: 16px;
-  -fx-background-radius: 16px;
-  -fx-text-fill: #ffffff;
-  -fx-font-family: "Consolas", "Courier New", monospace;
-  -fx-font-size: 18px;
-  -fx-font-weight: bold;
-  -fx-padding: 12 20 12 20;
-  -fx-alignment: center;
-  -fx-min-width: 160px;
-}
-
-/* Timer Normal State (Status indicators) */
-.timer-normal {
-  -fx-background-color: #1e3a8a;
-  -fx-border-color: #3b82f6;
-  -fx-border-width: 1px;
-  -fx-border-radius: 8px;
-  -fx-background-radius: 8px;
-  -fx-text-fill: #93c5fd;
-  -fx-font-family: "Consolas", "Courier New", monospace;
-  -fx-font-size: 11px;
-  -fx-padding: 4 8 4 8;
-  -fx-alignment: center;
-}
-
 /* ===== CONVERSATION PANEL STYLING ===== */
 /* Main conversation container with futuristic styling */
 #conversationPane {
@@ -182,13 +152,13 @@
   -fx-font-family: "Consolas", "Courier New", monospace;
   -fx-font-size: 16px;
   -fx-font-weight: bold;
-  -fx-background-color: rgba(30, 58, 138, 0.25);
-  /* Subtle background */
-  -fx-background-radius: 6px;
-  -fx-padding: 6 12 6 12;
-  -fx-border-color: #1e3a8a;
-  -fx-border-width: 1px;
-  -fx-border-radius: 6px;
+  -fx-background-color: #1e3a8a;
+  /* Solid blue background */
+  -fx-background-radius: 12px;
+  -fx-padding: 8 16 8 16;
+  -fx-border-color: #3b82f6;
+  -fx-border-width: 2px;
+  -fx-border-radius: 12px;
   -fx-max-height: 35px;
   -fx-wrap-text: true;
   -fx-text-overrun: ellipsis;
