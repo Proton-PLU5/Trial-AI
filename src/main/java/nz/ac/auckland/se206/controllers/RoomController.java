@@ -67,6 +67,9 @@ public class RoomController implements TimableScene {
 
     App.timer.addConsumer(this.getTimerConsumer());
 
+    // Check if player has chatted with all three participants
+    enableGuessButton();
+
     if (isFirstTimeInit) {
       startAudioMediaPlayer = new MediaPlayer(
           new Media(getClass().getResource("/sounds/voiceover.mp3").toExternalForm()));
@@ -175,5 +178,14 @@ public class RoomController implements TimableScene {
   @Override
   public Label getTimerLabel() {
     return timerLabel;
+  }
+
+  // Checks if all participants have been chatted with
+  public void enableGuessButton() {
+    if (AiMemory.hasChattedWithAi && HumanMemory.hasChattedWithHuman && DefendantMemory.hasChattedWithDefendant) {
+      btnGuess.setDisable(false);
+    } else {
+      btnGuess.setDisable(true);
+    }
   }
 }

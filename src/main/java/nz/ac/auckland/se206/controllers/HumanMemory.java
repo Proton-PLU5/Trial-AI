@@ -32,44 +32,68 @@ import nz.ac.auckland.se206.utils.DraggableMaker;
 
 public class HumanMemory extends MemoryController {
 
-  @FXML private Button roomBtn;
-  @FXML private Button chatBtn;
-  @FXML private Label timerLabel;
-  @FXML private Pane chatPanel;
+  @FXML
+  private Button roomBtn;
+  @FXML
+  private Button chatBtn;
+  @FXML
+  private Label timerLabel;
+  @FXML
+  private Pane chatPanel;
 
   // Title
-  @FXML private AnchorPane titleBlock;
-  @FXML private Label titleLabel;
-  @FXML private Label descriptionLabel;
+  @FXML
+  private AnchorPane titleBlock;
+  @FXML
+  private Label titleLabel;
+  @FXML
+  private Label descriptionLabel;
 
   // Shopping List
-  @FXML private ImageView markerLine1;
-  @FXML private ImageView markerLine2;
-  @FXML private ImageView markerLine3;
-  @FXML private ImageView markerLine4;
+  @FXML
+  private ImageView markerLine1;
+  @FXML
+  private ImageView markerLine2;
+  @FXML
+  private ImageView markerLine3;
+  @FXML
+  private ImageView markerLine4;
 
   // Main Aisle
-  @FXML private AnchorPane mainAislePane;
-  @FXML private Rectangle aisle1Rectangle;
-  @FXML private Rectangle aisle2Rectangle;
+  @FXML
+  private AnchorPane mainAislePane;
+  @FXML
+  private Rectangle aisle1Rectangle;
+  @FXML
+  private Rectangle aisle2Rectangle;
 
   // Misc
-  @FXML private Polygon shoppingCartHitbox;
-  @FXML private Rectangle purseHitbox;
-  @FXML private Button backToAislesButton;
+  @FXML
+  private Polygon shoppingCartHitbox;
+  @FXML
+  private Rectangle purseHitbox;
+  @FXML
+  private Button backToAislesButton;
 
   // Aisle 1
-  @FXML private AnchorPane aisle1Pane;
-  @FXML private ImageView aisle1Item;
+  @FXML
+  private AnchorPane aisle1Pane;
+  @FXML
+  private ImageView aisle1Item;
 
   // Aisle 2
-  @FXML private AnchorPane aisle2Pane;
-  @FXML private ImageView aisle2Item1;
-  @FXML private ImageView aisle2Item2;
+  @FXML
+  private AnchorPane aisle2Pane;
+  @FXML
+  private ImageView aisle2Item1;
+  @FXML
+  private ImageView aisle2Item2;
 
   // Aisle 3
-  @FXML private AnchorPane aisle3Pane;
-  @FXML private ImageView aisle3Item;
+  @FXML
+  private AnchorPane aisle3Pane;
+  @FXML
+  private ImageView aisle3Item;
 
   public static Map<String, Boolean> itemCollected = new HashMap<>();
   public static Map<String, ImageView> itemToLabel = new HashMap<>();
@@ -78,6 +102,8 @@ public class HumanMemory extends MemoryController {
 
   private ArrayList<ImageView> aisleItems = new ArrayList<ImageView>();
   private ArrayList<ImageView> itemMarkers = new ArrayList<ImageView>();
+
+  public static boolean hasChattedWithHuman;
 
   public HumanMemory() {
     super("prompts/witnessHuman.txt");
@@ -138,7 +164,7 @@ public class HumanMemory extends MemoryController {
   private void handleOpenChatButtonClick(MouseEvent event) throws IOException {
     chatPanel.setVisible(true);
   }
-  
+
   @FXML
   private void onBackToAislesButtonPressed() throws IOException {
     mainAislePane.setVisible(true);
@@ -179,12 +205,12 @@ public class HumanMemory extends MemoryController {
 
   // @FXML
   // private void checkIfItemHasBeenCollected() {
-  //   // Load shopping list items, if collected, then make invisible
-  //   if (itemCollected.getOrDefault(aisle1Item.getId(), true)) {
-  //     aisle1Item.setVisible(true);
-  //   } else {
-  //     aisle1Item.setVisible(false);
-  //   }
+  // // Load shopping list items, if collected, then make invisible
+  // if (itemCollected.getOrDefault(aisle1Item.getId(), true)) {
+  // aisle1Item.setVisible(true);
+  // } else {
+  // aisle1Item.setVisible(false);
+  // }
   // }
 
   @FXML
@@ -195,23 +221,23 @@ public class HumanMemory extends MemoryController {
     } else {
       hitbox = purseHitbox;
     }
-      draggableMaker.makeDraggable(item, hitbox);
-      // Check if released on shopping cart hitbox
-      item.setOnMouseReleased(event -> {
-          if (item.getBoundsInParent().intersects(hitbox.getBoundsInParent())) {
-              handleItemInCart(itemName);
-              // Hide the item once in cart
-              item.setVisible(false);
-          } else {
-              return;
-          }
-      });
+    draggableMaker.makeDraggable(item, hitbox);
+    // Check if released on shopping cart hitbox
+    item.setOnMouseReleased(event -> {
+      if (item.getBoundsInParent().intersects(hitbox.getBoundsInParent())) {
+        handleItemInCart(itemName);
+        // Hide the item once in cart
+        item.setVisible(false);
+      } else {
+        return;
+      }
+    });
   }
 
   @FXML
   private void handleItemInCart(String itemName) {
     itemCollected.put(itemName, true);
-    switch(itemName) {
+    switch (itemName) {
       case "aisle1Item":
         System.out.println("Item 1 in cart!"); // Debugging
         // Check off the shopping list
@@ -235,5 +261,10 @@ public class HumanMemory extends MemoryController {
       default:
         // placeholder
     }
+  }
+
+  @Override
+  protected void markAsChatted() {
+    hasChattedWithHuman = true;
   }
 }
