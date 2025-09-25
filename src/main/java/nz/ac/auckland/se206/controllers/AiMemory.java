@@ -2,6 +2,7 @@ package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -110,8 +111,24 @@ public class AiMemory extends MemoryController {
   private void interactableComplete() {
     if (isXrayMode && isFirstTime) {
       System.out.println("Identified concealed item");
-      sendNotification();
-      isFirstTime = false;
+
+      // LLM sends message when interactable is done
+      Task<Void> interactableDoneTask = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+          String output = sendGPTRequest(loadPrompt("prompts/defendantInteractableDone.txt"));
+          appendMessageToChat(roleOfCharacter, output);
+          // Send a notification to the user
+          sendNotification();
+          isFirstTime = false;
+          return null;
+        }
+      };
+
+      // Use a thread to perform the task concurrently
+      Thread additionalInfoThread = new Thread(interactableDoneTask);
+      additionalInfoThread.setDaemon(true);
+      additionalInfoThread.start();
     }
   }
 
