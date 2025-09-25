@@ -208,6 +208,15 @@
                   </GridPane>
                </children>
             </StackPane>
+            <StackPane layoutX="52.0" layoutY="642.0" prefHeight="35.0" prefWidth="0.0">
+               <children>
+                  <ImageView fx:id="notificationPane" fitHeight="39.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/notification.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
          </children></AnchorPane>
       <GridPane layoutX="10.0" layoutY="685.0" prefHeight="44.0" prefWidth="616.0">
         <columnConstraints>
