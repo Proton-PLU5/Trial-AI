@@ -33,6 +33,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -98,6 +100,7 @@ public abstract class MemoryController implements TimableScene {
   private String systemPrompt = "";
 
   private SequentialTransition hideLeftTransition;
+  private MediaPlayer startAudioMediaPlayer;
 
   // Constructor
   public MemoryController(String promptId) {
@@ -195,7 +198,7 @@ public abstract class MemoryController implements TimableScene {
    * @param message The message to append.
    */
   protected void appendMessageToChat(String role, String message) {
-    
+
     Paint colourToUse = Color.web("#00865d");
     if (role.equals("User")) {
       colourToUse = Color.web("#5599d9");
@@ -269,6 +272,9 @@ public abstract class MemoryController implements TimableScene {
   protected void sendNotification() {
     // If the chat pane is not visible, show the notification pane
     if (!isChatVisible) {
+      startAudioMediaPlayer = new MediaPlayer(
+          new Media(getClass().getResource("/sounds/notification.mp3").toExternalForm()));
+      startAudioMediaPlayer.setOnReady(() -> startAudioMediaPlayer.play());
       // Display the notification pane
       notificationPane.setVisible(true);
 
