@@ -75,6 +75,7 @@ public class DefendantMemory extends MemoryController {
   private static boolean loginSequenceCompleted = false;
   private AnimationTimer progressArcAnimationTimer;
   public static boolean hasChattedWithDefendant;
+  private static boolean isFirstTimeInteract = true;
 
   static {
     var resource = DefendantMemory.class.getResource("/sounds/keypad.mp3");
@@ -237,21 +238,7 @@ public class DefendantMemory extends MemoryController {
             customerCriminalRecordLabel.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
 
             // LLM sends message when interactable is done
-            Task<Void> interactableDoneTask = new Task<Void>() {
-              @Override
-              protected Void call() throws Exception {
-                String output = sendGPTRequest(loadPrompt("prompts/defendantInteractableDone.txt"));
-                appendMessageToChat(roleOfCharacter, output);
-                // Send a notification to the user
-                sendNotification();
-                return null;
-              }
-            };
-
-            // Use a thread to perform the task concurrently
-            Thread additionalInfoThread = new Thread(interactableDoneTask);
-            additionalInfoThread.setDaemon(true);
-            additionalInfoThread.start();
+            interactableDone();
 
           } else if (sourceNode.getId().equals(rec2.getId())) {
             customerIDLabel.setText("Customer 2");
@@ -297,5 +284,34 @@ public class DefendantMemory extends MemoryController {
   @Override
   protected void markAsChatted() {
     hasChattedWithDefendant = true;
+  }
+
+  // Add interaction event when shoplifting info is revealed
+  @FXML
+  private void interactableDone() {
+    if (isFirstTimeInteract) {
+      Task<Void> interactableDoneTask = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+          String output = sendGPTRequest(loadPrompt("prompts/defendantInteractableDone.txt"));
+
+          // Update the chat area with the AI's response
+          Platform.runLater(() -> {
+            appendMessageToChat(roleOfCharacter, output);
+          });
+
+          // Send a notification to the user
+          sendNotification();
+          return null;
+        }
+      };
+
+      // Use a thread to perform the task concurrently
+      Thread additionalInfoThread = new Thread(interactableDoneTask);
+      additionalInfoThread.setDaemon(true);
+      additionalInfoThread.start();
+
+      isFirstTimeInteract = false;
+    }
   }
 }

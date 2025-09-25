@@ -44,7 +44,7 @@ public class AiMemory extends MemoryController {
   private Circle clipCircle;
   private static final double CIRCLE_RADIUS = 75.0;
   private boolean isXrayMode = false;
-  private static boolean isFirstTime = true;
+  private static boolean isFirstTimeInteract = true;
   public static boolean hasChattedWithAi;
 
   public AiMemory() {
@@ -109,10 +109,8 @@ public class AiMemory extends MemoryController {
 
   // Add interaction event when concealed item is detected here
   @FXML
-  private void interactableComplete() {
-    if (isXrayMode && isFirstTime) {
-      System.out.println("Identified concealed item");
-
+  private void interactableDone() {
+    if (isXrayMode && isFirstTimeInteract) {
       // LLM sends message when interactable is done
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override
@@ -134,7 +132,8 @@ public class AiMemory extends MemoryController {
       Thread additionalInfoThread = new Thread(interactableDoneTask);
       additionalInfoThread.setDaemon(true);
       additionalInfoThread.start();
-      isFirstTime = false;
+
+      isFirstTimeInteract = false;
     }
   }
 
