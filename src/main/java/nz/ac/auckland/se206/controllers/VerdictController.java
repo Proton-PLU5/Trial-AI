@@ -188,33 +188,35 @@ public class VerdictController implements TimableScene {
 
   @FXML
   private void handleRationaleSubmitted() throws ApiProxyException {
-    verdictTimer.stopTimer();
-    restartButton.setVisible(true);
+    if (!rationaleSubmitted) {
+      rationaleSubmitted = true;
+      verdictTimer.stopTimer();
+      restartButton.setVisible(true);
+      verdictTitleLabel2.setVisible(false);
+      submitButton.setVisible(false);
+      rationaleTextArea.setVisible(false);
+      verdictCorrectLabel.setVisible(true);
+      rationaleJudgementTextArea.setVisible(true);
 
-    rationaleSubmitted = true;
-    verdictTitleLabel2.setVisible(false);
-    submitButton.setVisible(false);
-    rationaleTextArea.setVisible(false);
-    verdictCorrectLabel.setVisible(true);
-    rationaleJudgementTextArea.setVisible(true);
+      rationalePrompt += optionChose;
+      // Read the rationale from the TextArea
+      rationale = rationaleTextArea.getText().strip();
 
-    rationalePrompt += optionChose;
-    // Read the rationale from the TextArea
-    rationale = rationaleTextArea.getText().strip();
+      if (rationale.isEmpty()) {
+        gameOverText.setLength(0);
+        gameOverText.append("You didn't give a rationale. Try again.");
+        verdictCorrectLabel.setText(gameOverText.toString());
+      } else {
+        // Add the rationale to the prompt
+        rationalePrompt += rationale;
+        System.out.println(rationalePrompt); // Debugging
 
-    if (rationale.isEmpty()) {
-      gameOverText.setLength(0);
-      gameOverText.append("You didn't give a rationale. Try again.");
-      verdictCorrectLabel.setText(gameOverText.toString());
+        // Send the prompt and rationale to gpt
+        ChatMessage msg = new ChatMessage("user", rationalePrompt);
+        runGpt(msg);
+      }
     } else {
-      // Add the rationale to the prompt
-      rationalePrompt += rationale;
-      System.out.println(rationalePrompt); // Debugging
-
-      // Send the prompt and rationale to gpt
-      ChatMessage msg = new ChatMessage("user", rationalePrompt);
-      System.out.println(rationalePrompt);
-      runGpt(msg);
+      return;
     }
   }
 
