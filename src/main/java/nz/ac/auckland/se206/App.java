@@ -1,8 +1,10 @@
 package nz.ac.auckland.se206;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 
@@ -13,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.Timer;
+import nz.ac.auckland.se206.utils.Tuple;
 
 /**
  * This is the entry point of the JavaFX application. This class initializes and
@@ -23,7 +26,7 @@ public class App extends Application {
 
   private static Scene scene;
   public static Stage primaryStage;
-  public static LinkedHashMap<String, String> chatHistoryMap = new LinkedHashMap<>();
+  public static List<Tuple<String, String>> chatHistoryMap = new ArrayList<Tuple<String, String>>();
   public static final int TIMER_DURATION = 5 * 60; // 5 minutes in seconds
   public static Timer timer = new Timer(TIMER_DURATION); // 5 minutes
 

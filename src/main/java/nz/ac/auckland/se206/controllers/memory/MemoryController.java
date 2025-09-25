@@ -50,6 +50,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.RoomController;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
+import nz.ac.auckland.se206.utils.Tuple;
 
 public abstract class MemoryController implements TimableScene {
 
@@ -246,7 +247,7 @@ public abstract class MemoryController implements TimableScene {
     GridPane.setValignment(messageStack, VPos.TOP);
 
     // Update chat history in App class
-    App.chatHistoryMap.put(role, message);
+    App.chatHistoryMap.add(new Tuple<String, String>(role, message));
   }
 
   /** Handles the "Go Back" button press event. */
@@ -331,8 +332,9 @@ public abstract class MemoryController implements TimableScene {
 
       // Load the chat history, iterate through the map and append to the system
       // prompt.
-      for (String role : App.chatHistoryMap.keySet()) {
-        String message = App.chatHistoryMap.get(role);
+      for (Tuple<String, String> entry : App.chatHistoryMap) {
+        String role = entry.getKey();
+        String message = entry.getValue();
         systemPromptBuilder.append(role.split("\0")[0]).append(":\n").append(message).append("\n");
         if (role.endsWith(this.roleOfCharacter)) {
           appendMessageToChat(role.split("\0")[0], message);
