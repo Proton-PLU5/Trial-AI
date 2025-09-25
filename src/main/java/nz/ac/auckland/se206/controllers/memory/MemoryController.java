@@ -337,6 +337,7 @@ public abstract class MemoryController implements TimableScene {
    * @return the loaded prompt as a string
    */
   protected String loadPrompt(String promptId) {
+    //This method loads the prompt from a file and into the respective llms chat
     try {
       URL promptUrl = this.getClass().getClassLoader().getResource(promptId);
       List<String> promptStrings = Files.readAllLines(Paths.get(promptUrl.toURI()), Charset.defaultCharset());
