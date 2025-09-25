@@ -1,6 +1,13 @@
 package nz.ac.auckland.se206.controllers;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -57,6 +64,7 @@ public class VerdictController implements TimableScene {
   private boolean rationaleSubmitted = false;
   public Timer verdictTimer = null;
   private StringBuilder gameOverText = new StringBuilder("");
+  private String systemPrompt = "";
 
   @FXML
   private void initialize() {
@@ -64,11 +72,12 @@ public class VerdictController implements TimableScene {
     MediaPlayer mediaPlayer = new MediaPlayer(media);
     mediaPlayer.play();
 
-    // updateFinalTimerDisplay();
-
-    // startFinalTimer();
-
-    createChatCompletionResult();
+    try {
+      createChatCompletionResult();
+      loadInitialMessages("prompts/verdict.txt");
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
     // Add ourselves to the timer service
     App.timer.stopTimer();
@@ -171,12 +180,8 @@ public class VerdictController implements TimableScene {
       System.out.println(rationalePrompt); // Debugging
 
       // Send the prompt and rationale to gpt
-      String verdict = "verdict";
-      Map<String, String> map = new HashMap<>();
-      map.put("verdict", verdict);
-      String promptFile = verdict + ".txt";
-      String verdictPrompt = PromptEngineering.getPrompt(promptFile, map);
-      ChatMessage msg = new ChatMessage("user", verdictPrompt + rationalePrompt);
+      ChatMessage msg = new ChatMessage("user", rationalePrompt);
+      System.out.println(rationalePrompt);
       runGpt(msg);
     }
   }
@@ -230,5 +235,29 @@ public class VerdictController implements TimableScene {
   @Override
   public Label getTimerLabel() {
     return timerLabel;
+  }
+
+  protected void loadInitialMessages(String promptId) {
+    // Load the system prompt
+    this.systemPrompt = loadPrompt(promptId);
+
+    // Load initial messages
+    this.systemPrompt += App.chatHistory.toString();
+    this.systemPrompt += "The user's response will be provided below:\n";
+
+    // Append the system prompt to the chat completion request
+    this.chatCompletionRequest.addMessage("system", systemPrompt);
+    System.out.println(systemPrompt);
+  }
+
+  protected String loadPrompt(String promptId) {
+    try {
+      URL promptUrl = this.getClass().getClassLoader().getResource(promptId);
+      List<String> promptStrings = Files.readAllLines(Paths.get(promptUrl.toURI()), Charset.defaultCharset());
+      return String.join("\n", promptStrings);
+    } catch (IOException | URISyntaxException e) {
+      e.printStackTrace();
+      throw new IllegalStateException(promptId + " not found");
+    }
   }
 }
