@@ -10,22 +10,34 @@ import java.util.List;
 
 import javax.management.RuntimeErrorException;
 
+import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Transition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest.Model;
@@ -51,7 +63,9 @@ public abstract class MemoryController implements TimableScene {
   @FXML
   private Button chatButton;
   @FXML
-  private TextArea textArea;
+  private GridPane conversationGridPane;
+  @FXML
+  private ScrollPane conversationScrollPane;
   @FXML
   private TextField textField;
 
@@ -100,6 +114,21 @@ public abstract class MemoryController implements TimableScene {
     // Initially hide chat and notification panes
     notificationPane.setVisible(false);
     chatPane.setVisible(false);
+
+    // Add some spacing between messages
+    conversationGridPane.setVgap(10);
+    AnimationTimer scrollToBottomTimer = new AnimationTimer() {
+      private long lastUpdate = 0;
+
+      @Override
+      public void handle(long now) {
+        if (now - lastUpdate >= 200_000_000) { // 200 milliseconds
+          conversationScrollPane.setVvalue(1.0);
+          lastUpdate = now;
+        }
+      }
+    };
+    scrollToBottomTimer.start();
   }
 
   /** Handles the "Chat" button press event to toggle chat visibility. */
@@ -111,6 +140,9 @@ public abstract class MemoryController implements TimableScene {
     // Hide the notification pane when chat is opened
     if (isChatVisible) {
       notificationPane.setVisible(false);
+      chatButton.setText("Close Chat");
+    } else {
+      chatButton.setText("Open Chat");
     }
   }
 
@@ -131,8 +163,12 @@ public abstract class MemoryController implements TimableScene {
         protected Void call() throws Exception {
           String output = sendGPTRequest(userInput);
 
+          System.out.println("AI Response: " + output); // Debugging
+
           // Update the chat area with the AI's response
-          appendMessageToChat(roleOfCharacter, output);
+          Platform.runLater(() -> {
+            appendMessageToChat(roleOfCharacter, output);
+          });
 
           // Re-enable the text field and send button after processing
           textField.setDisable(false);
@@ -159,12 +195,48 @@ public abstract class MemoryController implements TimableScene {
    * @param message The message to append.
    */
   protected void appendMessageToChat(String role, String message) {
-    // Doesn't add newline if it's the first message
-    if (textArea.getText().isEmpty()) {
-      textArea.appendText(role + ":\n" + message + "\n");
-    } else {
-      textArea.appendText("\n" + role + ":\n" + message + "\n");
+    
+    Paint colourToUse = Color.web("#00865d");
+    if (role.equals("User")) {
+      colourToUse = Color.web("#5599d9");
     }
+
+    // Remove leading newline characters from the message
+    if (message.startsWith("\n")) {
+      message = message.replaceFirst("\n", "");
+    }
+
+    // Create Text nodes for role (bold) and message (normal)
+    Text roleText = new Text(role + ":\n");
+    roleText.setFill(Color.WHITE);
+    roleText.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+
+    Text messageText = new Text(message + "\n");
+    messageText.setFill(Color.WHITE);
+    messageText.setStyle("-fx-font-size: 16px;");
+
+    TextFlow textFlow = new TextFlow(roleText, messageText);
+    textFlow.setMaxWidth(conversationGridPane.getWidth() - 40);
+    textFlow.setStyle("-fx-padding: 15px;");
+
+    // Create a rectangle background which scales to the height of the textFlow
+    Rectangle background = new Rectangle();
+    background.setArcWidth(35);
+    background.setArcHeight(35);
+    background.setFill(colourToUse);
+    background.setWidth(textFlow.getMaxWidth() + 20);
+    background.setHeight(Region.USE_PREF_SIZE);
+    background.heightProperty().bind(textFlow.heightProperty().add(-15));
+
+    StackPane messageStack = new StackPane();
+    messageStack.getChildren().addAll(background, textFlow);
+
+    // Add the message to the next available row in the grid pane
+    int nextRow = conversationGridPane.getRowCount();
+    conversationGridPane.add(messageStack, 0, nextRow);
+    GridPane.setHalignment(messageStack, HPos.LEFT);
+    GridPane.setValignment(messageStack, VPos.TOP);
+
     // Update chat history in App class
     App.chatHistory.append(role + ":\n" + message + "\n");
   }
