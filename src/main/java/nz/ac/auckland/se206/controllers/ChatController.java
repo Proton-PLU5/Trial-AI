@@ -3,6 +3,7 @@ package nz.ac.auckland.se206.controllers;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +19,6 @@ import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.prompts.PromptEngineering;
-import nz.ac.auckland.se206.utils.SceneManager;
 
 /**
  * Controller class for the chat view. Handles user interactions and communication with the GPT
@@ -127,6 +127,7 @@ public class ChatController {
   }
 
   public void receiveContextUpdate(String fromProfession, String message) {
+    //This method receives context updates from other chat instances and adds them to the current chat's context
     if (chatCompletionRequest != null) {
       Thread contextThread =
           new Thread(

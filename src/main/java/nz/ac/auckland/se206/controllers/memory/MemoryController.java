@@ -349,6 +349,7 @@ public abstract class MemoryController implements TimableScene {
   }
 
   protected void createTitleDisappearAnimation() {
+    //This method creates the animation for the title to disappear after a few seconds
     TranslateTransition moveLeftTransition = new TranslateTransition(Duration.seconds(1), titleBlock);
     moveLeftTransition = new TranslateTransition(Duration.seconds(1), titleBlock);
     moveLeftTransition.setFromX(0);

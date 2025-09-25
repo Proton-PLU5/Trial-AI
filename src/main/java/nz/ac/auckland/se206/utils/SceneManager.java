@@ -23,6 +23,8 @@ public class SceneManager {
   }
 
   public static void switchScene(Scenes scene) {
+
+    // This method switches the scene to the specified scene
     try {
       Parent root = FXMLLoader.load(
           SceneManager.class.getResource("/fxml/" + scene.toString() + ".fxml"));

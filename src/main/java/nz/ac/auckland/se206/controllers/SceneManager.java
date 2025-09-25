@@ -3,6 +3,7 @@ package nz.ac.auckland.se206.controllers;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import nz.ac.auckland.se206.App;
@@ -35,7 +36,8 @@ public class SceneManager {
   }
 
   public static void initializeChats() throws IOException {
-    String[] professions = {"defendant", "witnessHuman", "witnessAi"};
+    // This code intializes the chats for the different professions
+    String[] professions = { "defendant", "witnessHuman", "witnessAi" };
 
     for (String profession : professions) {
       FXMLLoader loader = new FXMLLoader(App.class.getResource("/fxml/chat.fxml"));
@@ -65,10 +67,10 @@ public class SceneManager {
    * Notifies other chat instances about a message from one chat.
    *
    * @param fromProfession the profession of the chat that sent the message
-   * @param message the message content to share with other chats
+   * @param message        the message content to share with other chats
    */
   public static void notifyOtherChats(String fromProfession, String message) {
-    String[] allProfessions = {"defendant", "witnessHuman", "witnessAi"};
+    String[] allProfessions = { "defendant", "witnessHuman", "witnessAi" };
 
     for (String profession : allProfessions) {
       if (!profession.equals(fromProfession)) {

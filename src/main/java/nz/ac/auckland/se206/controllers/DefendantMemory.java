@@ -95,6 +95,9 @@ public class DefendantMemory extends MemoryController {
   @Override
   @FXML
   protected void initialize() {
+
+    // This method initializes the defendant memory scene, including the login
+    // sequence and CCTV interactions
     super.initialize();
 
     loginPane.setVisible(true);
@@ -114,6 +117,7 @@ public class DefendantMemory extends MemoryController {
       titleLabel.setText("Login Required");
     }
 
+    //We run a thread for the mouse movement so that the progress arc follows the mouse
     Platform.runLater(() -> {
       progressArc.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
         @Override
