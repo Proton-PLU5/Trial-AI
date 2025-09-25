@@ -111,6 +111,9 @@ public abstract class MemoryController implements TimableScene {
     // Hide the notification pane when chat is opened
     if (isChatVisible) {
       notificationPane.setVisible(false);
+      chatButton.setText("Close Chat");
+    } else {
+      chatButton.setText("Open Chat");
     }
   }
 
