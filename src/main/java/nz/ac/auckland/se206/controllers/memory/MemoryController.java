@@ -16,16 +16,24 @@ import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Transition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest.Model;
@@ -51,7 +59,9 @@ public abstract class MemoryController implements TimableScene {
   @FXML
   private Button chatButton;
   @FXML
-  private TextArea textArea;
+  private GridPane conversationGridPane;
+  @FXML
+  private ScrollPane conversationScrollPane;
   @FXML
   private TextField textField;
 
@@ -134,8 +144,12 @@ public abstract class MemoryController implements TimableScene {
         protected Void call() throws Exception {
           String output = sendGPTRequest(userInput);
 
+          System.out.println("AI Response: " + output); // Debugging
+
           // Update the chat area with the AI's response
-          appendMessageToChat(roleOfCharacter, output);
+          Platform.runLater(() -> {
+            appendMessageToChat(roleOfCharacter, output);
+          });
 
           // Update chat history in App class
           App.chatHistory.append(roleOfCharacter + ":\n" + output + "\n");
@@ -165,9 +179,37 @@ public abstract class MemoryController implements TimableScene {
    * @param message The message to append.
    */
   protected void appendMessageToChat(String role, String message) {
-    textArea.appendText(role + ":\n" + message + "\n");
+
+    // Create a new label for the message
+    Label messageLabel = new Label(role + ":\n" + message + "\n");
+    messageLabel.setWrapText(true);
+    messageLabel.setTextFill(Color.WHITE);
+    messageLabel.setMaxWidth(conversationGridPane.getWidth() - 40);
+    messageLabel.setStyle("-fx-padding: 5px; -fx-font-size: 16px;");
+
+    // Create a rectangle background which scales to the height of the label
+    Rectangle background = new Rectangle();
+    background.setArcWidth(35);
+    background.setArcHeight(35);
+    background.setFill(Color.web("#5599d9"));
+    background.setWidth(messageLabel.getMaxWidth() + 10);
+    background.setHeight(Region.USE_PREF_SIZE);
+    background.heightProperty().bind(messageLabel.heightProperty().add(10));
+
+    StackPane messageStack = new StackPane();
+    messageStack.getChildren().addAll(background, messageLabel);
+
+    // Add the message to the next available row in the grid pane
+    // Keep the messages at the top of the grid pane
+    int nextRow = conversationGridPane.getRowCount();
+    conversationGridPane.add(messageStack, 0, nextRow);
+    GridPane.setHalignment(messageStack, HPos.LEFT);
+    GridPane.setValignment(messageStack, VPos.TOP);
+
     App.chatHistory.append(role + ":\n" + message + "\n");
-    textArea.setScrollTop(Double.MAX_VALUE);
+
+    // Scroll to the bottom of the scroll pane
+    conversationScrollPane.setVvalue(1.0);
   }
 
   /** Handles the "Go Back" button press event. */
