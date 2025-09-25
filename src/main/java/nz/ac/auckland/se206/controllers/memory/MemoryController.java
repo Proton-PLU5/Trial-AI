@@ -142,19 +142,6 @@ public abstract class MemoryController implements TimableScene {
           textField.setPromptText("Enter your message.");
           sendButton.setDisable(false);
 
-          // If the chat pane is not visible, show the notification pane
-          if (!isChatVisible) {
-            // Display the notification pane
-            notificationPane.setVisible(true);
-
-            // Create a "bounce" animation for the notification pane
-            TranslateTransition bounce = new TranslateTransition(Duration.seconds(0.2), notificationPane);
-            bounce.setFromY(-10);
-            bounce.setToY(0);
-            bounce.setInterpolator(Interpolator.EASE_BOTH);
-            bounce.play();
-          }
-
           return null;
         }
       };
@@ -197,6 +184,27 @@ public abstract class MemoryController implements TimableScene {
           .setMaxTokens(500);
     } catch (ApiProxyException e) {
       e.printStackTrace();
+    }
+  }
+
+  /**
+   * Sends a notification to the user if they receive a new message while the chat
+   * pane is closed.
+   */
+  protected void sendNotification() {
+    // If the chat pane is not visible, show the notification pane
+    if (!isChatVisible) {
+      // Display the notification pane
+      notificationPane.setVisible(true);
+
+      // Create a "bounce" animation for the notification pane
+      TranslateTransition bounce = new TranslateTransition(Duration.seconds(0.5), notificationPane);
+      bounce.setFromY(-10);
+      bounce.setToY(0);
+      // Need to make it over shoot a little to make it look like a bounce
+      bounce.setInterpolator(Interpolator.EASE_OUT);
+      bounce.setCycleCount(2);
+      bounce.play();
     }
   }
 
