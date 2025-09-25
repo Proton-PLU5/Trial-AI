@@ -77,10 +77,7 @@ public class App extends Application {
     SceneManager.switchScene(SceneManager.Scenes.start);
     SceneManager.setStyleSheet("/css/style.css");
     primaryStage.show();
-
-    // Timer Setup
-    timer.setCountDown(true);
-    timer.buildTimer();
+    primaryStage.setTitle("Trial AI");
 
     primaryStage.requestFocus();
   }
