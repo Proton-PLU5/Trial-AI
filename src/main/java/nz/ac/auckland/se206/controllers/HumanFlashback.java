@@ -29,7 +29,6 @@ public class HumanFlashback extends FlashbackController {
 
   private int currentDrawingIndex = 0;
 
-  @Override
   @FXML
   protected void initialize() {
     super.initialize();

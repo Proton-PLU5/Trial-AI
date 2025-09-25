@@ -33,7 +33,6 @@ public class DefendantFlashback extends FlashbackController {
 
   private int currentDrawingIndex = 0;
 
-  @Override
   @FXML
   protected void initialize() {
     conversationTextLabel.setVisible(true);
@@ -55,7 +54,6 @@ public class DefendantFlashback extends FlashbackController {
     addText("My job is to surveil the customers when they first walk into our store.");
   }
 
-  @Override
   @FXML
   protected void handleMemoryButton() {
     SceneManager.switchScene(Scenes.defendantMemory);

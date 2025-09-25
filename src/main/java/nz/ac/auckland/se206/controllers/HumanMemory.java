@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javafx.animation.PauseTransition;
-import javafx.animation.TranslateTransition;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -15,7 +12,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -23,7 +19,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
@@ -97,7 +92,7 @@ public class HumanMemory extends MemoryController {
   public static Map<String, Boolean> itemCollected = new HashMap<>();
   public static Map<String, ImageView> itemToLabel = new HashMap<>();
 
-  private DraggableMaker draggableMaker = new DraggableMaker();
+  DraggableMaker draggableMaker = new DraggableMaker();
 
   private ArrayList<ImageView> aisleItems = new ArrayList<ImageView>();
   private ArrayList<ImageView> itemMarkers = new ArrayList<ImageView>();
@@ -168,7 +163,8 @@ public class HumanMemory extends MemoryController {
 
   @FXML
   private void onBackToAislesButtonPressed() throws IOException {
-    // This method makes it so that the character goes into each of the aisles
+    // This method makes it so that when the user clicks the back to aisles button,
+    // they are taken back to the main aisle
     mainAislePane.setVisible(true);
     aisle1Pane.setVisible(false);
     aisle2Pane.setVisible(false);

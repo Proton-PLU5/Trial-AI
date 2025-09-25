@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.PauseTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -60,7 +61,7 @@ public class DefendantMemory extends MemoryController {
   @FXML
   private StackPane customerDetailsPane;
   @FXML
-  private Label customerIdLabel;
+  private Label customerIDLabel;
   @FXML
   private Label customerStatusLabel;
   @FXML
@@ -116,8 +117,7 @@ public class DefendantMemory extends MemoryController {
       titleLabel.setText("Login Required");
     }
 
-    // We run a thread for the mouse movement so that the progress arc follows the
-    // mouse
+    //We run a thread for the mouse movement so that the progress arc follows the mouse
     Platform.runLater(() -> {
       progressArc.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
         @Override
@@ -233,7 +233,7 @@ public class DefendantMemory extends MemoryController {
           // Check if the source of the event is one of the rectangles
           // Check by getting the ID of the source
           if (sourceNode.getId().equals(rec1.getId())) {
-            customerIdLabel.setText("Customer 1");
+            customerIDLabel.setText("Customer 1");
             customerStatusLabel.setText("New Shopper");
             customerAgeLabel.setText("Age: 25");
             customerCriminalRecordLabel.setText("Shoplifting");
@@ -258,17 +258,17 @@ public class DefendantMemory extends MemoryController {
             additionalInfoThread.start();
 
           } else if (sourceNode.getId().equals(rec2.getId())) {
-            customerIdLabel.setText("Customer 2");
+            customerIDLabel.setText("Customer 2");
             customerStatusLabel.setText("Returning Shopper");
             customerAgeLabel.setText("Age: 40");
             customerCriminalRecordLabel.setText("No Record");
           } else if (sourceNode.getId().equals(rec3.getId())) {
-            customerIdLabel.setText("Customer 3");
+            customerIDLabel.setText("Customer 3");
             customerStatusLabel.setText("New Shopper");
             customerAgeLabel.setText("Age: 30");
             customerCriminalRecordLabel.setText("No Record");
           } else if (sourceNode.getId().equals(rec4.getId())) {
-            customerIdLabel.setText("Customer 4");
+            customerIDLabel.setText("Customer 4");
             customerStatusLabel.setText("Loyal Shopper");
             customerAgeLabel.setText("Age: 35");
             customerCriminalRecordLabel.setText("No Record");

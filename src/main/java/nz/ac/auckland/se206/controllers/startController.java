@@ -14,6 +14,8 @@ import nz.ac.auckland.se206.utils.TimableScene;
 public class startController implements TimableScene {
 
   @FXML
+  private Label timerLabel;
+  @FXML
   private Label title_label;
   @FXML
   private Button playBtn;
