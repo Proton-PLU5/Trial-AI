@@ -33,6 +33,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
@@ -110,6 +111,9 @@ public abstract class MemoryController implements TimableScene {
     // Initially hide chat and notification panes
     notificationPane.setVisible(false);
     chatPane.setVisible(false);
+
+    // Add some spacing between messages
+    conversationGridPane.setVgap(10);
   }
 
   /** Handles the "Chat" button press event to toggle chat visibility. */
@@ -180,6 +184,11 @@ public abstract class MemoryController implements TimableScene {
    */
   protected void appendMessageToChat(String role, String message) {
 
+    Paint colourToUse = Color.web("#00865d");
+    if (role.equals("User")) {
+      colourToUse = Color.web("#5599d9");
+    }
+
     // Create a new label for the message
     Label messageLabel = new Label(role + ":\n" + message + "\n");
     messageLabel.setWrapText(true);
@@ -191,7 +200,7 @@ public abstract class MemoryController implements TimableScene {
     Rectangle background = new Rectangle();
     background.setArcWidth(35);
     background.setArcHeight(35);
-    background.setFill(Color.web("#5599d9"));
+    background.setFill(colourToUse);
     background.setWidth(messageLabel.getMaxWidth() + 10);
     background.setHeight(Region.USE_PREF_SIZE);
     background.heightProperty().bind(messageLabel.heightProperty().add(10));
