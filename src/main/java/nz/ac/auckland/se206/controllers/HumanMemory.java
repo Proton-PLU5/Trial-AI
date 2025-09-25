@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -98,7 +97,7 @@ public class HumanMemory extends MemoryController {
   public static Map<String, Boolean> itemCollected = new HashMap<>();
   public static Map<String, ImageView> itemToLabel = new HashMap<>();
 
-  DraggableMaker draggableMaker = new DraggableMaker();
+  private DraggableMaker draggableMaker = new DraggableMaker();
 
   private ArrayList<ImageView> aisleItems = new ArrayList<ImageView>();
   private ArrayList<ImageView> itemMarkers = new ArrayList<ImageView>();
@@ -169,7 +168,7 @@ public class HumanMemory extends MemoryController {
 
   @FXML
   private void onBackToAislesButtonPressed() throws IOException {
-    //This method makes it so that the character goes into each of the aisles
+    // This method makes it so that the character goes into each of the aisles
     mainAislePane.setVisible(true);
     aisle1Pane.setVisible(false);
     aisle2Pane.setVisible(false);

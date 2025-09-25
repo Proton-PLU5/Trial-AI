@@ -3,7 +3,6 @@ package nz.ac.auckland.se206.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -57,14 +56,10 @@ public class VerdictController implements TimableScene {
   private StringBuilder gameOverText = new StringBuilder("");
 
   @FXML
-  private void initialize() {
+  protected void initialize() {
     Media media = new Media(getClass().getResource("/sounds/verdict.mp3").toExternalForm());
     MediaPlayer mediaPlayer = new MediaPlayer(media);
     mediaPlayer.play();
-
-    // updateFinalTimerDisplay();
-
-    // startFinalTimer();
 
     createChatCompletionResult();
 

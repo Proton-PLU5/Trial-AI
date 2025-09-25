@@ -29,6 +29,7 @@ public class HumanFlashback extends FlashbackController {
 
   private int currentDrawingIndex = 0;
 
+  @Override
   @FXML
   protected void initialize() {
     super.initialize();
@@ -49,6 +50,7 @@ public class HumanFlashback extends FlashbackController {
     addText("I was just shopping at the supermarket normally, with nothing out of the usual.");
   }
 
+  @Override
   @FXML
   protected void handleMemoryButton() {
     SceneManager.switchScene(SceneManager.Scenes.humanMemory);

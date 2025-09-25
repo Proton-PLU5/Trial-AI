@@ -22,6 +22,7 @@ public class AiFlashback extends FlashbackController {
   @FXML
   private Label conversationTextLabel;
 
+  @Override
   @FXML
   protected void initialize() {
     super.initialize();
@@ -43,6 +44,7 @@ public class AiFlashback extends FlashbackController {
         "System output: initial operations proceeded under standard parameters. All customers scanned items and exited with zero unscanned detections.");
   }
 
+  @Override
   @FXML
   protected void handleMemoryButton() {
     SceneManager.switchScene(SceneManager.Scenes.aiMemory);

@@ -49,8 +49,6 @@ public class RoomController implements TimableScene {
 
   private boolean finalSceneLoaded = false;
 
-  private AnchorPane conversationPane1;
-
   private MediaPlayer startAudioMediaPlayer;
 
   /**

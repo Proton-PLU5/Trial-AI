@@ -47,7 +47,6 @@ import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.controllers.RoomController;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
 
@@ -164,7 +163,7 @@ public abstract class MemoryController implements TimableScene {
       Task<Void> task = new Task<Void>() {
         @Override
         protected Void call() throws Exception {
-          String output = sendGPTRequest(userInput);
+          String output = sendGptRequest(userInput);
 
           System.out.println("AI Response: " + output); // Debugging
 
@@ -299,7 +298,7 @@ public abstract class MemoryController implements TimableScene {
    * @param userInput The user's input message.
    * @return The AI's response message.
    */
-  protected String sendGPTRequest(String userInput) {
+  protected String sendGptRequest(String userInput) {
     // This method sends the user input to the GPT model and returns the response
     this.chatCompletionRequest.addMessage("user", userInput);
 
@@ -371,6 +370,7 @@ public abstract class MemoryController implements TimableScene {
     hideLeftTransition.stop();
   }
 
+  @Override
   public Label getTimerLabel() {
     return timerLabel;
   }
