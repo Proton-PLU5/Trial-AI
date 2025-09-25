@@ -15,34 +15,34 @@
             <Image url="@../images/verdictBackground.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="yesButton" layoutX="556.0" layoutY="432.0" mnemonicParsing="false" onAction="#handleYesClicked" text="Yes">
+      <Button fx:id="yesButton" layoutX="576.0" layoutY="505.0" mnemonicParsing="false" onAction="#handleYesClicked" stylesheets="@../css/style.css" text="Yes">
          <font>
             <Font size="25.0" />
          </font></Button>
-      <Button fx:id="noButton" layoutX="792.0" layoutY="432.0" mnemonicParsing="false" onAction="#handleNoClicked" text="No">
+      <Button fx:id="noButton" layoutX="760.0" layoutY="505.0" mnemonicParsing="false" onAction="#handleNoClicked" stylesheets="@../css/style.css" text="No">
          <font>
             <Font size="25.0" />
          </font></Button>
-      <Button fx:id="submitButton" layoutX="648.0" layoutY="623.0" mnemonicParsing="false" onAction="#handleRationaleSubmitted" text="Submit" visible="false">
+      <Button fx:id="submitButton" layoutX="648.0" layoutY="623.0" mnemonicParsing="false" onAction="#handleRationaleSubmitted" stylesheets="@../css/style.css" text="Submit" visible="false">
          <font>
             <Font size="25.0" />
          </font></Button>
-      <Label fx:id="verdictTitleLabel1" layoutX="35.0" layoutY="47.0" prefHeight="43.0" prefWidth="1352.0" text="Was the AI defendant guilty's AI’s decision-making process ethical, reasonable and justified?" wrapText="true">
+      <Label fx:id="verdictTitleLabel1" alignment="CENTER" layoutX="305.0" layoutY="319.0" prefHeight="150.0" prefWidth="804.0" text="Was the AI defendant guilty's AI’s decision-making process ethical, reasonable and justified?" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
             <Font size="35.0" />
          </font>
       </Label>
-      <Label fx:id="verdictTitleLabel2" layoutX="350.0" layoutY="47.0" text="Explain the reasoning for your choice below." visible="false">
+      <Label fx:id="verdictTitleLabel2" layoutX="280.0" layoutY="59.0" stylesheets="@../css/style.css" text="Explain the reasoning for your choice below." textFill="WHITE" visible="false">
          <font>
             <Font size="35.0" />
          </font>
       </Label>
       <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="350.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" visible="false" />
-      <Label fx:id="timerLabel" layoutX="1215.0" layoutY="593.0" text="Label">
+      <Label fx:id="timerLabel" layoutX="162.0" layoutY="8.0" text="Label" visible="false">
          <font>
             <Font size="35.0" />
          </font></Label>
-      <TextArea fx:id="rationaleTextArea" layoutX="279.0" layoutY="148.0" prefHeight="442.0" prefWidth="838.0" visible="false" wrapText="true">
+      <TextArea fx:id="rationaleTextArea" layoutX="279.0" layoutY="148.0" prefHeight="442.0" prefWidth="838.0" stylesheets="@../css/style.css" visible="false" wrapText="true">
          <font>
             <Font size="30.0" />
          </font></TextArea>

@@ -127,7 +127,7 @@ public class DefendantMemory extends MemoryController {
     App.timer.addConsumer(getTimerConsumer());
     createTitleDisappearAnimation();
 
-    this.roleOfCharacter = "Defendant";
+    this.roleOfCharacter = "Security Bot";
   }
 
   @FXML
