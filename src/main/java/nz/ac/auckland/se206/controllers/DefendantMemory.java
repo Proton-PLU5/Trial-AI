@@ -22,6 +22,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -75,6 +76,7 @@ public class DefendantMemory extends MemoryController {
   private static boolean loginSequenceCompleted = false;
   private AnimationTimer progressArcAnimationTimer;
   public static boolean hasChattedWithDefendant;
+  private static boolean isFirstTimeInteract = true;
 
   static {
     var resource = DefendantMemory.class.getResource("/sounds/keypad.mp3");
@@ -248,22 +250,8 @@ public class DefendantMemory extends MemoryController {
             // Highlight criminal record
             customerCriminalRecordLabel.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
 
-            // Send additional info to the AI
-            Task<Void> sendAdditionalInfoTask = new Task<Void>() {
-              @Override
-              protected Void call() throws Exception {
-                String output = sendGPTRequest(loadPrompt("prompts/defendant_additional.txt"));
-                appendMessageToChat(roleOfCharacter, output);
-                // Send a notification to the user
-                sendNotification();
-                return null;
-              }
-            };
-
-            // Use a thread to perform the task concurrently
-            Thread additionalInfoThread = new Thread(sendAdditionalInfoTask);
-            additionalInfoThread.setDaemon(true);
-            additionalInfoThread.start();
+            // LLM sends message when interactable is done
+            interactableDone();
 
           } else if (sourceNode.getId().equals(rec2.getId())) {
             customerIDLabel.setText("Customer 2");
@@ -309,5 +297,34 @@ public class DefendantMemory extends MemoryController {
   @Override
   protected void markAsChatted() {
     hasChattedWithDefendant = true;
+  }
+
+  // Add interaction event when shoplifting info is revealed
+  @FXML
+  private void interactableDone() {
+    if (isFirstTimeInteract) {
+      Task<Void> interactableDoneTask = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+          String output = sendGPTRequest(loadPrompt("prompts/defendantInteractableDone.txt"));
+
+          // Update the chat area with the AI's response
+          Platform.runLater(() -> {
+            appendMessageToChat(roleOfCharacter, output);
+          });
+
+          // Send a notification to the user
+          sendNotification();
+          return null;
+        }
+      };
+
+      // Use a thread to perform the task concurrently
+      Thread additionalInfoThread = new Thread(interactableDoneTask);
+      additionalInfoThread.setDaemon(true);
+      additionalInfoThread.start();
+
+      isFirstTimeInteract = false;
+    }
   }
 }
