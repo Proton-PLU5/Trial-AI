@@ -29,7 +29,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.DraggableMaker;
 
-public class HumanMemory extends MemoryController {
+public class HumanMemoryController extends MemoryController {
 
   @FXML
   private Button roomBtn;
@@ -105,7 +105,7 @@ public class HumanMemory extends MemoryController {
   public static boolean hasChattedWithHuman;
   public static boolean isFirstTimeInteract = true;
 
-  public HumanMemory() {
+  public HumanMemoryController() {
     super("prompts/witnessHuman.txt");
     itemToLabel.put("aisle1Item", markerLine1);
     itemToLabel.put("aisle2Item1", markerLine2);

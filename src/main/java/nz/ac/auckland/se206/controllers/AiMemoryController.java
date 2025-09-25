@@ -21,8 +21,9 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.SceneManager;
 
-public class AiMemory extends MemoryController {
+public class AiMemoryController extends MemoryController {
 
+  private static final double CIRCLE_RADIUS = 75.0;
   @FXML
   private Button roomBtn;
   @FXML
@@ -42,12 +43,11 @@ public class AiMemory extends MemoryController {
 
   private TimerService timerService;
   private Circle clipCircle;
-  private static final double CIRCLE_RADIUS = 75.0;
   private boolean isXrayMode = false;
   public static boolean isFirstTimeInteract = true;
   public static boolean hasChattedWithAi;
 
-  public AiMemory() {
+  public AiMemoryController() {
     super("prompts/witnessAi.txt");
   }
 

@@ -152,17 +152,17 @@ public class VerdictController implements TimableScene {
     App.createTimer();
     App.chatHistoryMap = new LinkedHashMap<>();
 
-    HumanMemory.hasChattedWithHuman = false;
-    HumanMemory.itemCollected = new HashMap<>();
-    HumanMemory.itemToLabel = new HashMap<>();
-    HumanMemory.isFirstTimeInteract = true;
+    HumanMemoryController.hasChattedWithHuman = false;
+    HumanMemoryController.itemCollected = new HashMap<>();
+    HumanMemoryController.itemToLabel = new HashMap<>();
+    HumanMemoryController.isFirstTimeInteract = true;
 
-    DefendantMemory.hasChattedWithDefendant = false;
-    DefendantMemory.loginSequenceCompleted = false;
-    DefendantMemory.isFirstTimeInteract = true;
+    DefendantMemoryController.hasChattedWithDefendant = false;
+    DefendantMemoryController.loginSequenceCompleted = false;
+    DefendantMemoryController.isFirstTimeInteract = true;
 
-    AiMemory.isFirstTimeInteract = true;
-    AiMemory.hasChattedWithAi = false;
+    AiMemoryController.isFirstTimeInteract = true;
+    AiMemoryController.hasChattedWithAi = false;
 
     RoomController.characterInteracted = new HashMap<>();
     RoomController.isFirstTimeInit = true;
