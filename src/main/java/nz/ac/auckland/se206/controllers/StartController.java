@@ -11,7 +11,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.utils.TimableScene;
 
-public class startController implements TimableScene {
+public class StartController implements TimableScene {
 
   @FXML
   private Label timerLabel;

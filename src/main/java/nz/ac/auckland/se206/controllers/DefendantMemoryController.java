@@ -32,7 +32,7 @@ import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
 
-public class DefendantMemory extends MemoryController {
+public class DefendantMemoryController extends MemoryController {
 
   private static AudioClip keyPadAudioClip;
   private static boolean loginSequenceCompleted = false;
@@ -78,7 +78,7 @@ public class DefendantMemory extends MemoryController {
   private AnimationTimer progressArcAnimationTimer;
 
   static {
-    var resource = DefendantMemory.class.getResource("/sounds/keypad.mp3");
+    var resource = DefendantMemoryController.class.getResource("/sounds/keypad.mp3");
     System.out.println("[DEBUG] keypad.mp3 resource: " + resource);
     if (resource != null) {
       keyPadAudioClip = new AudioClip(resource.toExternalForm());
@@ -89,7 +89,7 @@ public class DefendantMemory extends MemoryController {
     }
   }
 
-  public DefendantMemory() {
+  public DefendantMemoryController() {
     super("prompts/defendant.txt");
   }
 

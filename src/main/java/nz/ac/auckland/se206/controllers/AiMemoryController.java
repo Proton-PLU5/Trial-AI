@@ -19,7 +19,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.SceneManager;
 
-public class AiMemory extends MemoryController {
+public class AiMemoryController extends MemoryController {
 
   private static final double CIRCLE_RADIUS = 75.0;
   public static boolean hasChattedWithAi;
@@ -45,7 +45,7 @@ public class AiMemory extends MemoryController {
   private boolean isXrayMode = false;
   private boolean isFirstTime = true;
 
-  public AiMemory() {
+  public AiMemoryController() {
     super("prompts/witnessAi.txt");
   }
 

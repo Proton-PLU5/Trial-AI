@@ -180,7 +180,8 @@ public class RoomController implements TimableScene {
 
   // Checks if all participants have been chatted with
   public void enableGuessButton() {
-    if (AiMemory.hasChattedWithAi && HumanMemory.hasChattedWithHuman && DefendantMemory.hasChattedWithDefendant) {
+    if (AiMemoryController.hasChattedWithAi && HumanMemoryController.hasChattedWithHuman
+        && DefendantMemoryController.hasChattedWithDefendant) {
       btnGuess.setDisable(false);
     } else {
       btnGuess.setDisable(true);

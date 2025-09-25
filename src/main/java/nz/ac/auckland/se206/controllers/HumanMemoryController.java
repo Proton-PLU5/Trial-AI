@@ -24,7 +24,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.DraggableMaker;
 
-public class HumanMemory extends MemoryController {
+public class HumanMemoryController extends MemoryController {
 
   public static boolean hasChattedWithHuman;
 
@@ -99,7 +99,7 @@ public class HumanMemory extends MemoryController {
   private ArrayList<ImageView> aisleItems = new ArrayList<ImageView>();
   private ArrayList<ImageView> itemMarkers = new ArrayList<ImageView>();
 
-  public HumanMemory() {
+  public HumanMemoryController() {
     super("prompts/witnessHuman.txt");
     itemToLabel.put("aisle1Item", markerLine1);
     itemToLabel.put("aisle2Item1", markerLine2);
