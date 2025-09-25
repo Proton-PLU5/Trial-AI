@@ -208,15 +208,6 @@
                   </GridPane>
                </children>
             </StackPane>
-            <StackPane fx:id="notificationPane" layoutX="52.0" layoutY="642.0" prefHeight="35.0" prefWidth="0.0">
-               <children>
-                  <ImageView fitHeight="39.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/notification.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </StackPane>
          </children></AnchorPane>
       <GridPane layoutX="10.0" layoutY="685.0" prefHeight="44.0" prefWidth="616.0">
           <columnConstraints>
@@ -278,5 +269,14 @@
             <Button fx:id="sendButton" layoutX="446.0" layoutY="471.0" mnemonicParsing="false" onAction="#onSendButtonPressed" prefHeight="25.0" prefWidth="87.0" text="Send" />
          </children>
       </AnchorPane>
+      <StackPane fx:id="notificationPane" layoutX="50.0" layoutY="640.0" prefHeight="35.0" prefWidth="0.0">
+         <children>
+            <ImageView fitHeight="39.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/notification.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
    </children>
 </Pane>
