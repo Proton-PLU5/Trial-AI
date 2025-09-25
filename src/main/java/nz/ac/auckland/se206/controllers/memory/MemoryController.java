@@ -142,15 +142,18 @@ public abstract class MemoryController implements TimableScene {
           textField.setPromptText("Enter your message.");
           sendButton.setDisable(false);
 
-          // Display the notification pane
-          notificationPane.setVisible(true);
+          // If the chat pane is not visible, show the notification pane
+          if (!isChatVisible) {
+            // Display the notification pane
+            notificationPane.setVisible(true);
 
-          // Create a "bounce" animation for the notification pane
-          TranslateTransition bounce = new TranslateTransition(Duration.seconds(0.2), notificationPane);
-          bounce.setFromY(-10);
-          bounce.setToY(0);
-          bounce.setInterpolator(Interpolator.EASE_BOTH);
-          bounce.play();
+            // Create a "bounce" animation for the notification pane
+            TranslateTransition bounce = new TranslateTransition(Duration.seconds(0.2), notificationPane);
+            bounce.setFromY(-10);
+            bounce.setToY(0);
+            bounce.setInterpolator(Interpolator.EASE_BOTH);
+            bounce.play();
+          }
 
           return null;
         }
