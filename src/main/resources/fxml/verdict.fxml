@@ -51,7 +51,7 @@
             <Font size="35.0" />
          </font>
       </Label>
-      <TextArea fx:id="rationaleJudgementTextArea" layoutX="279.0" layoutY="148.0" prefHeight="442.0" prefWidth="838.0" visible="false" wrapText="true">
+      <TextArea fx:id="rationaleJudgementTextArea" editable="false" layoutX="279.0" layoutY="148.0" prefHeight="442.0" prefWidth="838.0" visible="false" wrapText="true">
          <font>
             <Font size="30.0" />
          </font></TextArea>

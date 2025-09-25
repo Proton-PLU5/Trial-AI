@@ -174,7 +174,6 @@ public class VerdictController implements TimableScene {
       verdictTitleLabel1.setVisible(false);
       yesButton.setVisible(false);
       noButton.setVisible(false);
-      verdictCorrectLabel.setText("You didn't make a decision in time. Try again.");
     }
 
     // Continue to rationale submission screen regardless of if the user made a
@@ -204,7 +203,11 @@ public class VerdictController implements TimableScene {
 
       if (rationale.isEmpty()) {
         gameOverText.setLength(0);
-        gameOverText.append("You didn't give a rationale. Try again.");
+        if (!choiceMade) {
+          gameOverText.append("You didn't make a decision in time. Try again.");
+        } else {
+          gameOverText.append("You didn't give a rationale. Try again.");
+        }
         verdictCorrectLabel.setText(gameOverText.toString());
       } else {
         // Add the rationale to the prompt
