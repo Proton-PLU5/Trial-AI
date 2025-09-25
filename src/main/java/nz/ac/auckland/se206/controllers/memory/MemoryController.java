@@ -164,6 +164,7 @@ public abstract class MemoryController implements TimableScene {
   protected void appendMessageToChat(String role, String message) {
     textArea.appendText(role + ":\n" + message + "\n");
     App.chatHistory.append(role + ":\n" + message + "\n");
+    textArea.setScrollTop(Double.MAX_VALUE);
   }
 
   /** Handles the "Go Back" button press event. */
