@@ -71,9 +71,6 @@ public class RoomController implements TimableScene {
           new Media(getClass().getResource("/sounds/voiceover.mp3").toExternalForm()));
       startAudioMediaPlayer.play();
 
-      notificationAudioMediaPlayer = new MediaPlayer(
-          new Media(getClass().getResource("/sounds/notification.mp3").toExternalForm()));
-
       isFirstTimeInit = false;
     } else {
       conversationPane.setVisible(false);

@@ -25,7 +25,7 @@ public class App extends Application {
   private static Scene scene;
   public static Stage primaryStage;
   public static LinkedHashMap<String, String> chatHistoryMap = new LinkedHashMap<>();
-  public static final int TIMER_DURATION = 5 * 60; // 5 minutes in seconds
+  public static final int TIMER_DURATION = 10; // 5 minutes in seconds
   public static Timer timer;
 
   /**

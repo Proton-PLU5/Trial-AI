@@ -55,7 +55,7 @@
          <font>
             <Font size="30.0" />
          </font></TextArea>
-      <Button fx:id="restartButton" layoutX="651.0" layoutY="860.0" mnemonicParsing="false" onAction="#handleYesClicked" stylesheets="@../css/style.css" text="Restart">
+      <Button fx:id="restartButton" layoutX="644.0" layoutY="623.0" mnemonicParsing="false" onAction="#handleRestartButtonPressed" stylesheets="@../css/style.css" text="Restart" visible="false">
          <font>
             <Font size="25.0" />
          </font>

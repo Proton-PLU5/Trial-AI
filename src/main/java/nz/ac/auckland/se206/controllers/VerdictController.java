@@ -189,6 +189,8 @@ public class VerdictController implements TimableScene {
   @FXML
   private void handleRationaleSubmitted() throws ApiProxyException {
     verdictTimer.stopTimer();
+    restartButton.setVisible(true);
+
     rationaleSubmitted = true;
     verdictTitleLabel2.setVisible(false);
     submitButton.setVisible(false);
