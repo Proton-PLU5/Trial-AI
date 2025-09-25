@@ -141,6 +141,7 @@ public class RoomController implements TimableScene {
   }
 
   private SceneManager.Scenes getMemoryScene(String characterId) {
+    // This method gets the memory scene for each of the characters
     switch (characterId) {
       case "witnessAi":
         return SceneManager.Scenes.aiMemory;
@@ -152,6 +153,7 @@ public class RoomController implements TimableScene {
   }
 
   private SceneManager.Scenes getFlashbackScene(String characterId) {
+    // This method gets the flashback scene for each of the characters
     switch (characterId) {
       case "witnessAi":
         return SceneManager.Scenes.aiFlashback;

@@ -169,6 +169,7 @@ public class HumanMemory extends MemoryController {
 
   @FXML
   private void onBackToAislesButtonPressed() throws IOException {
+    //This method makes it so that the character goes into each of the aisles
     mainAislePane.setVisible(true);
     aisle1Pane.setVisible(false);
     aisle2Pane.setVisible(false);

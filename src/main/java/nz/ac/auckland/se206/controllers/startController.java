@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,16 +12,21 @@ import javafx.stage.Stage;
 import nz.ac.auckland.se206.utils.TimableScene;
 
 public class startController implements TimableScene {
-  @FXML Label timerLabel;
-  @FXML Label title_label;
-  @FXML private Button playBtn;
+  @FXML
+  Label timerLabel;
+  @FXML
+  Label title_label;
+  @FXML
+  private Button playBtn;
 
   // could add like volume dragger or sound button etc
 
   @FXML
-  private void initialize() {}
+  private void initialize() {
+  }
 
   private void handleGameOver() {
+    // This method handles the game over scenario and switches to the final scene
     try {
       Stage stage = (Stage) playBtn.getScene().getWindow();
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/final.fxml"));
@@ -33,6 +39,7 @@ public class startController implements TimableScene {
 
   @FXML
   private void handlePlayButton() {
+    // This method handles the play button click and switches to the room scene
     try {
       Stage stage = (Stage) playBtn.getScene().getWindow();
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/room.fxml"));

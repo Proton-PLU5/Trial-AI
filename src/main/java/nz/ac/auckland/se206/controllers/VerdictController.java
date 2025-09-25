@@ -2,9 +2,7 @@ package nz.ac.auckland.se206.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -20,8 +18,8 @@ import nz.ac.auckland.apiproxy.chat.openai.ChatMessage;
 import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
-import nz.ac.auckland.se206.prompts.PromptEngineering;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.prompts.PromptEngineering;
 import nz.ac.auckland.se206.utils.TimableScene;
 import nz.ac.auckland.se206.utils.Timer;
 
@@ -82,6 +80,7 @@ public class VerdictController implements TimableScene {
    * Creates and configures the ChatCompletionRequest object.
    */
   public void createChatCompletionResult() {
+    // This method creates the chat completion request for the verdict rationale
     try {
       ApiProxyConfig config = ApiProxyConfig.readConfig();
       chatCompletionRequest = new ChatCompletionRequest(
@@ -115,6 +114,8 @@ public class VerdictController implements TimableScene {
 
   @FXML
   private void handleVerdictMade() {
+    // This method makes the objects inthe scene switch when the user makes a
+    // verdict
     verdictTitleLabel1.setVisible(false);
     yesButton.setVisible(false);
     noButton.setVisible(false);
