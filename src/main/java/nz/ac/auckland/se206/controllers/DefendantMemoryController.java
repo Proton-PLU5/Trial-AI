@@ -255,22 +255,6 @@ public class DefendantMemoryController extends MemoryController {
             // Highlight criminal record
             customerCriminalRecordLabel.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
 
-            // Send additional info to the AI
-            Task<Void> sendAdditionalInfoTask = new Task<Void>() {
-              @Override
-              protected Void call() throws Exception {
-                String output = sendGptRequest(loadPrompt("prompts/defendant_additional.txt"));
-                appendMessageToChat(roleOfCharacter, output);
-                // Send a notification to the user
-                sendNotification();
-                return null;
-              }
-            };
-
-            // Use a thread to perform the task concurrently
-            Thread additionalInfoThread = new Thread(sendAdditionalInfoTask);
-            additionalInfoThread.setDaemon(true);
-            additionalInfoThread.start();
             // LLM sends message when interactable is done
             interactableDone();
 
