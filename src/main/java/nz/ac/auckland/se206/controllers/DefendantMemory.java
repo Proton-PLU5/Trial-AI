@@ -34,6 +34,10 @@ import nz.ac.auckland.se206.utils.TimableScene;
 
 public class DefendantMemory extends MemoryController {
 
+  private static AudioClip keyPadAudioClip;
+  private static boolean loginSequenceCompleted = false;
+  public static boolean hasChattedWithDefendant;
+
   @FXML
   private Rectangle rec1;
   @FXML
@@ -71,10 +75,7 @@ public class DefendantMemory extends MemoryController {
 
   private String pin = "_ _ _ _";
   private final String correctPin = "1 2 3 4";
-  private static AudioClip keyPadAudioClip;
-  private static boolean loginSequenceCompleted = false;
   private AnimationTimer progressArcAnimationTimer;
-  public static boolean hasChattedWithDefendant;
 
   static {
     var resource = DefendantMemory.class.getResource("/sounds/keypad.mp3");
@@ -117,7 +118,8 @@ public class DefendantMemory extends MemoryController {
       titleLabel.setText("Login Required");
     }
 
-    //We run a thread for the mouse movement so that the progress arc follows the mouse
+    // We run a thread for the mouse movement so that the progress arc follows the
+    // mouse
     Platform.runLater(() -> {
       progressArc.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
         @Override

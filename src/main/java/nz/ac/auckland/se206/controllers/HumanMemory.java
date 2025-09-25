@@ -26,6 +26,8 @@ import nz.ac.auckland.se206.utils.DraggableMaker;
 
 public class HumanMemory extends MemoryController {
 
+  public static boolean hasChattedWithHuman;
+
   @FXML
   private Button roomBtn;
   @FXML
@@ -96,8 +98,6 @@ public class HumanMemory extends MemoryController {
 
   private ArrayList<ImageView> aisleItems = new ArrayList<ImageView>();
   private ArrayList<ImageView> itemMarkers = new ArrayList<ImageView>();
-
-  public static boolean hasChattedWithHuman;
 
   public HumanMemory() {
     super("prompts/witnessHuman.txt");
