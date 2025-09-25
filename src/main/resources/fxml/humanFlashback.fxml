@@ -13,7 +13,7 @@
             <Label fx:id="timerLabel" alignment="CENTER" layoutX="1008.0" layoutY="20.0" maxHeight="83.0" prefHeight="83.0" prefWidth="106.0" stylesheets="@../css/style.css" text="00:00" textAlignment="CENTER" />
             <Button fx:id="memoryButton" layoutX="23.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#handleMemoryButton" stylesheets="@../css/style.css" text="Go to memory" />
             <Button fx:id="nextButton" layoutX="23.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#nextDrawing" prefHeight="45.0" prefWidth="93.0" stylesheets="@../css/style.css" text="Next" />
-            <Label fx:id="conversationRoleLabel" layoutX="23.0" layoutY="20.0" maxHeight="77.0" prefHeight="35.0" prefWidth="185.0" stylesheets="@../css/style.css" text="Human Witness" />
+            <Label fx:id="conversationRoleLabel" layoutX="23.0" layoutY="20.0" maxHeight="77.0" prefHeight="35.0" prefWidth="185.0" stylesheets="@../css/style.css" text="Maria Shader" />
             <Label fx:id="conversationTextLabel" layoutX="23.0" layoutY="68.0" prefHeight="40.0" prefWidth="1091.0" stylesheets="@../css/style.css" text="Label" />
          </children>
       </AnchorPane>

@@ -12,24 +12,29 @@ import nz.ac.auckland.se206.utils.SceneManager.Scenes;
 
 public class DefendantFlashback extends FlashbackController {
 
-  @FXML private ImageView backgroundImage;
+  @FXML
+  private ImageView backgroundImage;
 
-  @FXML private Label timerLabel;
+  @FXML
+  private Label timerLabel;
 
-  @FXML private Button nextBtn;
-  @FXML private Button memoryButton;
+  @FXML
+  private Button nextBtn;
+  @FXML
+  private Button memoryButton;
 
-  @FXML private Label conversationRoleLabel;
-  @FXML private Label conversationTextLabel;
+  @FXML
+  private Label conversationRoleLabel;
+  @FXML
+  private Label conversationTextLabel;
 
   private List<String> imagePaths;
   private List<String> conversationText;
 
   private int currentDrawingIndex = 0;
-  
+
   @FXML
   protected void initialize() {
-    conversationRoleLabel.setText("Defendant");
     conversationTextLabel.setVisible(true);
     super.initialize();
   }
@@ -43,7 +48,8 @@ public class DefendantFlashback extends FlashbackController {
 
   @Override
   protected void setupText() {
-    addText("Upon seeing the individual in court with us today, I immediately contacted the local authorities after reading their database profile.");
+    addText(
+        "Upon seeing the individual in court with us today, I immediately contacted the local authorities after reading their database profile.");
     addText("Since all our customers have a membership with us, I can access information on them from our database.");
     addText("My job is to surveil the customers when they first walk into our store.");
   }
