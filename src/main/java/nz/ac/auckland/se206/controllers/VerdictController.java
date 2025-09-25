@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -72,7 +74,12 @@ public class VerdictController implements TimableScene {
 
     // Add ourselves to the timer service
     App.timer.stopTimer();
-    verdictTimer = new Timer(2 * 60);
+    verdictTimer = new Timer(2 * 60, new Consumer<Void>() {
+      @Override
+      public void accept(Void t) {
+        timeOutOption();
+      }
+    });
     verdictTimer.addConsumer(getTimerConsumer());
     verdictTimer.setCountDown(true);
     verdictTimer.buildTimer();

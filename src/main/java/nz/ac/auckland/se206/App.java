@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206;
 
 import java.io.IOException;
+import java.util.function.Consumer;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +22,14 @@ public class App extends Application {
   public static Stage primaryStage;
   public static StringBuilder chatHistory = new StringBuilder();
   public static final int TIMER_DURATION = 5 * 60; // 5 minutes in seconds
-  public static Timer timer = new Timer(TIMER_DURATION); // 5 minutes
+  public static Timer timer = new Timer(TIMER_DURATION, new Consumer<Void>() {
+    @Override
+    public void accept(Void t) {
+      // Switch to the final scene
+      SceneManager.switchScene(SceneManager.Scenes.verdict);
+      SceneManager.setStyleSheet("/css/style.css");
+    }
+  }); // 5 minutes
 
   /**
    * The main method that launches the JavaFX application.
