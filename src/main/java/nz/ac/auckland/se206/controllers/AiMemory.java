@@ -2,6 +2,7 @@ package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -116,9 +117,13 @@ public class AiMemory extends MemoryController {
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override
         protected Void call() throws Exception {
-          System.out.println("Calling GPT for AI Witness");
-          // String output = sendGPTRequest(loadPrompt("prompts/aiInteractableDone.txt"));
-          // appendMessageToChat(roleOfCharacter, output);
+          String output = sendGPTRequest(loadPrompt("prompts/aiInteractableDone.txt"));
+
+          // Update the chat area with the AI's response
+          Platform.runLater(() -> {
+            appendMessageToChat(roleOfCharacter, output);
+          });
+
           // Send a notification to the user
           sendNotification();
           return null;
