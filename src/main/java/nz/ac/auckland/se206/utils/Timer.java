@@ -68,17 +68,10 @@ public class Timer {
    * Build and start the timer.
    */
   public void buildTimer() {
+    // This method builds the timer
     Task<Void> task = this.createTimerTask(length, countDown);
     this.timerThread = new Thread(task);
 
-    // Set the thread to be a daemon thread so that it does
-    // not block the
-    // application from exiting.
-    // This is important because the timer normally runs in
-    // the background.
-    // If the thread is not a daemon thread, the application
-    // will not exit until the
-    // timer finishes.
     this.timerThread.setDaemon(true);
     timerThread.start();
   }

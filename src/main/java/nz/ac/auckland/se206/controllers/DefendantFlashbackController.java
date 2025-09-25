@@ -10,7 +10,7 @@ import nz.ac.auckland.se206.controllers.flashback.FlashbackController;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.SceneManager.Scenes;
 
-public class DefendantFlashback extends FlashbackController {
+public class DefendantFlashbackController extends FlashbackController {
 
   @FXML
   private ImageView backgroundImage;

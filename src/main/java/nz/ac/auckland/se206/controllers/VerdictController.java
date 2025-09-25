@@ -68,7 +68,7 @@ public class VerdictController implements TimableScene {
   private String systemPrompt = "";
 
   @FXML
-  private void initialize() {
+  protected void initialize() {
     Media media = new Media(getClass().getResource("/sounds/verdict.mp3").toExternalForm());
     MediaPlayer mediaPlayer = new MediaPlayer(media);
     mediaPlayer.play();
@@ -103,6 +103,7 @@ public class VerdictController implements TimableScene {
    * Creates and configures the ChatCompletionRequest object.
    */
   public void createChatCompletionResult() {
+    // This method creates the chat completion request for the verdict rationale
     try {
       ApiProxyConfig config = ApiProxyConfig.readConfig();
       chatCompletionRequest = new ChatCompletionRequest(
@@ -136,6 +137,8 @@ public class VerdictController implements TimableScene {
 
   @FXML
   private void handleVerdictMade() {
+    // This method makes the objects inthe scene switch when the user makes a
+    // verdict
     verdictTitleLabel1.setVisible(false);
     yesButton.setVisible(false);
     noButton.setVisible(false);
@@ -149,17 +152,17 @@ public class VerdictController implements TimableScene {
     App.createTimer();
     App.chatHistoryMap = new LinkedHashMap<>();
 
-    HumanMemory.hasChattedWithHuman = false;
-    HumanMemory.itemCollected = new HashMap<>();
-    HumanMemory.itemToLabel = new HashMap<>();
-    HumanMemory.isFirstTimeInteract = true;
+    HumanMemoryController.hasChattedWithHuman = false;
+    HumanMemoryController.itemCollected = new HashMap<>();
+    HumanMemoryController.itemToLabel = new HashMap<>();
+    HumanMemoryController.isFirstTimeInteract = true;
 
-    DefendantMemory.hasChattedWithDefendant = false;
-    DefendantMemory.loginSequenceCompleted = false;
-    DefendantMemory.isFirstTimeInteract = true;
+    DefendantMemoryController.hasChattedWithDefendant = false;
+    DefendantMemoryController.loginSequenceCompleted = false;
+    DefendantMemoryController.isFirstTimeInteract = true;
 
-    AiMemory.isFirstTimeInteract = true;
-    AiMemory.hasChattedWithAi = false;
+    AiMemoryController.isFirstTimeInteract = true;
+    AiMemoryController.hasChattedWithAi = false;
 
     RoomController.characterInteracted = new HashMap<>();
     RoomController.isFirstTimeInit = true;
