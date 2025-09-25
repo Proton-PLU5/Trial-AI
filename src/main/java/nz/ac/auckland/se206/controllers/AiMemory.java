@@ -116,8 +116,8 @@ public class AiMemory extends MemoryController {
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override
         protected Void call() throws Exception {
-          String output = sendGPTRequest(loadPrompt("prompts/defendantInteractableDone.txt"));
-          appendMessageToChat(roleOfCharacter, output);
+          // String output = sendGPTRequest(loadPrompt("prompts/aiInteractableDone.txt"));
+          // appendMessageToChat(roleOfCharacter, output);
           // Send a notification to the user
           sendNotification();
           isFirstTime = false;
