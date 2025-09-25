@@ -49,7 +49,7 @@
                         <Font name="Consolas Bold" size="51.0" />
                      </font>
                   </Label>
-                  <Button fx:id="loginButton" layoutX="158.0" layoutY="80.0" mnemonicParsing="false" onAction="#loginButtonPressed" text="LOGIN">
+                  <Button id="loginButton" fx:id="loginButton" layoutX="158.0" layoutY="80.0" mnemonicParsing="false" onAction="#loginButtonPressed" onMouseEntered="#handleButtonMouseEntered" onMouseExited="#handleButtonMouseExited" stylesheets="@../css/defendant.css" text="LOGIN">
                      <font>
                         <Font name="Consolas Bold" size="22.0" />
                      </font>
@@ -75,59 +75,59 @@
                       <RowConstraints maxHeight="92.6666259765625" minHeight="0.0" prefHeight="59.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" prefHeight="51.0" prefWidth="54.0" style="-fx-background-radius: 100; -fx-background-color: 0; -fx-text-fill: #39ac00; -fx-border-color: #39ac00; -fx-border-radius: 100; -fx-border-width: 5;" stylesheets="@../css/defendant.css" text="1">
+                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" onMouseEntered="#handleButtonMouseEntered" onMouseExited="#handleButtonMouseExited" prefHeight="51.0" prefWidth="54.0" stylesheets="@../css/defendant.css" text="1">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" prefHeight="51.0" prefWidth="54.0" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="2" GridPane.columnIndex="1">
+                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" onMouseEntered="#handleButtonMouseEntered" onMouseExited="#handleButtonMouseExited" prefHeight="51.0" prefWidth="54.0" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="2" GridPane.columnIndex="1">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" prefHeight="51.0" prefWidth="54.0" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="4" GridPane.rowIndex="1">
+                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" onMouseEntered="#handleButtonMouseEntered" onMouseExited="#handleButtonMouseExited" prefHeight="51.0" prefWidth="54.0" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="4" GridPane.rowIndex="1">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" prefHeight="51.0" prefWidth="54.0" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="5" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" onMouseEntered="#handleButtonMouseEntered" onMouseExited="#handleButtonMouseExited" prefHeight="51.0" prefWidth="54.0" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="5" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" prefHeight="51.0" prefWidth="54.0" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="3" GridPane.columnIndex="2">
+                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" onMouseEntered="#handleButtonMouseEntered" onMouseExited="#handleButtonMouseExited" prefHeight="51.0" prefWidth="54.0" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="3" GridPane.columnIndex="2">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" prefHeight="51.0" prefWidth="54.0" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="6" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" onMouseEntered="#handleButtonMouseEntered" onMouseExited="#handleButtonMouseExited" prefHeight="51.0" prefWidth="54.0" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="6" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" prefHeight="51.0" prefWidth="54.0" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="7" GridPane.rowIndex="2">
+                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" onMouseEntered="#handleButtonMouseEntered" onMouseExited="#handleButtonMouseExited" prefHeight="51.0" prefWidth="54.0" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="7" GridPane.rowIndex="2">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" prefHeight="51.0" prefWidth="54.0" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="8" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" onMouseEntered="#handleButtonMouseEntered" onMouseExited="#handleButtonMouseExited" prefHeight="51.0" prefWidth="54.0" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="8" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" prefHeight="51.0" prefWidth="54.0" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="9" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                        <Button mnemonicParsing="false" onAction="#keypadButtonPressed" onMouseEntered="#handleButtonMouseEntered" onMouseExited="#handleButtonMouseExited" prefHeight="51.0" prefWidth="54.0" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="9" GridPane.columnIndex="2" GridPane.rowIndex="2">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Button>
                      </children>
                   </GridPane>
-                  <Button layoutX="110.0" layoutY="275.0" mnemonicParsing="false" onAction="#onSubmitPinPressed" prefHeight="51.0" prefWidth="97.0" scaleY="0.9" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="OK">
+                  <Button layoutX="110.0" layoutY="275.0" mnemonicParsing="false" onAction="#onSubmitPinPressed" onMouseEntered="#handleButtonMouseEntered" onMouseExited="#handleButtonMouseExited" prefHeight="51.0" prefWidth="97.0" scaleY="0.9" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="OK">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Button>
-                  <Button alignment="CENTER" layoutX="216.0" layoutY="275.0" mnemonicParsing="false" onAction="#onClearButtonPressed" prefHeight="62.0" prefWidth="80.0" scaleY="0.9" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="⌫ ">
+                  <Button alignment="CENTER" layoutX="216.0" layoutY="275.0" mnemonicParsing="false" onAction="#onClearButtonPressed" onMouseEntered="#handleButtonMouseEntered" onMouseExited="#handleButtonMouseExited" prefHeight="62.0" prefWidth="80.0" scaleY="0.9" style="-fx-background-radius: 100;" stylesheets="@../css/defendant.css" text="⌫ ">
                      <font>
                         <Font size="24.0" />
                      </font>
