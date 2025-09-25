@@ -73,6 +73,7 @@ public class App extends Application {
     SceneManager.switchScene(SceneManager.Scenes.start);
     SceneManager.setStyleSheet("/css/style.css");
     primaryStage.show();
+    primaryStage.setTitle("Trial AI");
 
     primaryStage.requestFocus();
   }
