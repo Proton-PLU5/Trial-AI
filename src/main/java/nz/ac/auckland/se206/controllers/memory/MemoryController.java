@@ -33,6 +33,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -100,7 +101,7 @@ public abstract class MemoryController implements TimableScene {
   private String systemPrompt = "";
 
   private SequentialTransition hideLeftTransition;
-  private MediaPlayer startAudioMediaPlayer;
+  protected AudioClip notificationSound;
 
   // Constructor
   public MemoryController(String promptId) {
@@ -117,6 +118,9 @@ public abstract class MemoryController implements TimableScene {
     // Initially hide chat and notification panes
     notificationPane.setVisible(false);
     chatPane.setVisible(false);
+
+    var resource = getClass().getResource("/sounds/notification.wav");
+    notificationSound = new AudioClip(resource.toExternalForm());
 
     // Add some spacing between messages
     conversationGridPane.setVgap(10);
@@ -171,6 +175,7 @@ public abstract class MemoryController implements TimableScene {
           // Update the chat area with the AI's response
           Platform.runLater(() -> {
             appendMessageToChat(roleOfCharacter, output);
+            notificationSound.play();
           });
 
           // Re-enable the text field and send button after processing
@@ -272,9 +277,9 @@ public abstract class MemoryController implements TimableScene {
   protected void sendNotification() {
     // If the chat pane is not visible, show the notification pane
     if (!isChatVisible) {
-      startAudioMediaPlayer = new MediaPlayer(
-          new Media(getClass().getResource("/sounds/notification.mp3").toExternalForm()));
-      startAudioMediaPlayer.setOnReady(() -> startAudioMediaPlayer.play());
+
+      notificationSound.play();
+
       // Display the notification pane
       notificationPane.setVisible(true);
 
