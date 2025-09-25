@@ -49,8 +49,6 @@ public class RoomController implements TimableScene {
 
   private boolean finalSceneLoaded = false;
 
-  private AnchorPane conversationPane1;
-
   private MediaPlayer startAudioMediaPlayer;
 
   /**
@@ -142,6 +140,7 @@ public class RoomController implements TimableScene {
   }
 
   private SceneManager.Scenes getMemoryScene(String characterId) {
+    // This method gets the memory scene for each of the characters
     switch (characterId) {
       case "witnessAi":
         return SceneManager.Scenes.aiMemory;
@@ -153,6 +152,7 @@ public class RoomController implements TimableScene {
   }
 
   private SceneManager.Scenes getFlashbackScene(String characterId) {
+    // This method gets the flashback scene for each of the characters
     switch (characterId) {
       case "witnessAi":
         return SceneManager.Scenes.aiFlashback;
@@ -181,7 +181,8 @@ public class RoomController implements TimableScene {
 
   // Checks if all participants have been chatted with
   public void enableGuessButton() {
-    if (AiMemory.hasChattedWithAi && HumanMemory.hasChattedWithHuman && DefendantMemory.hasChattedWithDefendant) {
+    if (AiMemoryController.hasChattedWithAi && HumanMemoryController.hasChattedWithHuman
+        && DefendantMemoryController.hasChattedWithDefendant) {
       btnGuess.setDisable(false);
     } else {
       btnGuess.setDisable(true);

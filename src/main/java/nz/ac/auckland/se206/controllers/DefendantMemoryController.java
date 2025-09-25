@@ -33,7 +33,7 @@ import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
 
-public class DefendantMemory extends MemoryController {
+public class DefendantMemoryController extends MemoryController {
 
   @FXML
   private Rectangle rec1;
@@ -80,7 +80,7 @@ public class DefendantMemory extends MemoryController {
   public String interactableContext = "";
 
   static {
-    var resource = DefendantMemory.class.getResource("/sounds/keypad.mp3");
+    var resource = DefendantMemoryController.class.getResource("/sounds/keypad.mp3");
     System.out.println("[DEBUG] keypad.mp3 resource: " + resource);
     if (resource != null) {
       keyPadAudioClip = new AudioClip(resource.toExternalForm());
@@ -91,13 +91,16 @@ public class DefendantMemory extends MemoryController {
     }
   }
 
-  public DefendantMemory() {
+  public DefendantMemoryController() {
     super("prompts/defendant.txt");
   }
 
   @Override
   @FXML
   protected void initialize() {
+
+    // This method initializes the defendant memory scene, including the login
+    // sequence and CCTV interactions
     super.initialize();
 
     loginPane.setVisible(true);
@@ -117,6 +120,8 @@ public class DefendantMemory extends MemoryController {
       titleLabel.setText("Login Required");
     }
 
+    // We run a thread for the mouse movement so that the progress arc follows the
+    // mouse
     Platform.runLater(() -> {
       progressArc.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
         @Override
@@ -319,7 +324,7 @@ public class DefendantMemory extends MemoryController {
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override
         protected Void call() throws Exception {
-          String output = sendGPTRequest(loadPrompt("prompts/defendantInteractableDone.txt"));
+          String output = sendGptRequest(loadPrompt("prompts/defendantInteractableDone.txt"));
 
           // Update the chat area with the AI's response
           Platform.runLater(() -> {

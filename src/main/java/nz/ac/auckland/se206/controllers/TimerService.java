@@ -3,6 +3,7 @@ package nz.ac.auckland.se206.controllers;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -28,13 +29,12 @@ public class TimerService {
   private StringProperty timeDisplay = new SimpleStringProperty("02:00");
 
   private TimerService() {
-    executor =
-        Executors.newSingleThreadScheduledExecutor(
-            r -> {
-              Thread t = new Thread(r);
-              t.setDaemon(true);
-              return t;
-            });
+    executor = Executors.newSingleThreadScheduledExecutor(
+        r -> {
+          Thread t = new Thread(r);
+          t.setDaemon(true);
+          return t;
+        });
 
     // Update display when seconds change
     secondsRemaining.addListener(
@@ -47,6 +47,7 @@ public class TimerService {
   }
 
   public void startTimer() {
+    // This method starts the timer for the game
     if (running.get()) {
       return;
     }

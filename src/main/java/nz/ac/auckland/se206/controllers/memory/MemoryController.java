@@ -50,7 +50,6 @@ import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.controllers.RoomController;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
 
@@ -177,7 +176,7 @@ public abstract class MemoryController implements TimableScene {
       Task<Void> task = new Task<Void>() {
         @Override
         protected Void call() throws Exception {
-          String output = sendGPTRequest(userInput);
+          String output = sendGptRequest(userInput);
 
           System.out.println("AI Response: " + output); // Debugging
 
@@ -268,6 +267,7 @@ public abstract class MemoryController implements TimableScene {
 
   /** Creates and configures the ChatCompletionRequest object. */
   public void createChatCompletionResult() {
+    // This method initialises the chat completion request for the memory chat
     try {
       ApiProxyConfig config = ApiProxyConfig.readConfig();
       chatCompletionRequest = new ChatCompletionRequest(config)
@@ -316,7 +316,8 @@ public abstract class MemoryController implements TimableScene {
    * @param userInput The user's input message.
    * @return The AI's response message.
    */
-  protected String sendGPTRequest(String userInput) {
+  protected String sendGptRequest(String userInput) {
+    // This method sends the user input to the GPT model and returns the response
     this.chatCompletionRequest.addMessage("user", userInput);
 
     try {
@@ -368,6 +369,7 @@ public abstract class MemoryController implements TimableScene {
    * @return the loaded prompt as a string
    */
   protected String loadPrompt(String promptId) {
+    // This method loads the prompt from a file and into the respective llms chat
     try {
       URL promptUrl = this.getClass().getClassLoader().getResource(promptId);
       List<String> promptStrings = Files.readAllLines(Paths.get(promptUrl.toURI()), Charset.defaultCharset());
@@ -379,6 +381,8 @@ public abstract class MemoryController implements TimableScene {
   }
 
   protected void createTitleDisappearAnimation() {
+    // This method creates the animation for the title to disappear after a few
+    // seconds
     TranslateTransition moveLeftTransition = new TranslateTransition(Duration.seconds(1), titleBlock);
     moveLeftTransition = new TranslateTransition(Duration.seconds(1), titleBlock);
     moveLeftTransition.setFromX(0);
@@ -397,6 +401,7 @@ public abstract class MemoryController implements TimableScene {
     hideLeftTransition.stop();
   }
 
+  @Override
   public Label getTimerLabel() {
     return timerLabel;
   }

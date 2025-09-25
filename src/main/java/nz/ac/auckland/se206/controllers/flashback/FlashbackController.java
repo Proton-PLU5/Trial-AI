@@ -2,6 +2,7 @@ package nz.ac.auckland.se206.controllers.flashback;
 
 import java.io.InputStream;
 import java.util.Stack;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -91,6 +92,7 @@ public abstract class FlashbackController implements TimableScene {
   /** Navigate to next image */
   @FXML
   protected void nextDrawing() {
+    //This method makes it so that the flashback image goes to the next one in a slide show sort of thing
     if (imageStack.size() == 1) {
       showCurrentImage();
       showCurrentText();
