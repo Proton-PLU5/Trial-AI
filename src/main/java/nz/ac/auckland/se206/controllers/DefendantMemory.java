@@ -34,33 +34,47 @@ import nz.ac.auckland.se206.utils.TimableScene;
 
 public class DefendantMemory extends MemoryController {
 
-  @FXML private Rectangle rec1;
-  @FXML private Rectangle rec2;
-  @FXML private Rectangle rec3;
-  @FXML private Rectangle rec4;
-  @FXML private Arc progressArc;
-  @FXML private Label pinLabel;
-  
+  @FXML
+  private Rectangle rec1;
+  @FXML
+  private Rectangle rec2;
+  @FXML
+  private Rectangle rec3;
+  @FXML
+  private Rectangle rec4;
+  @FXML
+  private Arc progressArc;
+  @FXML
+  private Label pinLabel;
+
   // Login Sequence
-  @FXML private AnchorPane initialPane;
-  @FXML private AnchorPane keypadPane;
-  @FXML private AnchorPane loginPane;
-  @FXML private AnchorPane cctvPane;
+  @FXML
+  private AnchorPane initialPane;
+  @FXML
+  private AnchorPane keypadPane;
+  @FXML
+  private AnchorPane loginPane;
+  @FXML
+  private AnchorPane cctvPane;
 
-  // Customer Details 
-  @FXML private StackPane customerDetailsPane;
-  @FXML private Label customerIDLabel;
-  @FXML private Label customerStatusLabel;
-  @FXML private Label customerAgeLabel;
-  @FXML private Label customerCriminalRecordLabel;
-
-
+  // Customer Details
+  @FXML
+  private StackPane customerDetailsPane;
+  @FXML
+  private Label customerIDLabel;
+  @FXML
+  private Label customerStatusLabel;
+  @FXML
+  private Label customerAgeLabel;
+  @FXML
+  private Label customerCriminalRecordLabel;
 
   private String pin = "_ _ _ _";
   private final String correctPin = "1 2 3 4";
   private static AudioClip keyPadAudioClip;
   private static boolean loginSequenceCompleted = false;
   private AnimationTimer progressArcAnimationTimer;
+  public static boolean hasChattedWithDefendant;
 
   static {
     var resource = DefendantMemory.class.getResource("/sounds/keypad.mp3");
@@ -82,12 +96,11 @@ public class DefendantMemory extends MemoryController {
   @FXML
   protected void initialize() {
     super.initialize();
-    
+
     loginPane.setVisible(true);
     initialPane.setVisible(true);
     keypadPane.setVisible(false);
     cctvPane.setVisible(false);
-
 
     if (loginSequenceCompleted) {
       loginPane.setVisible(false);
@@ -114,7 +127,7 @@ public class DefendantMemory extends MemoryController {
     App.timer.addConsumer(getTimerConsumer());
     createTitleDisappearAnimation();
 
-    this.roleOfCharacter = "Defendant";
+    this.roleOfCharacter = "Security Bot";
   }
 
   @FXML
@@ -129,13 +142,14 @@ public class DefendantMemory extends MemoryController {
       // Set the pitch of the audio clip based on the button pressed
       // For numbers 1-9, set pitch from 1.0 to 1.8
       double pitch = 1.0 + (Integer.parseInt(buttonText)) * 0.1;
-      //keyPadAudioClip.setRate(pitch);
+      // keyPadAudioClip.setRate(pitch);
       keyPadAudioClip.play();
     }
   }
 
   /**
    * Handles the "Submit PIN" button press event to check the entered pin.
+   * 
    * @param event The action event triggered by clicking the submit pin button
    */
   @FXML
@@ -162,6 +176,7 @@ public class DefendantMemory extends MemoryController {
 
   /**
    * Handles the "Clear" button press event to reset the pin.
+   * 
    * @param event The action event triggered by clicking the clear button
    */
   @FXML
@@ -172,6 +187,7 @@ public class DefendantMemory extends MemoryController {
 
   /**
    * Handles the "Login" button press event to show the keypad pane.
+   * 
    * @param event The action event triggered by clicking the login button
    */
   @FXML
@@ -183,6 +199,7 @@ public class DefendantMemory extends MemoryController {
   /**
    * Handles mouse press on a character in the CCTV pane.
    * Creates the progress bar for the "scanning" feature.
+   * 
    * @param event The mouse event triggered by pressing a character
    */
   @FXML
@@ -208,7 +225,7 @@ public class DefendantMemory extends MemoryController {
           Node sourceNode = (Node) event.getSource();
           customerDetailsPane.setLayoutX(sourceNode.getLayoutX());
           customerDetailsPane.setLayoutY(sourceNode.getLayoutY());
-          
+
           // Check if the source of the event is one of the rectangles
           // Check by getting the ID of the source
           if (sourceNode.getId().equals(rec1.getId())) {
@@ -225,6 +242,8 @@ public class DefendantMemory extends MemoryController {
               protected Void call() throws Exception {
                 String output = sendGPTRequest(loadPrompt("prompts/defendant_additional.txt"));
                 appendMessageToChat(roleOfCharacter, output);
+                // Send a notification to the user
+                sendNotification();
                 return null;
               }
             };
@@ -259,6 +278,7 @@ public class DefendantMemory extends MemoryController {
   /**
    * Handles mouse release on a character in the CCTV pane.
    * Stops the progress bar for the "scanning" feature.
+   * 
    * @param event The mouse event triggered by releasing a character
    */
   @FXML
@@ -274,5 +294,8 @@ public class DefendantMemory extends MemoryController {
     customerDetailsPane.setVisible(false);
   }
 
-  
+  @Override
+  protected void markAsChatted() {
+    hasChattedWithDefendant = true;
+  }
 }

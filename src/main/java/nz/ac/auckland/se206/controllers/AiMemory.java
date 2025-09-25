@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -14,25 +15,35 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.SceneManager;
 
 public class AiMemory extends MemoryController {
 
-  @FXML private Button roomBtn;
-  @FXML private Button chatBtn;
-  @FXML private Label timerLabel;
-  @FXML private Pane chatPanel;
-  @FXML private Pane rootPane;
-  @FXML private ImageView mainImageView;
-  @FXML private ImageView xrayImageView;
-  @FXML private Rectangle overlayRectangle;
+  @FXML
+  private Button roomBtn;
+  @FXML
+  private Button chatBtn;
+  @FXML
+  private Label timerLabel;
+  @FXML
+  private Pane chatPanel;
+  @FXML
+  private Pane rootPane;
+  @FXML
+  private ImageView mainImageView;
+  @FXML
+  private ImageView xrayImageView;
+  @FXML
+  private Rectangle overlayRectangle;
 
   private TimerService timerService;
   private Circle clipCircle;
   private static final double CIRCLE_RADIUS = 75.0;
   private boolean isXrayMode = false;
   private boolean isFirstTime = true;
+  public static boolean hasChattedWithAi;
 
   public AiMemory() {
     super("prompts/witnessAi.txt");
@@ -41,8 +52,10 @@ public class AiMemory extends MemoryController {
   @Override
   @FXML
   protected void initialize() {
+    App.timer.addConsumer(getTimerConsumer());
     super.initialize();
     setupXrayEffect();
+    this.roleOfCharacter = "Checkout Bot";
   }
 
   private void setupXrayEffect() {
@@ -96,7 +109,8 @@ public class AiMemory extends MemoryController {
   @FXML
   private void interactableComplete() {
     if (isXrayMode && isFirstTime) {
-      System.out.println("Identified conceled item");
+      System.out.println("Identified concealed item");
+      sendNotification();
       isFirstTime = false;
     }
   }
@@ -126,5 +140,10 @@ public class AiMemory extends MemoryController {
   @FXML
   private void handleOpenChatButtonClick(MouseEvent event) throws IOException {
     chatPanel.setVisible(true);
+  }
+
+  @Override
+  protected void markAsChatted() {
+    hasChattedWithAi = true;
   }
 }

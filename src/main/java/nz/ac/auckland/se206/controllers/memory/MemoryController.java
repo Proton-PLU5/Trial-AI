@@ -10,20 +10,34 @@ import java.util.List;
 
 import javax.management.RuntimeErrorException;
 
+import javafx.animation.AnimationTimer;
+import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Transition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest.Model;
@@ -33,6 +47,7 @@ import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.controllers.RoomController;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
 
@@ -41,22 +56,41 @@ public abstract class MemoryController implements TimableScene {
   protected ChatCompletionRequest chatCompletionRequest;
 
   // Chat Elements
-  @FXML private AnchorPane chatPane;
-  @FXML private Button sendButton;
-  @FXML private Button chatButton;
-  @FXML private TextArea textArea;
-  @FXML private TextField textField;
+  @FXML
+  private AnchorPane chatPane;
+  @FXML
+  private Button sendButton;
+  @FXML
+  private Button chatButton;
+  @FXML
+  private GridPane conversationGridPane;
+  @FXML
+  private ScrollPane conversationScrollPane;
+  @FXML
+  private TextField textField;
 
   // Navigation
-  @FXML private Button goBackButton;
+  @FXML
+  private Button goBackButton;
 
   // Timer
-  @FXML private Label timerLabel;
+  @FXML
+  private Label timerLabel;
 
-  // Title 
-  @FXML protected AnchorPane titleBlock;
-  @FXML protected Label titleLabel;
-  @FXML protected Label descriptionLabel;
+  @FXML
+  private Label timerLabelText;
+
+  // Title
+  @FXML
+  protected AnchorPane titleBlock;
+  @FXML
+  protected Label titleLabel;
+  @FXML
+  protected Label descriptionLabel;
+
+  // Notification
+  @FXML
+  protected StackPane notificationPane;
 
   // Chat visibility state
   private boolean isChatVisible = false;
@@ -77,7 +111,24 @@ public abstract class MemoryController implements TimableScene {
 
   @FXML
   protected void initialize() {
+    // Initially hide chat and notification panes
+    notificationPane.setVisible(false);
     chatPane.setVisible(false);
+
+    // Add some spacing between messages
+    conversationGridPane.setVgap(10);
+    AnimationTimer scrollToBottomTimer = new AnimationTimer() {
+      private long lastUpdate = 0;
+
+      @Override
+      public void handle(long now) {
+        if (now - lastUpdate >= 200_000_000) { // 200 milliseconds
+          conversationScrollPane.setVvalue(1.0);
+          lastUpdate = now;
+        }
+      }
+    };
+    scrollToBottomTimer.start();
   }
 
   /** Handles the "Chat" button press event to toggle chat visibility. */
@@ -85,6 +136,14 @@ public abstract class MemoryController implements TimableScene {
   protected void onChatButtonPressed() {
     isChatVisible = !isChatVisible;
     chatPane.setVisible(isChatVisible);
+
+    // Hide the notification pane when chat is opened
+    if (isChatVisible) {
+      notificationPane.setVisible(false);
+      chatButton.setText("Close Chat");
+    } else {
+      chatButton.setText("Open Chat");
+    }
   }
 
   /** Handles the "Send" button press event to send a message. */
@@ -95,29 +154,30 @@ public abstract class MemoryController implements TimableScene {
     textField.clear();
 
     if (!userInput.isEmpty()) {
+      markAsChatted();
       appendMessageToChat("User", userInput);
 
       // Create a new thread to handle the GPT request
-      Task<Void> task =
-          new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-              String output = sendGPTRequest(userInput);
+      Task<Void> task = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+          String output = sendGPTRequest(userInput);
 
-              // Update the chat area with the AI's response
-              appendMessageToChat(roleOfCharacter, output);
+          System.out.println("AI Response: " + output); // Debugging
 
-              // Update chat history in App class
-              App.chatHistory.append(roleOfCharacter + ":\n" + output + "\n");
+          // Update the chat area with the AI's response
+          Platform.runLater(() -> {
+            appendMessageToChat(roleOfCharacter, output);
+          });
 
-              // Re-enable the text field and send button after processing
-              textField.setDisable(false);
-              textField.setPromptText("Enter your message.");
-              sendButton.setDisable(false);
+          // Re-enable the text field and send button after processing
+          textField.setDisable(false);
+          textField.setPromptText("Enter your message.");
+          sendButton.setDisable(false);
 
-              return null;
-            }
-          };
+          return null;
+        }
+      };
       Thread gptRequestThread = new Thread(task);
       gptRequestThread.setDaemon(true);
       gptRequestThread.start();
@@ -135,7 +195,49 @@ public abstract class MemoryController implements TimableScene {
    * @param message The message to append.
    */
   protected void appendMessageToChat(String role, String message) {
-    textArea.appendText(role + ":\n" + message + "\n");
+    
+    Paint colourToUse = Color.web("#00865d");
+    if (role.equals("User")) {
+      colourToUse = Color.web("#5599d9");
+    }
+
+    // Remove leading newline characters from the message
+    if (message.startsWith("\n")) {
+      message = message.replaceFirst("\n", "");
+    }
+
+    // Create Text nodes for role (bold) and message (normal)
+    Text roleText = new Text(role + ":\n");
+    roleText.setFill(Color.WHITE);
+    roleText.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+
+    Text messageText = new Text(message + "\n");
+    messageText.setFill(Color.WHITE);
+    messageText.setStyle("-fx-font-size: 16px;");
+
+    TextFlow textFlow = new TextFlow(roleText, messageText);
+    textFlow.setMaxWidth(conversationGridPane.getWidth() - 40);
+    textFlow.setStyle("-fx-padding: 15px;");
+
+    // Create a rectangle background which scales to the height of the textFlow
+    Rectangle background = new Rectangle();
+    background.setArcWidth(35);
+    background.setArcHeight(35);
+    background.setFill(colourToUse);
+    background.setWidth(textFlow.getMaxWidth() + 20);
+    background.setHeight(Region.USE_PREF_SIZE);
+    background.heightProperty().bind(textFlow.heightProperty().add(-15));
+
+    StackPane messageStack = new StackPane();
+    messageStack.getChildren().addAll(background, textFlow);
+
+    // Add the message to the next available row in the grid pane
+    int nextRow = conversationGridPane.getRowCount();
+    conversationGridPane.add(messageStack, 0, nextRow);
+    GridPane.setHalignment(messageStack, HPos.LEFT);
+    GridPane.setValignment(messageStack, VPos.TOP);
+
+    // Update chat history in App class
     App.chatHistory.append(role + ":\n" + message + "\n");
   }
 
@@ -150,14 +252,40 @@ public abstract class MemoryController implements TimableScene {
   public void createChatCompletionResult() {
     try {
       ApiProxyConfig config = ApiProxyConfig.readConfig();
-      chatCompletionRequest =
-          new ChatCompletionRequest(config)
-              .setN(1)
-              .setTemperature(0.2)
-              .setModel(Model.GPT_4_1_MINI)
-              .setMaxTokens(500);
+      chatCompletionRequest = new ChatCompletionRequest(config)
+          .setN(1)
+          .setTemperature(0.2)
+          .setModel(Model.GPT_4_1_MINI)
+          .setMaxTokens(500);
     } catch (ApiProxyException e) {
       e.printStackTrace();
+    }
+  }
+
+  /**
+   * Sends a notification to the user if they receive a new message while the chat
+   * pane is closed.
+   */
+  protected void sendNotification() {
+    // If the chat pane is not visible, show the notification pane
+    if (!isChatVisible) {
+      // Display the notification pane
+      notificationPane.setVisible(true);
+
+      // Create a "bounce" animation for the notification pane
+      TranslateTransition moveUpTransition = new TranslateTransition(Duration.seconds(0.2), notificationPane);
+      moveUpTransition.setFromY(-30);
+      moveUpTransition.setToY(0);
+      moveUpTransition.setInterpolator(Interpolator.EASE_IN);
+
+      TranslateTransition moveDownTransition = new TranslateTransition(Duration.seconds(0.2), notificationPane);
+      moveDownTransition.setFromY(0);
+      moveDownTransition.setToY(-30);
+      moveDownTransition.setInterpolator(Interpolator.EASE_OUT);
+
+      SequentialTransition bounce = new SequentialTransition(moveDownTransition, moveUpTransition);
+      bounce.setCycleCount(2);
+      bounce.play();
     }
   }
 
@@ -174,9 +302,6 @@ public abstract class MemoryController implements TimableScene {
       ChatCompletionResult chatCompletionResult = this.chatCompletionRequest.execute();
       Choice result = chatCompletionResult.getChoices().iterator().next();
       ChatMessage message = result.getChatMessage();
-
-      // Replace what role the AI generated:
-      message.setContent("\n" + roleOfCharacter + ":\n" + message.getContent());
 
       this.chatCompletionRequest.addMessage(message);
       return message.getContent();
@@ -211,8 +336,7 @@ public abstract class MemoryController implements TimableScene {
   protected String loadPrompt(String promptId) {
     try {
       URL promptUrl = this.getClass().getClassLoader().getResource(promptId);
-      List<String> promptStrings =
-          Files.readAllLines(Paths.get(promptUrl.toURI()), Charset.defaultCharset());
+      List<String> promptStrings = Files.readAllLines(Paths.get(promptUrl.toURI()), Charset.defaultCharset());
       return String.join("\n", promptStrings);
     } catch (IOException | URISyntaxException e) {
       e.printStackTrace();
@@ -226,11 +350,11 @@ public abstract class MemoryController implements TimableScene {
     moveLeftTransition.setFromX(0);
     moveLeftTransition.setToX(-700);
     moveLeftTransition.setOnFinished(event -> titleBlock.setVisible(false));
-    
+
     PauseTransition pause = new PauseTransition(Duration.seconds(4));
 
     titleBlock.setTranslateX(0);
-    
+
     hideLeftTransition = new SequentialTransition(pause, moveLeftTransition);
     hideLeftTransition.play();
   }
@@ -241,5 +365,9 @@ public abstract class MemoryController implements TimableScene {
 
   public Label getTimerLabel() {
     return timerLabel;
+  }
+
+  protected void markAsChatted() {
+    return;
   }
 }
