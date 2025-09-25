@@ -249,7 +249,7 @@ public class VerdictController implements TimableScene {
     this.systemPrompt = loadPrompt(promptId);
 
     // Load initial messages
-    this.systemPrompt += App.chatHistory.toString();
+    this.systemPrompt += App.getChatHistoryString();
     this.systemPrompt += "The user's response will be provided below:\n";
 
     // Append the system prompt to the chat completion request

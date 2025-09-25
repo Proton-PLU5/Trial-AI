@@ -89,4 +89,12 @@ public class App extends Application {
 
     primaryStage.requestFocus();
   }
+
+  public static String getChatHistoryString() {
+    StringBuilder sb = new StringBuilder();
+    for (Map.Entry<String, String> entry : chatHistoryMap.entrySet()) {
+      sb.append(entry.getKey()).append(":\n").append(entry.getValue()).append("\n");
+    }
+    return sb.toString();
+  }
 }
