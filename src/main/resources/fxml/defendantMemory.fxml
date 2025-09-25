@@ -208,9 +208,9 @@
                   </GridPane>
                </children>
             </StackPane>
-            <StackPane layoutX="52.0" layoutY="642.0" prefHeight="35.0" prefWidth="0.0">
+            <StackPane fx:id="notificationPane" layoutX="52.0" layoutY="642.0" prefHeight="35.0" prefWidth="0.0">
                <children>
-                  <ImageView fx:id="notificationPane" fitHeight="39.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="39.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/notification.png" />
                      </image>
