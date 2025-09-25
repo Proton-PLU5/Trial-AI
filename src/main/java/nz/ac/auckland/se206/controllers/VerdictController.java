@@ -7,14 +7,11 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
-
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,8 +26,8 @@ import nz.ac.auckland.apiproxy.chat.openai.ChatMessage;
 import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
-import nz.ac.auckland.se206.prompts.PromptEngineering;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
 import nz.ac.auckland.se206.utils.Timer;
 
@@ -56,6 +53,8 @@ public class VerdictController implements TimableScene {
   private TextArea rationaleTextArea;
   @FXML
   private TextArea rationaleJudgementTextArea;
+  @FXML
+  private Button restartButton;
 
   private boolean choiceMade = false;
   private boolean isChoiceMadeCorrect = false;
@@ -143,6 +142,30 @@ public class VerdictController implements TimableScene {
     verdictTitleLabel2.setVisible(true);
     submitButton.setVisible(true);
     rationaleTextArea.setVisible(true);
+  }
+
+  @FXML
+  private void handleRestartButtonPressed(ActionEvent event) {
+    App.createTimer();
+    App.chatHistoryMap = new LinkedHashMap<>();
+
+    HumanMemory.hasChattedWithHuman = false;
+    HumanMemory.itemCollected = new HashMap<>();
+    HumanMemory.itemToLabel = new HashMap<>();
+    HumanMemory.isFirstTimeInteract = true;
+
+    DefendantMemory.hasChattedWithDefendant = false;
+    DefendantMemory.loginSequenceCompleted = false;
+    DefendantMemory.isFirstTimeInteract = true;
+
+    AiMemory.isFirstTimeInteract = true;
+    AiMemory.hasChattedWithAi = false;
+
+    RoomController.characterInteracted = new HashMap<>();
+    RoomController.isFirstTimeInit = true;
+
+    SceneManager.switchScene(SceneManager.Scenes.start);
+    SceneManager.setStyleSheet("/css/style.css");
   }
 
   @FXML

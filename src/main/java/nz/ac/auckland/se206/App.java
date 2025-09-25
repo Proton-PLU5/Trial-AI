@@ -26,14 +26,7 @@ public class App extends Application {
   public static Stage primaryStage;
   public static LinkedHashMap<String, String> chatHistoryMap = new LinkedHashMap<>();
   public static final int TIMER_DURATION = 5 * 60; // 5 minutes in seconds
-  public static Timer timer = new Timer(TIMER_DURATION, new Consumer<Void>() {
-    @Override
-    public void accept(Void t) {
-      // Switch to the final scene
-      SceneManager.switchScene(SceneManager.Scenes.verdict);
-      SceneManager.setStyleSheet("/css/style.css");
-    }
-  }); // 5 minutes
+  public static Timer timer;
 
   /**
    * The main method that launches the JavaFX application.
@@ -96,5 +89,21 @@ public class App extends Application {
       sb.append(entry.getKey()).append(":\n").append(entry.getValue()).append("\n");
     }
     return sb.toString();
+  }
+
+  /**
+   * Creates a timer that counts down from TIMER_DURATION seconds and switches to
+   * the final scene when
+   * the time is up.
+   */
+  public static void createTimer() {
+    timer = new Timer(TIMER_DURATION, new Consumer<Void>() {
+      @Override
+      public void accept(Void t) {
+        // Switch to the final scene
+        SceneManager.switchScene(SceneManager.Scenes.verdict);
+        SceneManager.setStyleSheet("/css/style.css");
+      }
+    }); // 5 minutes
   }
 }

@@ -44,7 +44,7 @@ public class AiMemory extends MemoryController {
   private Circle clipCircle;
   private static final double CIRCLE_RADIUS = 75.0;
   private boolean isXrayMode = false;
-  private static boolean isFirstTimeInteract = true;
+  public static boolean isFirstTimeInteract = true;
   public static boolean hasChattedWithAi;
 
   public AiMemory() {

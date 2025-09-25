@@ -55,5 +55,10 @@
          <font>
             <Font size="30.0" />
          </font></TextArea>
+      <Button fx:id="restartButton" layoutX="651.0" layoutY="860.0" mnemonicParsing="false" onAction="#handleYesClicked" stylesheets="@../css/style.css" text="Restart">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
