@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.animation.PauseTransition;
+import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -98,6 +103,7 @@ public class HumanMemory extends MemoryController {
   private ArrayList<ImageView> itemMarkers = new ArrayList<ImageView>();
 
   public static boolean hasChattedWithHuman;
+  public static boolean isFirstTimeInteract = true;
 
   public HumanMemory() {
     super("prompts/witnessHuman.txt");
@@ -255,6 +261,7 @@ public class HumanMemory extends MemoryController {
         System.out.println("Item 4 in cart!"); // Debugging
         // Check off the shopping list
         markerLine4.setVisible(true);
+        interactableDone();
         break;
       default:
         // placeholder
@@ -264,5 +271,34 @@ public class HumanMemory extends MemoryController {
   @Override
   protected void markAsChatted() {
     hasChattedWithHuman = true;
+  }
+
+  // Add interaction event when shoplifting info is revealed
+  @FXML
+  private void interactableDone() {
+    if (isFirstTimeInteract) {
+      Task<Void> interactableDoneTask = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+          String output = sendGptRequest(loadPrompt("prompts/humanInteractableDone.txt"));
+
+          // Update the chat area with the AI's response
+          Platform.runLater(() -> {
+            appendMessageToChat(roleOfCharacter, output);
+          });
+
+          // Send a notification to the user
+          sendNotification();
+          return null;
+        }
+      };
+
+      // Use a thread to perform the task concurrently
+      Thread additionalInfoThread = new Thread(interactableDoneTask);
+      additionalInfoThread.setDaemon(true);
+      additionalInfoThread.start();
+
+      isFirstTimeInteract = false;
+    }
   }
 }

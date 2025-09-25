@@ -1,6 +1,11 @@
 package nz.ac.auckland.se206;
 
 import java.io.IOException;
+import java.util.function.Consumer;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.SortedMap;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,9 +24,9 @@ public class App extends Application {
 
   private static Scene scene;
   public static Stage primaryStage;
-  public static StringBuilder chatHistory = new StringBuilder();
-  public static final int TIMER_DURATION = 5 * 60; // 5 minutes in seconds
-  public static Timer timer = new Timer(TIMER_DURATION); // 5 minutes
+  public static LinkedHashMap<String, String> chatHistoryMap = new LinkedHashMap<>();
+  public static final int TIMER_DURATION = 10; // 5 minutes in seconds
+  public static Timer timer;
 
   /**
    * The main method that launches the JavaFX application.
@@ -73,11 +78,32 @@ public class App extends Application {
     SceneManager.switchScene(SceneManager.Scenes.start);
     SceneManager.setStyleSheet("/css/style.css");
     primaryStage.show();
-
-    // Timer Setup
-    timer.setCountDown(true);
-    timer.buildTimer();
+    primaryStage.setTitle("Trial AI");
 
     primaryStage.requestFocus();
+  }
+
+  public static String getChatHistoryString() {
+    StringBuilder sb = new StringBuilder();
+    for (Map.Entry<String, String> entry : chatHistoryMap.entrySet()) {
+      sb.append(entry.getKey()).append(":\n").append(entry.getValue()).append("\n");
+    }
+    return sb.toString();
+  }
+
+  /**
+   * Creates a timer that counts down from TIMER_DURATION seconds and switches to
+   * the final scene when
+   * the time is up.
+   */
+  public static void createTimer() {
+    timer = new Timer(TIMER_DURATION, new Consumer<Void>() {
+      @Override
+      public void accept(Void t) {
+        // Switch to the final scene
+        SceneManager.switchScene(SceneManager.Scenes.verdict);
+        SceneManager.setStyleSheet("/css/style.css");
+      }
+    }); // 5 minutes
   }
 }

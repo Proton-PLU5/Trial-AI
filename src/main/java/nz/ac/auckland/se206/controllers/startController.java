@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.utils.TimableScene;
 
 public class startController implements TimableScene {
@@ -42,6 +43,11 @@ public class startController implements TimableScene {
   private void handlePlayButton() {
     // This method handles the play button click and switches to the room scene
     try {
+      // Timer Setup
+      App.createTimer();
+      App.timer.setCountDown(true);
+      App.timer.buildTimer();
+
       Stage stage = (Stage) playBtn.getScene().getWindow();
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/room.fxml"));
       Parent finalRoot = loader.load();

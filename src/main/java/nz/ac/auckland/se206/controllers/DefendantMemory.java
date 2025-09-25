@@ -22,6 +22,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -72,9 +73,10 @@ public class DefendantMemory extends MemoryController {
   private String pin = "_ _ _ _";
   private final String correctPin = "1 2 3 4";
   private static AudioClip keyPadAudioClip;
-  private static boolean loginSequenceCompleted = false;
+  public static boolean loginSequenceCompleted = false;
   private AnimationTimer progressArcAnimationTimer;
   public static boolean hasChattedWithDefendant;
+  public static boolean isFirstTimeInteract = true;
 
   static {
     var resource = DefendantMemory.class.getResource("/sounds/keypad.mp3");
@@ -117,7 +119,6 @@ public class DefendantMemory extends MemoryController {
       titleLabel.setText("Login Required");
     }
 
-    //We run a thread for the mouse movement so that the progress arc follows the mouse
     Platform.runLater(() -> {
       progressArc.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
         @Override
@@ -200,6 +201,18 @@ public class DefendantMemory extends MemoryController {
     keypadPane.setVisible(true);
   }
 
+  @FXML
+  private void handleButtonMouseEntered(MouseEvent event) {
+    Node button = (Node) event.getSource();
+    button.setStyle("-fx-border-color: #cdfeb5; -fx-text-fill: #cdfeb5;");
+  }
+
+  @FXML
+  private void handleButtonMouseExited(MouseEvent event) {
+    Node button = (Node) event.getSource();
+    button.setStyle("");
+  }
+
   /**
    * Handles mouse press on a character in the CCTV pane.
    * Creates the progress bar for the "scanning" feature.
@@ -256,6 +269,8 @@ public class DefendantMemory extends MemoryController {
             Thread additionalInfoThread = new Thread(sendAdditionalInfoTask);
             additionalInfoThread.setDaemon(true);
             additionalInfoThread.start();
+            // LLM sends message when interactable is done
+            interactableDone();
 
           } else if (sourceNode.getId().equals(rec2.getId())) {
             customerIDLabel.setText("Customer 2");
@@ -301,5 +316,34 @@ public class DefendantMemory extends MemoryController {
   @Override
   protected void markAsChatted() {
     hasChattedWithDefendant = true;
+  }
+
+  // Add interaction event when shoplifting info is revealed
+  @FXML
+  private void interactableDone() {
+    if (isFirstTimeInteract) {
+      Task<Void> interactableDoneTask = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+          String output = sendGptRequest(loadPrompt("prompts/defendantInteractableDone.txt"));
+
+          // Update the chat area with the AI's response
+          Platform.runLater(() -> {
+            appendMessageToChat(roleOfCharacter, output);
+          });
+
+          // Send a notification to the user
+          sendNotification();
+          return null;
+        }
+      };
+
+      // Use a thread to perform the task concurrently
+      Thread additionalInfoThread = new Thread(interactableDoneTask);
+      additionalInfoThread.setDaemon(true);
+      additionalInfoThread.start();
+
+      isFirstTimeInteract = false;
+    }
   }
 }
