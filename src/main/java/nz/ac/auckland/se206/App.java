@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206;
 
 import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,7 +11,8 @@ import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.Timer;
 
 /**
- * This is the entry point of the JavaFX application. This class initializes and runs the JavaFX
+ * This is the entry point of the JavaFX application. This class initializes and
+ * runs the JavaFX
  * application.
  */
 public class App extends Application {
@@ -18,7 +20,8 @@ public class App extends Application {
   private static Scene scene;
   public static Stage primaryStage;
   public static StringBuilder chatHistory = new StringBuilder();
-  public static Timer timer = new Timer(5 * 60); // 5 minutes
+  public static final int TIMER_DURATION = 5 * 60; // 5 minutes in seconds
+  public static Timer timer = new Timer(TIMER_DURATION); // 5 minutes
 
   /**
    * The main method that launches the JavaFX application.
@@ -40,7 +43,8 @@ public class App extends Application {
   }
 
   /**
-   * Loads the FXML file and returns the associated node. The method expects that the file is
+   * Loads the FXML file and returns the associated node. The method expects that
+   * the file is
    * located in "src/main/resources/fxml".
    *
    * @param fxml the name of the FXML file (without extension)
@@ -52,10 +56,12 @@ public class App extends Application {
   }
 
   /**
-   * This method is invoked when the application starts. It loads and shows the "room" scene.
+   * This method is invoked when the application starts. It loads and shows the
+   * "room" scene.
    *
    * @param stage the primary stage of the application
-   * @throws IOException if the "src/main/resources/fxml/room.fxml" file is not found
+   * @throws IOException if the "src/main/resources/fxml/room.fxml" file is not
+   *                     found
    */
   @Override
   public void start(final Stage stage) throws IOException {

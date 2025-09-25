@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
+import nz.ac.auckland.se206.App;
 
 /**
  * A custom timer class that is able to count to a specific
@@ -41,26 +42,19 @@ public class Timer {
 
   /**
    * Add a consumer to be executed when the timer to update timer labels.
+   * 
    * @param consumer
    * @return The current timer instance.
    */
   public Timer addConsumer(Consumer<String> consumer) {
     this.consumers.add(consumer);
-
-    double minutes = Math.floor(this.count / 60.0);
-    double seconds = this.count % 60; // Remainder
-
-    StringBuilder builder = new StringBuilder();
-    builder.append(String.format("%02.0f", minutes));
-    builder.append(" : ");
-    builder.append(String.format("%02.0f", seconds));
-
-    consumer.accept(builder.toString());
+    updateTimerLabel(App.TIMER_DURATION - count);
     return this;
   }
 
   /**
    * Set whether the timer counts down or up.
+   * 
    * @param countDown
    * @return The current timer instance.
    */
@@ -125,14 +119,13 @@ public class Timer {
             }
             consumer.accept(builder.toString());
           }
-    });
+        });
   }
 
   private Task<Void> createTimerTask(int length,
       boolean countDown) {
 
     Task<Void> timerTask = new Task<Void>() {
-
 
       private void count() {
         if (count < length) {
