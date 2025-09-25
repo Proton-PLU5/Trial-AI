@@ -198,11 +198,17 @@ public abstract class MemoryController implements TimableScene {
       notificationPane.setVisible(true);
 
       // Create a "bounce" animation for the notification pane
-      TranslateTransition bounce = new TranslateTransition(Duration.seconds(0.5), notificationPane);
-      bounce.setFromY(-10);
-      bounce.setToY(0);
-      // Need to make it over shoot a little to make it look like a bounce
-      bounce.setInterpolator(Interpolator.EASE_OUT);
+      TranslateTransition moveUpTransition = new TranslateTransition(Duration.seconds(0.2), notificationPane);
+      moveUpTransition.setFromY(-30);
+      moveUpTransition.setToY(0);
+      moveUpTransition.setInterpolator(Interpolator.EASE_IN);
+
+      TranslateTransition moveDownTransition = new TranslateTransition(Duration.seconds(0.2), notificationPane);
+      moveDownTransition.setFromY(0);
+      moveDownTransition.setToY(-30);
+      moveDownTransition.setInterpolator(Interpolator.EASE_OUT);
+
+      SequentialTransition bounce = new SequentialTransition(moveDownTransition, moveUpTransition);
       bounce.setCycleCount(2);
       bounce.play();
     }
