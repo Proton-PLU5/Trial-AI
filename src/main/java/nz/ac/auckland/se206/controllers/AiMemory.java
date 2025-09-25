@@ -43,7 +43,7 @@ public class AiMemory extends MemoryController {
   private Circle clipCircle;
   private static final double CIRCLE_RADIUS = 75.0;
   private boolean isXrayMode = false;
-  private boolean isFirstTime = true;
+  private static boolean isFirstTime = true;
   public static boolean hasChattedWithAi;
 
   public AiMemory() {
@@ -116,11 +116,11 @@ public class AiMemory extends MemoryController {
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override
         protected Void call() throws Exception {
+          System.out.println("Calling GPT for AI Witness");
           // String output = sendGPTRequest(loadPrompt("prompts/aiInteractableDone.txt"));
           // appendMessageToChat(roleOfCharacter, output);
           // Send a notification to the user
           sendNotification();
-          isFirstTime = false;
           return null;
         }
       };
@@ -129,6 +129,7 @@ public class AiMemory extends MemoryController {
       Thread additionalInfoThread = new Thread(interactableDoneTask);
       additionalInfoThread.setDaemon(true);
       additionalInfoThread.start();
+      isFirstTime = false;
     }
   }
 
