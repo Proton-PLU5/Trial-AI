@@ -24,7 +24,7 @@ import nz.ac.auckland.se206.utils.TimableScene;
  */
 public class RoomController implements TimableScene {
 
-  private static boolean isFirstTimeInit = true;
+  public static boolean isFirstTimeInit = true;
 
   @FXML
   private Rectangle witnessAi;
@@ -45,14 +45,13 @@ public class RoomController implements TimableScene {
   @FXML
   private AnchorPane conversationPane;
 
-  private static Map<String, Boolean> characterInteracted = new HashMap<>();
+  public static Map<String, Boolean> characterInteracted = new HashMap<>();
 
   private boolean finalSceneLoaded = false;
 
   private AnchorPane conversationPane1;
 
   private MediaPlayer startAudioMediaPlayer;
-  public static MediaPlayer notificationAudioMediaPlayer;
 
   /**
    * Initializes the room view. If it's the first time initialization, it will
@@ -71,9 +70,6 @@ public class RoomController implements TimableScene {
       startAudioMediaPlayer = new MediaPlayer(
           new Media(getClass().getResource("/sounds/voiceover.mp3").toExternalForm()));
       startAudioMediaPlayer.play();
-
-      notificationAudioMediaPlayer = new MediaPlayer(
-          new Media(getClass().getResource("/sounds/notification.mp3").toExternalForm()));
 
       isFirstTimeInit = false;
     } else {

@@ -30,6 +30,7 @@ public class startController implements TimableScene {
   private void handlePlayButton() {
     try {
       // Timer Setup
+      App.createTimer();
       App.timer.setCountDown(true);
       App.timer.buildTimer();
 

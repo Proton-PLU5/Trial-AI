@@ -73,10 +73,10 @@ public class DefendantMemory extends MemoryController {
   private String pin = "_ _ _ _";
   private final String correctPin = "1 2 3 4";
   private static AudioClip keyPadAudioClip;
-  private static boolean loginSequenceCompleted = false;
+  public static boolean loginSequenceCompleted = false;
   private AnimationTimer progressArcAnimationTimer;
   public static boolean hasChattedWithDefendant;
-  private static boolean isFirstTimeInteract = true;
+  public static boolean isFirstTimeInteract = true;
 
   static {
     var resource = DefendantMemory.class.getResource("/sounds/keypad.mp3");

@@ -105,7 +105,7 @@ public class HumanMemory extends MemoryController {
   private ArrayList<ImageView> itemMarkers = new ArrayList<ImageView>();
 
   public static boolean hasChattedWithHuman;
-  private static boolean isFirstTimeInteract = true;
+  public static boolean isFirstTimeInteract = true;
 
   public HumanMemory() {
     super("prompts/witnessHuman.txt");
