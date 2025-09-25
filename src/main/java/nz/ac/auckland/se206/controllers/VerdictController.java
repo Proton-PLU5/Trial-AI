@@ -76,6 +76,12 @@ public class VerdictController implements TimableScene {
     verdictTimer.addConsumer(getTimerConsumer());
     verdictTimer.setCountDown(true);
     verdictTimer.buildTimer();
+
+    // Disable submit button until rationale isn't empty
+    submitButton.setDisable(true);
+    rationaleTextArea.textProperty().addListener((obs, oldText, newText) -> {
+      submitButton.setDisable(newText.strip().isEmpty());
+    });
   }
 
   /**
