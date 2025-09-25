@@ -35,6 +35,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest.Model;
@@ -189,27 +191,37 @@ public abstract class MemoryController implements TimableScene {
       colourToUse = Color.web("#5599d9");
     }
 
-    // Create a new label for the message
-    Label messageLabel = new Label(role + ":\n" + message + "\n");
-    messageLabel.setWrapText(true);
-    messageLabel.setTextFill(Color.WHITE);
-    messageLabel.setMaxWidth(conversationGridPane.getWidth() - 40);
-    messageLabel.setStyle("-fx-padding: 5px; -fx-font-size: 16px;");
+    // Remove leading newline characters from the message
+    if (message.startsWith("\n")) {
+      message = message.replaceFirst("\n", "");
+    }
 
-    // Create a rectangle background which scales to the height of the label
+    // Create Text nodes for role (bold) and message (normal)
+    Text roleText = new Text(role + ":\n");
+    roleText.setFill(Color.WHITE);
+    roleText.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+
+    Text messageText = new Text(message + "\n");
+    messageText.setFill(Color.WHITE);
+    messageText.setStyle("-fx-font-size: 16px;");
+
+    TextFlow textFlow = new TextFlow(roleText, messageText);
+    textFlow.setMaxWidth(conversationGridPane.getWidth() - 40);
+    textFlow.setStyle("-fx-padding: 15px;");
+
+    // Create a rectangle background which scales to the height of the textFlow
     Rectangle background = new Rectangle();
     background.setArcWidth(35);
     background.setArcHeight(35);
     background.setFill(colourToUse);
-    background.setWidth(messageLabel.getMaxWidth() + 10);
+    background.setWidth(textFlow.getMaxWidth() + 20);
     background.setHeight(Region.USE_PREF_SIZE);
-    background.heightProperty().bind(messageLabel.heightProperty().add(10));
+    background.heightProperty().bind(textFlow.heightProperty().add(-15));
 
     StackPane messageStack = new StackPane();
-    messageStack.getChildren().addAll(background, messageLabel);
+    messageStack.getChildren().addAll(background, textFlow);
 
     // Add the message to the next available row in the grid pane
-    // Keep the messages at the top of the grid pane
     int nextRow = conversationGridPane.getRowCount();
     conversationGridPane.add(messageStack, 0, nextRow);
     GridPane.setHalignment(messageStack, HPos.LEFT);
@@ -218,7 +230,7 @@ public abstract class MemoryController implements TimableScene {
     App.chatHistory.append(role + ":\n" + message + "\n");
 
     // Scroll to the bottom of the scroll pane
-    conversationScrollPane.setVvalue(1.0);
+    Platform.runLater(() -> conversationScrollPane.setVvalue(1.0));
   }
 
   /** Handles the "Go Back" button press event. */
