@@ -154,6 +154,8 @@ public class Timer {
 
         Platform.runLater(() -> {
           // Switch to the final scene
+          SceneManager.switchScene(SceneManager.Scenes.verdict);
+          SceneManager.setStyleSheet("/css/style.css");
         });
         return null;
       }
