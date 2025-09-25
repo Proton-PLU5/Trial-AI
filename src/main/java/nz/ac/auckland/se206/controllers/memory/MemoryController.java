@@ -134,9 +134,6 @@ public abstract class MemoryController implements TimableScene {
           // Update the chat area with the AI's response
           appendMessageToChat(roleOfCharacter, output);
 
-          // Update chat history in App class
-          App.chatHistory.append(roleOfCharacter + ":\n" + output + "\n");
-
           // Re-enable the text field and send button after processing
           textField.setDisable(false);
           textField.setPromptText("Enter your message.");
@@ -162,7 +159,13 @@ public abstract class MemoryController implements TimableScene {
    * @param message The message to append.
    */
   protected void appendMessageToChat(String role, String message) {
-    textArea.appendText(role + ":\n" + message + "\n");
+    // Doesn't add newline if it's the first message
+    if (textArea.getText().isEmpty()) {
+      textArea.appendText(role + ":\n" + message + "\n");
+    } else {
+      textArea.appendText("\n" + role + ":\n" + message + "\n");
+    }
+    // Update chat history in App class
     App.chatHistory.append(role + ":\n" + message + "\n");
   }
 
@@ -227,9 +230,6 @@ public abstract class MemoryController implements TimableScene {
       ChatCompletionResult chatCompletionResult = this.chatCompletionRequest.execute();
       Choice result = chatCompletionResult.getChoices().iterator().next();
       ChatMessage message = result.getChatMessage();
-
-      // Replace what role the AI generated:
-      message.setContent("\n" + roleOfCharacter + ":\n" + message.getContent());
 
       this.chatCompletionRequest.addMessage(message);
       return message.getContent();
