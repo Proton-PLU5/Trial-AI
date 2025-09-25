@@ -8,7 +8,9 @@ public class DraggableMaker {
   private double mouseAnchorY;
 
   public void makeDraggable(Node node, Node hitbox) {
-    
+
+    // This makes it so that the items are dragable in the human memory
+
     node.setOnMousePressed(mouseEvent -> {
       mouseAnchorX = mouseEvent.getX();
       mouseAnchorY = mouseEvent.getY();

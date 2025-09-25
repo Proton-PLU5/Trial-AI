@@ -2,12 +2,8 @@ package nz.ac.auckland.se206;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.function.Consumer;
 import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,7 +24,7 @@ public class App extends Application {
   public static Stage primaryStage;
   public static List<Tuple<String, String>> chatHistoryMap = new ArrayList<Tuple<String, String>>();
   public static final int TIMER_DURATION = 5 * 60; // 5 minutes in seconds
-  public static Timer timer = new Timer(TIMER_DURATION); // 5 minutes
+  public static Timer timer; // 5 minutes
 
   /**
    * The main method that launches the JavaFX application.
@@ -80,11 +76,36 @@ public class App extends Application {
     SceneManager.switchScene(SceneManager.Scenes.start);
     SceneManager.setStyleSheet("/css/style.css");
     primaryStage.show();
-
-    // Timer Setup
-    timer.setCountDown(true);
-    timer.buildTimer();
+    primaryStage.setTitle("Trial AI");
 
     primaryStage.requestFocus();
+  }
+
+  public static String getChatHistoryString() {
+    StringBuilder stringBuilder = new StringBuilder();
+    // Load the chat history, iterate through the map and append to the string
+    // builder
+    for (Tuple<String, String> entry : App.chatHistoryMap) {
+      String role = entry.getKey();
+      String message = entry.getValue();
+      stringBuilder.append(role.split("\0")[0]).append(":\n").append(message).append("\n");
+    }
+    return stringBuilder.toString();
+  }
+
+  /**
+   * Creates a timer that counts down from TIMER_DURATION seconds and switches to
+   * the final scene when
+   * the time is up.
+   */
+  public static void createTimer() {
+    timer = new Timer(TIMER_DURATION, new Consumer<Void>() {
+      @Override
+      public void accept(Void t) {
+        // Switch to the final scene
+        SceneManager.switchScene(SceneManager.Scenes.verdict);
+        SceneManager.setStyleSheet("/css/style.css");
+      }
+    }); // 5 minutes
   }
 }

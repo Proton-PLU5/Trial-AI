@@ -22,6 +22,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -32,7 +33,7 @@ import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
 
-public class DefendantMemory extends MemoryController {
+public class DefendantMemoryController extends MemoryController {
 
   @FXML
   private Rectangle rec1;
@@ -72,12 +73,13 @@ public class DefendantMemory extends MemoryController {
   private String pin = "_ _ _ _";
   private final String correctPin = "1 2 3 4";
   private static AudioClip keyPadAudioClip;
-  private static boolean loginSequenceCompleted = false;
+  public static boolean loginSequenceCompleted = false;
   private AnimationTimer progressArcAnimationTimer;
   public static boolean hasChattedWithDefendant;
+  public static boolean isFirstTimeInteract = true;
 
   static {
-    var resource = DefendantMemory.class.getResource("/sounds/keypad.mp3");
+    var resource = DefendantMemoryController.class.getResource("/sounds/keypad.mp3");
     System.out.println("[DEBUG] keypad.mp3 resource: " + resource);
     if (resource != null) {
       keyPadAudioClip = new AudioClip(resource.toExternalForm());
@@ -88,13 +90,16 @@ public class DefendantMemory extends MemoryController {
     }
   }
 
-  public DefendantMemory() {
+  public DefendantMemoryController() {
     super("prompts/defendant.txt");
   }
 
   @Override
   @FXML
   protected void initialize() {
+
+    // This method initializes the defendant memory scene, including the login
+    // sequence and CCTV interactions
     super.initialize();
 
     loginPane.setVisible(true);
@@ -114,6 +119,8 @@ public class DefendantMemory extends MemoryController {
       titleLabel.setText("Login Required");
     }
 
+    // We run a thread for the mouse movement so that the progress arc follows the
+    // mouse
     Platform.runLater(() -> {
       progressArc.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
         @Override
@@ -248,22 +255,8 @@ public class DefendantMemory extends MemoryController {
             // Highlight criminal record
             customerCriminalRecordLabel.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
 
-            // Send additional info to the AI
-            Task<Void> sendAdditionalInfoTask = new Task<Void>() {
-              @Override
-              protected Void call() throws Exception {
-                String output = sendGPTRequest(loadPrompt("prompts/defendant_additional.txt"));
-                appendMessageToChat(roleOfCharacter, output);
-                // Send a notification to the user
-                sendNotification();
-                return null;
-              }
-            };
-
-            // Use a thread to perform the task concurrently
-            Thread additionalInfoThread = new Thread(sendAdditionalInfoTask);
-            additionalInfoThread.setDaemon(true);
-            additionalInfoThread.start();
+            // LLM sends message when interactable is done
+            interactableDone();
 
           } else if (sourceNode.getId().equals(rec2.getId())) {
             customerIDLabel.setText("Customer 2");
@@ -309,5 +302,34 @@ public class DefendantMemory extends MemoryController {
   @Override
   protected void markAsChatted() {
     hasChattedWithDefendant = true;
+  }
+
+  // Add interaction event when shoplifting info is revealed
+  @FXML
+  private void interactableDone() {
+    if (isFirstTimeInteract) {
+      Task<Void> interactableDoneTask = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+          String output = sendGptRequest(loadPrompt("prompts/defendantInteractableDone.txt"));
+
+          // Update the chat area with the AI's response
+          Platform.runLater(() -> {
+            appendMessageToChat(roleOfCharacter, output);
+          });
+
+          // Send a notification to the user
+          sendNotification();
+          return null;
+        }
+      };
+
+      // Use a thread to perform the task concurrently
+      Thread additionalInfoThread = new Thread(interactableDoneTask);
+      additionalInfoThread.setDaemon(true);
+      additionalInfoThread.start();
+
+      isFirstTimeInteract = false;
+    }
   }
 }

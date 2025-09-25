@@ -17,7 +17,7 @@ public class Timer {
 
   // A list of consumers which will be used to update individual timer labels.
   private ArrayList<Consumer<String>> consumers;
-
+  private Consumer<Void> finalConsumer;
   private boolean countDown;
   private int length;
 
@@ -34,10 +34,11 @@ public class Timer {
    * @param timerLabel The label to update during the
    *                   counting process.
    */
-  public Timer(int length) {
+  public Timer(int length, Consumer<Void> finalConsumer) {
     this.consumers = new ArrayList<>();
     this.countDown = false;
     this.length = length;
+    this.finalConsumer = finalConsumer;
   }
 
   /**
@@ -67,17 +68,10 @@ public class Timer {
    * Build and start the timer.
    */
   public void buildTimer() {
+    // This method builds the timer
     Task<Void> task = this.createTimerTask(length, countDown);
     this.timerThread = new Thread(task);
 
-    // Set the thread to be a daemon thread so that it does
-    // not block the
-    // application from exiting.
-    // This is important because the timer normally runs in
-    // the background.
-    // If the thread is not a daemon thread, the application
-    // will not exit until the
-    // timer finishes.
     this.timerThread.setDaemon(true);
     timerThread.start();
   }
@@ -153,7 +147,7 @@ public class Timer {
         System.out.println("Finished Counting!");
 
         Platform.runLater(() -> {
-          // Switch to the final scene
+          finalConsumer.accept(null);
         });
         return null;
       }

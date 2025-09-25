@@ -8,6 +8,7 @@ import java.util.Map;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +17,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -24,13 +24,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.DraggableMaker;
 
-public class HumanMemory extends MemoryController {
+public class HumanMemoryController extends MemoryController {
 
   @FXML
   private Button roomBtn;
@@ -104,8 +103,9 @@ public class HumanMemory extends MemoryController {
   private ArrayList<ImageView> itemMarkers = new ArrayList<ImageView>();
 
   public static boolean hasChattedWithHuman;
+  public static boolean isFirstTimeInteract = true;
 
-  public HumanMemory() {
+  public HumanMemoryController() {
     super("prompts/witnessHuman.txt");
     itemToLabel.put("aisle1Item", markerLine1);
     itemToLabel.put("aisle2Item1", markerLine2);
@@ -169,6 +169,8 @@ public class HumanMemory extends MemoryController {
 
   @FXML
   private void onBackToAislesButtonPressed() throws IOException {
+    // This method makes it so that when the user clicks the back to aisles button,
+    // they are taken back to the main aisle
     mainAislePane.setVisible(true);
     aisle1Pane.setVisible(false);
     aisle2Pane.setVisible(false);
@@ -259,6 +261,7 @@ public class HumanMemory extends MemoryController {
         System.out.println("Item 4 in cart!"); // Debugging
         // Check off the shopping list
         markerLine4.setVisible(true);
+        interactableDone();
         break;
       default:
         // placeholder
@@ -268,5 +271,34 @@ public class HumanMemory extends MemoryController {
   @Override
   protected void markAsChatted() {
     hasChattedWithHuman = true;
+  }
+
+  // Add interaction event when shoplifting info is revealed
+  @FXML
+  private void interactableDone() {
+    if (isFirstTimeInteract) {
+      Task<Void> interactableDoneTask = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+          String output = sendGptRequest(loadPrompt("prompts/humanInteractableDone.txt"));
+
+          // Update the chat area with the AI's response
+          Platform.runLater(() -> {
+            appendMessageToChat(roleOfCharacter, output);
+          });
+
+          // Send a notification to the user
+          sendNotification();
+          return null;
+        }
+      };
+
+      // Use a thread to perform the task concurrently
+      Thread additionalInfoThread = new Thread(interactableDoneTask);
+      additionalInfoThread.setDaemon(true);
+      additionalInfoThread.start();
+
+      isFirstTimeInteract = false;
+    }
   }
 }

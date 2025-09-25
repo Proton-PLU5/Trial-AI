@@ -1,0 +1,2 @@
+By viewing your memory, the user has seen things from your point of view. Using your X-ray vision, they scanned over the purse of the human shopper, Maria Shader, and found a red glowing item marked as unscanned in her purse when she was preparing to leave the store.
+The user has only seen this info visually, so inform the user of the situation and explain exactly what they're seeing.

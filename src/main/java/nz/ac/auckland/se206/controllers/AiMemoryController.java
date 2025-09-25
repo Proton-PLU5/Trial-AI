@@ -2,6 +2,8 @@ package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -19,8 +21,9 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.SceneManager;
 
-public class AiMemory extends MemoryController {
+public class AiMemoryController extends MemoryController {
 
+  private static final double CIRCLE_RADIUS = 75.0;
   @FXML
   private Button roomBtn;
   @FXML
@@ -40,12 +43,11 @@ public class AiMemory extends MemoryController {
 
   private TimerService timerService;
   private Circle clipCircle;
-  private static final double CIRCLE_RADIUS = 75.0;
   private boolean isXrayMode = false;
-  private boolean isFirstTime = true;
+  public static boolean isFirstTimeInteract = true;
   public static boolean hasChattedWithAi;
 
-  public AiMemory() {
+  public AiMemoryController() {
     super("prompts/witnessAi.txt");
   }
 
@@ -107,11 +109,31 @@ public class AiMemory extends MemoryController {
 
   // Add interaction event when concealed item is detected here
   @FXML
-  private void interactableComplete() {
-    if (isXrayMode && isFirstTime) {
-      System.out.println("Identified concealed item");
-      sendNotification();
-      isFirstTime = false;
+  private void interactableDone() {
+    if (isXrayMode && isFirstTimeInteract) {
+      // LLM sends message when interactable is done
+      Task<Void> interactableDoneTask = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+          String output = sendGptRequest(loadPrompt("prompts/aiInteractableDone.txt"));
+
+          // Update the chat area with the AI's response
+          Platform.runLater(() -> {
+            appendMessageToChat(roleOfCharacter, output);
+          });
+
+          // Send a notification to the user
+          sendNotification();
+          return null;
+        }
+      };
+
+      // Use a thread to perform the task concurrently
+      Thread additionalInfoThread = new Thread(interactableDoneTask);
+      additionalInfoThread.setDaemon(true);
+      additionalInfoThread.start();
+
+      isFirstTimeInteract = false;
     }
   }
 

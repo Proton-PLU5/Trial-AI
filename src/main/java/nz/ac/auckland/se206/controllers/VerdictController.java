@@ -1,11 +1,18 @@
 package nz.ac.auckland.se206.controllers;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.function.Consumer;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,10 +27,11 @@ import nz.ac.auckland.apiproxy.chat.openai.ChatMessage;
 import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
-import nz.ac.auckland.se206.prompts.PromptEngineering;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
 import nz.ac.auckland.se206.utils.Timer;
+import nz.ac.auckland.se206.utils.Tuple;
 
 public class VerdictController implements TimableScene {
 
@@ -47,6 +55,8 @@ public class VerdictController implements TimableScene {
   private TextArea rationaleTextArea;
   @FXML
   private TextArea rationaleJudgementTextArea;
+  @FXML
+  private Button restartButton;
 
   private boolean choiceMade = false;
   private boolean isChoiceMadeCorrect = false;
@@ -57,22 +67,29 @@ public class VerdictController implements TimableScene {
   private boolean rationaleSubmitted = false;
   public Timer verdictTimer = null;
   private StringBuilder gameOverText = new StringBuilder("");
+  private String systemPrompt = "";
 
   @FXML
-  private void initialize() {
+  protected void initialize() {
     Media media = new Media(getClass().getResource("/sounds/verdict.mp3").toExternalForm());
     MediaPlayer mediaPlayer = new MediaPlayer(media);
     mediaPlayer.play();
 
-    // updateFinalTimerDisplay();
-
-    // startFinalTimer();
-
-    createChatCompletionResult();
+    try {
+      createChatCompletionResult();
+      loadInitialMessages("prompts/verdict.txt");
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
     // Add ourselves to the timer service
     App.timer.stopTimer();
-    verdictTimer = new Timer(2 * 60);
+    verdictTimer = new Timer(2 * 60, new Consumer<Void>() {
+      @Override
+      public void accept(Void t) {
+        timeOutOption();
+      }
+    });
     verdictTimer.addConsumer(getTimerConsumer());
     verdictTimer.setCountDown(true);
     verdictTimer.buildTimer();
@@ -88,6 +105,7 @@ public class VerdictController implements TimableScene {
    * Creates and configures the ChatCompletionRequest object.
    */
   public void createChatCompletionResult() {
+    // This method creates the chat completion request for the verdict rationale
     try {
       ApiProxyConfig config = ApiProxyConfig.readConfig();
       chatCompletionRequest = new ChatCompletionRequest(
@@ -121,12 +139,38 @@ public class VerdictController implements TimableScene {
 
   @FXML
   private void handleVerdictMade() {
+    // This method makes the objects inthe scene switch when the user makes a
+    // verdict
     verdictTitleLabel1.setVisible(false);
     yesButton.setVisible(false);
     noButton.setVisible(false);
     verdictTitleLabel2.setVisible(true);
     submitButton.setVisible(true);
     rationaleTextArea.setVisible(true);
+  }
+
+  @FXML
+  private void handleRestartButtonPressed(ActionEvent event) {
+    App.createTimer();
+    App.chatHistoryMap = new ArrayList<Tuple<String, String>>();
+
+    HumanMemoryController.hasChattedWithHuman = false;
+    HumanMemoryController.itemCollected = new HashMap<>();
+    HumanMemoryController.itemToLabel = new HashMap<>();
+    HumanMemoryController.isFirstTimeInteract = true;
+
+    DefendantMemoryController.hasChattedWithDefendant = false;
+    DefendantMemoryController.loginSequenceCompleted = false;
+    DefendantMemoryController.isFirstTimeInteract = true;
+
+    AiMemoryController.isFirstTimeInteract = true;
+    AiMemoryController.hasChattedWithAi = false;
+
+    RoomController.characterInteracted = new HashMap<>();
+    RoomController.isFirstTimeInit = true;
+
+    SceneManager.switchScene(SceneManager.Scenes.start);
+    SceneManager.setStyleSheet("/css/style.css");
   }
 
   @FXML
@@ -150,6 +194,8 @@ public class VerdictController implements TimableScene {
   @FXML
   private void handleRationaleSubmitted() throws ApiProxyException {
     verdictTimer.stopTimer();
+    restartButton.setVisible(true);
+
     rationaleSubmitted = true;
     verdictTitleLabel2.setVisible(false);
     submitButton.setVisible(false);
@@ -171,12 +217,8 @@ public class VerdictController implements TimableScene {
       System.out.println(rationalePrompt); // Debugging
 
       // Send the prompt and rationale to gpt
-      String verdict = "verdict";
-      Map<String, String> map = new HashMap<>();
-      map.put("verdict", verdict);
-      String promptFile = verdict + ".txt";
-      String verdictPrompt = PromptEngineering.getPrompt(promptFile, map);
-      ChatMessage msg = new ChatMessage("user", verdictPrompt + rationalePrompt);
+      ChatMessage msg = new ChatMessage("user", rationalePrompt);
+      System.out.println(rationalePrompt);
       runGpt(msg);
     }
   }
@@ -230,5 +272,29 @@ public class VerdictController implements TimableScene {
   @Override
   public Label getTimerLabel() {
     return timerLabel;
+  }
+
+  protected void loadInitialMessages(String promptId) {
+    // Load the system prompt
+    this.systemPrompt = loadPrompt(promptId);
+
+    // Load initial messages
+    this.systemPrompt += App.getChatHistoryString();
+    this.systemPrompt += "The user's response will be provided below:\n";
+
+    // Append the system prompt to the chat completion request
+    this.chatCompletionRequest.addMessage("system", systemPrompt);
+    System.out.println(systemPrompt);
+  }
+
+  protected String loadPrompt(String promptId) {
+    try {
+      URL promptUrl = this.getClass().getClassLoader().getResource(promptId);
+      List<String> promptStrings = Files.readAllLines(Paths.get(promptUrl.toURI()), Charset.defaultCharset());
+      return String.join("\n", promptStrings);
+    } catch (IOException | URISyntaxException e) {
+      e.printStackTrace();
+      throw new IllegalStateException(promptId + " not found");
+    }
   }
 }
