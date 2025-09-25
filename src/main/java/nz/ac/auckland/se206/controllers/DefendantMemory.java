@@ -196,6 +196,18 @@ public class DefendantMemory extends MemoryController {
     keypadPane.setVisible(true);
   }
 
+  @FXML
+  private void handleButtonMouseEntered(MouseEvent event) {
+    Node button = (Node) event.getSource();
+    button.setStyle("-fx-border-color: #cdfeb5; -fx-text-fill: #cdfeb5;");
+  }
+
+  @FXML
+  private void handleButtonMouseExited(MouseEvent event) {
+    Node button = (Node) event.getSource();
+    button.setStyle("");
+  }
+
   /**
    * Handles mouse press on a character in the CCTV pane.
    * Creates the progress bar for the "scanning" feature.
