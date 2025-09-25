@@ -120,6 +120,8 @@ public class HumanMemory extends MemoryController {
     createTitleDisappearAnimation();
     super.initialize();
 
+    this.roleOfCharacter = "Maria Shader";
+
     // Add items to arraylists
     aisleItems.add(aisle1Item);
     aisleItems.add(aisle2Item1);

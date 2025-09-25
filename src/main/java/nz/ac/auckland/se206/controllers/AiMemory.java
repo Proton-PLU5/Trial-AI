@@ -55,6 +55,7 @@ public class AiMemory extends MemoryController {
     App.timer.addConsumer(getTimerConsumer());
     super.initialize();
     setupXrayEffect();
+    this.roleOfCharacter = "Checkout Bot";
   }
 
   private void setupXrayEffect() {
