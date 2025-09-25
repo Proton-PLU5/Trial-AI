@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.management.RuntimeErrorException;
 
+import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
@@ -24,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest.Model;
@@ -64,7 +66,6 @@ public abstract class MemoryController implements TimableScene {
   @FXML
   private Label timerLabelText;
 
-
   // Title
   @FXML
   protected AnchorPane titleBlock;
@@ -72,6 +73,10 @@ public abstract class MemoryController implements TimableScene {
   protected Label titleLabel;
   @FXML
   protected Label descriptionLabel;
+
+  // Notification
+  @FXML
+  protected StackPane notificationPane;
 
   // Chat visibility state
   private boolean isChatVisible = false;
@@ -92,6 +97,8 @@ public abstract class MemoryController implements TimableScene {
 
   @FXML
   protected void initialize() {
+    // Initially hide chat and notification panes
+    notificationPane.setVisible(false);
     chatPane.setVisible(false);
   }
 
@@ -100,6 +107,11 @@ public abstract class MemoryController implements TimableScene {
   protected void onChatButtonPressed() {
     isChatVisible = !isChatVisible;
     chatPane.setVisible(isChatVisible);
+
+    // Hide the notification pane when chat is opened
+    if (isChatVisible) {
+      notificationPane.setVisible(false);
+    }
   }
 
   /** Handles the "Send" button press event to send a message. */
@@ -129,6 +141,16 @@ public abstract class MemoryController implements TimableScene {
           textField.setDisable(false);
           textField.setPromptText("Enter your message.");
           sendButton.setDisable(false);
+
+          // Display the notification pane
+          notificationPane.setVisible(true);
+
+          // Create a "bounce" animation for the notification pane
+          TranslateTransition bounce = new TranslateTransition(Duration.seconds(0.2), notificationPane);
+          bounce.setFromY(-10);
+          bounce.setToY(0);
+          bounce.setInterpolator(Interpolator.EASE_BOTH);
+          bounce.play();
 
           return null;
         }
