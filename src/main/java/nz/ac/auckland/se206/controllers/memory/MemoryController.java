@@ -33,6 +33,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -99,11 +102,15 @@ public abstract class MemoryController implements TimableScene {
 
   private SequentialTransition hideLeftTransition;
 
+  protected AudioClip notificationSound;
+  protected String promptId = "";
+
+
   // Constructor
   public MemoryController(String promptId) {
     try {
       createChatCompletionResult();
-      loadInitialMessages(promptId);
+      this.promptId = promptId;
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -111,9 +118,15 @@ public abstract class MemoryController implements TimableScene {
 
   @FXML
   protected void initialize() {
+    // Load initial messages
+    loadInitialMessages(promptId);
+
     // Initially hide chat and notification panes
     notificationPane.setVisible(false);
     chatPane.setVisible(false);
+
+    var resource = getClass().getResource("/sounds/notification.wav");
+    notificationSound = new AudioClip(resource.toExternalForm());
 
     // Add some spacing between messages
     conversationGridPane.setVgap(10);
@@ -129,6 +142,9 @@ public abstract class MemoryController implements TimableScene {
       }
     };
     scrollToBottomTimer.start();
+
+    // Send with enter key
+    textField.setOnAction(event -> onSendButtonPressed());
   }
 
   /** Handles the "Chat" button press event to toggle chat visibility. */
@@ -149,7 +165,7 @@ public abstract class MemoryController implements TimableScene {
   /** Handles the "Send" button press event to send a message. */
   @FXML
   protected void onSendButtonPressed() {
-    String userInput = textField.getText();
+    String userInput = textField.getText().strip();
     // Clear the text field
     textField.clear();
 
@@ -168,6 +184,7 @@ public abstract class MemoryController implements TimableScene {
           // Update the chat area with the AI's response
           Platform.runLater(() -> {
             appendMessageToChat(roleOfCharacter, output);
+            notificationSound.play();
           });
 
           // Re-enable the text field and send button after processing
@@ -195,11 +212,6 @@ public abstract class MemoryController implements TimableScene {
    * @param message The message to append.
    */
   protected void appendMessageToChat(String role, String message) {
-    
-    Paint colourToUse = Color.web("#00865d");
-    if (role.equals("User")) {
-      colourToUse = Color.web("#5599d9");
-    }
 
     // Remove leading newline characters from the message
     if (message.startsWith("\n")) {
@@ -218,6 +230,12 @@ public abstract class MemoryController implements TimableScene {
     TextFlow textFlow = new TextFlow(roleText, messageText);
     textFlow.setMaxWidth(conversationGridPane.getWidth() - 40);
     textFlow.setStyle("-fx-padding: 15px;");
+
+    Paint colourToUse = Color.web("#00865d");
+    if (role.equals("User")) {
+      colourToUse = Color.web("#5599d9");
+      role = role + "\0" + roleOfCharacter; // To differentiate user messages for different characters
+    }
 
     // Create a rectangle background which scales to the height of the textFlow
     Rectangle background = new Rectangle();
@@ -238,7 +256,7 @@ public abstract class MemoryController implements TimableScene {
     GridPane.setValignment(messageStack, VPos.TOP);
 
     // Update chat history in App class
-    App.chatHistory.append(role + ":\n" + message + "\n");
+    App.chatHistoryMap.put(role, message);
   }
 
   /** Handles the "Go Back" button press event. */
@@ -269,6 +287,9 @@ public abstract class MemoryController implements TimableScene {
   protected void sendNotification() {
     // If the chat pane is not visible, show the notification pane
     if (!isChatVisible) {
+
+      notificationSound.play();
+
       // Display the notification pane
       notificationPane.setVisible(true);
 
@@ -317,14 +338,27 @@ public abstract class MemoryController implements TimableScene {
    * @param promptId The ID of the prompt to load.
    */
   protected void loadInitialMessages(String promptId) {
-    // Load initial messages
-    this.systemPrompt = App.chatHistory.toString();
+    Platform.runLater(() -> {
+      // Load initial messages
+      StringBuilder systemPromptBuilder = new StringBuilder();
 
-    // Load the system prompt
-    this.systemPrompt += loadPrompt(promptId);
+      // Load the chat history, iterate through the map and append to the system
+      // prompt.
+      for (String role : App.chatHistoryMap.keySet()) {
+        String message = App.chatHistoryMap.get(role);
+        systemPromptBuilder.append(role.split("\0")[0]).append(":\n").append(message).append("\n");
+        if (role.endsWith(this.roleOfCharacter)) {
+          appendMessageToChat(role.split("\0")[0], message);
+        }
+      }
 
-    // Append the system prompt to the chat completion request
-    this.chatCompletionRequest.addMessage("system", systemPrompt);
+      // Load the system prompt
+      systemPromptBuilder.append(loadPrompt(promptId));
+      this.systemPrompt = systemPromptBuilder.toString();
+
+      // Append the system prompt to the chat completion request
+      this.chatCompletionRequest.addMessage("system", this.systemPrompt);
+    });
   }
 
   /**

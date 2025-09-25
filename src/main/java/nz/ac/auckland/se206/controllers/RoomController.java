@@ -52,6 +52,7 @@ public class RoomController implements TimableScene {
   private AnchorPane conversationPane1;
 
   private MediaPlayer startAudioMediaPlayer;
+  public static MediaPlayer notificationAudioMediaPlayer;
 
   /**
    * Initializes the room view. If it's the first time initialization, it will
@@ -70,6 +71,10 @@ public class RoomController implements TimableScene {
       startAudioMediaPlayer = new MediaPlayer(
           new Media(getClass().getResource("/sounds/voiceover.mp3").toExternalForm()));
       startAudioMediaPlayer.play();
+
+      notificationAudioMediaPlayer = new MediaPlayer(
+          new Media(getClass().getResource("/sounds/notification.mp3").toExternalForm()));
+
       isFirstTimeInit = false;
     } else {
       conversationPane.setVisible(false);

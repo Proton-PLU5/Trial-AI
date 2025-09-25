@@ -2,6 +2,10 @@ package nz.ac.auckland.se206;
 
 import java.io.IOException;
 import java.util.function.Consumer;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.SortedMap;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +24,7 @@ public class App extends Application {
 
   private static Scene scene;
   public static Stage primaryStage;
-  public static StringBuilder chatHistory = new StringBuilder();
+  public static LinkedHashMap<String, String> chatHistoryMap = new LinkedHashMap<>();
   public static final int TIMER_DURATION = 5 * 60; // 5 minutes in seconds
   public static Timer timer = new Timer(TIMER_DURATION, new Consumer<Void>() {
     @Override
