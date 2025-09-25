@@ -133,6 +133,9 @@ public abstract class MemoryController implements TimableScene {
       }
     };
     scrollToBottomTimer.start();
+
+    // Send with enter key
+    textField.setOnAction(event -> onSendButtonPressed());
   }
 
   /** Handles the "Chat" button press event to toggle chat visibility. */
@@ -153,7 +156,7 @@ public abstract class MemoryController implements TimableScene {
   /** Handles the "Send" button press event to send a message. */
   @FXML
   protected void onSendButtonPressed() {
-    String userInput = textField.getText();
+    String userInput = textField.getText().strip();
     // Clear the text field
     textField.clear();
 
