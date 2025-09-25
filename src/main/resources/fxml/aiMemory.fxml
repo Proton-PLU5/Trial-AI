@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -90,5 +91,14 @@
       </AnchorPane>
       <Pane fx:id="chatPanel" layoutX="218.0" layoutY="32.0" prefHeight="200.0" prefWidth="200.0" />
       <Rectangle fx:id="overlayRectangle" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="80.0" layoutX="333.0" layoutY="321.0" onMouseEntered="#interactableComplete" onMouseExited="#interactableComplete" onMouseMoved="#interactableComplete" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="95.0" />
+      <StackPane fx:id="notificationPane" layoutX="52.0" layoutY="641.0" prefHeight="35.0" prefWidth="0.0">
+         <children>
+            <ImageView fitHeight="39.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/notification.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
    </children>
 </Pane>

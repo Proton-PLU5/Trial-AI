@@ -108,7 +108,8 @@ public class AiMemory extends MemoryController {
   @FXML
   private void interactableComplete() {
     if (isXrayMode && isFirstTime) {
-      System.out.println("Identified conceled item");
+      System.out.println("Identified concealed item");
+      sendNotification();
       isFirstTime = false;
     }
   }

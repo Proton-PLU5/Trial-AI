@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.management.RuntimeErrorException;
 
+import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
@@ -24,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest.Model;
@@ -64,7 +66,6 @@ public abstract class MemoryController implements TimableScene {
   @FXML
   private Label timerLabelText;
 
-
   // Title
   @FXML
   protected AnchorPane titleBlock;
@@ -72,6 +73,10 @@ public abstract class MemoryController implements TimableScene {
   protected Label titleLabel;
   @FXML
   protected Label descriptionLabel;
+
+  // Notification
+  @FXML
+  protected StackPane notificationPane;
 
   // Chat visibility state
   private boolean isChatVisible = false;
@@ -92,6 +97,8 @@ public abstract class MemoryController implements TimableScene {
 
   @FXML
   protected void initialize() {
+    // Initially hide chat and notification panes
+    notificationPane.setVisible(false);
     chatPane.setVisible(false);
   }
 
@@ -100,6 +107,11 @@ public abstract class MemoryController implements TimableScene {
   protected void onChatButtonPressed() {
     isChatVisible = !isChatVisible;
     chatPane.setVisible(isChatVisible);
+
+    // Hide the notification pane when chat is opened
+    if (isChatVisible) {
+      notificationPane.setVisible(false);
+    }
   }
 
   /** Handles the "Send" button press event to send a message. */
@@ -172,6 +184,33 @@ public abstract class MemoryController implements TimableScene {
           .setMaxTokens(500);
     } catch (ApiProxyException e) {
       e.printStackTrace();
+    }
+  }
+
+  /**
+   * Sends a notification to the user if they receive a new message while the chat
+   * pane is closed.
+   */
+  protected void sendNotification() {
+    // If the chat pane is not visible, show the notification pane
+    if (!isChatVisible) {
+      // Display the notification pane
+      notificationPane.setVisible(true);
+
+      // Create a "bounce" animation for the notification pane
+      TranslateTransition moveUpTransition = new TranslateTransition(Duration.seconds(0.2), notificationPane);
+      moveUpTransition.setFromY(-30);
+      moveUpTransition.setToY(0);
+      moveUpTransition.setInterpolator(Interpolator.EASE_IN);
+
+      TranslateTransition moveDownTransition = new TranslateTransition(Duration.seconds(0.2), notificationPane);
+      moveDownTransition.setFromY(0);
+      moveDownTransition.setToY(-30);
+      moveDownTransition.setInterpolator(Interpolator.EASE_OUT);
+
+      SequentialTransition bounce = new SequentialTransition(moveDownTransition, moveUpTransition);
+      bounce.setCycleCount(2);
+      bounce.play();
     }
   }
 

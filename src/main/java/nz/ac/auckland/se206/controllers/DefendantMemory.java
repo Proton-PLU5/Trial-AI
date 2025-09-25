@@ -242,6 +242,8 @@ public class DefendantMemory extends MemoryController {
               protected Void call() throws Exception {
                 String output = sendGPTRequest(loadPrompt("prompts/defendant_additional.txt"));
                 appendMessageToChat(roleOfCharacter, output);
+                // Send a notification to the user
+                sendNotification();
                 return null;
               }
             };
