@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.management.RuntimeErrorException;
 
+import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
@@ -116,6 +117,18 @@ public abstract class MemoryController implements TimableScene {
 
     // Add some spacing between messages
     conversationGridPane.setVgap(10);
+    AnimationTimer scrollToBottomTimer = new AnimationTimer() {
+      private long lastUpdate = 0;
+
+      @Override
+      public void handle(long now) {
+        if (now - lastUpdate >= 200_000_000) { // 200 milliseconds
+          conversationScrollPane.setVvalue(1.0);
+          lastUpdate = now;
+        }
+      }
+    };
+    scrollToBottomTimer.start();
   }
 
   /** Handles the "Chat" button press event to toggle chat visibility. */
@@ -228,9 +241,6 @@ public abstract class MemoryController implements TimableScene {
     GridPane.setValignment(messageStack, VPos.TOP);
 
     App.chatHistory.append(role + ":\n" + message + "\n");
-
-    // Scroll to the bottom of the scroll pane
-    Platform.runLater(() -> conversationScrollPane.setVvalue(1.0));
   }
 
   /** Handles the "Go Back" button press event. */
