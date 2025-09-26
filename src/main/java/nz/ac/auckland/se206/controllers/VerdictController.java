@@ -208,11 +208,17 @@ public class VerdictController implements TimableScene {
         gameOverText.setLength(0);
         if (!choiceMade) {
           gameOverText.append("You didn't make a decision in time. Try again.");
+          verdictCorrectLabel.setLayoutX(201);
         } else {
           gameOverText.append("You didn't give a rationale. Try again.");
+          verdictCorrectLabel.setLayoutX(278);
         }
         verdictCorrectLabel.setText(gameOverText.toString());
       } else {
+        if (!isChoiceMadeCorrect) {
+          verdictCorrectLabel.setLayoutX(395);
+        }
+
         // Add the rationale to the prompt
         rationalePrompt += rationale;
         System.out.println(rationalePrompt); // Debugging
@@ -252,7 +258,11 @@ public class VerdictController implements TimableScene {
                     // Remove first 5 words from GPT response
                     String rationaleSummary = content.replaceFirst("^(\\S+\\s+){5}", "");
                     rationaleJudgementTextArea.setText(rationaleSummary);
-                    verdictCorrectLabel.setLayoutX(50);
+                    if (arr[9].equals("correct")) {
+                      verdictCorrectLabel.setLayoutX(47);
+                    } else {
+                      verdictCorrectLabel.setLayoutX(25);
+                    }
                   } else {
                     rationaleJudgementTextArea.setText(content);
                   }
