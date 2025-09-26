@@ -1,10 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
-import java.io.IOException;
-import java.io.InputStream;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,7 +16,6 @@ import javafx.scene.shape.Arc;
 import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
-import nz.ac.auckland.se206.utils.Tuple;
 
 public class DefendantMemoryController extends MemoryController {
 
