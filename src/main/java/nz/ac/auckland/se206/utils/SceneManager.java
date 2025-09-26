@@ -1,7 +1,6 @@
 package nz.ac.auckland.se206.utils;
 
 import java.io.IOException;
-
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

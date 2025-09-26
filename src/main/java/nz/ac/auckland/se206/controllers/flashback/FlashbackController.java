@@ -2,7 +2,6 @@ package nz.ac.auckland.se206.controllers.flashback;
 
 import java.io.InputStream;
 import java.util.Stack;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

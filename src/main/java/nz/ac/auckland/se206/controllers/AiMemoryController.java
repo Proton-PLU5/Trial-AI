@@ -2,7 +2,6 @@ package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;

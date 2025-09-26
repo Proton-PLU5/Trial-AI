@@ -235,9 +235,8 @@ public abstract class MemoryController implements TimableScene {
 
     Paint colourToUse = Color.web("#00865d");
     if (role.equals("User")) {
-      colourToUse = Color.web("#5599d9");
-      role = role + "\0" + roleOfCharacter;
       // To differentiate user messages for different characters
+      colourToUse = Color.web("#5599d9");
     }
 
     // Create a rectangle background which scales to the height of the textFlow
@@ -431,7 +430,6 @@ public abstract class MemoryController implements TimableScene {
     // seconds
     TranslateTransition moveLeftTransition = new TranslateTransition(
         Duration.seconds(1), titleBlock);
-    moveLeftTransition = new TranslateTransition(Duration.seconds(1), titleBlock);
     moveLeftTransition.setFromX(0);
     moveLeftTransition.setToX(-700);
     moveLeftTransition.setOnFinished(event -> titleBlock.setVisible(false));
