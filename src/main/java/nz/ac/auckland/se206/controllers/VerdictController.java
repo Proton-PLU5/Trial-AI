@@ -235,7 +235,6 @@ public class VerdictController implements TimableScene {
         runGpt(msg);
       }
     } else {
-      return;
     }
   }
 
@@ -308,7 +307,8 @@ public class VerdictController implements TimableScene {
     // Loading the prompt into the chats and stuff
     try {
       URL promptUrl = this.getClass().getClassLoader().getResource(promptId);
-      List<String> promptStrings = Files.readAllLines(Paths.get(promptUrl.toURI()), Charset.defaultCharset());
+      List<String> promptStrings = Files.readAllLines(
+          Paths.get(promptUrl.toURI()), Charset.defaultCharset());
       return String.join("\n", promptStrings);
     } catch (IOException | URISyntaxException e) {
       e.printStackTrace();
@@ -317,6 +317,7 @@ public class VerdictController implements TimableScene {
   }
 
   private void setVerdictCorrectLabelLayout() {
+    // See if the verdict is correct and then change the scene
     if (rationale.isEmpty()) {
       if (!choiceMade) {
         verdictCorrectLabel.setLayoutX(201);

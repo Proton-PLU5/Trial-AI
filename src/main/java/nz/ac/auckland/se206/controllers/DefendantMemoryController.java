@@ -55,7 +55,7 @@ public class DefendantMemoryController extends MemoryController {
   @FXML
   private StackPane customerDetailsPane;
   @FXML
-  private Label customerIDLabel;
+  private Label customerIdLabel;
   @FXML
   private Label customerStatusLabel;
   @FXML
@@ -67,7 +67,7 @@ public class DefendantMemoryController extends MemoryController {
   private final String correctPin = "1 2 3 4";
   private AnimationTimer progressArcAnimationTimer;
 
-  public String interactableContext = "";
+  private String interactableContext = "";
 
   static {
     var resource = DefendantMemoryController.class.getResource("/sounds/keypad.mp3");
@@ -128,7 +128,7 @@ public class DefendantMemoryController extends MemoryController {
   }
 
   @FXML
-  private void pressKeypadButton(ActionEvent event) {
+  private void clickKeypadButton(ActionEvent event) {
     Button button = (Button) event.getSource();
     String buttonText = button.getText();
 
@@ -187,7 +187,7 @@ public class DefendantMemoryController extends MemoryController {
    * @param event The action event triggered by clicking the login button
    */
   @FXML
-  private void pressLoginButton(ActionEvent event) {
+  private void clickLoginButton(ActionEvent event) {
     initialPane.setVisible(false);
     keypadPane.setVisible(true);
   }
@@ -237,7 +237,7 @@ public class DefendantMemoryController extends MemoryController {
           // Check if the source of the event is one of the rectangles
           // Check by getting the ID of the source
           if (sourceNode.getId().equals(rec1.getId())) {
-            customerIDLabel.setText("Customer 1");
+            customerIdLabel.setText("Customer 1");
             customerStatusLabel.setText("New Shopper");
             customerAgeLabel.setText("Age: 25");
             customerCriminalRecordLabel.setText("Shoplifting");
@@ -248,25 +248,23 @@ public class DefendantMemoryController extends MemoryController {
             interactableDone();
 
           } else if (sourceNode.getId().equals(rec2.getId())) {
-            customerIDLabel.setText("Customer 2");
+            customerIdLabel.setText("Customer 2");
             customerStatusLabel.setText("Returning Shopper");
             customerAgeLabel.setText("Age: 40");
             customerCriminalRecordLabel.setText("No Record");
           } else if (sourceNode.getId().equals(rec3.getId())) {
-            customerIDLabel.setText("Customer 3");
+            customerIdLabel.setText("Customer 3");
             customerStatusLabel.setText("New Shopper");
             customerAgeLabel.setText("Age: 30");
             customerCriminalRecordLabel.setText("No Record");
           } else if (sourceNode.getId().equals(rec4.getId())) {
-            customerIDLabel.setText("Customer 4");
+            customerIdLabel.setText("Customer 4");
             customerStatusLabel.setText("Loyal Shopper");
             customerAgeLabel.setText("Age: 35");
             customerCriminalRecordLabel.setText("No Record");
           }
         }
-
       };
-
     };
     progressArcAnimationTimer.start();
   }
@@ -304,7 +302,8 @@ public class DefendantMemoryController extends MemoryController {
         if (is == null) {
           throw new IOException("Resource not found: prompts/defendantInteractableContext.txt");
         }
-        interactableContext = new String(is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        interactableContext = new String(
+            is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
       } catch (IOException e) {
         e.printStackTrace();
       }
