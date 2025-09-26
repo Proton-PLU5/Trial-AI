@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import javafx.animation.Interpolator;
 import javafx.animation.PauseTransition;
-import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
