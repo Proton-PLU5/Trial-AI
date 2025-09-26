@@ -27,14 +27,14 @@
          <font>
             <Font size="25.0" />
          </font></Button>
-      <Label fx:id="verdictTitleLabel1" alignment="CENTER" layoutX="305.0" layoutY="239.0" prefHeight="150.0" prefWidth="804.0" text="Was the AI defendant’s decision-making process ethical, reasonable and justified?" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+      <Label fx:id="verdictTitleLabel1" alignment="CENTER" layoutX="305.0" layoutY="223.0" prefHeight="164.0" prefWidth="804.0" text="Was the AI defendant’s decision-making process ethical, reasonable and justified?" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
-            <Font size="35.0" />
+            <Font name="Consolas" size="40.0" />
          </font>
       </Label>
-      <Label fx:id="verdictTitleLabel2" layoutX="280.0" layoutY="59.0" stylesheets="@../css/style.css" text="Explain the reasoning for your choice below." textFill="WHITE" visible="false">
+      <Label fx:id="verdictTitleLabel2" layoutX="223.0" layoutY="56.0" stylesheets="@../css/style.css" text="Explain the reasoning for your choice below." textFill="WHITE" visible="false">
          <font>
-            <Font size="35.0" />
+            <Font size="40.0" />
          </font>
       </Label>
       <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="350.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" visible="false" />

@@ -73,6 +73,10 @@ public class VerdictController implements TimableScene {
     MediaPlayer mediaPlayer = new MediaPlayer(media);
     mediaPlayer.play();
 
+    verdictCorrectLabel.setText("Your verdict was...");
+    verdictCorrectLabel.setLayoutX(498);
+    verdictCorrectLabel.setVisible(false);
+
     try {
       createChatCompletionResult();
       loadInitialMessages("prompts/verdict.txt");
@@ -82,7 +86,7 @@ public class VerdictController implements TimableScene {
 
     // Add ourselves to the timer service
     App.timer.stopTimer();
-    verdictTimer = new Timer(2 * 60, new Consumer<Void>() {
+    verdictTimer = new Timer(10, new Consumer<Void>() {
       @Override
       public void accept(Void t) {
         timeOutOption();
@@ -208,17 +212,12 @@ public class VerdictController implements TimableScene {
         gameOverText.setLength(0);
         if (!choiceMade) {
           gameOverText.append("You didn't make a decision in time. Try again.");
-          verdictCorrectLabel.setLayoutX(201);
         } else {
           gameOverText.append("You didn't give a rationale. Try again.");
-          verdictCorrectLabel.setLayoutX(278);
         }
         verdictCorrectLabel.setText(gameOverText.toString());
+        setVerdictCorrectLabelLayout();
       } else {
-        if (!isChoiceMadeCorrect) {
-          verdictCorrectLabel.setLayoutX(395);
-        }
-
         // Add the rationale to the prompt
         rationalePrompt += rationale;
         System.out.println(rationalePrompt); // Debugging
@@ -258,16 +257,13 @@ public class VerdictController implements TimableScene {
                     // Remove first 5 words from GPT response
                     String rationaleSummary = content.replaceFirst("^(\\S+\\s+){5}", "");
                     rationaleJudgementTextArea.setText(rationaleSummary);
-                    if (arr[9].equals("correct")) {
-                      verdictCorrectLabel.setLayoutX(47);
-                    } else {
-                      verdictCorrectLabel.setLayoutX(25);
-                    }
+                    verdictCorrectLabel.setText(gameOverText.toString());
+                    setVerdictCorrectLabelLayout(arr);
                   } else {
                     rationaleJudgementTextArea.setText(content);
+                    verdictCorrectLabel.setText(gameOverText.toString());
+                    setVerdictCorrectLabelLayout();
                   }
-
-                  verdictCorrectLabel.setText(gameOverText.toString());
                 });
 
           } catch (ApiProxyException e) {
@@ -308,6 +304,29 @@ public class VerdictController implements TimableScene {
     } catch (IOException | URISyntaxException e) {
       e.printStackTrace();
       throw new IllegalStateException(promptId + " not found");
+    }
+  }
+
+  private void setVerdictCorrectLabelLayout() {
+    if (rationale.isEmpty()) {
+      if (!choiceMade) {
+        verdictCorrectLabel.setLayoutX(201);
+      } else {
+        verdictCorrectLabel.setLayoutX(278);
+      }
+      verdictCorrectLabel.setText(gameOverText.toString());
+    } else {
+      if (!isChoiceMadeCorrect) {
+        verdictCorrectLabel.setLayoutX(410);
+      }
+    }
+  }
+
+  private void setVerdictCorrectLabelLayout(String[] arr) {
+    if (arr[9].equals("correct")) {
+      verdictCorrectLabel.setLayoutX(47);
+    } else {
+      verdictCorrectLabel.setLayoutX(25);
     }
   }
 }
