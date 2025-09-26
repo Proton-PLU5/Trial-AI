@@ -25,9 +25,6 @@ public class HumanMemoryController extends MemoryController {
   public static Map<String, Boolean> itemCollected = new HashMap<>();
   public static Map<String, ImageView> itemToLabel = new HashMap<>();
   public static boolean isFirstTimeInteract = true;
-  public static boolean completedOne = false;
-  public static boolean completedTwo = false;
-  public static boolean completedThree = false;
 
   @FXML
   private Button roomBtn;
@@ -130,22 +127,12 @@ public class HumanMemoryController extends MemoryController {
     itemMarkers.add(markerLine4);
 
     aisle1Rectangle.setVisible(true);
-    aisle2Rectangle.setVisible(false);
-    aisle3Rectangle.setVisible(false);
+    aisle2Rectangle.setVisible(true);
+    aisle3Rectangle.setVisible(true);
 
     // Initial UI setup
     for (ImageView item : aisleItems) {
       item.setVisible(true);
-    }
-
-    if (completedOne) {
-      aisle1Rectangle.setVisible(false);
-    }
-    if (completedTwo) {
-      aisle2Rectangle.setVisible(false);
-    }
-    if (completedThree) {
-      aisle3Rectangle.setVisible(false);
     }
 
     // Load shopping list items, if collected, then make invisible
@@ -176,44 +163,30 @@ public class HumanMemoryController extends MemoryController {
 
   @FXML
   private void handleAisle1RectangleClicked(MouseEvent event) throws IOException {
-    aisle1Rectangle.setVisible(false);
     mainAislePane.setVisible(false);
     aisle1Pane.setVisible(true);
     shoppingCartHitbox.setVisible(true);
     backToAislesButton.setVisible(true);
-    completedOne = true;
     aisle2Rectangle.setVisible(true);
     // might need to use checkIfItemHasBeenCollected();
   }
 
   @FXML
   private void handleAisle2RectangleClicked(MouseEvent event) throws IOException {
-    if (completedOne) {
-      aisle2Rectangle.setVisible(false);
-      mainAislePane.setVisible(false);
-      aisle2Pane.setVisible(true);
-      shoppingCartHitbox.setVisible(true);
-      backToAislesButton.setVisible(true);
-      completedTwo = true;
-      aisle3Rectangle.setVisible(true);
-      // might need to use checkIfItemHasBeenCollected();
-    } else {
-
-    }
+    mainAislePane.setVisible(false);
+    aisle2Pane.setVisible(true);
+    shoppingCartHitbox.setVisible(true);
+    backToAislesButton.setVisible(true);
+    // might need to use checkIfItemHasBeenCollected();
   }
 
   @FXML
   private void handleAisle3RectangleClicked(MouseEvent event) throws IOException {
-    if (completedTwo) {
-      aisle3Rectangle.setVisible(false);
-      mainAislePane.setVisible(false);
-      aisle3Pane.setVisible(true);
-      purseHitbox.setVisible(true);
-      backToAislesButton.setVisible(true);
-      // might need to use checkIfItemHasBeenCollected();
-    } else {
-
-    }
+    mainAislePane.setVisible(false);
+    aisle3Pane.setVisible(true);
+    purseHitbox.setVisible(true);
+    backToAislesButton.setVisible(true);
+    // might need to use checkIfItemHasBeenCollected();
   }
 
   // @FXML
