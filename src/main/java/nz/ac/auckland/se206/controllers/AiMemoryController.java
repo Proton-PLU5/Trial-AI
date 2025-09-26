@@ -2,6 +2,8 @@ package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.Tuple;
@@ -132,6 +135,12 @@ public class AiMemoryController extends MemoryController {
           // Update the chat area with the AI's response
           Platform.runLater(() -> {
             appendMessageToChat(roleOfCharacter, output);
+          });
+
+          Platform.runLater(() -> {
+            PauseTransition pt = new PauseTransition(Duration.millis(50));
+            pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
+            pt.play();
           });
 
           // Send a notification to the user
