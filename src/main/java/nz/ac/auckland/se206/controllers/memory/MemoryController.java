@@ -95,6 +95,9 @@ public abstract class MemoryController implements TimableScene {
 
   protected AudioClip notificationSound;
   protected String promptId = "";
+  protected final String INITIAL_PROMPT = "If there are no previous messages you can talk about with the user,"
+      + "then you should introduce yourself to the user with a short and concise message. "
+      + "Otherwise, you should respond to the previous conversations.";
 
   // Constructor
   public MemoryController(String promptId) {
@@ -369,6 +372,28 @@ public abstract class MemoryController implements TimableScene {
 
       // Append the system prompt to the chat completion request
       this.chatCompletionRequest.addMessage("system", this.systemPrompt);
+
+      Task<Void> task = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+          String output = sendGptRequest(INITIAL_PROMPT);
+
+          // Update the chat area with the AI's response
+          Platform.runLater(() -> {
+            appendMessageToChat(roleOfCharacter, output);
+            notificationSound.play();
+            PauseTransition pt = new PauseTransition(Duration.millis(50));
+            pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
+            pt.play();
+          });
+
+          return null;
+        }
+      };
+
+      Thread gptRequestThread = new Thread(task);
+      gptRequestThread.setDaemon(true);
+      gptRequestThread.start();
     });
   }
 
