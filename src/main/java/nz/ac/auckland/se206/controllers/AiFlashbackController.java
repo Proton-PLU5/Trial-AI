@@ -22,6 +22,7 @@ public class AiFlashbackController extends FlashbackController {
   @FXML
   private Label conversationTextLabel;
 
+  @Override
   @FXML
   protected void initialize() {
     super.initialize();
@@ -35,14 +36,18 @@ public class AiFlashbackController extends FlashbackController {
   }
 
   @Override
-  protected void setupText() {
+  protected void initializeText() {
     addText(
-        "System output: subject detected exhibiting irregular behavior. Subject advanced toward exit carrying one unscanned item.");
-    addText("This operational pattern persisted throughout the cycle until anomaly data was registered.");
+        "System output: subject detected exhibiting irregular behavior."
+            + " Subject advanced toward exit carrying one unscanned item.");
+    addText("This operational pattern persisted throughout"
+        + " the cycle until anomaly data was registered.");
     addText(
-        "System output: initial operations proceeded under standard parameters. All customers scanned items and exited with zero unscanned detections.");
+        "System output: initial operations proceeded under standard parameters."
+            + " All customers scanned items and exited with zero unscanned detections.");
   }
 
+  @Override
   @FXML
   protected void handleMemoryButton() {
     SceneManager.switchScene(SceneManager.Scenes.aiMemory);

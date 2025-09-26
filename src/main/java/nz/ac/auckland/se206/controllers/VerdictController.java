@@ -8,9 +8,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.function.Consumer;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -65,7 +65,7 @@ public class VerdictController implements TimableScene {
   private String rationalePrompt = "";
   private ChatCompletionRequest chatCompletionRequest = null;
   private boolean rationaleSubmitted = false;
-  public Timer verdictTimer = null;
+  private Timer verdictTimer = null;
   private StringBuilder gameOverText = new StringBuilder("");
   private String systemPrompt = "";
 
@@ -74,6 +74,10 @@ public class VerdictController implements TimableScene {
     Media media = new Media(getClass().getResource("/sounds/verdict.mp3").toExternalForm());
     MediaPlayer mediaPlayer = new MediaPlayer(media);
     mediaPlayer.play();
+
+    verdictCorrectLabel.setText("Your verdict was...");
+    verdictCorrectLabel.setLayoutX(498);
+    verdictCorrectLabel.setVisible(false);
 
     try {
       createChatCompletionResult();
@@ -84,7 +88,7 @@ public class VerdictController implements TimableScene {
 
     // Add ourselves to the timer service
     App.timer.stopTimer();
-    verdictTimer = new Timer(2 * 60, new Consumer<Void>() {
+    verdictTimer = new Timer(10, new Consumer<Void>() {
       @Override
       public void accept(Void t) {
         timeOutOption();
@@ -123,7 +127,9 @@ public class VerdictController implements TimableScene {
   private void handleYesClicked() {
     choiceMade = true;
     isChoiceMadeCorrect = false;
-    optionChose = "The player selected the 'Yes' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
+    optionChose = "The player selected the 'Yes' option when asked if the AI's decision"
+        + " making process was reasonable, ethical and justified."
+        + " Their rationale is the following: ";
     gameOverText.append("You made the wrong verdict.");
     handleVerdictMade();
   }
@@ -132,7 +138,8 @@ public class VerdictController implements TimableScene {
   private void handleNoClicked() {
     choiceMade = true;
     isChoiceMadeCorrect = true;
-    optionChose = "The player selected the 'No' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
+    optionChose = "The player selected the 'No' option when asked if the AI's decision making"
+        + " process was reasonable, ethical and justified. Their rationale is the following: ";
     gameOverText.append("You made the correct verdict");
     handleVerdictMade();
   }
@@ -151,6 +158,7 @@ public class VerdictController implements TimableScene {
 
   @FXML
   private void handleRestartButtonPressed(ActionEvent event) {
+    // This method handles the restart button
     App.createTimer();
     App.chatHistoryMap = new ArrayList<Tuple<String, String>>();
 
@@ -179,7 +187,6 @@ public class VerdictController implements TimableScene {
       verdictTitleLabel1.setVisible(false);
       yesButton.setVisible(false);
       noButton.setVisible(false);
-      verdictCorrectLabel.setText("You didn't make a decision in time. Try again.");
     }
 
     // Continue to rationale submission screen regardless of if the user made a
@@ -193,33 +200,40 @@ public class VerdictController implements TimableScene {
 
   @FXML
   private void handleRationaleSubmitted() throws ApiProxyException {
-    verdictTimer.stopTimer();
-    restartButton.setVisible(true);
+    if (!rationaleSubmitted) {
+      rationaleSubmitted = true;
+      verdictTimer.stopTimer();
+      restartButton.setVisible(true);
+      verdictTitleLabel2.setVisible(false);
+      submitButton.setVisible(false);
+      rationaleTextArea.setVisible(false);
+      verdictCorrectLabel.setVisible(true);
+      rationaleJudgementTextArea.setVisible(true);
 
-    rationaleSubmitted = true;
-    verdictTitleLabel2.setVisible(false);
-    submitButton.setVisible(false);
-    rationaleTextArea.setVisible(false);
-    verdictCorrectLabel.setVisible(true);
-    rationaleJudgementTextArea.setVisible(true);
+      rationalePrompt += optionChose;
+      // Read the rationale from the TextArea
+      rationale = rationaleTextArea.getText().strip();
 
-    rationalePrompt += optionChose;
-    // Read the rationale from the TextArea
-    rationale = rationaleTextArea.getText().strip();
+      if (rationale.isEmpty()) {
+        gameOverText.setLength(0);
+        if (!choiceMade) {
+          gameOverText.append("You didn't make a decision in time. Try again.");
+        } else {
+          gameOverText.append("You didn't give a rationale. Try again.");
+        }
+        verdictCorrectLabel.setText(gameOverText.toString());
+        setVerdictCorrectLabelLayout();
+      } else {
+        // Add the rationale to the prompt
+        rationalePrompt += rationale;
+        System.out.println(rationalePrompt); // Debugging
 
-    if (rationale.isEmpty()) {
-      gameOverText.setLength(0);
-      gameOverText.append("You didn't give a rationale. Try again.");
-      verdictCorrectLabel.setText(gameOverText.toString());
+        // Send the prompt and rationale to gpt
+        ChatMessage msg = new ChatMessage("user", rationalePrompt);
+        runGpt(msg);
+      }
     } else {
-      // Add the rationale to the prompt
-      rationalePrompt += rationale;
-      System.out.println(rationalePrompt); // Debugging
-
-      // Send the prompt and rationale to gpt
-      ChatMessage msg = new ChatMessage("user", rationalePrompt);
-      System.out.println(rationalePrompt);
-      runGpt(msg);
+      return;
     }
   }
 
@@ -249,12 +263,13 @@ public class VerdictController implements TimableScene {
                     // Remove first 5 words from GPT response
                     String rationaleSummary = content.replaceFirst("^(\\S+\\s+){5}", "");
                     rationaleJudgementTextArea.setText(rationaleSummary);
-                    verdictCorrectLabel.setLayoutX(50);
+                    verdictCorrectLabel.setText(gameOverText.toString());
+                    setVerdictCorrectLabelLayout(arr);
                   } else {
                     rationaleJudgementTextArea.setText(content);
+                    verdictCorrectLabel.setText(gameOverText.toString());
+                    setVerdictCorrectLabelLayout();
                   }
-
-                  verdictCorrectLabel.setText(gameOverText.toString());
                 });
 
           } catch (ApiProxyException e) {
@@ -288,6 +303,7 @@ public class VerdictController implements TimableScene {
   }
 
   protected String loadPrompt(String promptId) {
+    // Loading the prompt into the chats and stuff
     try {
       URL promptUrl = this.getClass().getClassLoader().getResource(promptId);
       List<String> promptStrings = Files.readAllLines(Paths.get(promptUrl.toURI()), Charset.defaultCharset());
@@ -295,6 +311,29 @@ public class VerdictController implements TimableScene {
     } catch (IOException | URISyntaxException e) {
       e.printStackTrace();
       throw new IllegalStateException(promptId + " not found");
+    }
+  }
+
+  private void setVerdictCorrectLabelLayout() {
+    if (rationale.isEmpty()) {
+      if (!choiceMade) {
+        verdictCorrectLabel.setLayoutX(201);
+      } else {
+        verdictCorrectLabel.setLayoutX(278);
+      }
+      verdictCorrectLabel.setText(gameOverText.toString());
+    } else {
+      if (!isChoiceMadeCorrect) {
+        verdictCorrectLabel.setLayoutX(410);
+      }
+    }
+  }
+
+  private void setVerdictCorrectLabelLayout(String[] arr) {
+    if (arr[9].equals("correct")) {
+      verdictCorrectLabel.setLayoutX(47);
+    } else {
+      verdictCorrectLabel.setLayoutX(25);
     }
   }
 }

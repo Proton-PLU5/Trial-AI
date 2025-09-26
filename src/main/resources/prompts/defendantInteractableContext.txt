@@ -1,0 +1,4 @@
+[AI Defendant Interactable Done]
+
+By viewing the Security Bot's memory, the user has seen things from their point of view and found new information. 
+After the user logged into the CCTV camera footage, they saw that the customer, Maria Shader, had a previous criminal record of shoplifting.

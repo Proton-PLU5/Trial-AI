@@ -17,7 +17,7 @@ public class StartController implements TimableScene {
   @FXML
   private Label timerLabel;
   @FXML
-  private Label title_label;
+  private Label titleLabel;
   @FXML
   private Button playBtn;
 
@@ -25,18 +25,6 @@ public class StartController implements TimableScene {
 
   @FXML
   private void initialize() {
-  }
-
-  private void handleGameOver() {
-    // This method handles the game over scenario and switches to the final scene
-    try {
-      Stage stage = (Stage) playBtn.getScene().getWindow();
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/final.fxml"));
-      Parent finalRoot = loader.load();
-      stage.setScene(new Scene(finalRoot));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
   }
 
   @FXML

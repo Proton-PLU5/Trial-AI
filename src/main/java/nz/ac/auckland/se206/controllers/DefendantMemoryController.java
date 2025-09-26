@@ -1,39 +1,31 @@
 package nz.ac.auckland.se206.controllers;
 
-import java.io.IOException;
 
+import java.io.IOException;
+import java.io.InputStream;
 import javafx.animation.AnimationTimer;
-import javafx.animation.PauseTransition;
-import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Arc;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
-import nz.ac.auckland.se206.utils.SceneManager;
-import nz.ac.auckland.se206.utils.TimableScene;
 
 public class DefendantMemoryController extends MemoryController {
+
+  public static boolean loginSequenceCompleted = false;
+  public static boolean hasChattedWithDefendant;
+  public static boolean isFirstTimeInteract = true;
 
   @FXML
   private Rectangle rec1;
@@ -73,10 +65,12 @@ public class DefendantMemoryController extends MemoryController {
   private String pin = "_ _ _ _";
   private final String correctPin = "1 2 3 4";
   private static AudioClip keyPadAudioClip;
-  public static boolean loginSequenceCompleted = false;
   private AnimationTimer progressArcAnimationTimer;
+
   public static boolean hasChattedWithDefendant;
   public static boolean isFirstTimeInteract = true;
+  public String interactableContext = "";
+
 
   static {
     var resource = DefendantMemoryController.class.getResource("/sounds/keypad.mp3");
@@ -148,7 +142,7 @@ public class DefendantMemoryController extends MemoryController {
       // Set the pitch of the audio clip based on the button pressed
       // For numbers 1-9, set pitch from 1.0 to 1.8
       double pitch = 1.0 + (Integer.parseInt(buttonText)) * 0.1;
-      // keyPadAudioClip.setRate(pitch);
+
       keyPadAudioClip.play();
     }
   }
@@ -275,6 +269,7 @@ public class DefendantMemoryController extends MemoryController {
           }
         }
       };
+
     };
     progressArcAnimationTimer.start();
   }
@@ -307,6 +302,18 @@ public class DefendantMemoryController extends MemoryController {
   @FXML
   private void interactableDone() {
     if (isFirstTimeInteract) {
+      try (InputStream is = getClass().getClassLoader()
+          .getResourceAsStream("prompts/defendantInteractableContext.txt")) {
+        if (is == null) {
+          throw new IOException("Resource not found: prompts/defendantInteractableContext.txt");
+        }
+        interactableContext = new String(is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      App.chatHistoryMap.put("Context", interactableContext);
+      System.out.println(App.getChatHistoryString());
+
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override
         protected Void call() throws Exception {

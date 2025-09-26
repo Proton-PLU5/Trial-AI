@@ -1,7 +1,5 @@
 package nz.ac.auckland.se206.controllers;
 
-import java.util.List;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,11 +26,7 @@ public class DefendantFlashbackController extends FlashbackController {
   @FXML
   private Label conversationTextLabel;
 
-  private List<String> imagePaths;
-  private List<String> conversationText;
-
-  private int currentDrawingIndex = 0;
-
+  @Override
   @FXML
   protected void initialize() {
     conversationTextLabel.setVisible(true);
@@ -47,13 +41,16 @@ public class DefendantFlashbackController extends FlashbackController {
   }
 
   @Override
-  protected void setupText() {
+  protected void initializeText() {
     addText(
-        "Upon seeing the individual in court with us today, I immediately contacted the local authorities after reading their database profile.");
-    addText("Since all our customers have a membership with us, I can access information on them from our database.");
+        "Upon seeing the individual in court with us today, I immediately"
+            + " contacted the local authorities after reading their database profile.");
+    addText("Since all our customers have a membership with us,"
+        + " I can access information on them from our database.");
     addText("My job is to surveil the customers when they first walk into our store.");
   }
 
+  @Override
   @FXML
   protected void handleMemoryButton() {
     SceneManager.switchScene(Scenes.defendantMemory);

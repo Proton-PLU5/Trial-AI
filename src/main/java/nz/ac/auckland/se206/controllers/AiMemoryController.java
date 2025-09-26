@@ -1,7 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
-
+import java.io.InputStream;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -24,6 +24,9 @@ import nz.ac.auckland.se206.utils.SceneManager;
 public class AiMemoryController extends MemoryController {
 
   private static final double CIRCLE_RADIUS = 75.0;
+  public static boolean isFirstTimeInteract = true;
+  public static boolean hasChattedWithAi;
+
   @FXML
   private Button roomBtn;
   @FXML
@@ -43,8 +46,11 @@ public class AiMemoryController extends MemoryController {
 
   private Circle clipCircle;
   private boolean isXrayMode = false;
+
   public static boolean isFirstTimeInteract = true;
   public static boolean hasChattedWithAi;
+  public String interactableContext = "";
+
 
   public AiMemoryController() {
     super("prompts/ai.txt");
@@ -110,6 +116,16 @@ public class AiMemoryController extends MemoryController {
   @FXML
   private void interactableDone() {
     if (isXrayMode && isFirstTimeInteract) {
+      try (InputStream is = getClass().getClassLoader().getResourceAsStream("prompts/aiInteractableContext.txt")) {
+        if (is == null) {
+          throw new IOException("Resource not found: prompts/aiInteractableContext.txt");
+        }
+        interactableContext = new String(is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      App.chatHistoryMap.put("Context", interactableContext);
+      System.out.println(App.getChatHistoryString());
       // LLM sends message when interactable is done
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override
@@ -144,23 +160,6 @@ public class AiMemoryController extends MemoryController {
     // Update the clip circle position
     clipCircle.setCenterX(imageX);
     clipCircle.setCenterY(imageY);
-  }
-
-  private void handleGameOver() throws IOException {
-    Stage stage = (Stage) chatBtn.getScene().getWindow();
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/verdict.fxml"));
-    Parent finalRoot = loader.load();
-    stage.setScene(new Scene(finalRoot));
-  }
-
-  @FXML
-  private void handleBackButton() {
-    SceneManager.switchScene(SceneManager.Scenes.room);
-  }
-
-  @FXML
-  private void handleOpenChatButtonClick(MouseEvent event) throws IOException {
-    chatPanel.setVisible(true);
   }
 
   @Override

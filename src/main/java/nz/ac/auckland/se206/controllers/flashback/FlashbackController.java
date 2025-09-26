@@ -13,24 +13,34 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.utils.TimableScene;
 
 public abstract class FlashbackController implements TimableScene {
-  @FXML protected ImageView backgroundImage;
+  @FXML
+  protected ImageView backgroundImage;
 
-  @FXML protected Label titleLabel;
-  @FXML protected Label descriptionLabel;
+  @FXML
+  protected Label titleLabel;
+  @FXML
+  protected Label descriptionLabel;
 
   /// Conversation Elements
   // Conversation Pane (The parent object of all the conversation elements)
-  @FXML protected AnchorPane conversationPane;
-  @FXML protected Label conversationRoleLabel;
-  @FXML protected Label conversationTextLabel;
-  @FXML protected Button conversationNextButton;
+  @FXML
+  protected AnchorPane conversationPane;
+  @FXML
+  protected Label conversationRoleLabel;
+  @FXML
+  protected Label conversationTextLabel;
+  @FXML
+  protected Button conversationNextButton;
 
   // Navigation
-  @FXML protected Button nextButton;
-  @FXML protected Button memoryButton;
+  @FXML
+  protected Button nextButton;
+  @FXML
+  protected Button memoryButton;
 
   // Timer
-  @FXML protected Label timerLabel;
+  @FXML
+  protected Label timerLabel;
 
   // Image Drawings Elements
   protected Stack<String> imageStack;
@@ -39,7 +49,8 @@ public abstract class FlashbackController implements TimableScene {
   protected Stack<String> textStack;
 
   /**
-   * Method executed during the initialization of the flashback scene. Update UI elements with the
+   * Method executed during the initialization of the flashback scene. Update UI
+   * elements with the
    * current flashback data here.
    */
   protected void initialize() {
@@ -47,7 +58,7 @@ public abstract class FlashbackController implements TimableScene {
     textStack = new Stack<>();
     memoryButton.setVisible(false);
     setupImages();
-    setupText();
+    initializeText();
     showCurrentImage();
     showCurrentText();
 
@@ -55,10 +66,13 @@ public abstract class FlashbackController implements TimableScene {
     App.timer.addConsumer(getTimerConsumer());
   }
 
-  /** Abstract method to be implemented by child classes to setup their specific images */
+  /**
+   * Abstract method to be implemented by child classes to setup their specific
+   * images
+   */
   protected abstract void setupImages();
 
-  protected abstract void setupText();
+  protected abstract void initializeText();
 
   /** Abstract method to handle navigation to memory scene */
   protected abstract void handleMemoryButton();
@@ -92,7 +106,7 @@ public abstract class FlashbackController implements TimableScene {
   /** Navigate to next image */
   @FXML
   protected void nextDrawing() {
-    //This method makes it so that the flashback image goes to the next one in a slide show sort of thing
+    // This method makes it so that the next flashback image appears
     if (imageStack.size() == 1) {
       showCurrentImage();
       showCurrentText();

@@ -1,15 +1,14 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -24,12 +23,17 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.DraggableMaker;
+import nz.ac.auckland.se206.utils.SceneManager;
 
 public class HumanMemoryController extends MemoryController {
+
+  public static boolean hasChattedWithHuman;
+  public static Map<String, Boolean> itemCollected = new HashMap<>();
+  public static Map<String, ImageView> itemToLabel = new HashMap<>();
+  public static boolean isFirstTimeInteract = true;
 
   @FXML
   private Button roomBtn;
@@ -94,9 +98,6 @@ public class HumanMemoryController extends MemoryController {
   @FXML
   private ImageView aisle3Item;
 
-  public static Map<String, Boolean> itemCollected = new HashMap<>();
-  public static Map<String, ImageView> itemToLabel = new HashMap<>();
-
   DraggableMaker draggableMaker = new DraggableMaker();
 
   private ArrayList<ImageView> aisleItems = new ArrayList<ImageView>();
@@ -104,6 +105,7 @@ public class HumanMemoryController extends MemoryController {
 
   public static boolean hasChattedWithHuman;
   public static boolean isFirstTimeInteract = true;
+  public String interactableContext = "";
 
   public HumanMemoryController() {
     super("prompts/human.txt");
@@ -150,23 +152,6 @@ public class HumanMemoryController extends MemoryController {
     }
   }
 
-  private void handleGameOver() throws IOException {
-    Stage stage = (Stage) chatBtn.getScene().getWindow();
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/verdict.fxml"));
-    Parent finalRoot = loader.load();
-    stage.setScene(new Scene(finalRoot));
-  }
-
-  @FXML
-  private void handleBackButton() {
-    SceneManager.switchScene(SceneManager.Scenes.room);
-  }
-
-  @FXML
-  private void handleOpenChatButtonClick(MouseEvent event) throws IOException {
-    chatPanel.setVisible(true);
-  }
-
   @FXML
   private void onBackToAislesButtonPressed() throws IOException {
     // This method makes it so that when the user clicks the back to aisles button,
@@ -195,7 +180,7 @@ public class HumanMemoryController extends MemoryController {
     aisle2Pane.setVisible(true);
     shoppingCartHitbox.setVisible(true);
     backToAislesButton.setVisible(true);
-    // checkIfItemHasBeenCollected();
+    // might need to use checkIfItemHasBeenCollected();
   }
 
   @FXML
@@ -204,7 +189,7 @@ public class HumanMemoryController extends MemoryController {
     aisle3Pane.setVisible(true);
     purseHitbox.setVisible(true);
     backToAislesButton.setVisible(true);
-    // checkIfItemHasBeenCollected();
+    // might need to use checkIfItemHasBeenCollected();
   }
 
   // @FXML
@@ -232,8 +217,6 @@ public class HumanMemoryController extends MemoryController {
         handleItemInCart(itemName);
         // Hide the item once in cart
         item.setVisible(false);
-      } else {
-        return;
       }
     });
   }
@@ -277,6 +260,17 @@ public class HumanMemoryController extends MemoryController {
   @FXML
   private void interactableDone() {
     if (isFirstTimeInteract) {
+      try (InputStream is = getClass().getClassLoader().getResourceAsStream("prompts/humanInteractableContext.txt")) {
+        if (is == null) {
+          throw new IOException("Resource not found: prompts/humanInteractableContext.txt");
+        }
+        interactableContext = new String(is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      App.chatHistoryMap.put("Context", interactableContext);
+      System.out.println(App.getChatHistoryString());
+
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override
         protected Void call() throws Exception {
