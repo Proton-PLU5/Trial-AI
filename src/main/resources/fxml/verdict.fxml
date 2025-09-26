@@ -46,7 +46,7 @@
          <font>
             <Font size="30.0" />
          </font></TextArea>
-      <Label fx:id="verdictCorrectLabel" layoutX="498.0" layoutY="56.0" text="Your verdict was..." textFill="WHITE" visible="false">
+      <Label fx:id="verdictCorrectLabel" alignment="CENTER" layoutY="56.0" prefHeight="48.0" prefWidth="1408.0" text="Your verdict was..." textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Consolas" size="40.0" />
          </font>
