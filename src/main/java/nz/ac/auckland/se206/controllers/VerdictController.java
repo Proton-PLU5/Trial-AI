@@ -87,7 +87,7 @@ public class VerdictController implements TimableScene {
 
     // Add ourselves to the timer service
     App.timer.stopTimer();
-    verdictTimer = new Timer(10, new Consumer<Void>() {
+    verdictTimer = new Timer(60, new Consumer<Void>() {
       @Override
       public void accept(Void t) {
         timeOutOption();
