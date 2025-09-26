@@ -136,7 +136,7 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="cctvPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+      <AnchorPane fx:id="cctvPane" prefHeight="200.0" prefWidth="200.0">
          <children>
             <ImageView fitHeight="736.0" fitWidth="1408.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -148,9 +148,9 @@
             <Rectangle fx:id="rec2" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="382.0" layoutX="429.0" layoutY="260.0" onMousePressed="#onTargetMousePressed" onMouseReleased="#onTargetMouseReleased" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="137.0" />
             <Rectangle fx:id="rec3" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="340.0" layoutX="645.0" layoutY="283.0" onMousePressed="#onTargetMousePressed" onMouseReleased="#onTargetMouseReleased" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="113.0" />
             <Rectangle fx:id="rec4" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="373.0" layoutX="894.0" layoutY="268.0" onMousePressed="#onTargetMousePressed" onMouseReleased="#onTargetMouseReleased" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="113.0" />
-            <StackPane fx:id="customerDetailsPane" layoutX="14.0" layoutY="49.0" prefHeight="275.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;" visible="false">
+            <StackPane fx:id="customerDetailsPane" layoutX="14.0" layoutY="49.0" prefHeight="305.0" prefWidth="200.0" style="-fx-background-color: #1d4ed8; -fx-border-color: #3b82f6; -fx-border-width: 3; -fx-border-radius: 20; -fx-background-radius: 20;" visible="false">
                <children>
-                  <GridPane alignment="CENTER" StackPane.alignment="CENTER">
+                  <GridPane alignment="CENTER" prefHeight="183.0" prefWidth="194.0" StackPane.alignment="CENTER">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
@@ -165,42 +165,42 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="customerIdLabel" prefHeight="47.0" prefWidth="149.0" text="Customer 1">
+                        <Label fx:id="customerIdLabel" prefHeight="47.0" prefWidth="149.0" stylesheets="@../css/button.css" text="Customer 1" textFill="WHITE">
                            <font>
                               <Font name="Consolas Bold" size="27.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="23.0" prefWidth="162.0" text="Estimated Age:" GridPane.rowIndex="1">
+                        <Label prefHeight="23.0" prefWidth="162.0" stylesheets="@../css/button.css" text="Estimated Age:" textFill="WHITE" GridPane.rowIndex="1">
                            <font>
                               <Font name="Consolas Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="customerAgeLabel" text="24 Years Old" GridPane.rowIndex="2">
+                        <Label fx:id="customerAgeLabel" stylesheets="@../css/button.css" text="24 Years Old" GridPane.rowIndex="2">
                            <font>
                               <Font name="Consolas" size="20.0" />
                            </font>
                         </Label>
-                        <Label text="Shopping Status:" GridPane.rowIndex="3">
+                        <Label stylesheets="@../css/button.css" text="Shopping Status:" GridPane.rowIndex="3">
                            <font>
                               <Font name="Consolas Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="customerStatusLabel" text="New Shopper" GridPane.rowIndex="4">
+                        <Label fx:id="customerStatusLabel" stylesheets="@../css/button.css" text="New Shopper" GridPane.rowIndex="4">
                            <font>
                               <Font name="Consolas" size="20.0" />
                            </font>
                         </Label>
-                        <Label text="Criminal Record:" GridPane.rowIndex="5">
+                        <Label stylesheets="@../css/button.css" text="Criminal Record:" GridPane.rowIndex="5">
                            <font>
                               <Font name="Consolas Bold" size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="customerCriminalRecordLabel" text="No Record" GridPane.rowIndex="6">
+                        <Label fx:id="customerCriminalRecordLabel" stylesheets="@../css/button.css" text="No Record" GridPane.rowIndex="6">
                            <font>
                               <Font name="Consolas" size="20.0" />
                            </font>
                         </Label>
-                        <Button fx:id="customerAcceptButton" mnemonicParsing="false" onAction="#onCustomerDetailsButtonPressed" prefHeight="25.0" prefWidth="180.0" text="Accept" GridPane.rowIndex="7" />
+                        <Button fx:id="customerAcceptButton" mnemonicParsing="false" onAction="#onCustomerDetailsButtonPressed" prefHeight="47.0" prefWidth="180.0" stylesheets="@../css/button.css" text="Accept" textFill="WHITE" GridPane.rowIndex="7" />
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="10.0" />
@@ -257,7 +257,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="chatPane" layoutX="380.0" layoutY="113.0" prefHeight="546.0" prefWidth="548.0" style="-fx-background-color: #1d4ed8; -fx-border-color: #3b82f6; -fx-border-radius: 20; -fx-border-width: 4; -fx-background-radius: 20;">
+      <AnchorPane fx:id="chatPane" layoutX="380.0" layoutY="113.0" prefHeight="546.0" prefWidth="548.0" style="-fx-background-color: #1d4ed8; -fx-border-color: #3b82f6; -fx-border-radius: 20; -fx-border-width: 4; -fx-background-radius: 20;" visible="false">
          <children>
             <Label layoutX="18.0" layoutY="8.0" prefHeight="37.0" prefWidth="176.0" style="-fx-font-size: 24; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Conversation">
                <font>
