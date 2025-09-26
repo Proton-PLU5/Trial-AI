@@ -59,7 +59,7 @@ public abstract class MemoryController implements TimableScene {
   @FXML
   private GridPane conversationGridPane;
   @FXML
-  private ScrollPane conversationScrollPane;
+  protected ScrollPane conversationScrollPane;
   @FXML
   private TextArea textArea;
 
@@ -508,6 +508,25 @@ public abstract class MemoryController implements TimableScene {
       return false;
     }
     return isFirstTimeInteract;
+  }
+
+  /**
+   * Handles the completion of an interactable element.
+   */
+  @FXML
+  protected void minorInteractableDoneString(String locationOfContextString, String interactableContext) {
+    try (InputStream is = getClass().getClassLoader()
+        .getResourceAsStream("prompts/" + locationOfContextString)) {
+      if (is == null) {
+        throw new IOException("Resource not found: prompts/" + locationOfContextString);
+      }
+      interactableContext = new String(
+          is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
+    System.out.println(App.getChatHistoryString());
   }
 
   protected void createScaleAnimation(Rectangle node,

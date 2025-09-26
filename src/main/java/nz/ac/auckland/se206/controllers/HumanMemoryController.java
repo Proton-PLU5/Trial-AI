@@ -17,6 +17,7 @@ import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.DraggableMaker;
+import nz.ac.auckland.se206.utils.Tuple;
 
 public class HumanMemoryController extends MemoryController {
 
@@ -246,16 +247,19 @@ public class HumanMemoryController extends MemoryController {
         System.out.println("Item 1 in cart!"); // Debugging
         // Check off the shopping list
         markerLine1.setVisible(true);
+        minorInteractableDoneString("humanInteractableContext1.txt", interactableContext);
         break;
       case "aisle2Item1":
         System.out.println("Item 2 in cart!"); // Debugging
         // Check off the shopping list
         markerLine2.setVisible(true);
+        minorInteractableDoneString("humanInteractableContext2a.txt", interactableContext);
         break;
       case "aisle2Item2":
         System.out.println("Item 3 in cart!"); // Debugging
         // Check off the shopping list
         markerLine3.setVisible(true);
+        minorInteractableDoneString("humanInteractableContext2b.txt", interactableContext);
         break;
       case "aisle3Item":
         System.out.println("Item 4 in cart!"); // Debugging
