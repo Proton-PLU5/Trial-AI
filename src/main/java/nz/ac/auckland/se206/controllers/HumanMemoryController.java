@@ -232,7 +232,9 @@ public class HumanMemoryController extends MemoryController {
         System.out.println("Item 4 in cart!"); // Debugging
         // Check off the shopping list
         markerLine4.setVisible(true);
-        interactableDone(isFirstTimeInteract, "humanInteractableContext.txt", "humanInteractableDone.txt",
+        interactableDone(isFirstTimeInteract,
+            "humanInteractableContext.txt",
+            "humanInteractableDone.txt",
             interactableContext);
         break;
       default:

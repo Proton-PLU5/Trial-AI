@@ -27,7 +27,7 @@ public class StartController implements TimableScene {
   }
 
   @FXML
-  private void clickPlayButton() {
+  private void onPlayButtonPressed() {
     // This method handles the play button click and switches to the room scene
     try {
       // Timer Setup
