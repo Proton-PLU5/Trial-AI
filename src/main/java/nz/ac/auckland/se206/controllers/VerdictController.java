@@ -318,6 +318,7 @@ public class VerdictController implements TimableScene {
   }
 
   private void setVerdictCorrectLabelLayout() {
+    // See if the verdict is correct and then change the scene
     if (rationale.isEmpty()) {
       if (!choiceMade) {
         verdictCorrectLabel.setLayoutX(201);

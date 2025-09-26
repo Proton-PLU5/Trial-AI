@@ -44,7 +44,7 @@ public class AiMemoryController extends MemoryController {
   private Circle clipCircle;
   private boolean isXrayMode = false;
 
-  public String interactableContext = "";
+  private String interactableContext = "";
 
   public AiMemoryController() {
     super("prompts/ai.txt");

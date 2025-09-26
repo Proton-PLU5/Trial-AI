@@ -67,7 +67,7 @@ public class DefendantMemoryController extends MemoryController {
   private final String correctPin = "1 2 3 4";
   private AnimationTimer progressArcAnimationTimer;
 
-  public String interactableContext = "";
+  private String interactableContext = "";
 
   static {
     var resource = DefendantMemoryController.class.getResource("/sounds/keypad.mp3");

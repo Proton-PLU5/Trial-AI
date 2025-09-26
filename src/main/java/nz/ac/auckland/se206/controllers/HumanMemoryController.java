@@ -100,7 +100,7 @@ public class HumanMemoryController extends MemoryController {
   private ArrayList<ImageView> aisleItems = new ArrayList<ImageView>();
   private ArrayList<ImageView> itemMarkers = new ArrayList<ImageView>();
 
-  public String interactableContext = "";
+  private String interactableContext = "";
 
   public HumanMemoryController() {
     super("prompts/human.txt");
