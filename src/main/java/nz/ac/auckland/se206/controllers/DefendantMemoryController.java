@@ -1,6 +1,5 @@
 package nz.ac.auckland.se206.controllers;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import javafx.animation.AnimationTimer;
@@ -20,6 +19,7 @@ import javafx.scene.shape.Arc;
 import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
+import nz.ac.auckland.se206.utils.Tuple;
 
 public class DefendantMemoryController extends MemoryController {
 
@@ -67,10 +67,7 @@ public class DefendantMemoryController extends MemoryController {
   private static AudioClip keyPadAudioClip;
   private AnimationTimer progressArcAnimationTimer;
 
-  public static boolean hasChattedWithDefendant;
-  public static boolean isFirstTimeInteract = true;
   public String interactableContext = "";
-
 
   static {
     var resource = DefendantMemoryController.class.getResource("/sounds/keypad.mp3");
@@ -311,7 +308,7 @@ public class DefendantMemoryController extends MemoryController {
       } catch (IOException e) {
         e.printStackTrace();
       }
-      App.chatHistoryMap.put("Context", interactableContext);
+      App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
       System.out.println(App.getChatHistoryString());
 
       Task<Void> interactableDoneTask = new Task<Void>() {

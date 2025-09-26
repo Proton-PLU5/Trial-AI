@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.SceneManager;
+import nz.ac.auckland.se206.utils.Tuple;
 
 public class AiMemoryController extends MemoryController {
 
@@ -47,10 +48,7 @@ public class AiMemoryController extends MemoryController {
   private Circle clipCircle;
   private boolean isXrayMode = false;
 
-  public static boolean isFirstTimeInteract = true;
-  public static boolean hasChattedWithAi;
   public String interactableContext = "";
-
 
   public AiMemoryController() {
     super("prompts/witnessAi.txt");
@@ -124,7 +122,9 @@ public class AiMemoryController extends MemoryController {
       } catch (IOException e) {
         e.printStackTrace();
       }
-      App.chatHistoryMap.put("Context", interactableContext);
+
+      App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
+
       System.out.println(App.getChatHistoryString());
       // LLM sends message when interactable is done
       Task<Void> interactableDoneTask = new Task<Void>() {
