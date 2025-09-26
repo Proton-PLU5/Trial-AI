@@ -170,7 +170,7 @@ public class DefendantMemoryController extends MemoryController {
       loginPane.setVisible(false);
       cctvPane.setVisible(true);
       titleBlock.setVisible(true);
-      descriptionLabel.setText("Click on the different characters to view their details.");
+      descriptionLabel.setText("Press and hold on the different characters to view their details.");
       titleLabel.setText("View Character Details");
       createTitleDisappearAnimation();
     } else {
