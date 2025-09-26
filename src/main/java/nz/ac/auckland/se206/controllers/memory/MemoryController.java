@@ -95,7 +95,9 @@ public abstract class MemoryController implements TimableScene {
 
   protected AudioClip notificationSound;
   protected String promptId = "";
-  protected final String INITIAL_PROMPT = "Introduce yourself to the user with a short and concise message.";
+  protected final String INITIAL_PROMPT = "If there are no previous messages you can talk about with the user,"
+      + "then you should introduce yourself to the user with a short and concise message. "
+      + "Otherwise, you should respond to the previous conversations.";
 
   // Constructor
   public MemoryController(String promptId) {
