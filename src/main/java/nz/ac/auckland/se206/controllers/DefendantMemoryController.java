@@ -11,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.media.AudioClip;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
@@ -70,7 +69,6 @@ public class DefendantMemoryController extends MemoryController {
   private String interactableContext = "";
 
 
-  public DefendantMemoryController() {
     super("prompts/defendant.txt");
   }
 
