@@ -376,7 +376,7 @@ public abstract class MemoryController implements TimableScene {
           Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-              chatCompletionRequest.addMessage("system", INITIAL_PROMPT);
+              chatCompletionRequest.addMessage("system", initalPrompt);
               String output = sendGptRequest("");
               // Update the chat area with the AI's response
               Platform.runLater(() -> {
