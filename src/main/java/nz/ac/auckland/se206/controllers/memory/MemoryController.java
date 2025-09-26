@@ -58,7 +58,7 @@ public abstract class MemoryController implements TimableScene {
   @FXML
   private GridPane conversationGridPane;
   @FXML
-  private ScrollPane conversationScrollPane;
+  protected ScrollPane conversationScrollPane;
   @FXML
   private TextArea textArea;
 
