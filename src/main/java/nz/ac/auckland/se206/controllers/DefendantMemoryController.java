@@ -264,8 +264,9 @@ public class DefendantMemoryController extends MemoryController {
             customerCriminalRecordLabel.setText("No Record");
           }
         }
-      };
+      }
     };
+
     progressArcAnimationTimer.start();
   }
 
