@@ -165,7 +165,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="customerIDLabel" prefHeight="47.0" prefWidth="149.0" text="Customer 1">
+                        <Label fx:id="customerIdLabel" prefHeight="47.0" prefWidth="149.0" text="Customer 1">
                            <font>
                               <Font name="Consolas Bold" size="27.0" />
                            </font>

@@ -55,7 +55,7 @@ public class DefendantMemoryController extends MemoryController {
   @FXML
   private StackPane customerDetailsPane;
   @FXML
-  private Label customerIDLabel;
+  private Label customerIdLabel;
   @FXML
   private Label customerStatusLabel;
   @FXML
@@ -237,7 +237,7 @@ public class DefendantMemoryController extends MemoryController {
           // Check if the source of the event is one of the rectangles
           // Check by getting the ID of the source
           if (sourceNode.getId().equals(rec1.getId())) {
-            customerIDLabel.setText("Customer 1");
+            customerIdLabel.setText("Customer 1");
             customerStatusLabel.setText("New Shopper");
             customerAgeLabel.setText("Age: 25");
             customerCriminalRecordLabel.setText("Shoplifting");
@@ -248,17 +248,17 @@ public class DefendantMemoryController extends MemoryController {
             interactableDone();
 
           } else if (sourceNode.getId().equals(rec2.getId())) {
-            customerIDLabel.setText("Customer 2");
+            customerIdLabel.setText("Customer 2");
             customerStatusLabel.setText("Returning Shopper");
             customerAgeLabel.setText("Age: 40");
             customerCriminalRecordLabel.setText("No Record");
           } else if (sourceNode.getId().equals(rec3.getId())) {
-            customerIDLabel.setText("Customer 3");
+            customerIdLabel.setText("Customer 3");
             customerStatusLabel.setText("New Shopper");
             customerAgeLabel.setText("Age: 30");
             customerCriminalRecordLabel.setText("No Record");
           } else if (sourceNode.getId().equals(rec4.getId())) {
-            customerIDLabel.setText("Customer 4");
+            customerIdLabel.setText("Customer 4");
             customerStatusLabel.setText("Loyal Shopper");
             customerAgeLabel.setText("Age: 35");
             customerCriminalRecordLabel.setText("No Record");

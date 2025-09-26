@@ -93,7 +93,7 @@ public abstract class MemoryController implements TimableScene {
 
   protected AudioClip notificationSound;
   protected String promptId = "";
-  protected final String INITIAL_PROMPT = "If there are no previous"
+  protected final String initalPrompt = "If there are no previous"
       + " messages you can talk about with the user,"
       + "then you should introduce yourself to the user with a short and concise message. "
       + "Otherwise, you should respond to the previous conversations.";
@@ -378,7 +378,7 @@ public abstract class MemoryController implements TimableScene {
       Task<Void> task = new Task<Void>() {
         @Override
         protected Void call() throws Exception {
-          String output = sendGptRequest(INITIAL_PROMPT);
+          String output = sendGptRequest(initalPrompt);
 
           // Update the chat area with the AI's response
           Platform.runLater(() -> {

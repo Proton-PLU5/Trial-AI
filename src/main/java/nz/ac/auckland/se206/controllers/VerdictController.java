@@ -308,7 +308,8 @@ public class VerdictController implements TimableScene {
     // Loading the prompt into the chats and stuff
     try {
       URL promptUrl = this.getClass().getClassLoader().getResource(promptId);
-      List<String> promptStrings = Files.readAllLines(Paths.get(promptUrl.toURI()), Charset.defaultCharset());
+      List<String> promptStrings = Files.readAllLines(
+          Paths.get(promptUrl.toURI()), Charset.defaultCharset());
       return String.join("\n", promptStrings);
     } catch (IOException | URISyntaxException e) {
       e.printStackTrace();
