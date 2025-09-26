@@ -295,7 +295,8 @@ public class DefendantMemoryController extends MemoryController {
 
   // Add interaction event when shoplifting info is revealed
   @FXML
-  private void interactableDone() {
+  @Override
+  protected void interactableDone() {
     if (isFirstTimeInteract) {
       try (InputStream is = getClass().getClassLoader()
           .getResourceAsStream("prompts/defendantInteractableContext.txt")) {
@@ -334,4 +335,5 @@ public class DefendantMemoryController extends MemoryController {
       isFirstTimeInteract = false;
     }
   }
+
 }

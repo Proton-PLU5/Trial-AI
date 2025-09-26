@@ -108,7 +108,8 @@ public class AiMemoryController extends MemoryController {
 
   // Add interaction event when concealed item is detected here
   @FXML
-  private void interactableDone() {
+  @Override
+  protected void interactableDone() {
     if (isXrayMode && isFirstTimeInteract) {
       try (InputStream is = getClass().getClassLoader().getResourceAsStream(
           "prompts/aiInteractableContext.txt")) {
