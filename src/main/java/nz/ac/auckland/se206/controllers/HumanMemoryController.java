@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -17,7 +18,6 @@ import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.DraggableMaker;
-import nz.ac.auckland.se206.utils.Tuple;
 
 public class HumanMemoryController extends MemoryController {
 
@@ -129,6 +129,10 @@ public class HumanMemoryController extends MemoryController {
     itemMarkers.add(markerLine3);
     itemMarkers.add(markerLine4);
 
+    aisle1Rectangle.setVisible(true);
+    aisle2Rectangle.setVisible(false);
+    aisle3Rectangle.setVisible(false);
+
     // Initial UI setup
     for (ImageView item : aisleItems) {
       item.setVisible(true);
@@ -178,6 +182,7 @@ public class HumanMemoryController extends MemoryController {
     shoppingCartHitbox.setVisible(true);
     backToAislesButton.setVisible(true);
     completedOne = true;
+    aisle2Rectangle.setVisible(true);
     // might need to use checkIfItemHasBeenCollected();
   }
 
@@ -190,6 +195,7 @@ public class HumanMemoryController extends MemoryController {
       shoppingCartHitbox.setVisible(true);
       backToAislesButton.setVisible(true);
       completedTwo = true;
+      aisle3Rectangle.setVisible(true);
       // might need to use checkIfItemHasBeenCollected();
     } else {
 
