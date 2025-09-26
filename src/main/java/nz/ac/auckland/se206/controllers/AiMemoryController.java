@@ -47,7 +47,7 @@ public class AiMemoryController extends MemoryController {
   public static boolean hasChattedWithAi;
 
   public AiMemoryController() {
-    super("prompts/witnessAi.txt");
+    super("prompts/ai.txt");
   }
 
   @Override
