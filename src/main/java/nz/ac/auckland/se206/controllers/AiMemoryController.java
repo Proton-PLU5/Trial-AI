@@ -130,7 +130,7 @@ public class AiMemoryController extends MemoryController {
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override
         protected Void call() throws Exception {
-          chatCompletionRequest.addMessage("system",loadPrompt("prompts/aiInteractableDone.txt"));
+          chatCompletionRequest.addMessage("system", loadPrompt("prompts/aiInteractableDone.txt"));
           String output = sendGptRequest("");
 
           // Update the chat area with the AI's response
