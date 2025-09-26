@@ -235,7 +235,6 @@ public class VerdictController implements TimableScene {
         runGpt(msg);
       }
     } else {
-      return;
     }
   }
 

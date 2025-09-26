@@ -5,8 +5,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javafx.animation.PauseTransition;
-import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -22,7 +20,6 @@ import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.DraggableMaker;
-import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.Tuple;
 
 public class HumanMemoryController extends MemoryController {

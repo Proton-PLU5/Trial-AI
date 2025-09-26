@@ -128,7 +128,7 @@ public class DefendantMemoryController extends MemoryController {
   }
 
   @FXML
-  private void pressKeypadButton(ActionEvent event) {
+  private void clickKeypadButton(ActionEvent event) {
     Button button = (Button) event.getSource();
     String buttonText = button.getText();
 
@@ -187,7 +187,7 @@ public class DefendantMemoryController extends MemoryController {
    * @param event The action event triggered by clicking the login button
    */
   @FXML
-  private void pressLoginButton(ActionEvent event) {
+  private void clickLoginButton(ActionEvent event) {
     initialPane.setVisible(false);
     keypadPane.setVisible(true);
   }
