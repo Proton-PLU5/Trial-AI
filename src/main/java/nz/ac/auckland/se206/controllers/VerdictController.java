@@ -167,6 +167,9 @@ public class VerdictController implements TimableScene {
     HumanMemoryController.itemCollected = new HashMap<>();
     HumanMemoryController.itemToLabel = new HashMap<>();
     HumanMemoryController.isFirstTimeInteract = true;
+    HumanMemoryController.completedOne = false;
+    HumanMemoryController.completedTwo = false;
+    HumanMemoryController.completedThree = false;
 
     DefendantMemoryController.hasChattedWithDefendant = false;
     DefendantMemoryController.loginSequenceCompleted = false;
