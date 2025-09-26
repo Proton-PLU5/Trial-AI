@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -25,6 +24,8 @@ public class HumanMemoryController extends MemoryController {
   public static Map<String, Boolean> itemCollected = new HashMap<>();
   public static Map<String, ImageView> itemToLabel = new HashMap<>();
   public static boolean isFirstTimeInteract = true;
+  private static boolean hasAisle1BeenCompleted = false;
+  private static boolean hasAisle2BeenCompleted = false;
 
   @FXML
   private Button roomBtn;
@@ -135,7 +136,18 @@ public class HumanMemoryController extends MemoryController {
       item.setVisible(true);
     }
 
-    // Load shopping list items, if collected, then make invisible
+    if (!hasAisle1BeenCompleted) {
+      aisle2Rectangle.setVisible(false);
+    } else {
+      aisle2Rectangle.setVisible(true);
+    }
+
+    if (!hasAisle2BeenCompleted) {
+      aisle3Rectangle.setVisible(false);
+    } else {
+      aisle3Rectangle.setVisible(true);
+    }
+
     for (int i = 0; i < aisleItems.size(); i++) {
       if (itemCollected.getOrDefault(aisleItems.get(i).getId(), false)) {
         aisleItems.get(i).setVisible(false);
@@ -167,7 +179,6 @@ public class HumanMemoryController extends MemoryController {
     aisle1Pane.setVisible(true);
     shoppingCartHitbox.setVisible(true);
     backToAislesButton.setVisible(true);
-    aisle2Rectangle.setVisible(true);
     // might need to use checkIfItemHasBeenCollected();
   }
 
@@ -227,18 +238,28 @@ public class HumanMemoryController extends MemoryController {
         // Check off the shopping list
         markerLine1.setVisible(true);
         minorInteractableDoneString("humanInteractableContext1.txt", interactableContext);
+        hasAisle1BeenCompleted = true;
+        aisle2Rectangle.setVisible(true);
         break;
       case "aisle2Item1":
         System.out.println("Item 2 in cart!"); // Debugging
         // Check off the shopping list
         markerLine2.setVisible(true);
         minorInteractableDoneString("humanInteractableContext2a.txt", interactableContext);
+        if (markerLine2.isVisible() && markerLine3.isVisible()) {
+          hasAisle2BeenCompleted = true;
+          aisle3Rectangle.setVisible(true);
+        }
         break;
       case "aisle2Item2":
         System.out.println("Item 3 in cart!"); // Debugging
         // Check off the shopping list
         markerLine3.setVisible(true);
         minorInteractableDoneString("humanInteractableContext2b.txt", interactableContext);
+        if (markerLine2.isVisible() && markerLine3.isVisible()) {
+          hasAisle2BeenCompleted = true;
+          aisle3Rectangle.setVisible(true);
+        }
         break;
       case "aisle3Item":
         System.out.println("Item 4 in cart!"); // Debugging
