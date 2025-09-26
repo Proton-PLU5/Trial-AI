@@ -98,7 +98,7 @@
                   <Font name="System Bold" size="39.0" />
                </font>
             </Label>
-            <Label fx:id="descriptionLabel" alignment="BASELINE_LEFT" layoutX="14.0" layoutY="48.0" prefHeight="37.0" prefWidth="523.0" text="Click to use x-ray vision and find the unscanned item" textFill="WHITE">
+            <Label fx:id="descriptionLabel" alignment="BASELINE_LEFT" layoutX="14.0" layoutY="48.0" prefHeight="37.0" prefWidth="523.0" text="Click to use x-ray vision and find any unscanned items." textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>

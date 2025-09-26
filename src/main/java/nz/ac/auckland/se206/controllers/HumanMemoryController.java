@@ -111,7 +111,6 @@ public class HumanMemoryController extends MemoryController {
   protected void initialize() {
     initializeRectangleAnimations();
     App.timer.addConsumer(getTimerConsumer());
-    createTitleDisappearAnimation();
     super.initialize();
 
     this.roleOfCharacter = "Maria Shader";
