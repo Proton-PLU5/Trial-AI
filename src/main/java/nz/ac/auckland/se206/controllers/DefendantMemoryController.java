@@ -20,7 +20,6 @@ import nz.ac.auckland.se206.controllers.memory.MemoryController;
 public class DefendantMemoryController extends MemoryController {
 
   public static boolean hasChattedWithDefendant;
-  private static AudioClip keyPadAudioClip;
   public static boolean isFirstTimeInteract = true;
   public static boolean loginSequenceCompleted = false;
 
@@ -70,17 +69,6 @@ public class DefendantMemoryController extends MemoryController {
 
   private String interactableContext = "";
 
-  static {
-    var resource = DefendantMemoryController.class.getResource("/sounds/keypad.mp3");
-    System.out.println("[DEBUG] keypad.mp3 resource: " + resource);
-    if (resource != null) {
-      keyPadAudioClip = new AudioClip(resource.toExternalForm());
-      keyPadAudioClip.setVolume(1.0); // Set volume to max
-      Platform.runLater(() -> keyPadAudioClip.play());
-    } else {
-      System.out.println("[ERROR] Could not find keypad.mp3 resource!");
-    }
-  }
 
   public DefendantMemoryController() {
     super("prompts/defendant.txt");
