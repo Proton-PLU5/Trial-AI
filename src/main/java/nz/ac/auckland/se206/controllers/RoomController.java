@@ -62,7 +62,7 @@ public class RoomController implements TimableScene {
   @FXML
   public void initialize() {
     initializeRectangleAnimations();
-    
+
     App.timer.addConsumer(this.getTimerConsumer());
 
     // Check if player has chatted with all three participants
@@ -76,6 +76,15 @@ public class RoomController implements TimableScene {
       isFirstTimeInit = false;
     } else {
       conversationPane.setVisible(false);
+    }
+    if (characterInteracted.getOrDefault("defendant", false)) {
+      defendant.setVisible(false);
+    }
+    if (characterInteracted.getOrDefault("witnessAi", false)) {
+      witnessAi.setVisible(false);
+    }
+    if (characterInteracted.getOrDefault("witnessHuman", false)) {
+      witnessHuman.setVisible(false);
     }
   }
 
