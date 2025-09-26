@@ -350,6 +350,7 @@ public abstract class MemoryController implements TimableScene {
     Platform.runLater(() -> {
       // Load initial messages
       StringBuilder systemPromptBuilder = new StringBuilder();
+      boolean hasBeenChattedWith = false;
 
       // Load the chat history, iterate through the map and append to the system
       // prompt.
@@ -360,6 +361,7 @@ public abstract class MemoryController implements TimableScene {
         systemPromptBuilder.append(displayRole).append(":\n").append(message).append("\n");
         // Show all messages for this character (AI and User)
         if (role.equals(this.roleOfCharacter) || role.endsWith(this.roleOfCharacter)) {
+          hasBeenChattedWith = true;
           appendMessageToChat(displayRole, message);
         }
       }
@@ -370,7 +372,7 @@ public abstract class MemoryController implements TimableScene {
         pt.play();
       });
 
-      if (systemPromptBuilder.isEmpty()) {
+      if (!hasBeenChattedWith) {
         Platform.runLater(() -> {
           Task<Void> task = new Task<Void>() {
             @Override
