@@ -257,14 +257,14 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="chatPane" layoutX="380.0" layoutY="113.0" prefHeight="546.0" prefWidth="548.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 20;">
+      <AnchorPane fx:id="chatPane" layoutX="380.0" layoutY="113.0" prefHeight="546.0" prefWidth="548.0" style="-fx-background-color: #1d4ed8; -fx-border-color: #3b82f6; -fx-border-radius: 20; -fx-border-width: 4; -fx-background-radius: 20;">
          <children>
-            <Label layoutX="14.0" layoutY="8.0" text="Conversation">
+            <Label layoutX="18.0" layoutY="8.0" prefHeight="37.0" prefWidth="176.0" style="-fx-font-size: 24; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Conversation">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Button fx:id="sendButton" layoutX="446.0" layoutY="471.0" mnemonicParsing="false" onAction="#onSendButtonPressed" prefHeight="60.0" prefWidth="87.0" style="-fx-font-size: 16; -fx-font-weight: bold;" text="Send">
+            <Button fx:id="sendButton" layoutX="446.0" layoutY="471.0" mnemonicParsing="false" onAction="#onSendButtonPressed" prefHeight="60.0" prefWidth="87.0" style="-fx-font-size: 16; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Send">
                <font>
                   <Font size="19.0" />
                </font></Button>
@@ -277,7 +277,7 @@
                   </GridPane>
                </content>
             </ScrollPane>
-            <TextArea fx:id="textArea" layoutX="17.0" layoutY="471.0" prefHeight="60.0" prefWidth="423.0" promptText="Enter your message here!" style="-fx-font-size: 16; -fx-border-width: 1; -fx-border-color: #555555;" wrapText="true">
+            <TextArea fx:id="textArea" layoutX="16.0" layoutY="471.0" prefHeight="60.0" prefWidth="424.0" promptText="Enter your message here!" style="-fx-font-size: 16;" wrapText="true">
                <font>
                   <Font size="16.0" />
                </font>

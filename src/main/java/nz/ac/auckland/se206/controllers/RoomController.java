@@ -62,7 +62,7 @@ public class RoomController implements TimableScene {
     App.timer.addConsumer(this.getTimerConsumer());
 
     // Check if player has chatted with all three participants
-    enableGuessButton();
+    // enableGuessButton();
 
     if (isFirstTimeInit) {
       startAudioMediaPlayer = new MediaPlayer(
@@ -83,7 +83,7 @@ public class RoomController implements TimableScene {
       }
       finalSceneLoaded = true;
       SceneManager.switchScene(SceneManager.Scenes.verdict);
-      SceneManager.setStyleSheet("/css/style.css");
+      SceneManager.setStyleSheet("/css/verdict.css");
     }
   }
 

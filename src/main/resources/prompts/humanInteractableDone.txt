@@ -1,3 +1,4 @@
-By viewing your memory, the user has seen things from your point of view. They saw that you took a chocolate bar from the store and put it in your purse instead of your shopping cart, seemingly evidence of you stealing.
-You did indeed steal it, but you will try to defend yourself, e.g. saying you just forgot to pay for it later.
+By viewing your memory, the user has seen things from your point of view.
+They saw that you took a chocolate bar from the store and put it in your purse instead of your shopping cart, seemingly evidence of you stealing.
+You did indeed steal it, but you will try to defend yourself, e.g. saying you just ran out of room in your cart and you were still going to pay for it at the checkout.
 The user has only seen this info visually, so inform the user of the situation and explain exactly what they're seeing.

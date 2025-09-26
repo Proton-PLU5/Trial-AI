@@ -1,5 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
+import java.io.IOException;
+import java.io.InputStream;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -17,6 +19,7 @@ import javafx.scene.shape.Arc;
 import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
+import nz.ac.auckland.se206.utils.Tuple;
 
 public class DefendantMemoryController extends MemoryController {
 
@@ -63,6 +66,8 @@ public class DefendantMemoryController extends MemoryController {
   private String pin = "_ _ _ _";
   private final String correctPin = "1 2 3 4";
   private AnimationTimer progressArcAnimationTimer;
+
+  public String interactableContext = "";
 
   static {
     var resource = DefendantMemoryController.class.getResource("/sounds/keypad.mp3");
@@ -294,6 +299,18 @@ public class DefendantMemoryController extends MemoryController {
   @FXML
   private void interactableDone() {
     if (isFirstTimeInteract) {
+      try (InputStream is = getClass().getClassLoader()
+          .getResourceAsStream("prompts/defendantInteractableContext.txt")) {
+        if (is == null) {
+          throw new IOException("Resource not found: prompts/defendantInteractableContext.txt");
+        }
+        interactableContext = new String(is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
+      System.out.println(App.getChatHistoryString());
+
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override
         protected Void call() throws Exception {

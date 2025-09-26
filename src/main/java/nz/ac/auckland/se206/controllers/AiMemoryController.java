@@ -1,5 +1,8 @@
 package nz.ac.auckland.se206.controllers;
 
+
+import java.io.IOException;
+import java.io.InputStream;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -13,6 +16,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
+import nz.ac.auckland.se206.utils.SceneManager;
+import nz.ac.auckland.se206.utils.Tuple;
 
 public class AiMemoryController extends MemoryController {
 
@@ -40,8 +45,10 @@ public class AiMemoryController extends MemoryController {
   private Circle clipCircle;
   private boolean isXrayMode = false;
 
+  public String interactableContext = "";
+
   public AiMemoryController() {
-    super("prompts/witnessAi.txt");
+    super("prompts/ai.txt");
   }
 
   @Override
@@ -104,6 +111,18 @@ public class AiMemoryController extends MemoryController {
   @FXML
   private void interactableDone() {
     if (isXrayMode && isFirstTimeInteract) {
+      try (InputStream is = getClass().getClassLoader().getResourceAsStream("prompts/aiInteractableContext.txt")) {
+        if (is == null) {
+          throw new IOException("Resource not found: prompts/aiInteractableContext.txt");
+        }
+        interactableContext = new String(is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      
+      App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
+      
+      System.out.println(App.getChatHistoryString());
       // LLM sends message when interactable is done
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override
