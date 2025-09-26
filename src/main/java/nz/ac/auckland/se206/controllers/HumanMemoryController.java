@@ -255,11 +255,13 @@ public class HumanMemoryController extends MemoryController {
   @FXML
   private void interactableDone() {
     if (isFirstTimeInteract) {
-      try (InputStream is = getClass().getClassLoader().getResourceAsStream("prompts/humanInteractableContext.txt")) {
+      try (InputStream is = getClass().getClassLoader().getResourceAsStream(
+          "prompts/humanInteractableContext.txt")) {
         if (is == null) {
           throw new IOException("Resource not found: prompts/humanInteractableContext.txt");
         }
-        interactableContext = new String(is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        interactableContext = new String(
+            is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
       } catch (IOException e) {
         e.printStackTrace();
       }
