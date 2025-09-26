@@ -27,6 +27,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.DraggableMaker;
 import nz.ac.auckland.se206.utils.SceneManager;
+import nz.ac.auckland.se206.utils.Tuple;
 
 public class HumanMemoryController extends MemoryController {
 
@@ -103,8 +104,6 @@ public class HumanMemoryController extends MemoryController {
   private ArrayList<ImageView> aisleItems = new ArrayList<ImageView>();
   private ArrayList<ImageView> itemMarkers = new ArrayList<ImageView>();
 
-  public static boolean hasChattedWithHuman;
-  public static boolean isFirstTimeInteract = true;
   public String interactableContext = "";
 
   public HumanMemoryController() {
@@ -268,7 +267,7 @@ public class HumanMemoryController extends MemoryController {
       } catch (IOException e) {
         e.printStackTrace();
       }
-      App.chatHistoryMap.put("Context", interactableContext);
+      App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
       System.out.println(App.getChatHistoryString());
 
       Task<Void> interactableDoneTask = new Task<Void>() {
