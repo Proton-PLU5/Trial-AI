@@ -68,7 +68,7 @@ public class DefendantMemoryController extends MemoryController {
 
   private String interactableContext = "";
 
-
+  public DefendantMemoryController() {
     super("prompts/defendant.txt");
   }
 
