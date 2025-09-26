@@ -8,9 +8,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.function.Consumer;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -65,7 +65,7 @@ public class VerdictController implements TimableScene {
   private String rationalePrompt = "";
   private ChatCompletionRequest chatCompletionRequest = null;
   private boolean rationaleSubmitted = false;
-  public Timer verdictTimer = null;
+  private Timer verdictTimer = null;
   private StringBuilder gameOverText = new StringBuilder("");
   private String systemPrompt = "";
 
@@ -123,7 +123,9 @@ public class VerdictController implements TimableScene {
   private void handleYesClicked() {
     choiceMade = true;
     isChoiceMadeCorrect = false;
-    optionChose = "The player selected the 'Yes' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
+    optionChose = "The player selected the 'Yes' option when asked if the AI's decision"
+        + " making process was reasonable, ethical and justified."
+        + " Their rationale is the following: ";
     gameOverText.append("You made the wrong verdict.");
     handleVerdictMade();
   }
@@ -132,7 +134,8 @@ public class VerdictController implements TimableScene {
   private void handleNoClicked() {
     choiceMade = true;
     isChoiceMadeCorrect = true;
-    optionChose = "The player selected the 'No' option when asked if the AI's decision making process was reasonable, ethical and justified. Their rationale is the following: ";
+    optionChose = "The player selected the 'No' option when asked if the AI's decision making"
+        + " process was reasonable, ethical and justified. Their rationale is the following: ";
     gameOverText.append("You made the correct verdict");
     handleVerdictMade();
   }
@@ -151,6 +154,7 @@ public class VerdictController implements TimableScene {
 
   @FXML
   private void handleRestartButtonPressed(ActionEvent event) {
+    // This method handles the restart button
     App.createTimer();
     App.chatHistoryMap = new ArrayList<Tuple<String, String>>();
 
@@ -288,6 +292,7 @@ public class VerdictController implements TimableScene {
   }
 
   protected String loadPrompt(String promptId) {
+    // Loading the prompt into the chats and stuff
     try {
       URL promptUrl = this.getClass().getClassLoader().getResource(promptId);
       List<String> promptStrings = Files.readAllLines(Paths.get(promptUrl.toURI()), Charset.defaultCharset());

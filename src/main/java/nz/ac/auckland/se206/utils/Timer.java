@@ -2,9 +2,9 @@ package nz.ac.auckland.se206.utils;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
+
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.scene.control.Label;
 import nz.ac.auckland.se206.App;
 
 /**
@@ -143,6 +143,7 @@ public class Timer {
 
       @Override
       protected Void call() throws Exception {
+        // We call something here
         count();
         System.out.println("Finished Counting!");
 
