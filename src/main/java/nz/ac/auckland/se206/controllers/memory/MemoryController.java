@@ -95,6 +95,7 @@ public abstract class MemoryController implements TimableScene {
 
   protected AudioClip notificationSound;
   protected String promptId = "";
+  protected final String INITIAL_PROMPT = "Introduce yourself to the user with a short and concise message.";
 
   // Constructor
   public MemoryController(String promptId) {
@@ -110,6 +111,7 @@ public abstract class MemoryController implements TimableScene {
   protected void initialize() {
     // Load initial messages
     loadInitialMessages(promptId);
+    sendGptRequest(INITIAL_PROMPT);
 
     // Initially hide chat and notification panes
     notificationPane.setVisible(false);
