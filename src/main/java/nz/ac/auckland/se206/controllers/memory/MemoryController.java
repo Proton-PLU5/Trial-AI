@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import javafx.animation.Interpolator;
 import javafx.animation.PauseTransition;
-import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -465,18 +464,7 @@ public abstract class MemoryController implements TimableScene {
   protected boolean interactableDone(boolean isFirstTimeInteract, String locationOfContextString,
       String locationOfDoneString, String interactableContext) {
     if (isFirstTimeInteract) {
-      try (InputStream is = getClass().getClassLoader()
-          .getResourceAsStream("prompts/" + locationOfContextString)) {
-        if (is == null) {
-          throw new IOException("Resource not found: prompts/" + locationOfContextString);
-        }
-        interactableContext = new String(
-            is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-      App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
-      System.out.println(App.getChatHistoryString());
+      minorInteractableDoneString(locationOfContextString, interactableContext);
 
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override
