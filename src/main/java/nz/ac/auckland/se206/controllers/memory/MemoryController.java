@@ -257,9 +257,6 @@ public abstract class MemoryController implements TimableScene {
     conversationGridPane.add(messageStack, 0, nextRow);
     GridPane.setHalignment(messageStack, HPos.LEFT);
     GridPane.setValignment(messageStack, VPos.TOP);
-
-    // Update chat history in App class
-    App.chatHistoryMap.add(new Tuple<String, String>(role, message));
   }
 
   /** Handles the "Go Back" button press event. */
@@ -330,6 +327,9 @@ public abstract class MemoryController implements TimableScene {
       ChatMessage message = result.getChatMessage();
 
       this.chatCompletionRequest.addMessage(message);
+      // Update chat history in App class
+      App.chatHistoryMap.add(new Tuple<String, String>("User" + "\0" + roleOfCharacter, userInput));
+      App.chatHistoryMap.add(new Tuple<String, String>(roleOfCharacter, message.getContent()));
       return message.getContent();
     } catch (ApiProxyException e) {
       e.printStackTrace();
@@ -352,9 +352,11 @@ public abstract class MemoryController implements TimableScene {
       for (Tuple<String, String> entry : App.chatHistoryMap) {
         String role = entry.getKey();
         String message = entry.getValue();
-        systemPromptBuilder.append(role.split("\0")[0]).append(":\n").append(message).append("\n");
-        if (role.endsWith(this.roleOfCharacter)) {
-          appendMessageToChat(role.split("\0")[0], message);
+        String displayRole = role.split("\0")[0];
+        systemPromptBuilder.append(displayRole).append(":\n").append(message).append("\n");
+        // Show all messages for this character (AI and User)
+        if (role.equals(this.roleOfCharacter) || role.endsWith(this.roleOfCharacter)) {
+          appendMessageToChat(displayRole, message);
         }
       }
 
