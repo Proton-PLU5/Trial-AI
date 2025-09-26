@@ -42,6 +42,7 @@ public class DefendantFlashbackController extends FlashbackController {
 
   @Override
   protected void initializeText() {
+    // Create teh text for the flashback scene
     addText(
         "Upon seeing the individual in court with us today, I immediately"
             + " contacted the local authorities after reading their database profile.");

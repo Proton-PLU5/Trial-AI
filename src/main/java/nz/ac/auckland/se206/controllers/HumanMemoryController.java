@@ -10,10 +10,7 @@ import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -22,7 +19,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.DraggableMaker;
@@ -99,7 +95,7 @@ public class HumanMemoryController extends MemoryController {
   @FXML
   private ImageView aisle3Item;
 
-  DraggableMaker draggableMaker = new DraggableMaker();
+  private DraggableMaker draggableMaker = new DraggableMaker();
 
   private ArrayList<ImageView> aisleItems = new ArrayList<ImageView>();
   private ArrayList<ImageView> itemMarkers = new ArrayList<ImageView>();
@@ -170,7 +166,7 @@ public class HumanMemoryController extends MemoryController {
     aisle1Pane.setVisible(true);
     shoppingCartHitbox.setVisible(true);
     backToAislesButton.setVisible(true);
-    // checkIfItemHasBeenCollected();
+    // might need to use checkIfItemHasBeenCollected();
   }
 
   @FXML

@@ -37,6 +37,7 @@ public class HumanFlashbackController extends FlashbackController {
 
   @Override
   protected void initializeText() {
+    //Create the text for the flashback scene
     addText(
         "But when I was about to leave the store, the police"
             + " suddenly showed up to arrest me, and I had no idea why.");

@@ -2,8 +2,8 @@ package nz.ac.auckland.se206;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.function.Consumer;
 import java.util.List;
+import java.util.function.Consumer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -85,7 +85,7 @@ public class App extends Application {
     StringBuilder stringBuilder = new StringBuilder();
     // Load the chat history, iterate through the map and append to the string
     // builder
-    for (Tuple<String, String> entry : App.chatHistoryMap) {
+    for (Tuple<String, String> entry : chatHistoryMap) {
       String role = entry.getKey();
       String message = entry.getValue();
       stringBuilder.append(role.split("\0")[0]).append(":\n").append(message).append("\n");

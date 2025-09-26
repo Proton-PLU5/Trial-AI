@@ -124,7 +124,8 @@ public class VerdictController implements TimableScene {
   }
 
   @FXML
-  private void handleYesClicked() {
+  private void onYesClicked() {
+    // Make sure something happens when press yes
     choiceMade = true;
     isChoiceMadeCorrect = false;
     optionChose = "The player selected the 'Yes' option when asked if the AI's decision"
@@ -135,7 +136,8 @@ public class VerdictController implements TimableScene {
   }
 
   @FXML
-  private void handleNoClicked() {
+  private void onNoClicked() {
+    // Make sure what happens when no is clicked
     choiceMade = true;
     isChoiceMadeCorrect = true;
     optionChose = "The player selected the 'No' option when asked if the AI's decision making"
@@ -157,7 +159,7 @@ public class VerdictController implements TimableScene {
   }
 
   @FXML
-  private void handleRestartButtonPressed(ActionEvent event) {
+  private void onRestartButtonPressed(ActionEvent event) {
     // This method handles the restart button
     App.createTimer();
     App.chatHistoryMap = new ArrayList<Tuple<String, String>>();
@@ -192,14 +194,14 @@ public class VerdictController implements TimableScene {
     // Continue to rationale submission screen regardless of if the user made a
     // verdict
     try {
-      handleRationaleSubmitted();
+      onRationaleSubmitted();
     } catch (ApiProxyException e) {
       e.printStackTrace();
     }
   }
 
   @FXML
-  private void handleRationaleSubmitted() throws ApiProxyException {
+  private void onRationaleSubmitted() throws ApiProxyException {
     if (!rationaleSubmitted) {
       rationaleSubmitted = true;
       verdictTimer.stopTimer();

@@ -23,9 +23,10 @@ import nz.ac.auckland.se206.utils.Tuple;
 
 public class DefendantMemoryController extends MemoryController {
 
-  public static boolean loginSequenceCompleted = false;
   public static boolean hasChattedWithDefendant;
+  private static AudioClip keyPadAudioClip;
   public static boolean isFirstTimeInteract = true;
+  public static boolean loginSequenceCompleted = false;
 
   @FXML
   private Rectangle rec1;
@@ -64,7 +65,6 @@ public class DefendantMemoryController extends MemoryController {
 
   private String pin = "_ _ _ _";
   private final String correctPin = "1 2 3 4";
-  private static AudioClip keyPadAudioClip;
   private AnimationTimer progressArcAnimationTimer;
 
   public String interactableContext = "";
@@ -128,7 +128,7 @@ public class DefendantMemoryController extends MemoryController {
   }
 
   @FXML
-  private void keypadButtonPressed(ActionEvent event) {
+  private void pressKeypadButton(ActionEvent event) {
     Button button = (Button) event.getSource();
     String buttonText = button.getText();
 
@@ -138,7 +138,6 @@ public class DefendantMemoryController extends MemoryController {
       pinLabel.setText(pin);
       // Set the pitch of the audio clip based on the button pressed
       // For numbers 1-9, set pitch from 1.0 to 1.8
-      double pitch = 1.0 + (Integer.parseInt(buttonText)) * 0.1;
 
       keyPadAudioClip.play();
     }
@@ -188,7 +187,7 @@ public class DefendantMemoryController extends MemoryController {
    * @param event The action event triggered by clicking the login button
    */
   @FXML
-  private void loginButtonPressed(ActionEvent event) {
+  private void pressLoginButton(ActionEvent event) {
     initialPane.setVisible(false);
     keypadPane.setVisible(true);
   }
@@ -265,6 +264,7 @@ public class DefendantMemoryController extends MemoryController {
             customerCriminalRecordLabel.setText("No Record");
           }
         }
+
       };
 
     };
