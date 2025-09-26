@@ -273,7 +273,8 @@ public abstract class MemoryController implements TimableScene {
       ApiProxyConfig config = ApiProxyConfig.readConfig();
       chatCompletionRequest = new ChatCompletionRequest(config)
           .setN(1)
-          .setTemperature(0.2)
+          .setTemperature(0.7)
+          .setTopP(0.9)
           .setModel(Model.GPT_4_1_MINI)
           .setMaxTokens(500);
     } catch (ApiProxyException e) {
