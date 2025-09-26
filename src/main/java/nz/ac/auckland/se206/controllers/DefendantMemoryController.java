@@ -245,7 +245,8 @@ public class DefendantMemoryController extends MemoryController {
             customerCriminalRecordLabel.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
 
             // LLM sends message when interactable is done
-            interactableDone();
+            interactableDone(isFirstTimeInteract, "defendantInteractableContext.txt",
+                "defendantInteractableDone.txt", interactableContext);
 
           } else if (sourceNode.getId().equals(rec2.getId())) {
             customerIdLabel.setText("Customer 2");
@@ -292,49 +293,6 @@ public class DefendantMemoryController extends MemoryController {
   @Override
   protected void markAsChatted() {
     hasChattedWithDefendant = true;
-  }
-
-  // Add interaction event when shoplifting info is revealed
-  @FXML
-  @Override
-  protected void interactableDone() {
-    if (isFirstTimeInteract) {
-      try (InputStream is = getClass().getClassLoader()
-          .getResourceAsStream("prompts/defendantInteractableContext.txt")) {
-        if (is == null) {
-          throw new IOException("Resource not found: prompts/defendantInteractableContext.txt");
-        }
-        interactableContext = new String(
-            is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-      App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
-      System.out.println(App.getChatHistoryString());
-
-      Task<Void> interactableDoneTask = new Task<Void>() {
-        @Override
-        protected Void call() throws Exception {
-          String output = sendGptRequest(loadPrompt("prompts/defendantInteractableDone.txt"));
-
-          // Update the chat area with the AI's response
-          Platform.runLater(() -> {
-            appendMessageToChat(roleOfCharacter, output);
-          });
-
-          // Send a notification to the user
-          sendNotification();
-          return null;
-        }
-      };
-
-      // Use a thread to perform the task concurrently
-      Thread additionalInfoThread = new Thread(interactableDoneTask);
-      additionalInfoThread.setDaemon(true);
-      additionalInfoThread.start();
-
-      isFirstTimeInteract = false;
-    }
   }
 
 }

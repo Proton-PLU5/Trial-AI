@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers.memory;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -458,6 +459,45 @@ public abstract class MemoryController implements TimableScene {
    * Handles the completion of an interactable element.
    */
   @FXML
-  protected void interactableDone() {
+  protected boolean interactableDone(boolean isFirstTimeInteract, String locationOfContextString,
+      String locationOfDoneString, String interactableContext) {
+    if (isFirstTimeInteract) {
+      try (InputStream is = getClass().getClassLoader()
+          .getResourceAsStream("prompts/" + locationOfContextString)) {
+        if (is == null) {
+          throw new IOException("Resource not found: prompts/" + locationOfContextString);
+        }
+        interactableContext = new String(
+            is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
+      System.out.println(App.getChatHistoryString());
+
+      Task<Void> interactableDoneTask = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+          String output = sendGptRequest(loadPrompt("prompts/" + locationOfDoneString));
+
+          // Update the chat area with the AI's response
+          Platform.runLater(() -> {
+            appendMessageToChat(roleOfCharacter, output);
+          });
+
+          // Send a notification to the user
+          sendNotification();
+          return null;
+        }
+      };
+
+      // Use a thread to perform the task concurrently
+      Thread additionalInfoThread = new Thread(interactableDoneTask);
+      additionalInfoThread.setDaemon(true);
+      additionalInfoThread.start();
+
+      return false;
+    }
+    return isFirstTimeInteract;
   }
 }
