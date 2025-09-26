@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import java.io.InputStream;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -45,6 +46,11 @@ public class AiMemoryController extends MemoryController {
 
   private Circle clipCircle;
   private boolean isXrayMode = false;
+
+  public static boolean isFirstTimeInteract = true;
+  public static boolean hasChattedWithAi;
+  public String interactableContext = "";
+
 
   public AiMemoryController() {
     super("prompts/witnessAi.txt");
@@ -110,6 +116,16 @@ public class AiMemoryController extends MemoryController {
   @FXML
   private void interactableDone() {
     if (isXrayMode && isFirstTimeInteract) {
+      try (InputStream is = getClass().getClassLoader().getResourceAsStream("prompts/aiInteractableContext.txt")) {
+        if (is == null) {
+          throw new IOException("Resource not found: prompts/aiInteractableContext.txt");
+        }
+        interactableContext = new String(is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      App.chatHistoryMap.put("Context", interactableContext);
+      System.out.println(App.getChatHistoryString());
       // LLM sends message when interactable is done
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override

@@ -1,10 +1,12 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
+import javafx.animation.PauseTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -100,6 +102,10 @@ public class HumanMemoryController extends MemoryController {
 
   private ArrayList<ImageView> aisleItems = new ArrayList<ImageView>();
   private ArrayList<ImageView> itemMarkers = new ArrayList<ImageView>();
+
+  public static boolean hasChattedWithHuman;
+  public static boolean isFirstTimeInteract = true;
+  public String interactableContext = "";
 
   public HumanMemoryController() {
     super("prompts/witnessHuman.txt");
@@ -254,6 +260,17 @@ public class HumanMemoryController extends MemoryController {
   @FXML
   private void interactableDone() {
     if (isFirstTimeInteract) {
+      try (InputStream is = getClass().getClassLoader().getResourceAsStream("prompts/humanInteractableContext.txt")) {
+        if (is == null) {
+          throw new IOException("Resource not found: prompts/humanInteractableContext.txt");
+        }
+        interactableContext = new String(is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      App.chatHistoryMap.put("Context", interactableContext);
+      System.out.println(App.getChatHistoryString());
+
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override
         protected Void call() throws Exception {

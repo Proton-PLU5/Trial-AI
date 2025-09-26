@@ -1,5 +1,8 @@
 package nz.ac.auckland.se206.controllers;
 
+
+import java.io.IOException;
+import java.io.InputStream;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -63,6 +66,11 @@ public class DefendantMemoryController extends MemoryController {
   private final String correctPin = "1 2 3 4";
   private static AudioClip keyPadAudioClip;
   private AnimationTimer progressArcAnimationTimer;
+
+  public static boolean hasChattedWithDefendant;
+  public static boolean isFirstTimeInteract = true;
+  public String interactableContext = "";
+
 
   static {
     var resource = DefendantMemoryController.class.getResource("/sounds/keypad.mp3");
@@ -294,6 +302,18 @@ public class DefendantMemoryController extends MemoryController {
   @FXML
   private void interactableDone() {
     if (isFirstTimeInteract) {
+      try (InputStream is = getClass().getClassLoader()
+          .getResourceAsStream("prompts/defendantInteractableContext.txt")) {
+        if (is == null) {
+          throw new IOException("Resource not found: prompts/defendantInteractableContext.txt");
+        }
+        interactableContext = new String(is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      App.chatHistoryMap.put("Context", interactableContext);
+      System.out.println(App.getChatHistoryString());
+
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override
         protected Void call() throws Exception {
