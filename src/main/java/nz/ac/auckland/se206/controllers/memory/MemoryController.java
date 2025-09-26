@@ -515,7 +515,9 @@ public abstract class MemoryController implements TimableScene {
    * Handles the completion of an interactable element.
    */
   @FXML
-  protected void minorInteractableDoneString(String locationOfContextString, String interactableContext) {
+  protected void minorInteractableDoneString(String locationOfContextString,
+      String interactableContext) {
+    // this method puts the string to llm when interactable is done
     try (InputStream is = getClass().getClassLoader()
         .getResourceAsStream("prompts/" + locationOfContextString)) {
       if (is == null) {

@@ -159,6 +159,7 @@ public class VerdictController implements TimableScene {
 
   @FXML
   private void onRestartButtonPressed(ActionEvent event) {
+    // This method resets the game state
     // This method handles the restart button
     App.createTimer();
     App.chatHistoryMap = new ArrayList<Tuple<String, String>>();
