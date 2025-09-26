@@ -316,10 +316,10 @@ public class DefendantMemoryController extends MemoryController {
   }
 
   private void initializeRectangleAnimations() {
-    createScaleAnimation(rec1, 2.0, 1.1);
-    createScaleAnimation(rec2, 2.0, 1.1);
-    createScaleAnimation(rec3, 2.0, 1.1);
-    createScaleAnimation(rec4, 2.0, 1.1);
+    App.createScaleAnimation(rec1, 2.0, 1.1);
+    App.createScaleAnimation(rec2, 2.0, 1.1);
+    App.createScaleAnimation(rec3, 2.0, 1.1);
+    App.createScaleAnimation(rec4, 2.0, 1.1);
   }
 
 }
