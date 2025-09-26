@@ -17,6 +17,7 @@ import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.DraggableMaker;
+import nz.ac.auckland.se206.utils.Tuple;
 
 public class HumanMemoryController extends MemoryController {
 
