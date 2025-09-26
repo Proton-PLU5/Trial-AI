@@ -37,7 +37,7 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Button fx:id="sendButton" layoutX="446.0" layoutY="471.0" mnemonicParsing="false" onAction="#onSendButtonPressed" prefHeight="60.0" prefWidth="87.0" style="-fx-font-size: 16; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Send">
+            <Button fx:id="sendButton" layoutX="436.0" layoutY="471.0" mnemonicParsing="false" onAction="#onSendButtonPressed" prefHeight="60.0" prefWidth="97.0" style="-fx-font-size: 16; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Send">
                <font>
                   <Font size="19.0" />
                </font></Button>
@@ -50,7 +50,7 @@
                   </GridPane>
                </content>
             </ScrollPane>
-            <TextArea fx:id="textArea" layoutX="16.0" layoutY="471.0" prefHeight="60.0" prefWidth="424.0" promptText="Enter your message here!" style="-fx-font-size: 16;" wrapText="true">
+            <TextArea fx:id="textArea" layoutX="16.0" layoutY="471.0" prefHeight="60.0" prefWidth="417.0" promptText="Enter your message here!" style="-fx-font-size: 16;" wrapText="true">
                <font>
                   <Font size="16.0" />
                </font>
