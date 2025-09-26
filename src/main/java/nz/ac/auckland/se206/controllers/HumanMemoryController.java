@@ -1,12 +1,9 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -20,7 +17,6 @@ import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.DraggableMaker;
-import nz.ac.auckland.se206.utils.Tuple;
 
 public class HumanMemoryController extends MemoryController {
 
@@ -236,7 +232,8 @@ public class HumanMemoryController extends MemoryController {
         System.out.println("Item 4 in cart!"); // Debugging
         // Check off the shopping list
         markerLine4.setVisible(true);
-        interactableDone();
+        interactableDone(isFirstTimeInteract, "humanInteractableContext.txt", "humanInteractableDone.txt",
+            interactableContext);
         break;
       default:
         // placeholder
@@ -246,48 +243,5 @@ public class HumanMemoryController extends MemoryController {
   @Override
   protected void markAsChatted() {
     hasChattedWithHuman = true;
-  }
-
-  // Add interaction event when shoplifting info is revealed
-  @FXML
-  @Override
-  protected void interactableDone() {
-    if (isFirstTimeInteract) {
-      try (InputStream is = getClass().getClassLoader().getResourceAsStream(
-          "prompts/humanInteractableContext.txt")) {
-        if (is == null) {
-          throw new IOException("Resource not found: prompts/humanInteractableContext.txt");
-        }
-        interactableContext = new String(
-            is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-      App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
-      System.out.println(App.getChatHistoryString());
-
-      Task<Void> interactableDoneTask = new Task<Void>() {
-        @Override
-        protected Void call() throws Exception {
-          String output = sendGptRequest(loadPrompt("prompts/humanInteractableDone.txt"));
-
-          // Update the chat area with the AI's response
-          Platform.runLater(() -> {
-            appendMessageToChat(roleOfCharacter, output);
-          });
-
-          // Send a notification to the user
-          sendNotification();
-          return null;
-        }
-      };
-
-      // Use a thread to perform the task concurrently
-      Thread additionalInfoThread = new Thread(interactableDoneTask);
-      additionalInfoThread.setDaemon(true);
-      additionalInfoThread.start();
-
-      isFirstTimeInteract = false;
-    }
   }
 }
