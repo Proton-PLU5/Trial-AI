@@ -223,6 +223,7 @@ public class VerdictController implements TimableScene {
         }
         verdictCorrectLabel.setText(gameOverText.toString());
         setVerdictCorrectLabelLayout();
+        restartButton.setVisible(true);
       } else {
         // Add the rationale to the prompt
         rationalePrompt += rationale;
