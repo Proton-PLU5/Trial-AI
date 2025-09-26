@@ -87,7 +87,7 @@ public class VerdictController implements TimableScene {
 
     // Add ourselves to the timer service
     App.timer.stopTimer();
-    verdictTimer = new Timer(10, new Consumer<Void>() {
+    verdictTimer = new Timer(60, new Consumer<Void>() {
       @Override
       public void accept(Void t) {
         timeOutOption();
@@ -159,6 +159,7 @@ public class VerdictController implements TimableScene {
 
   @FXML
   private void onRestartButtonPressed(ActionEvent event) {
+    // This method resets the game state
     // This method handles the restart button
     App.createTimer();
     App.chatHistoryMap = new ArrayList<Tuple<String, String>>();
@@ -167,6 +168,8 @@ public class VerdictController implements TimableScene {
     HumanMemoryController.itemCollected = new HashMap<>();
     HumanMemoryController.itemToLabel = new HashMap<>();
     HumanMemoryController.isFirstTimeInteract = true;
+    HumanMemoryController.hasAisle1BeenCompleted = false;
+    HumanMemoryController.hasAisle2BeenCompleted = false;
 
     DefendantMemoryController.hasChattedWithDefendant = false;
     DefendantMemoryController.loginSequenceCompleted = false;

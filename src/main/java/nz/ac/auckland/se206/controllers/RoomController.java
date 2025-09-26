@@ -3,8 +3,6 @@ package nz.ac.auckland.se206.controllers;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,9 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
@@ -66,7 +62,7 @@ public class RoomController implements TimableScene {
     App.timer.addConsumer(this.getTimerConsumer());
 
     // Check if player has chatted with all three participants
-    // enableGuessButton();
+    enableGuessButton();
 
     if (isFirstTimeInit) {
       startAudioMediaPlayer = new MediaPlayer(
@@ -193,47 +189,9 @@ public class RoomController implements TimableScene {
     }
   }
 
-  protected void createScaleAnimation(Rectangle node,
-      double durationSeconds, double intensity) {
-    ScaleTransition scaleUpTransition = new ScaleTransition(
-        Duration.seconds(durationSeconds), node);
-    scaleUpTransition.setToX(intensity);
-    scaleUpTransition.setToY(intensity);
-    scaleUpTransition.setFromX(1);
-    scaleUpTransition.setFromY(1);
-
-    ScaleTransition scaleDownTransition = new ScaleTransition(
-        Duration.seconds(durationSeconds), node);
-    scaleDownTransition.setToX(1);
-    scaleDownTransition.setToY(1);
-    scaleDownTransition.setFromX(intensity);
-    scaleDownTransition.setFromY(intensity);
-
-    scaleUpTransition.play();
-
-    scaleUpTransition.setOnFinished((event) -> {
-      scaleDownTransition.play();
-    });
-
-    scaleDownTransition.setOnFinished((event) -> {
-      scaleUpTransition.play();
-    });
-
-    // Add hover and exit effects
-    node.setOnMouseEntered(e -> {
-      // set fill to be orange tint
-      node.setFill(Color.web("#2197ff", 0.5));
-    });
-
-    node.setOnMouseExited(e -> {
-      // clear the fill
-      node.setFill(Color.web("transparent", 0));
-    });
-  }
-
   private void initializeRectangleAnimations() {
-    createScaleAnimation(witnessAi, 2.0, 1.1);
-    createScaleAnimation(witnessHuman, 2.0, 1.1);
-    createScaleAnimation(defendant, 2.0, 1.1);
+    App.createScaleAnimation(witnessAi, 2.0, 1.1);
+    App.createScaleAnimation(witnessHuman, 2.0, 1.1);
+    App.createScaleAnimation(defendant, 2.0, 1.1);
   }
 }

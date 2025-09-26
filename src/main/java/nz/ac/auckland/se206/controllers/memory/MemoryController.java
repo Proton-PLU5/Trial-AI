@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import javafx.animation.Interpolator;
 import javafx.animation.PauseTransition;
-import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -274,7 +273,8 @@ public abstract class MemoryController implements TimableScene {
       ApiProxyConfig config = ApiProxyConfig.readConfig();
       chatCompletionRequest = new ChatCompletionRequest(config)
           .setN(1)
-          .setTemperature(0.2)
+          .setTemperature(0.7)
+          .setTopP(0.9)
           .setModel(Model.GPT_4_1_MINI)
           .setMaxTokens(500);
     } catch (ApiProxyException e) {
@@ -465,18 +465,7 @@ public abstract class MemoryController implements TimableScene {
   protected boolean interactableDone(boolean isFirstTimeInteract, String locationOfContextString,
       String locationOfDoneString, String interactableContext) {
     if (isFirstTimeInteract) {
-      try (InputStream is = getClass().getClassLoader()
-          .getResourceAsStream("prompts/" + locationOfContextString)) {
-        if (is == null) {
-          throw new IOException("Resource not found: prompts/" + locationOfContextString);
-        }
-        interactableContext = new String(
-            is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-      App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
-      System.out.println(App.getChatHistoryString());
+      minorInteractableDoneString(locationOfContextString, interactableContext);
 
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override
@@ -515,7 +504,9 @@ public abstract class MemoryController implements TimableScene {
    * Handles the completion of an interactable element.
    */
   @FXML
-  protected void minorInteractableDoneString(String locationOfContextString, String interactableContext) {
+  protected void minorInteractableDoneString(String locationOfContextString,
+      String interactableContext) {
+    // this method puts the string to llm when interactable is done
     try (InputStream is = getClass().getClassLoader()
         .getResourceAsStream("prompts/" + locationOfContextString)) {
       if (is == null) {
@@ -528,43 +519,5 @@ public abstract class MemoryController implements TimableScene {
     }
     App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
     System.out.println(App.getChatHistoryString());
-  }
-
-  protected void createScaleAnimation(Rectangle node,
-      double durationSeconds, double intensity) {
-    ScaleTransition scaleUpTransition = new ScaleTransition(
-        Duration.seconds(durationSeconds), node);
-    scaleUpTransition.setToX(intensity);
-    scaleUpTransition.setToY(intensity);
-    scaleUpTransition.setFromX(1);
-    scaleUpTransition.setFromY(1);
-
-    ScaleTransition scaleDownTransition = new ScaleTransition(
-        Duration.seconds(durationSeconds), node);
-    scaleDownTransition.setToX(1);
-    scaleDownTransition.setToY(1);
-    scaleDownTransition.setFromX(intensity);
-    scaleDownTransition.setFromY(intensity);
-
-    scaleUpTransition.play();
-
-    scaleUpTransition.setOnFinished((event) -> {
-      scaleDownTransition.play();
-    });
-
-    scaleDownTransition.setOnFinished((event) -> {
-      scaleUpTransition.play();
-    });
-
-    // Add hover and exit effects
-    node.setOnMouseEntered(e -> {
-      // set fill to be orange tint
-      node.setFill(Color.web("#2197ff", 0.5));
-    });
-
-    node.setOnMouseExited(e -> {
-      // clear the fill
-      node.setFill(Color.web("transparent", 0));
-    });
   }
 }

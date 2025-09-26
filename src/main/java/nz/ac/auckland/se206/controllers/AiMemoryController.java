@@ -2,7 +2,6 @@ package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -130,7 +129,7 @@ public class AiMemoryController extends MemoryController {
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override
         protected Void call() throws Exception {
-          chatCompletionRequest.addMessage("system",loadPrompt("prompts/aiInteractableDone.txt"));
+          chatCompletionRequest.addMessage("system", loadPrompt("prompts/aiInteractableDone.txt"));
           String output = sendGptRequest("");
 
           // Update the chat area with the AI's response

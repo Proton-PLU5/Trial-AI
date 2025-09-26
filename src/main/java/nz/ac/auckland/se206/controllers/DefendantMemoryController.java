@@ -11,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.media.AudioClip;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
@@ -20,7 +19,6 @@ import nz.ac.auckland.se206.controllers.memory.MemoryController;
 public class DefendantMemoryController extends MemoryController {
 
   public static boolean hasChattedWithDefendant;
-  private static AudioClip keyPadAudioClip;
   public static boolean isFirstTimeInteract = true;
   public static boolean loginSequenceCompleted = false;
 
@@ -69,18 +67,6 @@ public class DefendantMemoryController extends MemoryController {
   private AnimationTimer progressArcAnimationTimer;
 
   private String interactableContext = "";
-
-  static {
-    var resource = DefendantMemoryController.class.getResource("/sounds/keypad.mp3");
-    System.out.println("[DEBUG] keypad.mp3 resource: " + resource);
-    if (resource != null) {
-      keyPadAudioClip = new AudioClip(resource.toExternalForm());
-      keyPadAudioClip.setVolume(1.0); // Set volume to max
-      Platform.runLater(() -> keyPadAudioClip.play());
-    } else {
-      System.out.println("[ERROR] Could not find keypad.mp3 resource!");
-    }
-  }
 
   public DefendantMemoryController() {
     super("prompts/defendant.txt");
@@ -170,7 +156,7 @@ public class DefendantMemoryController extends MemoryController {
       loginPane.setVisible(false);
       cctvPane.setVisible(true);
       titleBlock.setVisible(true);
-      descriptionLabel.setText("Click on the different characters to view their details.");
+      descriptionLabel.setText("Press and hold on the different characters to view their details.");
       titleLabel.setText("View Character Details");
       createTitleDisappearAnimation();
     } else {
@@ -316,10 +302,10 @@ public class DefendantMemoryController extends MemoryController {
   }
 
   private void initializeRectangleAnimations() {
-    createScaleAnimation(rec1, 2.0, 1.1);
-    createScaleAnimation(rec2, 2.0, 1.1);
-    createScaleAnimation(rec3, 2.0, 1.1);
-    createScaleAnimation(rec4, 2.0, 1.1);
+    App.createScaleAnimation(rec1, 2.0, 1.1);
+    App.createScaleAnimation(rec2, 2.0, 1.1);
+    App.createScaleAnimation(rec3, 2.0, 1.1);
+    App.createScaleAnimation(rec4, 2.0, 1.1);
   }
 
 }
