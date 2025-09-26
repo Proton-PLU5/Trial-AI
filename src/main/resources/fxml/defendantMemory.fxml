@@ -144,10 +144,10 @@
                </image>
             </ImageView>
             <Arc fx:id="progressArc" fill="#73ff1f" layoutX="545.0" layoutY="152.0" length="270.0" radiusX="47.0" radiusY="47.0" startAngle="45.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" type="ROUND" visible="false" />
-            <Rectangle fx:id="rec1" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="359.0" layoutX="222.0" layoutY="283.0" onMousePressed="#onTargetMousePressed" onMouseReleased="#onTargetMouseReleased" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="128.0" />
-            <Rectangle fx:id="rec2" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="382.0" layoutX="429.0" layoutY="260.0" onMousePressed="#onTargetMousePressed" onMouseReleased="#onTargetMouseReleased" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="137.0" />
-            <Rectangle fx:id="rec3" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="340.0" layoutX="645.0" layoutY="283.0" onMousePressed="#onTargetMousePressed" onMouseReleased="#onTargetMouseReleased" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="113.0" />
-            <Rectangle fx:id="rec4" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="373.0" layoutX="894.0" layoutY="268.0" onMousePressed="#onTargetMousePressed" onMouseReleased="#onTargetMouseReleased" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="113.0" />
+            <Rectangle fx:id="rec1" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="359.0" layoutX="222.0" layoutY="283.0" onMousePressed="#onTargetMousePressed" onMouseReleased="#onTargetMouseReleased" stroke="#2197ff" strokeType="INSIDE" strokeWidth="3.0" width="128.0" />
+            <Rectangle fx:id="rec2" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="382.0" layoutX="429.0" layoutY="260.0" onMousePressed="#onTargetMousePressed" onMouseReleased="#onTargetMouseReleased" stroke="#2197ff" strokeType="INSIDE" strokeWidth="3.0" width="137.0" />
+            <Rectangle fx:id="rec3" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="340.0" layoutX="645.0" layoutY="283.0" onMousePressed="#onTargetMousePressed" onMouseReleased="#onTargetMouseReleased" stroke="#2197ff" strokeType="INSIDE" strokeWidth="3.0" width="113.0" />
+            <Rectangle fx:id="rec4" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="373.0" layoutX="894.0" layoutY="268.0" onMousePressed="#onTargetMousePressed" onMouseReleased="#onTargetMouseReleased" stroke="#2197ff" strokeType="INSIDE" strokeWidth="3.0" width="113.0" />
             <StackPane fx:id="customerDetailsPane" layoutX="14.0" layoutY="49.0" prefHeight="305.0" prefWidth="200.0" style="-fx-background-color: #1d4ed8; -fx-border-color: #3b82f6; -fx-border-width: 3; -fx-border-radius: 20; -fx-background-radius: 20;" visible="false">
                <children>
                   <GridPane alignment="CENTER" prefHeight="183.0" prefWidth="194.0" StackPane.alignment="CENTER">

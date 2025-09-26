@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import javafx.animation.Interpolator;
 import javafx.animation.PauseTransition;
+import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -507,5 +508,43 @@ public abstract class MemoryController implements TimableScene {
       return false;
     }
     return isFirstTimeInteract;
+  }
+
+  protected void createScaleAnimation(Rectangle node,
+      double durationSeconds, double intensity) {
+    ScaleTransition scaleUpTransition = new ScaleTransition(
+        Duration.seconds(durationSeconds), node);
+    scaleUpTransition.setToX(intensity);
+    scaleUpTransition.setToY(intensity);
+    scaleUpTransition.setFromX(1);
+    scaleUpTransition.setFromY(1);
+
+    ScaleTransition scaleDownTransition = new ScaleTransition(
+        Duration.seconds(durationSeconds), node);
+    scaleDownTransition.setToX(1);
+    scaleDownTransition.setToY(1);
+    scaleDownTransition.setFromX(intensity);
+    scaleDownTransition.setFromY(intensity);
+
+    scaleUpTransition.play();
+
+    scaleUpTransition.setOnFinished((event) -> {
+      scaleDownTransition.play();
+    });
+
+    scaleDownTransition.setOnFinished((event) -> {
+      scaleUpTransition.play();
+    });
+
+    // Add hover and exit effects
+    node.setOnMouseEntered(e -> {
+      // set fill to be orange tint
+      node.setFill(Color.web("#2197ff", 0.5));
+    });
+
+    node.setOnMouseExited(e -> {
+      // clear the fill
+      node.setFill(Color.web("transparent", 0));
+    });
   }
 }

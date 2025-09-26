@@ -24,6 +24,11 @@ public class DefendantMemoryController extends MemoryController {
   public static boolean isFirstTimeInteract = true;
   public static boolean loginSequenceCompleted = false;
 
+  public static boolean scannedOne = false;
+  public static boolean scannedTwo = false;
+  public static boolean scannedThree = false;
+  public static boolean scannedFour = false;
+
   @FXML
   private Rectangle rec1;
   @FXML
@@ -85,6 +90,7 @@ public class DefendantMemoryController extends MemoryController {
   @FXML
   protected void initialize() {
     this.roleOfCharacter = "Security Bot";
+    initializeRectangleAnimations();
 
     // This method initializes the defendant memory scene, including the login
     // sequence and CCTV interactions
@@ -105,6 +111,18 @@ public class DefendantMemoryController extends MemoryController {
       titleBlock.setVisible(true);
       descriptionLabel.setText("Please login to access the CCTV footage.");
       titleLabel.setText("Login Required");
+    }
+    if (scannedOne) {
+      rec1.setVisible(false);
+    }
+    if (scannedTwo) {
+      rec2.setVisible(false);
+    }
+    if (scannedThree) {
+      rec3.setVisible(false);
+    }
+    if (scannedFour) {
+      rec4.setVisible(false);
     }
 
     // We run a thread for the mouse movement so that the progress arc follows the
@@ -236,6 +254,9 @@ public class DefendantMemoryController extends MemoryController {
             // Highlight criminal record
             customerCriminalRecordLabel.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
 
+            rec1.setVisible(false);
+            scannedOne = true;
+
             // LLM sends message when interactable is done
             interactableDone(isFirstTimeInteract, "defendantInteractableContext.txt",
                 "defendantInteractableDone.txt", interactableContext);
@@ -245,16 +266,23 @@ public class DefendantMemoryController extends MemoryController {
             customerStatusLabel.setText("Returning Shopper");
             customerAgeLabel.setText("Age: 40");
             customerCriminalRecordLabel.setText("No Record");
+            rec2.setVisible(false);
+            scannedTwo = true;
+
           } else if (sourceNode.getId().equals(rec3.getId())) {
             customerIdLabel.setText("Customer 3");
             customerStatusLabel.setText("New Shopper");
             customerAgeLabel.setText("Age: 30");
             customerCriminalRecordLabel.setText("No Record");
+            rec3.setVisible(false);
+            scannedThree = true;
           } else if (sourceNode.getId().equals(rec4.getId())) {
             customerIdLabel.setText("Customer 4");
             customerStatusLabel.setText("Loyal Shopper");
             customerAgeLabel.setText("Age: 35");
             customerCriminalRecordLabel.setText("No Record");
+            rec4.setVisible(false);
+            scannedFour = true;
           }
         }
       }
@@ -285,6 +313,13 @@ public class DefendantMemoryController extends MemoryController {
   @Override
   protected void markAsChatted() {
     hasChattedWithDefendant = true;
+  }
+
+  private void initializeRectangleAnimations() {
+    createScaleAnimation(rec1, 2.0, 1.1);
+    createScaleAnimation(rec2, 2.0, 1.1);
+    createScaleAnimation(rec3, 2.0, 1.1);
+    createScaleAnimation(rec4, 2.0, 1.1);
   }
 
 }

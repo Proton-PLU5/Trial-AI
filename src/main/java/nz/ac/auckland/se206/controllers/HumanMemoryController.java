@@ -24,6 +24,9 @@ public class HumanMemoryController extends MemoryController {
   public static Map<String, Boolean> itemCollected = new HashMap<>();
   public static Map<String, ImageView> itemToLabel = new HashMap<>();
   public static boolean isFirstTimeInteract = true;
+  public static boolean completedOne = false;
+  public static boolean completedTwo = false;
+  public static boolean completedThree = false;
 
   @FXML
   private Button roomBtn;
@@ -59,6 +62,8 @@ public class HumanMemoryController extends MemoryController {
   private Rectangle aisle1Rectangle;
   @FXML
   private Rectangle aisle2Rectangle;
+  @FXML
+  private Rectangle aisle3Rectangle;
 
   // Misc
   @FXML
@@ -106,6 +111,7 @@ public class HumanMemoryController extends MemoryController {
   @Override
   @FXML
   protected void initialize() {
+    initializeRectangleAnimations();
     App.timer.addConsumer(getTimerConsumer());
     createTitleDisappearAnimation();
     super.initialize();
@@ -125,6 +131,16 @@ public class HumanMemoryController extends MemoryController {
     // Initial UI setup
     for (ImageView item : aisleItems) {
       item.setVisible(true);
+    }
+
+    if (completedOne) {
+      aisle1Rectangle.setVisible(false);
+    }
+    if (completedTwo) {
+      aisle2Rectangle.setVisible(false);
+    }
+    if (completedThree) {
+      aisle3Rectangle.setVisible(false);
     }
 
     // Load shopping list items, if collected, then make invisible
@@ -155,29 +171,42 @@ public class HumanMemoryController extends MemoryController {
 
   @FXML
   private void handleAisle1RectangleClicked(MouseEvent event) throws IOException {
+    aisle1Rectangle.setVisible(false);
     mainAislePane.setVisible(false);
     aisle1Pane.setVisible(true);
     shoppingCartHitbox.setVisible(true);
     backToAislesButton.setVisible(true);
+    completedOne = true;
     // might need to use checkIfItemHasBeenCollected();
   }
 
   @FXML
   private void handleAisle2RectangleClicked(MouseEvent event) throws IOException {
-    mainAislePane.setVisible(false);
-    aisle2Pane.setVisible(true);
-    shoppingCartHitbox.setVisible(true);
-    backToAislesButton.setVisible(true);
-    // might need to use checkIfItemHasBeenCollected();
+    if (completedOne) {
+      aisle2Rectangle.setVisible(false);
+      mainAislePane.setVisible(false);
+      aisle2Pane.setVisible(true);
+      shoppingCartHitbox.setVisible(true);
+      backToAislesButton.setVisible(true);
+      completedTwo = true;
+      // might need to use checkIfItemHasBeenCollected();
+    } else {
+
+    }
   }
 
   @FXML
   private void handleAisle3RectangleClicked(MouseEvent event) throws IOException {
-    mainAislePane.setVisible(false);
-    aisle3Pane.setVisible(true);
-    purseHitbox.setVisible(true);
-    backToAislesButton.setVisible(true);
-    // might need to use checkIfItemHasBeenCollected();
+    if (completedTwo) {
+      aisle3Rectangle.setVisible(false);
+      mainAislePane.setVisible(false);
+      aisle3Pane.setVisible(true);
+      purseHitbox.setVisible(true);
+      backToAislesButton.setVisible(true);
+      // might need to use checkIfItemHasBeenCollected();
+    } else {
+
+    }
   }
 
   // @FXML
@@ -245,5 +274,11 @@ public class HumanMemoryController extends MemoryController {
   @Override
   protected void markAsChatted() {
     hasChattedWithHuman = true;
+  }
+
+  private void initializeRectangleAnimations() {
+    createScaleAnimation(aisle1Rectangle, 2.0, 1.1);
+    createScaleAnimation(aisle2Rectangle, 2.0, 1.1);
+    createScaleAnimation(aisle3Rectangle, 2.0, 1.1);
   }
 }
