@@ -58,6 +58,7 @@ public class AiMemoryController extends MemoryController {
     super.initialize();
     setupXrayEffect();
     this.roleOfCharacter = "Checkout Bot";
+    createTitleDisappearAnimation();
   }
 
   private void setupXrayEffect() {
