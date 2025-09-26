@@ -316,8 +316,11 @@ public abstract class MemoryController implements TimableScene {
    * @return The AI's response message.
    */
   protected String sendGptRequest(String userInput) {
-    // This method sends the user input to the GPT model and returns the response
-    this.chatCompletionRequest.addMessage("user", userInput);
+    if (!userInput.isEmpty()) {
+      // This method sends the user input to the GPT model and returns the response
+      this.chatCompletionRequest.addMessage("user", userInput);
+      App.chatHistoryMap.add(new Tuple<String, String>("User" + "\0" + roleOfCharacter, userInput));
+    }
 
     try {
       ChatCompletionResult chatCompletionResult = this.chatCompletionRequest.execute();
@@ -326,7 +329,7 @@ public abstract class MemoryController implements TimableScene {
 
       this.chatCompletionRequest.addMessage(message);
       // Update chat history in App class
-      App.chatHistoryMap.add(new Tuple<String, String>("User" + "\0" + roleOfCharacter, userInput));
+
       App.chatHistoryMap.add(new Tuple<String, String>(roleOfCharacter, message.getContent()));
       return message.getContent();
     } catch (ApiProxyException e) {
@@ -364,6 +367,33 @@ public abstract class MemoryController implements TimableScene {
         pt.play();
       });
 
+      if (systemPromptBuilder.isEmpty()) {
+        Platform.runLater(() -> {
+          Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+              chatCompletionRequest.addMessage("system", INITIAL_PROMPT);
+              String output = sendGptRequest("");
+              // Update the chat area with the AI's response
+              Platform.runLater(() -> {
+                appendMessageToChat(roleOfCharacter, output);
+                sendNotification();
+                notificationSound.play();
+                PauseTransition pt = new PauseTransition(Duration.millis(50));
+                pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
+                pt.play();
+              });
+
+              return null;
+            }
+          };
+
+          Thread gptRequestThread = new Thread(task);
+          gptRequestThread.setDaemon(true);
+          gptRequestThread.start();
+        });
+      }
+
       // Load the system prompt
       systemPromptBuilder.append(loadPrompt(promptId));
       this.systemPrompt = systemPromptBuilder.toString();
@@ -371,27 +401,6 @@ public abstract class MemoryController implements TimableScene {
       // Append the system prompt to the chat completion request
       this.chatCompletionRequest.addMessage("system", this.systemPrompt);
 
-      Task<Void> task = new Task<Void>() {
-        @Override
-        protected Void call() throws Exception {
-          String output = sendGptRequest(INITIAL_PROMPT);
-
-          // Update the chat area with the AI's response
-          Platform.runLater(() -> {
-            appendMessageToChat(roleOfCharacter, output);
-            notificationSound.play();
-            PauseTransition pt = new PauseTransition(Duration.millis(50));
-            pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
-            pt.play();
-          });
-
-          return null;
-        }
-      };
-
-      Thread gptRequestThread = new Thread(task);
-      gptRequestThread.setDaemon(true);
-      gptRequestThread.start();
     });
   }
 
