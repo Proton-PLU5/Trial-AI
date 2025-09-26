@@ -116,7 +116,7 @@ public class VerdictController implements TimableScene {
           .setN(1)
           .setTemperature(0.2)
           .setModel(Model.GPT_4_1_MINI)
-          .setMaxTokens(500);
+          .setMaxTokens(2000);
     } catch (ApiProxyException e) {
       e.printStackTrace();
     }
