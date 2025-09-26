@@ -44,9 +44,9 @@ public class DefendantFlashbackController extends FlashbackController {
   protected void initializeText() {
     addText(
         "Upon seeing the individual in court with us today, I immediately"
-            + "contacted the local authorities after reading their database profile.");
+            + " contacted the local authorities after reading their database profile.");
     addText("Since all our customers have a membership with us,"
-        + "I can access information on them from our database.");
+        + " I can access information on them from our database.");
     addText("My job is to surveil the customers when they first walk into our store.");
   }
 
