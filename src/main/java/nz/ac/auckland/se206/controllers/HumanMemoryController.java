@@ -107,7 +107,7 @@ public class HumanMemoryController extends MemoryController {
   public String interactableContext = "";
 
   public HumanMemoryController() {
-    super("prompts/witnessHuman.txt");
+    super("prompts/human.txt");
     itemToLabel.put("aisle1Item", markerLine1);
     itemToLabel.put("aisle2Item1", markerLine2);
     itemToLabel.put("aisle2Item2", markerLine3);

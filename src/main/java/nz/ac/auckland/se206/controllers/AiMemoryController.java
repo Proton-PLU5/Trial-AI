@@ -51,7 +51,7 @@ public class AiMemoryController extends MemoryController {
   public String interactableContext = "";
 
   public AiMemoryController() {
-    super("prompts/witnessAi.txt");
+    super("prompts/ai.txt");
   }
 
   @Override
@@ -122,9 +122,9 @@ public class AiMemoryController extends MemoryController {
       } catch (IOException e) {
         e.printStackTrace();
       }
-
+      
       App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
-
+      
       System.out.println(App.getChatHistoryString());
       // LLM sends message when interactable is done
       Task<Void> interactableDoneTask = new Task<Void>() {
