@@ -4,11 +4,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+
+import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.Timer;
 import nz.ac.auckland.se206.utils.Tuple;
@@ -108,4 +113,53 @@ public class App extends Application {
       }
     }); // 5 minutes
   }
+
+  /**
+   * Creates a scaling animation effect on a node with scale
+   * up and down
+   * transitions.
+   *
+   * @param node            The node to animate
+   * @param durationSeconds The duration of each transition
+   *                        in seconds
+   * @param intensity       The maximum scale factor
+   */
+  public static void createScaleAnimation(Rectangle node,
+      double durationSeconds, double intensity) {
+    ScaleTransition scaleUpTransition = new ScaleTransition(
+        Duration.seconds(durationSeconds), node);
+    scaleUpTransition.setToX(intensity);
+    scaleUpTransition.setToY(intensity);
+    scaleUpTransition.setFromX(1);
+    scaleUpTransition.setFromY(1);
+
+    ScaleTransition scaleDownTransition = new ScaleTransition(
+        Duration.seconds(durationSeconds), node);
+    scaleDownTransition.setToX(1);
+    scaleDownTransition.setToY(1);
+    scaleDownTransition.setFromX(intensity);
+    scaleDownTransition.setFromY(intensity);
+
+    scaleUpTransition.play();
+
+    scaleUpTransition.setOnFinished((event) -> {
+      scaleDownTransition.play();
+    });
+
+    scaleDownTransition.setOnFinished((event) -> {
+      scaleUpTransition.play();
+    });
+
+    // Add hover and exit effects
+    node.setOnMouseEntered(e -> {
+      // set fill to be orange tint
+      node.setFill(Color.web("#2197ff", 0.5));
+    });
+
+    node.setOnMouseExited(e -> {
+      // clear the fill
+      node.setFill(Color.web("transparent", 0));
+    });
+  }
+
 }

@@ -280,8 +280,8 @@ public class HumanMemoryController extends MemoryController {
   }
 
   private void initializeRectangleAnimations() {
-    createScaleAnimation(aisle1Rectangle, 2.0, 1.1);
-    createScaleAnimation(aisle2Rectangle, 2.0, 1.1);
-    createScaleAnimation(aisle3Rectangle, 2.0, 1.1);
+    App.createScaleAnimation(aisle1Rectangle, 2.0, 1.1);
+    App.createScaleAnimation(aisle2Rectangle, 2.0, 1.1);
+    App.createScaleAnimation(aisle3Rectangle, 2.0, 1.1);
   }
 }
