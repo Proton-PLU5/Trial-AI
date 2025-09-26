@@ -235,9 +235,8 @@ public abstract class MemoryController implements TimableScene {
 
     Paint colourToUse = Color.web("#00865d");
     if (role.equals("User")) {
-      colourToUse = Color.web("#5599d9");
-      role = role + "\0" + roleOfCharacter;
       // To differentiate user messages for different characters
+      colourToUse = Color.web("#5599d9");
     }
 
     // Create a rectangle background which scales to the height of the textFlow
@@ -351,6 +350,7 @@ public abstract class MemoryController implements TimableScene {
     Platform.runLater(() -> {
       // Load initial messages
       StringBuilder systemPromptBuilder = new StringBuilder();
+      boolean hasBeenChattedWith = false;
 
       // Load the chat history, iterate through the map and append to the system
       // prompt.
@@ -361,6 +361,7 @@ public abstract class MemoryController implements TimableScene {
         systemPromptBuilder.append(displayRole).append(":\n").append(message).append("\n");
         // Show all messages for this character (AI and User)
         if (role.equals(this.roleOfCharacter) || role.endsWith(this.roleOfCharacter)) {
+          hasBeenChattedWith = true;
           appendMessageToChat(displayRole, message);
         }
       }
@@ -371,7 +372,7 @@ public abstract class MemoryController implements TimableScene {
         pt.play();
       });
 
-      if (systemPromptBuilder.isEmpty()) {
+      if (!hasBeenChattedWith) {
         Platform.runLater(() -> {
           Task<Void> task = new Task<Void>() {
             @Override
@@ -431,7 +432,6 @@ public abstract class MemoryController implements TimableScene {
     // seconds
     TranslateTransition moveLeftTransition = new TranslateTransition(
         Duration.seconds(1), titleBlock);
-    moveLeftTransition = new TranslateTransition(Duration.seconds(1), titleBlock);
     moveLeftTransition.setFromX(0);
     moveLeftTransition.setToX(-700);
     moveLeftTransition.setOnFinished(event -> titleBlock.setVisible(false));
@@ -454,5 +454,12 @@ public abstract class MemoryController implements TimableScene {
   }
 
   protected void markAsChatted() {
+  }
+
+  /**
+   * Handles the completion of an interactable element.
+   */
+  @FXML
+  protected void interactableDone() {
   }
 }

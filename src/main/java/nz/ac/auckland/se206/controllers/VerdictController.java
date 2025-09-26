@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -234,7 +233,6 @@ public class VerdictController implements TimableScene {
         ChatMessage msg = new ChatMessage("user", rationalePrompt);
         runGpt(msg);
       }
-    } else {
     }
   }
 

@@ -2,7 +2,6 @@ package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -108,7 +107,8 @@ public class AiMemoryController extends MemoryController {
 
   // Add interaction event when concealed item is detected here
   @FXML
-  private void interactableDone() {
+  @Override
+  protected void interactableDone() {
     if (isXrayMode && isFirstTimeInteract) {
       try (InputStream is = getClass().getClassLoader().getResourceAsStream(
           "prompts/aiInteractableContext.txt")) {
