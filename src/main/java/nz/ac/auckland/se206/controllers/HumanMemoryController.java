@@ -157,6 +157,8 @@ public class HumanMemoryController extends MemoryController {
       }
       setupDraggableItem(aisleItems.get(i), aisleItems.get(i).getId());
     }
+
+    createTitleDisappearAnimation();
   }
 
   @FXML
