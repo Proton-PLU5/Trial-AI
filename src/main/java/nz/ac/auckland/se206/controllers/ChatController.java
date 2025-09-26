@@ -115,8 +115,6 @@ public class ChatController {
   }
 
   private void appendChatMessage(ChatMessage msg) {
-
-    String content = msg.getContent();
     String displayName;
 
     if ("user".equals(msg.getRole())) {
