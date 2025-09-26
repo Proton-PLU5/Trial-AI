@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import nz.ac.auckland.se206.controllers.flashback.FlashbackController;
 import nz.ac.auckland.se206.utils.SceneManager;
+import nz.ac.auckland.se206.utils.SceneManager.Scenes;
 
 public class AiFlashbackController extends FlashbackController {
   @FXML
@@ -16,7 +17,6 @@ public class AiFlashbackController extends FlashbackController {
   private Label timerLabel;
   @FXML
   private Button memoryButton;
-
   @FXML
   private Label conversationRoleLabel;
   @FXML
@@ -51,6 +51,6 @@ public class AiFlashbackController extends FlashbackController {
   @Override
   @FXML
   protected void handleMemoryButton() {
-    SceneManager.switchScene(SceneManager.Scenes.aiMemory);
+    SceneManager.switchScene(Scenes.aiMemory);
   }
 }

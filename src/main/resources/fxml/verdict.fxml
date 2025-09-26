@@ -15,15 +15,15 @@
             <Image url="@../images/verdictBackground.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="yesButton" layoutX="576.0" layoutY="505.0" mnemonicParsing="false" onAction="#handleYesClicked" stylesheets="@../css/style.css" text="Yes">
+      <Button fx:id="yesButton" layoutX="576.0" layoutY="505.0" mnemonicParsing="false" onAction="#onYesClicked" stylesheets="@../css/style.css" text="Yes">
          <font>
             <Font size="25.0" />
          </font></Button>
-      <Button fx:id="noButton" layoutX="760.0" layoutY="505.0" mnemonicParsing="false" onAction="#handleNoClicked" stylesheets="@../css/style.css" text="No">
+      <Button fx:id="noButton" layoutX="760.0" layoutY="505.0" mnemonicParsing="false" onAction="#onNoClicked" stylesheets="@../css/style.css" text="No">
          <font>
             <Font size="25.0" />
          </font></Button>
-      <Button fx:id="submitButton" layoutX="648.0" layoutY="623.0" mnemonicParsing="false" onAction="#handleRationaleSubmitted" stylesheets="@../css/style.css" text="Submit" visible="false">
+      <Button fx:id="submitButton" layoutX="648.0" layoutY="623.0" mnemonicParsing="false" onAction="#onRationaleSubmitted" stylesheets="@../css/style.css" text="Submit" visible="false">
          <font>
             <Font size="25.0" />
          </font></Button>
@@ -55,7 +55,7 @@
          <font>
             <Font size="30.0" />
          </font></TextArea>
-      <Button fx:id="restartButton" layoutX="644.0" layoutY="623.0" mnemonicParsing="false" onAction="#handleRestartButtonPressed" stylesheets="@../css/style.css" text="Restart" visible="false">
+      <Button fx:id="restartButton" layoutX="644.0" layoutY="623.0" mnemonicParsing="false" onAction="#onRestartButtonPressed" stylesheets="@../css/style.css" text="Restart" visible="false">
          <font>
             <Font size="25.0" />
          </font>
