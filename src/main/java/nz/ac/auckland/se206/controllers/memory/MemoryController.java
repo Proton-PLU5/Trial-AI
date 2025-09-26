@@ -120,18 +120,6 @@ public abstract class MemoryController implements TimableScene {
 
     // Add some spacing between messages
     conversationGridPane.setVgap(10);
-    AnimationTimer scrollToBottomTimer = new AnimationTimer() {
-      private long lastUpdate = 0;
-
-      @Override
-      public void handle(long now) {
-        if (now - lastUpdate >= 200_000_000) { // 200 milliseconds
-          conversationScrollPane.setVvalue(1.0);
-          lastUpdate = now;
-        }
-      }
-    };
-    scrollToBottomTimer.start();
 
     // Send with enter key
     textArea.setOnKeyPressed(event -> {
@@ -176,6 +164,12 @@ public abstract class MemoryController implements TimableScene {
       markAsChatted();
       appendMessageToChat("User", userInput);
 
+      Platform.runLater(() -> {
+        PauseTransition pt = new PauseTransition(Duration.millis(50));
+        pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
+        pt.play();
+      });
+
       // Create a new thread to handle the GPT request
       Task<Void> task = new Task<Void>() {
         @Override
@@ -188,6 +182,9 @@ public abstract class MemoryController implements TimableScene {
           Platform.runLater(() -> {
             appendMessageToChat(roleOfCharacter, output);
             notificationSound.play();
+            PauseTransition pt = new PauseTransition(Duration.millis(50));
+            pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
+            pt.play();
           });
 
           // Re-enable the text field and send button after processing
@@ -359,6 +356,12 @@ public abstract class MemoryController implements TimableScene {
           appendMessageToChat(displayRole, message);
         }
       }
+
+      Platform.runLater(() -> {
+        PauseTransition pt = new PauseTransition(Duration.millis(50));
+        pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
+        pt.play();
+      });
 
       // Load the system prompt
       systemPromptBuilder.append(loadPrompt(promptId));
