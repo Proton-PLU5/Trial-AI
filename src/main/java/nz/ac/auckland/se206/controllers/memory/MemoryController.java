@@ -113,7 +113,6 @@ public abstract class MemoryController implements TimableScene {
   protected void initialize() {
     // Load initial messages
     loadInitialMessages(promptId);
-    sendGptRequest(INITIAL_PROMPT);
 
     // Initially hide chat and notification panes
     notificationPane.setVisible(false);
@@ -373,6 +372,28 @@ public abstract class MemoryController implements TimableScene {
 
       // Append the system prompt to the chat completion request
       this.chatCompletionRequest.addMessage("system", this.systemPrompt);
+
+      Task<Void> task = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+          String output = sendGptRequest(INITIAL_PROMPT);
+
+          // Update the chat area with the AI's response
+          Platform.runLater(() -> {
+            appendMessageToChat(roleOfCharacter, output);
+            notificationSound.play();
+            PauseTransition pt = new PauseTransition(Duration.millis(50));
+            pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
+            pt.play();
+          });
+
+          return null;
+        }
+      };
+
+      Thread gptRequestThread = new Thread(task);
+      gptRequestThread.setDaemon(true);
+      gptRequestThread.start();
     });
   }
 
