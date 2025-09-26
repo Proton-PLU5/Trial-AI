@@ -63,7 +63,6 @@ public class RoomController implements TimableScene {
 
     // Check if player has chatted with all three participants
     enableGuessButton();
-    btnGuess.setDisable(false);
 
     if (isFirstTimeInit) {
       startAudioMediaPlayer = new MediaPlayer(
