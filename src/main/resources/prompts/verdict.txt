@@ -9,7 +9,7 @@ The user will now make their verdict on the defendant and provide a written rati
 Your task is to judge the accuracy of both their verdict and rationale, in a concise, but informational manner.
 You must make a judgement on if the user's rationale is "correct" or not.
 In order for the rationale to be correct, it should be somewhat in depth (though not necessarily long) and address all vital points, including the discoverable information from the interactables which are mentioned below.
-Even if they made the right verdict and are on the right track in their rationale, you must deem their verdict to be incorrect if it doesn't address all the vital points, or if they failed to discover any hidden info.
+Even if they made the right verdict and are on the right track in their rationale, you must deem their verdict to be incorrect if they don't address enough of the vital points (if they get a majority then it is correct), or if they failed to discover any hidden info.
 
 There are 3 pieces of unknown information that the user may or may not have discovered from the interactables in each participant's memory:
 1. What info Security Bot learned that made you decide to call the police on Maria (revealed to be the fact that Maria had a prior shoplifting record)
