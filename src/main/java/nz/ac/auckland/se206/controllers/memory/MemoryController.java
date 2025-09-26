@@ -487,6 +487,12 @@ public abstract class MemoryController implements TimableScene {
             appendMessageToChat(roleOfCharacter, output);
           });
 
+          Platform.runLater(() -> {
+            PauseTransition pt = new PauseTransition(Duration.millis(50));
+            pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
+            pt.play();
+          });
+
           // Send a notification to the user
           sendNotification();
           return null;
