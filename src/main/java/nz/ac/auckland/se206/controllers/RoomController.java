@@ -77,15 +77,6 @@ public class RoomController implements TimableScene {
     } else {
       conversationPane.setVisible(false);
     }
-    if (characterInteracted.getOrDefault("defendant", false)) {
-      defendant.setVisible(false);
-    }
-    if (characterInteracted.getOrDefault("witnessAi", false)) {
-      witnessAi.setVisible(false);
-    }
-    if (characterInteracted.getOrDefault("witnessHuman", false)) {
-      witnessHuman.setVisible(false);
-    }
   }
 
   private void handleGameOver() throws IOException {
