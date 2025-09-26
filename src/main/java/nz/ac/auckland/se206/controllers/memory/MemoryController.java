@@ -502,4 +502,23 @@ public abstract class MemoryController implements TimableScene {
     }
     return isFirstTimeInteract;
   }
+
+  /**
+   * Handles the completion of an interactable element.
+   */
+  @FXML
+  protected void minorInteractableDoneString(String locationOfContextString, String interactableContext) {
+    try (InputStream is = getClass().getClassLoader()
+        .getResourceAsStream("prompts/" + locationOfContextString)) {
+      if (is == null) {
+        throw new IOException("Resource not found: prompts/" + locationOfContextString);
+      }
+      interactableContext = new String(
+          is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
+    System.out.println(App.getChatHistoryString());
+  }
 }
