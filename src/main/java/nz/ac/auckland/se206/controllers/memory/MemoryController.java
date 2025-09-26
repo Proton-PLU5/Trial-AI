@@ -438,7 +438,7 @@ public abstract class MemoryController implements TimableScene {
     moveLeftTransition.setToX(-700);
     moveLeftTransition.setOnFinished(event -> titleBlock.setVisible(false));
 
-    PauseTransition pause = new PauseTransition(Duration.seconds(4));
+    PauseTransition pause = new PauseTransition(Duration.seconds(8));
 
     titleBlock.setTranslateX(0);
 

@@ -32,7 +32,7 @@
             <Font name="Consolas" size="40.0" />
          </font>
       </Label>
-      <Label fx:id="verdictTitleLabel2" layoutX="223.0" layoutY="56.0" stylesheets="@../css/style.css" text="Explain the reasoning for your choice below." textFill="WHITE" visible="false">
+      <Label fx:id="verdictTitleLabel2" alignment="CENTER" layoutX="-6.0" layoutY="56.0" prefHeight="48.0" prefWidth="1414.0" stylesheets="@../css/style.css" text="Explain the reasoning for your choice below." textFill="WHITE" visible="false">
          <font>
             <Font size="40.0" />
          </font>
@@ -46,7 +46,7 @@
          <font>
             <Font size="30.0" />
          </font></TextArea>
-      <Label fx:id="verdictCorrectLabel" alignment="CENTER" layoutY="56.0" prefHeight="48.0" prefWidth="1408.0" text="Your verdict was..." textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="verdictCorrectLabel" alignment="CENTER" layoutY="56.0" prefHeight="48.0" prefWidth="1408.0" text="Your verdict was..." textAlignment="CENTER" textFill="WHITE" visible="false">
          <font>
             <Font name="Consolas" size="40.0" />
          </font>
