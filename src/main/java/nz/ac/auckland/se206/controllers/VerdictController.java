@@ -75,7 +75,6 @@ public class VerdictController implements TimableScene {
     mediaPlayer.play();
 
     verdictCorrectLabel.setText("Your verdict was...");
-    verdictCorrectLabel.setLayoutX(498);
     verdictCorrectLabel.setVisible(false);
 
     try {
@@ -229,7 +228,6 @@ public class VerdictController implements TimableScene {
           gameOverText.append("You didn't give a rationale. Try again.");
         }
         verdictCorrectLabel.setText(gameOverText.toString());
-        setVerdictCorrectLabelLayout();
         restartButton.setVisible(true);
       } else {
         // Add the rationale to the prompt
@@ -270,11 +268,9 @@ public class VerdictController implements TimableScene {
                     String rationaleSummary = content.replaceFirst("^(\\S+\\s+){5}", "");
                     rationaleJudgementTextArea.setText(rationaleSummary);
                     verdictCorrectLabel.setText(gameOverText.toString());
-                    setVerdictCorrectLabelLayout(arr);
                   } else {
                     rationaleJudgementTextArea.setText(content);
                     verdictCorrectLabel.setText(gameOverText.toString());
-                    setVerdictCorrectLabelLayout();
                   }
 
                   restartButton.setVisible(true);
@@ -320,30 +316,6 @@ public class VerdictController implements TimableScene {
     } catch (IOException | URISyntaxException e) {
       e.printStackTrace();
       throw new IllegalStateException(promptId + " not found");
-    }
-  }
-
-  private void setVerdictCorrectLabelLayout() {
-    // See if the verdict is correct and then change the scene
-    if (rationale.isEmpty()) {
-      if (!choiceMade) {
-        verdictCorrectLabel.setLayoutX(201);
-      } else {
-        verdictCorrectLabel.setLayoutX(278);
-      }
-      verdictCorrectLabel.setText(gameOverText.toString());
-    } else {
-      if (!isChoiceMadeCorrect) {
-        verdictCorrectLabel.setLayoutX(410);
-      }
-    }
-  }
-
-  private void setVerdictCorrectLabelLayout(String[] arr) {
-    if (arr[9].equals("correct")) {
-      verdictCorrectLabel.setLayoutX(47);
-    } else {
-      verdictCorrectLabel.setLayoutX(25);
     }
   }
 }
