@@ -20,6 +20,7 @@ import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -60,7 +61,7 @@ public abstract class MemoryController implements TimableScene {
   @FXML
   private ScrollPane conversationScrollPane;
   @FXML
-  private TextField textField;
+  private TextArea textArea;
 
   // Navigation
   @FXML
@@ -133,7 +134,20 @@ public abstract class MemoryController implements TimableScene {
     scrollToBottomTimer.start();
 
     // Send with enter key
-    textField.setOnAction(event -> onSendButtonPressed());
+    textArea.setOnKeyPressed(event -> {
+      switch (event.getCode()) {
+        case ENTER:
+          if (event.isShiftDown()) {
+            textArea.appendText("\n");
+          } else {
+            event.consume(); // Prevents adding a new line
+            onSendButtonPressed();
+          }
+          break;
+        default:
+          break;
+      }
+    });
   }
 
   /** Handles the "Chat" button press event to toggle chat visibility. */
@@ -154,9 +168,9 @@ public abstract class MemoryController implements TimableScene {
   /** Handles the "Send" button press event to send a message. */
   @FXML
   protected void onSendButtonPressed() {
-    String userInput = textField.getText().strip();
+    String userInput = textArea.getText().strip();
     // Clear the text field
-    textField.clear();
+    textArea.clear();
 
     if (!userInput.isEmpty()) {
       markAsChatted();
@@ -177,8 +191,8 @@ public abstract class MemoryController implements TimableScene {
           });
 
           // Re-enable the text field and send button after processing
-          textField.setDisable(false);
-          textField.setPromptText("Enter your message.");
+          textArea.setDisable(false);
+          textArea.setPromptText("Enter your message.");
           sendButton.setDisable(false);
 
           return null;
@@ -189,8 +203,8 @@ public abstract class MemoryController implements TimableScene {
       gptRequestThread.start();
 
       // Lock the text field and send button while processing
-      textField.setDisable(true);
-      textField.setPromptText("Waiting for response...");
+      textArea.setDisable(true);
+      textArea.setPromptText("Waiting for response...");
       sendButton.setDisable(true);
     }
   }
