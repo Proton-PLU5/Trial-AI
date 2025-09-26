@@ -42,7 +42,7 @@ public class HumanFlashbackController extends FlashbackController {
   }
 
   @Override
-  protected void setupText() {
+  protected void initializeText() {
     addText(
         "But when I was about to leave the store, the police suddenly showed up to arrest me, and I had no idea why.");
     addText("After I finished getting everything I needed, I went to purchase it all at the self-checkout.");
