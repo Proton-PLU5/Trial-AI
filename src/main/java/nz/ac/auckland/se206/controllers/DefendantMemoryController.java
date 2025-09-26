@@ -1,10 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
-import java.io.IOException;
-import java.io.InputStream;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,7 +16,6 @@ import javafx.scene.shape.Arc;
 import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
-import nz.ac.auckland.se206.utils.Tuple;
 
 public class DefendantMemoryController extends MemoryController {
 
@@ -27,6 +23,11 @@ public class DefendantMemoryController extends MemoryController {
   private static AudioClip keyPadAudioClip;
   public static boolean isFirstTimeInteract = true;
   public static boolean loginSequenceCompleted = false;
+
+  public static boolean scannedOne = false;
+  public static boolean scannedTwo = false;
+  public static boolean scannedThree = false;
+  public static boolean scannedFour = false;
 
   @FXML
   private Rectangle rec1;
@@ -55,7 +56,7 @@ public class DefendantMemoryController extends MemoryController {
   @FXML
   private StackPane customerDetailsPane;
   @FXML
-  private Label customerIDLabel;
+  private Label customerIdLabel;
   @FXML
   private Label customerStatusLabel;
   @FXML
@@ -67,7 +68,7 @@ public class DefendantMemoryController extends MemoryController {
   private final String correctPin = "1 2 3 4";
   private AnimationTimer progressArcAnimationTimer;
 
-  public String interactableContext = "";
+  private String interactableContext = "";
 
   static {
     var resource = DefendantMemoryController.class.getResource("/sounds/keypad.mp3");
@@ -89,6 +90,7 @@ public class DefendantMemoryController extends MemoryController {
   @FXML
   protected void initialize() {
     this.roleOfCharacter = "Security Bot";
+    initializeRectangleAnimations();
 
     // This method initializes the defendant memory scene, including the login
     // sequence and CCTV interactions
@@ -110,6 +112,18 @@ public class DefendantMemoryController extends MemoryController {
       descriptionLabel.setText("Please login to access the CCTV footage.");
       titleLabel.setText("Login Required");
     }
+    if (scannedOne) {
+      rec1.setVisible(false);
+    }
+    if (scannedTwo) {
+      rec2.setVisible(false);
+    }
+    if (scannedThree) {
+      rec3.setVisible(false);
+    }
+    if (scannedFour) {
+      rec4.setVisible(false);
+    }
 
     // We run a thread for the mouse movement so that the progress arc follows the
     // mouse
@@ -128,7 +142,7 @@ public class DefendantMemoryController extends MemoryController {
   }
 
   @FXML
-  private void pressKeypadButton(ActionEvent event) {
+  private void onKeypadButtonPressed(ActionEvent event) {
     Button button = (Button) event.getSource();
     String buttonText = button.getText();
 
@@ -136,10 +150,6 @@ public class DefendantMemoryController extends MemoryController {
     if (buttonText.matches("[0-9]")) {
       pin = pin.replaceFirst("_", buttonText);
       pinLabel.setText(pin);
-      // Set the pitch of the audio clip based on the button pressed
-      // For numbers 1-9, set pitch from 1.0 to 1.8
-
-      keyPadAudioClip.play();
     }
   }
 
@@ -187,7 +197,7 @@ public class DefendantMemoryController extends MemoryController {
    * @param event The action event triggered by clicking the login button
    */
   @FXML
-  private void pressLoginButton(ActionEvent event) {
+  private void onLoginButtonPressed(ActionEvent event) {
     initialPane.setVisible(false);
     keypadPane.setVisible(true);
   }
@@ -237,37 +247,47 @@ public class DefendantMemoryController extends MemoryController {
           // Check if the source of the event is one of the rectangles
           // Check by getting the ID of the source
           if (sourceNode.getId().equals(rec1.getId())) {
-            customerIDLabel.setText("Customer 1");
+            customerIdLabel.setText("Customer 1");
             customerStatusLabel.setText("New Shopper");
             customerAgeLabel.setText("Age: 25");
             customerCriminalRecordLabel.setText("Shoplifting");
             // Highlight criminal record
             customerCriminalRecordLabel.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
 
+            rec1.setVisible(false);
+            scannedOne = true;
+
             // LLM sends message when interactable is done
-            interactableDone();
+            interactableDone(isFirstTimeInteract, "defendantInteractableContext.txt",
+                "defendantInteractableDone.txt", interactableContext);
 
           } else if (sourceNode.getId().equals(rec2.getId())) {
-            customerIDLabel.setText("Customer 2");
+            customerIdLabel.setText("Customer 2");
             customerStatusLabel.setText("Returning Shopper");
             customerAgeLabel.setText("Age: 40");
             customerCriminalRecordLabel.setText("No Record");
+            rec2.setVisible(false);
+            scannedTwo = true;
+
           } else if (sourceNode.getId().equals(rec3.getId())) {
-            customerIDLabel.setText("Customer 3");
+            customerIdLabel.setText("Customer 3");
             customerStatusLabel.setText("New Shopper");
             customerAgeLabel.setText("Age: 30");
             customerCriminalRecordLabel.setText("No Record");
+            rec3.setVisible(false);
+            scannedThree = true;
           } else if (sourceNode.getId().equals(rec4.getId())) {
-            customerIDLabel.setText("Customer 4");
+            customerIdLabel.setText("Customer 4");
             customerStatusLabel.setText("Loyal Shopper");
             customerAgeLabel.setText("Age: 35");
             customerCriminalRecordLabel.setText("No Record");
+            rec4.setVisible(false);
+            scannedFour = true;
           }
         }
-
-      };
-
+      }
     };
+
     progressArcAnimationTimer.start();
   }
 
@@ -295,44 +315,11 @@ public class DefendantMemoryController extends MemoryController {
     hasChattedWithDefendant = true;
   }
 
-  // Add interaction event when shoplifting info is revealed
-  @FXML
-  private void interactableDone() {
-    if (isFirstTimeInteract) {
-      try (InputStream is = getClass().getClassLoader()
-          .getResourceAsStream("prompts/defendantInteractableContext.txt")) {
-        if (is == null) {
-          throw new IOException("Resource not found: prompts/defendantInteractableContext.txt");
-        }
-        interactableContext = new String(is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-      App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
-      System.out.println(App.getChatHistoryString());
-
-      Task<Void> interactableDoneTask = new Task<Void>() {
-        @Override
-        protected Void call() throws Exception {
-          String output = sendGptRequest(loadPrompt("prompts/defendantInteractableDone.txt"));
-
-          // Update the chat area with the AI's response
-          Platform.runLater(() -> {
-            appendMessageToChat(roleOfCharacter, output);
-          });
-
-          // Send a notification to the user
-          sendNotification();
-          return null;
-        }
-      };
-
-      // Use a thread to perform the task concurrently
-      Thread additionalInfoThread = new Thread(interactableDoneTask);
-      additionalInfoThread.setDaemon(true);
-      additionalInfoThread.start();
-
-      isFirstTimeInteract = false;
-    }
+  private void initializeRectangleAnimations() {
+    createScaleAnimation(rec1, 2.0, 1.1);
+    createScaleAnimation(rec2, 2.0, 1.1);
+    createScaleAnimation(rec3, 2.0, 1.1);
+    createScaleAnimation(rec4, 2.0, 1.1);
   }
+
 }

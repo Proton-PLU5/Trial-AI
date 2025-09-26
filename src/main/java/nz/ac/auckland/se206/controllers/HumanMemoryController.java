@@ -1,14 +1,10 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javafx.animation.PauseTransition;
-import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
+
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -22,8 +18,6 @@ import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
 import nz.ac.auckland.se206.utils.DraggableMaker;
-import nz.ac.auckland.se206.utils.SceneManager;
-import nz.ac.auckland.se206.utils.Tuple;
 
 public class HumanMemoryController extends MemoryController {
 
@@ -66,6 +60,8 @@ public class HumanMemoryController extends MemoryController {
   private Rectangle aisle1Rectangle;
   @FXML
   private Rectangle aisle2Rectangle;
+  @FXML
+  private Rectangle aisle3Rectangle;
 
   // Misc
   @FXML
@@ -100,7 +96,7 @@ public class HumanMemoryController extends MemoryController {
   private ArrayList<ImageView> aisleItems = new ArrayList<ImageView>();
   private ArrayList<ImageView> itemMarkers = new ArrayList<ImageView>();
 
-  public String interactableContext = "";
+  private String interactableContext = "";
 
   public HumanMemoryController() {
     super("prompts/human.txt");
@@ -113,6 +109,7 @@ public class HumanMemoryController extends MemoryController {
   @Override
   @FXML
   protected void initialize() {
+    initializeRectangleAnimations();
     App.timer.addConsumer(getTimerConsumer());
     createTitleDisappearAnimation();
     super.initialize();
@@ -128,6 +125,10 @@ public class HumanMemoryController extends MemoryController {
     itemMarkers.add(markerLine2);
     itemMarkers.add(markerLine3);
     itemMarkers.add(markerLine4);
+
+    aisle1Rectangle.setVisible(true);
+    aisle2Rectangle.setVisible(true);
+    aisle3Rectangle.setVisible(true);
 
     // Initial UI setup
     for (ImageView item : aisleItems) {
@@ -166,6 +167,7 @@ public class HumanMemoryController extends MemoryController {
     aisle1Pane.setVisible(true);
     shoppingCartHitbox.setVisible(true);
     backToAislesButton.setVisible(true);
+    aisle2Rectangle.setVisible(true);
     // might need to use checkIfItemHasBeenCollected();
   }
 
@@ -224,22 +226,28 @@ public class HumanMemoryController extends MemoryController {
         System.out.println("Item 1 in cart!"); // Debugging
         // Check off the shopping list
         markerLine1.setVisible(true);
+        minorInteractableDoneString("humanInteractableContext1.txt", interactableContext);
         break;
       case "aisle2Item1":
         System.out.println("Item 2 in cart!"); // Debugging
         // Check off the shopping list
         markerLine2.setVisible(true);
+        minorInteractableDoneString("humanInteractableContext2a.txt", interactableContext);
         break;
       case "aisle2Item2":
         System.out.println("Item 3 in cart!"); // Debugging
         // Check off the shopping list
         markerLine3.setVisible(true);
+        minorInteractableDoneString("humanInteractableContext2b.txt", interactableContext);
         break;
       case "aisle3Item":
         System.out.println("Item 4 in cart!"); // Debugging
         // Check off the shopping list
         markerLine4.setVisible(true);
-        interactableDone();
+        interactableDone(isFirstTimeInteract,
+            "humanInteractableContext.txt",
+            "humanInteractableDone.txt",
+            interactableContext);
         break;
       default:
         // placeholder
@@ -251,43 +259,9 @@ public class HumanMemoryController extends MemoryController {
     hasChattedWithHuman = true;
   }
 
-  // Add interaction event when shoplifting info is revealed
-  @FXML
-  private void interactableDone() {
-    if (isFirstTimeInteract) {
-      try (InputStream is = getClass().getClassLoader().getResourceAsStream("prompts/humanInteractableContext.txt")) {
-        if (is == null) {
-          throw new IOException("Resource not found: prompts/humanInteractableContext.txt");
-        }
-        interactableContext = new String(is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-      App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
-      System.out.println(App.getChatHistoryString());
-
-      Task<Void> interactableDoneTask = new Task<Void>() {
-        @Override
-        protected Void call() throws Exception {
-          String output = sendGptRequest(loadPrompt("prompts/humanInteractableDone.txt"));
-
-          // Update the chat area with the AI's response
-          Platform.runLater(() -> {
-            appendMessageToChat(roleOfCharacter, output);
-          });
-
-          // Send a notification to the user
-          sendNotification();
-          return null;
-        }
-      };
-
-      // Use a thread to perform the task concurrently
-      Thread additionalInfoThread = new Thread(interactableDoneTask);
-      additionalInfoThread.setDaemon(true);
-      additionalInfoThread.start();
-
-      isFirstTimeInteract = false;
-    }
+  private void initializeRectangleAnimations() {
+    createScaleAnimation(aisle1Rectangle, 2.0, 1.1);
+    createScaleAnimation(aisle2Rectangle, 2.0, 1.1);
+    createScaleAnimation(aisle3Rectangle, 2.0, 1.1);
   }
 }

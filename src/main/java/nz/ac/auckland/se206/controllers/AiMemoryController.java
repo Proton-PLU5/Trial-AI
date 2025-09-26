@@ -1,8 +1,9 @@
 package nz.ac.auckland.se206.controllers;
 
-
 import java.io.IOException;
 import java.io.InputStream;
+
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -14,9 +15,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.memory.MemoryController;
-import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.Tuple;
 
 public class AiMemoryController extends MemoryController {
@@ -45,7 +46,7 @@ public class AiMemoryController extends MemoryController {
   private Circle clipCircle;
   private boolean isXrayMode = false;
 
-  public String interactableContext = "";
+  private String interactableContext = "";
 
   public AiMemoryController() {
     super("prompts/ai.txt");
@@ -109,29 +110,38 @@ public class AiMemoryController extends MemoryController {
 
   // Add interaction event when concealed item is detected here
   @FXML
-  private void interactableDone() {
+  protected void interactableDone() {
     if (isXrayMode && isFirstTimeInteract) {
-      try (InputStream is = getClass().getClassLoader().getResourceAsStream("prompts/aiInteractableContext.txt")) {
+      try (InputStream is = getClass().getClassLoader().getResourceAsStream(
+          "prompts/aiInteractableContext.txt")) {
         if (is == null) {
           throw new IOException("Resource not found: prompts/aiInteractableContext.txt");
         }
-        interactableContext = new String(is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+        interactableContext = new String(
+            is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
       } catch (IOException e) {
         e.printStackTrace();
       }
-      
+
       App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
-      
+
       System.out.println(App.getChatHistoryString());
       // LLM sends message when interactable is done
       Task<Void> interactableDoneTask = new Task<Void>() {
         @Override
         protected Void call() throws Exception {
-          String output = sendGptRequest(loadPrompt("prompts/aiInteractableDone.txt"));
+          chatCompletionRequest.addMessage("system",loadPrompt("prompts/aiInteractableDone.txt"));
+          String output = sendGptRequest("");
 
           // Update the chat area with the AI's response
           Platform.runLater(() -> {
             appendMessageToChat(roleOfCharacter, output);
+          });
+
+          Platform.runLater(() -> {
+            PauseTransition pt = new PauseTransition(Duration.millis(50));
+            pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
+            pt.play();
           });
 
           // Send a notification to the user

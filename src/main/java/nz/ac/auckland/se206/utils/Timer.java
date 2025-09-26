@@ -2,7 +2,6 @@ package nz.ac.auckland.se206.utils;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
-
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import nz.ac.auckland.se206.App;

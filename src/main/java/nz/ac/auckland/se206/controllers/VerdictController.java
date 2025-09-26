@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -117,7 +116,7 @@ public class VerdictController implements TimableScene {
           .setN(1)
           .setTemperature(0.2)
           .setModel(Model.GPT_4_1_MINI)
-          .setMaxTokens(500);
+          .setMaxTokens(2000);
     } catch (ApiProxyException e) {
       e.printStackTrace();
     }
@@ -172,6 +171,10 @@ public class VerdictController implements TimableScene {
     DefendantMemoryController.hasChattedWithDefendant = false;
     DefendantMemoryController.loginSequenceCompleted = false;
     DefendantMemoryController.isFirstTimeInteract = true;
+    DefendantMemoryController.scannedOne = false;
+    DefendantMemoryController.scannedTwo = false;
+    DefendantMemoryController.scannedThree = false;
+    DefendantMemoryController.scannedFour = false;
 
     AiMemoryController.isFirstTimeInteract = true;
     AiMemoryController.hasChattedWithAi = false;
@@ -205,7 +208,6 @@ public class VerdictController implements TimableScene {
     if (!rationaleSubmitted) {
       rationaleSubmitted = true;
       verdictTimer.stopTimer();
-      restartButton.setVisible(true);
       verdictTitleLabel2.setVisible(false);
       submitButton.setVisible(false);
       rationaleTextArea.setVisible(false);
@@ -225,6 +227,7 @@ public class VerdictController implements TimableScene {
         }
         verdictCorrectLabel.setText(gameOverText.toString());
         setVerdictCorrectLabelLayout();
+        restartButton.setVisible(true);
       } else {
         // Add the rationale to the prompt
         rationalePrompt += rationale;
@@ -234,8 +237,6 @@ public class VerdictController implements TimableScene {
         ChatMessage msg = new ChatMessage("user", rationalePrompt);
         runGpt(msg);
       }
-    } else {
-      return;
     }
   }
 
@@ -272,6 +273,8 @@ public class VerdictController implements TimableScene {
                     verdictCorrectLabel.setText(gameOverText.toString());
                     setVerdictCorrectLabelLayout();
                   }
+
+                  restartButton.setVisible(true);
                 });
 
           } catch (ApiProxyException e) {
@@ -308,7 +311,8 @@ public class VerdictController implements TimableScene {
     // Loading the prompt into the chats and stuff
     try {
       URL promptUrl = this.getClass().getClassLoader().getResource(promptId);
-      List<String> promptStrings = Files.readAllLines(Paths.get(promptUrl.toURI()), Charset.defaultCharset());
+      List<String> promptStrings = Files.readAllLines(
+          Paths.get(promptUrl.toURI()), Charset.defaultCharset());
       return String.join("\n", promptStrings);
     } catch (IOException | URISyntaxException e) {
       e.printStackTrace();
@@ -317,6 +321,7 @@ public class VerdictController implements TimableScene {
   }
 
   private void setVerdictCorrectLabelLayout() {
+    // See if the verdict is correct and then change the scene
     if (rationale.isEmpty()) {
       if (!choiceMade) {
         verdictCorrectLabel.setLayoutX(201);

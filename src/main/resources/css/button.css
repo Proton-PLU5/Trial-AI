@@ -1,0 +1,41 @@
+/* ===== BASE BUTTON STYLING ===== */
+.button {
+  -fx-background-color: #1e3a8a;
+  -fx-border-color: #3b82f6;
+  -fx-border-width: 2px;
+  -fx-border-radius: 12px;
+  -fx-background-radius: 12px;
+  -fx-text-fill: #ffffff;
+  -fx-font-family: "Consolas", "Courier New", monospace;
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+  -fx-cursor: hand;
+}
+
+/* ===== BUTTON HOVER STATE ===== */
+.button:hover {
+  -fx-background-color: #2563eb;
+  -fx-border-color: #60a5fa;
+  -fx-border-width: 2px;
+  -fx-text-fill: #ffffff;
+}
+
+/* ===== BUTTON PRESSED STATE ===== */
+.button:pressed {
+  -fx-background-color: #1d4ed8;
+  -fx-border-color: #3b82f6;
+  -fx-border-width: 2px;
+  -fx-text-fill: #ffffff;
+}
+
+/* ===== BUTTON FOCUS STATE ===== */
+.button:focused {
+  -fx-border-color: #60a5fa;
+  -fx-border-width: 3px;
+  -fx-background-insets: 0;
+  -fx-border-insets: 0;
+}
+
+.label {
+  -fx-text-fill: #ffffff;
+}

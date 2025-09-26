@@ -1,7 +1,6 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,7 +27,7 @@ public class StartController implements TimableScene {
   }
 
   @FXML
-  private void pressPlayButton() {
+  private void onPlayButtonPressed() {
     // This method handles the play button click and switches to the room scene
     try {
       // Timer Setup

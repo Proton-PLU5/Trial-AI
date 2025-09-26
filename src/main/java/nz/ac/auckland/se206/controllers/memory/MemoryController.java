@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers.memory;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -9,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import javafx.animation.Interpolator;
 import javafx.animation.PauseTransition;
+import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -57,7 +59,7 @@ public abstract class MemoryController implements TimableScene {
   @FXML
   private GridPane conversationGridPane;
   @FXML
-  private ScrollPane conversationScrollPane;
+  protected ScrollPane conversationScrollPane;
   @FXML
   private TextArea textArea;
 
@@ -93,7 +95,8 @@ public abstract class MemoryController implements TimableScene {
 
   protected AudioClip notificationSound;
   protected String promptId = "";
-  protected final String INITIAL_PROMPT = "If there are no previous messages you can talk about with the user,"
+  protected final String initalPrompt = "If there are no previous"
+      + " messages you can talk about with the user,"
       + "then you should introduce yourself to the user with a short and concise message. "
       + "Otherwise, you should respond to the previous conversations.";
 
@@ -234,8 +237,8 @@ public abstract class MemoryController implements TimableScene {
 
     Paint colourToUse = Color.web("#00865d");
     if (role.equals("User")) {
+      // To differentiate user messages for different characters
       colourToUse = Color.web("#5599d9");
-      role = role + "\0" + roleOfCharacter; // To differentiate user messages for different characters
     }
 
     // Create a rectangle background which scales to the height of the textFlow
@@ -293,12 +296,14 @@ public abstract class MemoryController implements TimableScene {
       notificationPane.setVisible(true);
 
       // Create a "bounce" animation for the notification pane
-      TranslateTransition moveUpTransition = new TranslateTransition(Duration.seconds(0.2), notificationPane);
+      TranslateTransition moveUpTransition = new TranslateTransition(
+          Duration.seconds(0.2), notificationPane);
       moveUpTransition.setFromY(-30);
       moveUpTransition.setToY(0);
       moveUpTransition.setInterpolator(Interpolator.EASE_IN);
 
-      TranslateTransition moveDownTransition = new TranslateTransition(Duration.seconds(0.2), notificationPane);
+      TranslateTransition moveDownTransition = new TranslateTransition(
+          Duration.seconds(0.2), notificationPane);
       moveDownTransition.setFromY(0);
       moveDownTransition.setToY(-30);
       moveDownTransition.setInterpolator(Interpolator.EASE_OUT);
@@ -347,6 +352,7 @@ public abstract class MemoryController implements TimableScene {
     Platform.runLater(() -> {
       // Load initial messages
       StringBuilder systemPromptBuilder = new StringBuilder();
+      boolean hasBeenChattedWith = false;
 
       // Load the chat history, iterate through the map and append to the system
       // prompt.
@@ -357,6 +363,7 @@ public abstract class MemoryController implements TimableScene {
         systemPromptBuilder.append(displayRole).append(":\n").append(message).append("\n");
         // Show all messages for this character (AI and User)
         if (role.equals(this.roleOfCharacter) || role.endsWith(this.roleOfCharacter)) {
+          hasBeenChattedWith = true;
           appendMessageToChat(displayRole, message);
         }
       }
@@ -367,12 +374,12 @@ public abstract class MemoryController implements TimableScene {
         pt.play();
       });
 
-      if (systemPromptBuilder.isEmpty()) {
+      if (!hasBeenChattedWith) {
         Platform.runLater(() -> {
           Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-              chatCompletionRequest.addMessage("system", INITIAL_PROMPT);
+              chatCompletionRequest.addMessage("system", initalPrompt);
               String output = sendGptRequest("");
               // Update the chat area with the AI's response
               Platform.runLater(() -> {
@@ -400,7 +407,6 @@ public abstract class MemoryController implements TimableScene {
 
       // Append the system prompt to the chat completion request
       this.chatCompletionRequest.addMessage("system", this.systemPrompt);
-
     });
   }
 
@@ -414,7 +420,8 @@ public abstract class MemoryController implements TimableScene {
     // This method loads the prompt from a file and into the respective llms chat
     try {
       URL promptUrl = this.getClass().getClassLoader().getResource(promptId);
-      List<String> promptStrings = Files.readAllLines(Paths.get(promptUrl.toURI()), Charset.defaultCharset());
+      List<String> promptStrings = Files.readAllLines(
+          Paths.get(promptUrl.toURI()), Charset.defaultCharset());
       return String.join("\n", promptStrings);
     } catch (IOException | URISyntaxException e) {
       e.printStackTrace();
@@ -425,8 +432,8 @@ public abstract class MemoryController implements TimableScene {
   protected void createTitleDisappearAnimation() {
     // This method creates the animation for the title to disappear after a few
     // seconds
-    TranslateTransition moveLeftTransition = new TranslateTransition(Duration.seconds(1), titleBlock);
-    moveLeftTransition = new TranslateTransition(Duration.seconds(1), titleBlock);
+    TranslateTransition moveLeftTransition = new TranslateTransition(
+        Duration.seconds(1), titleBlock);
     moveLeftTransition.setFromX(0);
     moveLeftTransition.setToX(-700);
     moveLeftTransition.setOnFinished(event -> titleBlock.setVisible(false));
@@ -449,5 +456,115 @@ public abstract class MemoryController implements TimableScene {
   }
 
   protected void markAsChatted() {
+  }
+
+  /**
+   * Handles the completion of an interactable element.
+   */
+  @FXML
+  protected boolean interactableDone(boolean isFirstTimeInteract, String locationOfContextString,
+      String locationOfDoneString, String interactableContext) {
+    if (isFirstTimeInteract) {
+      try (InputStream is = getClass().getClassLoader()
+          .getResourceAsStream("prompts/" + locationOfContextString)) {
+        if (is == null) {
+          throw new IOException("Resource not found: prompts/" + locationOfContextString);
+        }
+        interactableContext = new String(
+            is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
+      System.out.println(App.getChatHistoryString());
+
+      Task<Void> interactableDoneTask = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+          chatCompletionRequest.addMessage("system", loadPrompt("prompts/" + locationOfDoneString));
+          String output = sendGptRequest("");
+
+          // Update the chat area with the AI's response
+          Platform.runLater(() -> {
+            appendMessageToChat(roleOfCharacter, output);
+          });
+
+          Platform.runLater(() -> {
+            PauseTransition pt = new PauseTransition(Duration.millis(50));
+            pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
+            pt.play();
+          });
+
+          // Send a notification to the user
+          sendNotification();
+          return null;
+        }
+      };
+
+      // Use a thread to perform the task concurrently
+      Thread additionalInfoThread = new Thread(interactableDoneTask);
+      additionalInfoThread.setDaemon(true);
+      additionalInfoThread.start();
+
+      return false;
+    }
+    return isFirstTimeInteract;
+  }
+
+  /**
+   * Handles the completion of an interactable element.
+   */
+  @FXML
+  protected void minorInteractableDoneString(String locationOfContextString, String interactableContext) {
+    try (InputStream is = getClass().getClassLoader()
+        .getResourceAsStream("prompts/" + locationOfContextString)) {
+      if (is == null) {
+        throw new IOException("Resource not found: prompts/" + locationOfContextString);
+      }
+      interactableContext = new String(
+          is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
+    System.out.println(App.getChatHistoryString());
+  }
+
+  protected void createScaleAnimation(Rectangle node,
+      double durationSeconds, double intensity) {
+    ScaleTransition scaleUpTransition = new ScaleTransition(
+        Duration.seconds(durationSeconds), node);
+    scaleUpTransition.setToX(intensity);
+    scaleUpTransition.setToY(intensity);
+    scaleUpTransition.setFromX(1);
+    scaleUpTransition.setFromY(1);
+
+    ScaleTransition scaleDownTransition = new ScaleTransition(
+        Duration.seconds(durationSeconds), node);
+    scaleDownTransition.setToX(1);
+    scaleDownTransition.setToY(1);
+    scaleDownTransition.setFromX(intensity);
+    scaleDownTransition.setFromY(intensity);
+
+    scaleUpTransition.play();
+
+    scaleUpTransition.setOnFinished((event) -> {
+      scaleDownTransition.play();
+    });
+
+    scaleDownTransition.setOnFinished((event) -> {
+      scaleUpTransition.play();
+    });
+
+    // Add hover and exit effects
+    node.setOnMouseEntered(e -> {
+      // set fill to be orange tint
+      node.setFill(Color.web("#2197ff", 0.5));
+    });
+
+    node.setOnMouseExited(e -> {
+      // clear the fill
+      node.setFill(Color.web("transparent", 0));
+    });
   }
 }
