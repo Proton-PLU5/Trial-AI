@@ -37,6 +37,7 @@ public class AiFlashbackController extends FlashbackController {
 
   @Override
   protected void initializeText() {
+    // Add the text to be displayed
     addText(
         "System output: subject detected exhibiting irregular behavior."
             + " Subject advanced toward exit carrying one unscanned item.");
