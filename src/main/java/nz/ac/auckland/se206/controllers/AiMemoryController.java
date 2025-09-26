@@ -1,7 +1,6 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
-
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -24,6 +23,9 @@ import nz.ac.auckland.se206.utils.SceneManager;
 public class AiMemoryController extends MemoryController {
 
   private static final double CIRCLE_RADIUS = 75.0;
+  public static boolean isFirstTimeInteract = true;
+  public static boolean hasChattedWithAi;
+
   @FXML
   private Button roomBtn;
   @FXML
@@ -43,8 +45,6 @@ public class AiMemoryController extends MemoryController {
 
   private Circle clipCircle;
   private boolean isXrayMode = false;
-  public static boolean isFirstTimeInteract = true;
-  public static boolean hasChattedWithAi;
 
   public AiMemoryController() {
     super("prompts/witnessAi.txt");
@@ -144,23 +144,6 @@ public class AiMemoryController extends MemoryController {
     // Update the clip circle position
     clipCircle.setCenterX(imageX);
     clipCircle.setCenterY(imageY);
-  }
-
-  private void handleGameOver() throws IOException {
-    Stage stage = (Stage) chatBtn.getScene().getWindow();
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/verdict.fxml"));
-    Parent finalRoot = loader.load();
-    stage.setScene(new Scene(finalRoot));
-  }
-
-  @FXML
-  private void handleBackButton() {
-    SceneManager.switchScene(SceneManager.Scenes.room);
-  }
-
-  @FXML
-  private void handleOpenChatButtonClick(MouseEvent event) throws IOException {
-    chatPanel.setVisible(true);
   }
 
   @Override
