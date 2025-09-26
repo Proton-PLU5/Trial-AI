@@ -250,7 +250,8 @@ public class HumanMemoryController extends MemoryController {
 
   // Add interaction event when shoplifting info is revealed
   @FXML
-  private void interactableDone() {
+  @Override
+  protected void interactableDone() {
     if (isFirstTimeInteract) {
       try (InputStream is = getClass().getClassLoader().getResourceAsStream(
           "prompts/humanInteractableContext.txt")) {

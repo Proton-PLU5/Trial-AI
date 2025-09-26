@@ -455,4 +455,11 @@ public abstract class MemoryController implements TimableScene {
 
   protected void markAsChatted() {
   }
+
+  /**
+   * Handles the completion of an interactable element.
+   */
+  @FXML
+  protected void interactableDone() {
+  }
 }
