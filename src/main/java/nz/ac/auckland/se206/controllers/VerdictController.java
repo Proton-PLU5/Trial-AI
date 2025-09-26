@@ -174,6 +174,10 @@ public class VerdictController implements TimableScene {
     DefendantMemoryController.hasChattedWithDefendant = false;
     DefendantMemoryController.loginSequenceCompleted = false;
     DefendantMemoryController.isFirstTimeInteract = true;
+    DefendantMemoryController.scannedOne = false;
+    DefendantMemoryController.scannedTwo = false;
+    DefendantMemoryController.scannedThree = false;
+    DefendantMemoryController.scannedFour = false;
 
     AiMemoryController.isFirstTimeInteract = true;
     AiMemoryController.hasChattedWithAi = false;
