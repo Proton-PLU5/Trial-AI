@@ -1,4 +1,4 @@
-[AI Defendant Interactable Done]
+[ecurity Bot (Defendant) Interactable Done]
 [Security Bot Memory Info Learned]
 
 By viewing the Security Bot's memory, the user has seen things from their point of view and found new information. 
