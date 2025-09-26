@@ -7,35 +7,25 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-
-import javax.management.RuntimeErrorException;
-
 import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
-import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
-import javafx.animation.Transition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -52,6 +42,7 @@ import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
+import nz.ac.auckland.se206.utils.Tuple;
 
 public abstract class MemoryController implements TimableScene {
 
@@ -103,7 +94,6 @@ public abstract class MemoryController implements TimableScene {
 
   protected AudioClip notificationSound;
   protected String promptId = "";
-
 
   // Constructor
   public MemoryController(String promptId) {
@@ -255,7 +245,7 @@ public abstract class MemoryController implements TimableScene {
     GridPane.setValignment(messageStack, VPos.TOP);
 
     // Update chat history in App class
-    App.chatHistoryMap.put(role, message);
+    App.chatHistoryMap.add(new Tuple<String, String>(role, message));
   }
 
   /** Handles the "Go Back" button press event. */
@@ -345,8 +335,9 @@ public abstract class MemoryController implements TimableScene {
 
       // Load the chat history, iterate through the map and append to the system
       // prompt.
-      for (String role : App.chatHistoryMap.keySet()) {
-        String message = App.chatHistoryMap.get(role);
+      for (Tuple<String, String> entry : App.chatHistoryMap) {
+        String role = entry.getKey();
+        String message = entry.getValue();
         systemPromptBuilder.append(role.split("\0")[0]).append(":\n").append(message).append("\n");
         if (role.endsWith(this.roleOfCharacter)) {
           appendMessageToChat(role.split("\0")[0], message);

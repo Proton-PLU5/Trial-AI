@@ -1,12 +1,9 @@
 package nz.ac.auckland.se206;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.function.Consumer;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.SortedMap;
-
+import java.util.List;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.Timer;
+import nz.ac.auckland.se206.utils.Tuple;
 
 /**
  * This is the entry point of the JavaFX application. This class initializes and
@@ -24,9 +22,9 @@ public class App extends Application {
 
   private static Scene scene;
   public static Stage primaryStage;
-  public static LinkedHashMap<String, String> chatHistoryMap = new LinkedHashMap<>();
-  public static final int TIMER_DURATION = 10; // 5 minutes in seconds
-  public static Timer timer;
+  public static List<Tuple<String, String>> chatHistoryMap = new ArrayList<Tuple<String, String>>();
+  public static final int TIMER_DURATION = 5 * 60; // 5 minutes in seconds
+  public static Timer timer; // 5 minutes
 
   /**
    * The main method that launches the JavaFX application.
@@ -84,11 +82,15 @@ public class App extends Application {
   }
 
   public static String getChatHistoryString() {
-    StringBuilder sb = new StringBuilder();
-    for (Map.Entry<String, String> entry : chatHistoryMap.entrySet()) {
-      sb.append(entry.getKey()).append(":\n").append(entry.getValue()).append("\n");
+    StringBuilder stringBuilder = new StringBuilder();
+    // Load the chat history, iterate through the map and append to the string
+    // builder
+    for (Tuple<String, String> entry : App.chatHistoryMap) {
+      String role = entry.getKey();
+      String message = entry.getValue();
+      stringBuilder.append(role.split("\0")[0]).append(":\n").append(message).append("\n");
     }
-    return sb.toString();
+    return stringBuilder.toString();
   }
 
   /**
