@@ -93,7 +93,8 @@ public abstract class MemoryController implements TimableScene {
 
   protected AudioClip notificationSound;
   protected String promptId = "";
-  protected final String INITIAL_PROMPT = "If there are no previous messages you can talk about with the user,"
+  protected final String INITIAL_PROMPT = "If there are no previous"
+      + " messages you can talk about with the user,"
       + "then you should introduce yourself to the user with a short and concise message. "
       + "Otherwise, you should respond to the previous conversations.";
 
@@ -235,7 +236,8 @@ public abstract class MemoryController implements TimableScene {
     Paint colourToUse = Color.web("#00865d");
     if (role.equals("User")) {
       colourToUse = Color.web("#5599d9");
-      role = role + "\0" + roleOfCharacter; // To differentiate user messages for different characters
+      role = role + "\0" + roleOfCharacter;
+      // To differentiate user messages for different characters
     }
 
     // Create a rectangle background which scales to the height of the textFlow
@@ -293,12 +295,14 @@ public abstract class MemoryController implements TimableScene {
       notificationPane.setVisible(true);
 
       // Create a "bounce" animation for the notification pane
-      TranslateTransition moveUpTransition = new TranslateTransition(Duration.seconds(0.2), notificationPane);
+      TranslateTransition moveUpTransition = new TranslateTransition(
+          Duration.seconds(0.2), notificationPane);
       moveUpTransition.setFromY(-30);
       moveUpTransition.setToY(0);
       moveUpTransition.setInterpolator(Interpolator.EASE_IN);
 
-      TranslateTransition moveDownTransition = new TranslateTransition(Duration.seconds(0.2), notificationPane);
+      TranslateTransition moveDownTransition = new TranslateTransition(
+          Duration.seconds(0.2), notificationPane);
       moveDownTransition.setFromY(0);
       moveDownTransition.setToY(-30);
       moveDownTransition.setInterpolator(Interpolator.EASE_OUT);
@@ -405,7 +409,8 @@ public abstract class MemoryController implements TimableScene {
     // This method loads the prompt from a file and into the respective llms chat
     try {
       URL promptUrl = this.getClass().getClassLoader().getResource(promptId);
-      List<String> promptStrings = Files.readAllLines(Paths.get(promptUrl.toURI()), Charset.defaultCharset());
+      List<String> promptStrings = Files.readAllLines(
+          Paths.get(promptUrl.toURI()), Charset.defaultCharset());
       return String.join("\n", promptStrings);
     } catch (IOException | URISyntaxException e) {
       e.printStackTrace();
@@ -416,7 +421,8 @@ public abstract class MemoryController implements TimableScene {
   protected void createTitleDisappearAnimation() {
     // This method creates the animation for the title to disappear after a few
     // seconds
-    TranslateTransition moveLeftTransition = new TranslateTransition(Duration.seconds(1), titleBlock);
+    TranslateTransition moveLeftTransition = new TranslateTransition(
+        Duration.seconds(1), titleBlock);
     moveLeftTransition = new TranslateTransition(Duration.seconds(1), titleBlock);
     moveLeftTransition.setFromX(0);
     moveLeftTransition.setToX(-700);
