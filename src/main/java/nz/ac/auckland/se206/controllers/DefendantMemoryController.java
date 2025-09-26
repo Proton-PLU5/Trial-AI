@@ -249,7 +249,7 @@ public class DefendantMemoryController extends MemoryController {
 
           } else if (sourceNode.getId().equals(rec2.getId())) {
             customerIdLabel.setText("Customer 2");
-            customerStatusLabel.setText("Returning Shopper");
+            customerStatusLabel.setText("New Shopper");
             customerAgeLabel.setText("Age: 40");
             customerCriminalRecordLabel.setText("No Record");
             rec2.setVisible(false);
