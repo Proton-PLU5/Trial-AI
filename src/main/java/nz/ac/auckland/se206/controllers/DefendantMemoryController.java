@@ -85,6 +85,7 @@ public class DefendantMemoryController extends MemoryController {
   @FXML
   protected void initialize() {
     this.roleOfCharacter = "Security Bot";
+    initializeRectangleAnimations();
 
     // This method initializes the defendant memory scene, including the login
     // sequence and CCTV interactions
@@ -289,6 +290,13 @@ public class DefendantMemoryController extends MemoryController {
   @Override
   protected void markAsChatted() {
     hasChattedWithDefendant = true;
+  }
+
+  private void initializeRectangleAnimations() {
+    createScaleAnimation(rec1, 2.0, 1.1);
+    createScaleAnimation(rec2, 2.0, 1.1);
+    createScaleAnimation(rec3, 2.0, 1.1);
+    createScaleAnimation(rec4, 2.0, 1.1);
   }
 
 }
