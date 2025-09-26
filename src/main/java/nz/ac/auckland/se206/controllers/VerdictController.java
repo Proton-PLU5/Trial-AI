@@ -204,7 +204,6 @@ public class VerdictController implements TimableScene {
     if (!rationaleSubmitted) {
       rationaleSubmitted = true;
       verdictTimer.stopTimer();
-      restartButton.setVisible(true);
       verdictTitleLabel2.setVisible(false);
       submitButton.setVisible(false);
       rationaleTextArea.setVisible(false);
@@ -269,6 +268,8 @@ public class VerdictController implements TimableScene {
                     verdictCorrectLabel.setText(gameOverText.toString());
                     setVerdictCorrectLabelLayout();
                   }
+
+                  restartButton.setVisible(true);
                 });
 
           } catch (ApiProxyException e) {
