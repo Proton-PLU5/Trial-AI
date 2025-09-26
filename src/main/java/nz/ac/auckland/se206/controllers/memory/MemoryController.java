@@ -7,23 +7,16 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-
-import javax.management.RuntimeErrorException;
-
 import javafx.animation.AnimationTimer;
 import javafx.animation.Interpolator;
-import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
-import javafx.animation.Transition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -34,8 +27,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -52,6 +43,7 @@ import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
+import nz.ac.auckland.se206.utils.Tuple;
 
 public abstract class MemoryController implements TimableScene {
 
@@ -69,7 +61,7 @@ public abstract class MemoryController implements TimableScene {
   @FXML
   private ScrollPane conversationScrollPane;
   @FXML
-  private TextField textField;
+  private TextArea textArea;
 
   // Navigation
   @FXML
@@ -104,7 +96,6 @@ public abstract class MemoryController implements TimableScene {
   protected AudioClip notificationSound;
   protected String promptId = "";
 
-
   // Constructor
   public MemoryController(String promptId) {
     try {
@@ -129,21 +120,22 @@ public abstract class MemoryController implements TimableScene {
 
     // Add some spacing between messages
     conversationGridPane.setVgap(10);
-    AnimationTimer scrollToBottomTimer = new AnimationTimer() {
-      private long lastUpdate = 0;
-
-      @Override
-      public void handle(long now) {
-        if (now - lastUpdate >= 200_000_000) { // 200 milliseconds
-          conversationScrollPane.setVvalue(1.0);
-          lastUpdate = now;
-        }
-      }
-    };
-    scrollToBottomTimer.start();
 
     // Send with enter key
-    textField.setOnAction(event -> onSendButtonPressed());
+    textArea.setOnKeyPressed(event -> {
+      switch (event.getCode()) {
+        case ENTER:
+          if (event.isShiftDown()) {
+            textArea.appendText("\n");
+          } else {
+            event.consume(); // Prevents adding a new line
+            onSendButtonPressed();
+          }
+          break;
+        default:
+          break;
+      }
+    });
   }
 
   /** Handles the "Chat" button press event to toggle chat visibility. */
@@ -164,13 +156,19 @@ public abstract class MemoryController implements TimableScene {
   /** Handles the "Send" button press event to send a message. */
   @FXML
   protected void onSendButtonPressed() {
-    String userInput = textField.getText().strip();
+    String userInput = textArea.getText().strip();
     // Clear the text field
-    textField.clear();
+    textArea.clear();
 
     if (!userInput.isEmpty()) {
       markAsChatted();
       appendMessageToChat("User", userInput);
+
+      Platform.runLater(() -> {
+        PauseTransition pt = new PauseTransition(Duration.millis(50));
+        pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
+        pt.play();
+      });
 
       // Create a new thread to handle the GPT request
       Task<Void> task = new Task<Void>() {
@@ -184,11 +182,14 @@ public abstract class MemoryController implements TimableScene {
           Platform.runLater(() -> {
             appendMessageToChat(roleOfCharacter, output);
             notificationSound.play();
+            PauseTransition pt = new PauseTransition(Duration.millis(50));
+            pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
+            pt.play();
           });
 
           // Re-enable the text field and send button after processing
-          textField.setDisable(false);
-          textField.setPromptText("Enter your message.");
+          textArea.setDisable(false);
+          textArea.setPromptText("Enter your message.");
           sendButton.setDisable(false);
 
           return null;
@@ -199,8 +200,8 @@ public abstract class MemoryController implements TimableScene {
       gptRequestThread.start();
 
       // Lock the text field and send button while processing
-      textField.setDisable(true);
-      textField.setPromptText("Waiting for response...");
+      textArea.setDisable(true);
+      textArea.setPromptText("Waiting for response...");
       sendButton.setDisable(true);
     }
   }
@@ -253,9 +254,6 @@ public abstract class MemoryController implements TimableScene {
     conversationGridPane.add(messageStack, 0, nextRow);
     GridPane.setHalignment(messageStack, HPos.LEFT);
     GridPane.setValignment(messageStack, VPos.TOP);
-
-    // Update chat history in App class
-    App.chatHistoryMap.put(role, message);
   }
 
   /** Handles the "Go Back" button press event. */
@@ -326,6 +324,9 @@ public abstract class MemoryController implements TimableScene {
       ChatMessage message = result.getChatMessage();
 
       this.chatCompletionRequest.addMessage(message);
+      // Update chat history in App class
+      App.chatHistoryMap.add(new Tuple<String, String>("User" + "\0" + roleOfCharacter, userInput));
+      App.chatHistoryMap.add(new Tuple<String, String>(roleOfCharacter, message.getContent()));
       return message.getContent();
     } catch (ApiProxyException e) {
       e.printStackTrace();
@@ -345,13 +346,22 @@ public abstract class MemoryController implements TimableScene {
 
       // Load the chat history, iterate through the map and append to the system
       // prompt.
-      for (String role : App.chatHistoryMap.keySet()) {
-        String message = App.chatHistoryMap.get(role);
-        systemPromptBuilder.append(role.split("\0")[0]).append(":\n").append(message).append("\n");
-        if (role.endsWith(this.roleOfCharacter)) {
-          appendMessageToChat(role.split("\0")[0], message);
+      for (Tuple<String, String> entry : App.chatHistoryMap) {
+        String role = entry.getKey();
+        String message = entry.getValue();
+        String displayRole = role.split("\0")[0];
+        systemPromptBuilder.append(displayRole).append(":\n").append(message).append("\n");
+        // Show all messages for this character (AI and User)
+        if (role.equals(this.roleOfCharacter) || role.endsWith(this.roleOfCharacter)) {
+          appendMessageToChat(displayRole, message);
         }
       }
+
+      Platform.runLater(() -> {
+        PauseTransition pt = new PauseTransition(Duration.millis(50));
+        pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
+        pt.play();
+      });
 
       // Load the system prompt
       systemPromptBuilder.append(loadPrompt(promptId));

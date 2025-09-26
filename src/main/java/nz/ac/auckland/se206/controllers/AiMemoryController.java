@@ -41,7 +41,6 @@ public class AiMemoryController extends MemoryController {
   @FXML
   private Rectangle overlayRectangle;
 
-  private TimerService timerService;
   private Circle clipCircle;
   private boolean isXrayMode = false;
   public static boolean isFirstTimeInteract = true;

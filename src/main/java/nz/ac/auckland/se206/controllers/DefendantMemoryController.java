@@ -98,6 +98,7 @@ public class DefendantMemoryController extends MemoryController {
   @Override
   @FXML
   protected void initialize() {
+    this.roleOfCharacter = "Security Bot";
 
     // This method initializes the defendant memory scene, including the login
     // sequence and CCTV interactions
@@ -134,8 +135,6 @@ public class DefendantMemoryController extends MemoryController {
 
     App.timer.addConsumer(getTimerConsumer());
     createTitleDisappearAnimation();
-
-    this.roleOfCharacter = "Security Bot";
   }
 
   @FXML

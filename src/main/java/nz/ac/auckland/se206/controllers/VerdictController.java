@@ -6,6 +6,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,6 +31,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
 import nz.ac.auckland.se206.utils.Timer;
+import nz.ac.auckland.se206.utils.Tuple;
 
 public class VerdictController implements TimableScene {
 
@@ -154,7 +156,7 @@ public class VerdictController implements TimableScene {
   @FXML
   private void handleRestartButtonPressed(ActionEvent event) {
     App.createTimer();
-    App.chatHistoryMap = new LinkedHashMap<>();
+    App.chatHistoryMap = new ArrayList<Tuple<String, String>>();
 
     HumanMemoryController.hasChattedWithHuman = false;
     HumanMemoryController.itemCollected = new HashMap<>();
