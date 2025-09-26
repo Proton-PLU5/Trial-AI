@@ -132,10 +132,6 @@ public class DefendantMemoryController extends MemoryController {
     if (buttonText.matches("[0-9]")) {
       pin = pin.replaceFirst("_", buttonText);
       pinLabel.setText(pin);
-      // Set the pitch of the audio clip based on the button pressed
-      // For numbers 1-9, set pitch from 1.0 to 1.8
-
-      keyPadAudioClip.play();
     }
   }
 
