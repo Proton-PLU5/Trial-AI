@@ -24,8 +24,8 @@ public class HumanMemoryController extends MemoryController {
   public static Map<String, Boolean> itemCollected = new HashMap<>();
   public static Map<String, ImageView> itemToLabel = new HashMap<>();
   public static boolean isFirstTimeInteract = true;
-  private static boolean hasAisle1BeenCompleted = false;
-  private static boolean hasAisle2BeenCompleted = false;
+  public static boolean hasAisle1BeenCompleted = false;
+  public static boolean hasAisle2BeenCompleted = false;
 
   @FXML
   private Button roomBtn;
