@@ -545,66 +545,75 @@ public abstract class MemoryController implements TimableScene {
     Platform.runLater(() -> {
       loadingPane.setVisible(true);
 
-      // Reset positions - trolley starts on top of first grocery
+      double imageScale = 2.5;
+      double trolleyScale = 3.5;
+      trolleyImage.setScaleX(trolleyScale);
+      trolleyImage.setScaleY(trolleyScale);
+      orangeJuiceImage.setScaleX(imageScale);
+      orangeJuiceImage.setScaleY(imageScale);
+      appleJuiceImage.setScaleX(imageScale);
+      appleJuiceImage.setScaleY(imageScale);
+      candyBarImage.setScaleX(imageScale);
+      candyBarImage.setScaleY(imageScale);
+
       trolleyImage.setTranslateX(0);
+      trolleyImage.setTranslateY(0);
+      orangeJuiceImage.setTranslateY(0);
+      appleJuiceImage.setTranslateY(0);
+      candyBarImage.setTranslateY(0);
       orangeJuiceImage.setOpacity(1);
       appleJuiceImage.setOpacity(1);
       candyBarImage.setOpacity(1);
 
-      // Create the animation timeline
       loadingAnimation = new Timeline();
       loadingAnimation.setCycleCount(Timeline.INDEFINITE);
 
-      // Distance between groceries (they're at X: 150, 250, 350, so 100px apart)
       double moveDistance = 100;
 
-      // Keyframes for the animation - trolley jumps from item to item
       loadingAnimation.getKeyFrames().addAll(
-          // Start on first grocery
           new KeyFrame(Duration.ZERO,
-              new KeyValue(trolleyImage.translateXProperty(), 0),
-              new KeyValue(orangeJuiceImage.opacityProperty(), 1),
-              new KeyValue(appleJuiceImage.opacityProperty(), 1),
-              new KeyValue(candyBarImage.opacityProperty(), 1)),
+              new KeyValue(trolleyImage.translateXProperty(), 0, Interpolator.DISCRETE),
+              new KeyValue(orangeJuiceImage.opacityProperty(), 0, Interpolator.DISCRETE),
+              new KeyValue(appleJuiceImage.opacityProperty(), 1, Interpolator.DISCRETE),
+              new KeyValue(candyBarImage.opacityProperty(), 1, Interpolator.DISCRETE)),
 
-          // Fade out first grocery
-          new KeyFrame(Duration.seconds(0.3),
-              new KeyValue(orangeJuiceImage.opacityProperty(), 0)),
+          new KeyFrame(Duration.seconds(0.6),
+              new KeyValue(trolleyImage.translateXProperty(), 0, Interpolator.DISCRETE),
+              new KeyValue(orangeJuiceImage.opacityProperty(), 0, Interpolator.DISCRETE)),
 
-          // Jump to second grocery
-          new KeyFrame(Duration.seconds(0.5),
-              new KeyValue(trolleyImage.translateXProperty(), moveDistance)),
+          new KeyFrame(Duration.seconds(0.61),
+              new KeyValue(trolleyImage.translateXProperty(), moveDistance, Interpolator.DISCRETE),
+              new KeyValue(orangeJuiceImage.opacityProperty(), 1, Interpolator.DISCRETE),
+              new KeyValue(appleJuiceImage.opacityProperty(), 0, Interpolator.DISCRETE)),
 
-          // Fade out second grocery
-          new KeyFrame(Duration.seconds(0.8),
-              new KeyValue(appleJuiceImage.opacityProperty(), 0)),
+          new KeyFrame(Duration.seconds(1.2),
+              new KeyValue(trolleyImage.translateXProperty(), moveDistance, Interpolator.DISCRETE),
+              new KeyValue(appleJuiceImage.opacityProperty(), 0, Interpolator.DISCRETE)),
 
-          // Jump to third grocery
-          new KeyFrame(Duration.seconds(1.0),
-              new KeyValue(trolleyImage.translateXProperty(), moveDistance * 2)),
+          new KeyFrame(Duration.seconds(1.21),
+              new KeyValue(trolleyImage.translateXProperty(), moveDistance * 2, Interpolator.DISCRETE),
+              new KeyValue(appleJuiceImage.opacityProperty(), 1, Interpolator.DISCRETE),
+              new KeyValue(candyBarImage.opacityProperty(), 0, Interpolator.DISCRETE)),
 
-          // Fade out third grocery
-          new KeyFrame(Duration.seconds(1.3),
-              new KeyValue(candyBarImage.opacityProperty(), 0)),
+          new KeyFrame(Duration.seconds(1.8),
+              new KeyValue(trolleyImage.translateXProperty(), moveDistance * 2, Interpolator.DISCRETE),
+              new KeyValue(candyBarImage.opacityProperty(), 0, Interpolator.DISCRETE)),
 
-          // Reset - jump back to first and fade all groceries back in
-          new KeyFrame(Duration.seconds(1.5),
-              new KeyValue(trolleyImage.translateXProperty(), 0),
-              new KeyValue(orangeJuiceImage.opacityProperty(), 1),
-              new KeyValue(appleJuiceImage.opacityProperty(), 1),
-              new KeyValue(candyBarImage.opacityProperty(), 1)));
+          new KeyFrame(Duration.seconds(1.81),
+              new KeyValue(trolleyImage.translateXProperty(), 0, Interpolator.DISCRETE),
+              new KeyValue(orangeJuiceImage.opacityProperty(), 0, Interpolator.DISCRETE),
+              new KeyValue(candyBarImage.opacityProperty(), 1, Interpolator.DISCRETE)));
 
       loadingAnimation.play();
     });
   }
 
-  protected void hideLoadingAnimation() {
+  private void hideLoadingAnimation() {
     if (loadingAnimation != null) {
       loadingAnimation.stop();
     }
     loadingPane.setVisible(false);
 
-    // Reset all positions and opacities for next time
     trolleyImage.setTranslateX(0);
     orangeJuiceImage.setOpacity(1);
     appleJuiceImage.setOpacity(1);
