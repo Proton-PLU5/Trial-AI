@@ -72,6 +72,7 @@ public class VerdictController implements TimableScene {
   protected void initialize() {
     Media media = new Media(getClass().getResource("/sounds/verdict.mp3").toExternalForm());
     MediaPlayer mediaPlayer = new MediaPlayer(media);
+    mediaPlayer.setVolume(0.02);
     mediaPlayer.play();
 
     verdictCorrectLabel.setText("Your verdict was...");

@@ -9,8 +9,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -21,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
@@ -84,6 +88,19 @@ public abstract class MemoryController implements TimableScene {
   // Notification
   @FXML
   protected StackPane notificationPane;
+
+  @FXML
+  private AnchorPane loadingPane;
+  @FXML
+  private ImageView trolleyImage;
+  @FXML
+  private ImageView orangeJuiceImage;
+  @FXML
+  private ImageView appleJuiceImage;
+  @FXML
+  private ImageView candyBarImage;
+
+  private Timeline loadingAnimation;
 
   // Chat visibility state
   private boolean isChatVisible = false;
@@ -184,6 +201,8 @@ public abstract class MemoryController implements TimableScene {
           // Update the chat area with the AI's response
           Platform.runLater(() -> {
             appendMessageToChat(roleOfCharacter, output);
+            hideLoadingAnimation();
+            showLoadingAnimation();
             notificationSound.play();
             PauseTransition pt = new PauseTransition(Duration.millis(50));
             pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
@@ -206,6 +225,7 @@ public abstract class MemoryController implements TimableScene {
       textArea.setDisable(true);
       textArea.setPromptText("Waiting for response...");
       sendButton.setDisable(true);
+      showLoadingAnimation();
     }
   }
 
@@ -519,5 +539,75 @@ public abstract class MemoryController implements TimableScene {
     }
     App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
     System.out.println(App.getChatHistoryString());
+  }
+
+  private void showLoadingAnimation() {
+    Platform.runLater(() -> {
+      loadingPane.setVisible(true);
+
+      // Reset positions - trolley starts on top of first grocery
+      trolleyImage.setTranslateX(0);
+      orangeJuiceImage.setOpacity(1);
+      appleJuiceImage.setOpacity(1);
+      candyBarImage.setOpacity(1);
+
+      // Create the animation timeline
+      loadingAnimation = new Timeline();
+      loadingAnimation.setCycleCount(Timeline.INDEFINITE);
+
+      // Distance between groceries (they're at X: 150, 250, 350, so 100px apart)
+      double moveDistance = 100;
+
+      // Keyframes for the animation - trolley jumps from item to item
+      loadingAnimation.getKeyFrames().addAll(
+          // Start on first grocery
+          new KeyFrame(Duration.ZERO,
+              new KeyValue(trolleyImage.translateXProperty(), 0),
+              new KeyValue(orangeJuiceImage.opacityProperty(), 1),
+              new KeyValue(appleJuiceImage.opacityProperty(), 1),
+              new KeyValue(candyBarImage.opacityProperty(), 1)),
+
+          // Fade out first grocery
+          new KeyFrame(Duration.seconds(0.3),
+              new KeyValue(orangeJuiceImage.opacityProperty(), 0)),
+
+          // Jump to second grocery
+          new KeyFrame(Duration.seconds(0.5),
+              new KeyValue(trolleyImage.translateXProperty(), moveDistance)),
+
+          // Fade out second grocery
+          new KeyFrame(Duration.seconds(0.8),
+              new KeyValue(appleJuiceImage.opacityProperty(), 0)),
+
+          // Jump to third grocery
+          new KeyFrame(Duration.seconds(1.0),
+              new KeyValue(trolleyImage.translateXProperty(), moveDistance * 2)),
+
+          // Fade out third grocery
+          new KeyFrame(Duration.seconds(1.3),
+              new KeyValue(candyBarImage.opacityProperty(), 0)),
+
+          // Reset - jump back to first and fade all groceries back in
+          new KeyFrame(Duration.seconds(1.5),
+              new KeyValue(trolleyImage.translateXProperty(), 0),
+              new KeyValue(orangeJuiceImage.opacityProperty(), 1),
+              new KeyValue(appleJuiceImage.opacityProperty(), 1),
+              new KeyValue(candyBarImage.opacityProperty(), 1)));
+
+      loadingAnimation.play();
+    });
+  }
+
+  protected void hideLoadingAnimation() {
+    if (loadingAnimation != null) {
+      loadingAnimation.stop();
+    }
+    loadingPane.setVisible(false);
+
+    // Reset all positions and opacities for next time
+    trolleyImage.setTranslateX(0);
+    orangeJuiceImage.setOpacity(1);
+    appleJuiceImage.setOpacity(1);
+    candyBarImage.setOpacity(1);
   }
 }
