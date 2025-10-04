@@ -558,8 +558,11 @@ public abstract class MemoryController implements TimableScene {
 
       trolleyImage.setTranslateX(0);
       trolleyImage.setTranslateY(0);
+      orangeJuiceImage.setTranslateX(-50);
       orangeJuiceImage.setTranslateY(0);
+      appleJuiceImage.setTranslateX(0);
       appleJuiceImage.setTranslateY(0);
+      candyBarImage.setTranslateX(50);
       candyBarImage.setTranslateY(0);
       orangeJuiceImage.setOpacity(1);
       appleJuiceImage.setOpacity(1);
@@ -568,7 +571,7 @@ public abstract class MemoryController implements TimableScene {
       loadingAnimation = new Timeline();
       loadingAnimation.setCycleCount(Timeline.INDEFINITE);
 
-      double moveDistance = 100;
+      double moveDistance = 150;
 
       loadingAnimation.getKeyFrames().addAll(
           new KeyFrame(Duration.ZERO,
