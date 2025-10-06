@@ -19,7 +19,6 @@
       <Rectangle fx:id="defendant" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" focusTraversable="true" height="370.0" layoutX="488.0" layoutY="232.0" onMouseClicked="#handleRectangleClick" opacity="1" stroke="#2197ff" strokeType="INSIDE" strokeWidth="3.0" width="397.0" />
       <Rectangle fx:id="witnessHuman" arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" focusTraversable="true" height="320.0" layoutX="134.0" layoutY="255.0" onMouseClicked="#handleRectangleClick" opacity="1" stroke="#2197ff" strokeType="INSIDE" strokeWidth="3.0" width="329.0" />
       <Button fx:id="btnGuess" layoutX="590.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#handleGuessClick" stylesheets="@../css/style.css" text="Make your choice" />
-      <Label fx:id="timerLabel" layoutX="632.0" layoutY="68.0" stylesheets="@../css/style.css" text="Label" />
       <AnchorPane fx:id="conversationPane" layoutX="32.0" layoutY="499.0" minHeight="135.0" prefHeight="183.0" prefWidth="1165.0" stylesheets="@../css/style.css" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.333333333333485">
          <children>
             <Button fx:id="nextButton" layoutX="31.0" layoutY="126.0" mnemonicParsing="false" onMouseClicked="#handleNextButton" text="Continue" />
@@ -27,5 +26,6 @@
             <Label fx:id="conversationTextLabel" layoutX="31.0" layoutY="68.0" prefHeight="40.0" prefWidth="1226.0" text="This is the situation, your task is to figure out whether the AI defendant's decision was ethical, reasonable, and justified." />
          </children>
       </AnchorPane>
+      <Label fx:id="timerLabel" layoutX="1231.0" layoutY="599.0" maxHeight="118.0" maxWidth="125.0" prefHeight="118.0" prefWidth="125.0" stylesheets="@../css/style.css" text="Label" />
    </children>
 </Pane>
