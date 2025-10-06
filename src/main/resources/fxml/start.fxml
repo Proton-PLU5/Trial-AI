@@ -15,7 +15,7 @@
          <font>
             <Font name="System Bold" size="57.0" />
          </font></Label>
-      <Label fx:id="timerLabel" alignment="CENTER" layoutX="-2.0" layoutY="155.0" prefHeight="113.0" prefWidth="1314.0" text="An interactive ethics simulation game." textAlignment="CENTER" wrapText="true">
+      <Label fx:id="textLabel" alignment="CENTER" layoutX="406.0" layoutY="196.0" maxWidth="1308.0" prefHeight="47.0" prefWidth="525.0" stylesheets="@../css/style.css" text="An interactive ethics simulation game." textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="27.0" />
          </font></Label>

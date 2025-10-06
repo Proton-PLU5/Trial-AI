@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +14,8 @@ import nz.ac.auckland.se206.utils.TimableScene;
 
 public class StartController implements TimableScene {
 
+  @FXML
+  private Label textLabel;
   @FXML
   private Label timerLabel;
   @FXML

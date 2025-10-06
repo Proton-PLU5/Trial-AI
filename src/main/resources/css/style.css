@@ -168,6 +168,24 @@
   -fx-text-overrun: ellipsis;
 }
 
+#textLabel {
+  /* Bright blue text matching timer */
+  -fx-font-family: "Consolas", "Courier New", monospace;
+  -fx-font-size: 18px;
+  -fx-font-weight: bold;
+  -fx-background-color: rgba(30, 58, 138, 0.4);
+  /* Semi-transparent blue background */
+  -fx-background-radius: 10px;
+  -fx-padding: 10 20 10 20;
+  -fx-border-color: #3b82f6;
+  -fx-border-width: 2px;
+  -fx-border-radius: 10px;
+  -fx-alignment: center;
+  -fx-wrap-text: true;
+  -fx-effect: dropshadow(three-pass-box, rgba(59, 130, 246, 0.4), 8, 0.3, 0, 1);
+  /* Subtle glow */
+}
+
 /* ===== CONVERSATION TEXT LABEL ===== */
 #conversationTextLabel {
   -fx-text-fill: #e2e8f0;
