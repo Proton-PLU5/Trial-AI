@@ -57,8 +57,6 @@ public class RoomController implements TimableScene {
    */
   @FXML
   public void initialize() {
-    initializeRectangleAnimations();
-
     App.timer.addConsumer(this.getTimerConsumer());
 
     // Check if player has chatted with all three participants
@@ -70,8 +68,12 @@ public class RoomController implements TimableScene {
       startAudioMediaPlayer.play();
 
       isFirstTimeInit = false;
+      witnessAi.setVisible(false);
+      witnessHuman.setVisible(false);
+      defendant.setVisible(false);
     } else {
       conversationPane.setVisible(false);
+      initializeRectangleAnimations();
     }
   }
 
@@ -137,6 +139,16 @@ public class RoomController implements TimableScene {
   @FXML
   void handleNextButton() {
     conversationPane.setVisible(false);
+    showRectangles();
+  }
+
+  @FXML
+  void showRectangles() {
+    // Hides the rectangles at the start before the judge message is done
+    witnessAi.setVisible(true);
+    witnessHuman.setVisible(true);
+    defendant.setVisible(true);
+    initializeRectangleAnimations();
   }
 
   private SceneManager.Scenes getMemoryScene(String characterId) {
