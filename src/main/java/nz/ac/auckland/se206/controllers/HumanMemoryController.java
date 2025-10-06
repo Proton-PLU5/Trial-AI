@@ -8,10 +8,12 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
@@ -285,5 +287,21 @@ public class HumanMemoryController extends MemoryController {
     App.createScaleAnimation(aisle1Rectangle, 2.0, 1.1);
     App.createScaleAnimation(aisle2Rectangle, 2.0, 1.1);
     App.createScaleAnimation(aisle3Rectangle, 2.0, 1.1);
+  }
+
+  @FXML
+  private void handleItemMouseEntered(MouseEvent event) {
+    Node item = (Node) event.getSource();
+    DropShadow glow = new DropShadow();
+    glow.setColor(Color.web("#99cbff"));
+    glow.setRadius(20);
+    glow.setSpread(0.45);
+    item.setEffect(glow);
+  }
+
+  @FXML
+  private void handleItemMouseExited(MouseEvent event) {
+    Node item = (Node) event.getSource();
+    item.setEffect(null);
   }
 }

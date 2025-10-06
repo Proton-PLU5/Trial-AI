@@ -25,7 +25,7 @@
                   <Image url="@../images/humanMemoryAisle3.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="aisle3Item" fitHeight="78.0" fitWidth="83.0" layoutX="431.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="aisle3Item" fitHeight="78.0" fitWidth="83.0" layoutX="431.0" layoutY="204.0" onMouseEntered="#handleItemMouseEntered" onMouseExited="#handleItemMouseExited" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/candyBar.png" />
                </image>
@@ -40,12 +40,12 @@
                   <Image url="@../images/humanMemoryAisle2.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="aisle2Item1" fitHeight="96.0" fitWidth="37.0" layoutX="840.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="aisle2Item1" fitHeight="96.0" fitWidth="37.0" layoutX="840.0" layoutY="56.0" onMouseEntered="#handleItemMouseEntered" onMouseExited="#handleItemMouseExited" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/appleJuice.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="aisle2Item2" fitHeight="103.0" fitWidth="60.0" layoutX="288.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="aisle2Item2" fitHeight="103.0" fitWidth="60.0" layoutX="288.0" layoutY="178.0" onMouseEntered="#handleItemMouseEntered" onMouseExited="#handleItemMouseExited" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/orangeJuice.png" />
                </image>
@@ -59,7 +59,7 @@
                   <Image url="@../images/humanMemoryAisle1.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="aisle1Item" fitHeight="80.0" fitWidth="73.0" layoutX="974.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="aisle1Item" fitHeight="80.0" fitWidth="73.0" layoutX="974.0" layoutY="215.0" onMouseEntered="#handleItemMouseEntered" onMouseExited="#handleItemMouseExited" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/humanMemoryAisle1Item.png" />
                </image>
