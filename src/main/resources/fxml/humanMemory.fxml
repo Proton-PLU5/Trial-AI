@@ -185,11 +185,6 @@
                       <Font size="24.0" />
                   </font>
               </Label>
-              <Label fx:id="timerLabel" alignment="CENTER" maxHeight="38.0" prefHeight="38.0" prefWidth="129.0" stylesheets="@../css/style.css" text="00:00" GridPane.columnIndex="2">
-                  <font>
-                      <Font size="24.0" />
-                  </font>
-              </Label>
           </children>
       </GridPane>
       <AnchorPane fx:id="titleBlock" layoutX="14.0" layoutY="14.0" prefHeight="110.0" prefWidth="563.0">
@@ -218,5 +213,10 @@
             </ImageView>
          </children>
       </StackPane>
+        <Label fx:id="timerLabel" alignment="CENTER" layoutX="1297.0" layoutY="620.0" maxHeight="38.0" prefHeight="38.0" prefWidth="129.0" stylesheets="@../css/style.css" text="00:00">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
    </children>
 </Pane>
