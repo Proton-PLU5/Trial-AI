@@ -45,7 +45,7 @@
                   <Image url="@../images/appleJuice.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="aisle2Item2" fitHeight="103.0" fitWidth="60.0" layoutX="288.0" layoutY="178.0" onMouseEntered="#handleItemMouseEntered" onMouseExited="#handleItemMouseExited" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="aisle2Item2" fitHeight="103.0" fitWidth="60.0" layoutX="414.0" layoutY="318.0" onMouseEntered="#handleItemMouseEntered" onMouseExited="#handleItemMouseExited" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/orangeJuice.png" />
                </image>
@@ -133,7 +133,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="chatPane" layoutX="380.0" layoutY="113.0" prefHeight="546.0" prefWidth="548.0" style="-fx-background-color: #1d4ed8; -fx-border-color: #3b82f6; -fx-border-radius: 20; -fx-border-width: 4; -fx-background-radius: 20;">
+      <AnchorPane fx:id="chatPane" layoutX="380.0" layoutY="113.0" prefHeight="546.0" prefWidth="548.0" style="-fx-background-color: #1d4ed8; -fx-border-color: #3b82f6; -fx-border-radius: 20; -fx-border-width: 4; -fx-background-radius: 20;" visible="false">
          <children>
             <Label layoutX="18.0" layoutY="8.0" prefHeight="37.0" prefWidth="176.0" style="-fx-font-size: 24; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Conversation">
                <font>
