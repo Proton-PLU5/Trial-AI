@@ -229,16 +229,6 @@
                       <Font name="System Bold" size="18.0" />
                   </font>
               </Button>
-              <Label fx:id="timerLabelText" alignment="CENTER" prefHeight="46.0" prefWidth="87.0" stylesheets="@../css/style.css" text="Time:" textAlignment="CENTER" GridPane.columnIndex="2">
-                  <font>
-                      <Font size="24.0" />
-                  </font>
-              </Label>
-              <Label fx:id="timerLabel" alignment="CENTER" maxHeight="38.0" prefHeight="38.0" prefWidth="129.0" stylesheets="@../css/style.css" text="00:00" GridPane.columnIndex="2">
-                  <font>
-                      <Font size="24.0" />
-                  </font>
-              </Label>
           </children>
       </GridPane>
       <AnchorPane fx:id="titleBlock" layoutX="14.0" layoutY="14.0" prefHeight="110.0" prefWidth="563.0">
@@ -293,5 +283,10 @@
             </ImageView>
          </children>
       </StackPane>
+        <Label fx:id="timerLabel" alignment="CENTER" layoutX="1197.0" layoutY="620.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" stylesheets="@../css/style.css" text="00:00">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
    </children>
 </Pane>
