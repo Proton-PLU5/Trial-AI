@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -294,6 +295,18 @@ public class DefendantMemoryController extends MemoryController {
   @FXML
   private void onCustomerDetailsButtonPressed(ActionEvent event) {
     customerDetailsPane.setVisible(false);
+  }
+
+  @FXML
+  private void onKeyboardButtonPressed(KeyEvent event) {
+    String keyPressed = event.getText();
+    // Placeholder for any future functionality for keyboard buttons
+    if (!loginSequenceCompleted && keypadPane.isVisible()) {
+      if (keyPressed.matches("[0-9]")) {
+        pin = pin.replaceFirst("_", keyPressed);
+        pinLabel.setText(pin);
+      }
+    }
   }
 
   @Override
