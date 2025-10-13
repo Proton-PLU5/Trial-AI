@@ -24,25 +24,25 @@
          <children>
             <ImageView fitHeight="736.0" fitWidth="1308.0">
                <image>
-                  <Image url="@../images/screen_2.png" />
+                  <Image url="@../images/defendantScreen.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="252.0" fitWidth="246.0" layoutX="967.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="252.0" fitWidth="246.0" layoutX="843.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/Post-it-note-transparent.png" />
                </image>
             </ImageView>
-            <Label layoutX="1007.0" layoutY="86.0" prefHeight="101.0" prefWidth="161.0" rotate="3.0" text="Password For Login:" wrapText="true">
+            <Label layoutX="883.0" layoutY="106.0" prefHeight="101.0" prefWidth="161.0" rotate="3.0" text="Password For Login:" wrapText="true">
                <font>
                   <Font size="25.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="994.0" layoutY="192.0" prefHeight="52.0" prefWidth="161.0" rotate="3.0" text="1234" textAlignment="CENTER" wrapText="true">
+            <Label alignment="CENTER" layoutX="870.0" layoutY="212.0" prefHeight="52.0" prefWidth="161.0" rotate="3.0" text="1234" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <AnchorPane fx:id="initialPane" layoutX="385.0" layoutY="214.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+            <AnchorPane fx:id="initialPane" layoutX="463.0" layoutY="234.0" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
                   <Label fx:id="pinLabel1" alignment="CENTER" prefHeight="59.0" prefWidth="405.0" text="CCTV Access" textAlignment="CENTER" textFill="#39ac00">
                      <font>
@@ -56,7 +56,7 @@
                   </Button>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="keypadPane" layoutX="385.0" layoutY="128.0" prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane fx:id="keypadPane" layoutX="463.0" layoutY="137.0" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <Label fx:id="pinLabel" alignment="CENTER" prefHeight="59.0" prefWidth="405.0" text="_ _ _ _" textAlignment="CENTER" textFill="#39ac00">
                      <font>
@@ -136,7 +136,7 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="cctvPane" prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane fx:id="cctvPane" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
             <ImageView fitHeight="736.0" fitWidth="1408.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -247,7 +247,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="chatPane" layoutX="380.0" layoutY="113.0" prefHeight="546.0" prefWidth="548.0" style="-fx-background-color: #1d4ed8; -fx-border-color: #3b82f6; -fx-border-radius: 20; -fx-border-width: 4; -fx-background-radius: 20;">
+      <AnchorPane fx:id="chatPane" layoutX="380.0" layoutY="113.0" prefHeight="546.0" prefWidth="548.0" style="-fx-background-color: #1d4ed8; -fx-border-color: #3b82f6; -fx-border-radius: 20; -fx-border-width: 4; -fx-background-radius: 20;" visible="false">
          <children>
             <Label layoutX="18.0" layoutY="8.0" prefHeight="37.0" prefWidth="176.0" style="-fx-font-size: 24; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Conversation">
                <font>
