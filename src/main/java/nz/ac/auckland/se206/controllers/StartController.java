@@ -1,8 +1,6 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
-
-import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
