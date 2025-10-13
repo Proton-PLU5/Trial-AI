@@ -96,7 +96,7 @@
       </AnchorPane>
       <Pane fx:id="chatPanel" layoutX="218.0" layoutY="32.0" prefHeight="200.0" prefWidth="200.0" />
       <Rectangle fx:id="overlayRectangle" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="80.0" layoutX="380.0" layoutY="394.0" onMouseEntered="#interactableDone" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="95.0" />
-      <StackPane fx:id="notificationPane" layoutX="70.0" layoutY="640.0" prefHeight="35.0" prefWidth="0.0">
+      <StackPane fx:id="notificationPane" layoutX="80.0" layoutY="640.0" prefHeight="35.0" prefWidth="0.0">
          <children>
             <ImageView fitHeight="39.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                <image>
