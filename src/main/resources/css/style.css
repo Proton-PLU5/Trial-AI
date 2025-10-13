@@ -199,11 +199,11 @@
   -fx-wrap-text: true;
   /* Enable text wrapping */
   -fx-pref-height: 80;
-  /* Allow height to expand as needed */
+  /* Set fixed height for consistent layout */
   -fx-min-height: 80;
-  /* Allow natural minimum height */
+  /* Set fixed minimum height */
   -fx-max-height: 80;
-  /* Remove height restriction to show all text */
+  /* Max height configured to show all text */
 }
 
 /* Enhanced conversation text with better contrast */
