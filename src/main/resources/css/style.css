@@ -10,7 +10,7 @@
   -fx-background-radius: 12px;
   -fx-text-fill: #ffffff;
   -fx-font-family: "Consolas", "Courier New", monospace;
-  -fx-font-size: 14px;
+  -fx-font-size: 20px;
   -fx-font-weight: bold;
   -fx-padding: 12 24 12 24;
   -fx-cursor: hand;
@@ -132,7 +132,7 @@
   -fx-text-fill: #60a5fa;
   /* Bright blue text */
   -fx-font-family: "Consolas", "Courier New", monospace;
-  -fx-font-size: 16px;
+  -fx-font-size: 20px;
   -fx-font-weight: bold;
   -fx-background-color: rgba(30, 58, 138, 0.25);
   /* Subtle background */
@@ -187,7 +187,7 @@
   -fx-text-fill: #e2e8f0;
   /* Light gray text for readability */
   -fx-font-family: "Consolas", "Courier New", monospace;
-  -fx-font-size: 13px;
+  -fx-font-size: 20px;
   -fx-line-spacing: 1px;
   -fx-background-color: rgba(30, 41, 59, 0.3);
   /* Subtle text background */
@@ -198,11 +198,11 @@
   -fx-border-radius: 8px;
   -fx-wrap-text: true;
   /* Enable text wrapping */
-  -fx-pref-height: -1;
+  -fx-pref-height: 80;
   /* Allow height to expand as needed */
-  -fx-min-height: -1;
+  -fx-min-height: 80;
   /* Allow natural minimum height */
-  -fx-max-height: -1;
+  -fx-max-height: 80;
   /* Remove height restriction to show all text */
 }
 
