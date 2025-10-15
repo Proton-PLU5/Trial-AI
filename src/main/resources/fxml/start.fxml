@@ -19,7 +19,7 @@
             <Font name="System Bold" size="57.0" />
          </font></Label>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1e3a8a" height="47.0" layoutY="196.0" stroke="#3b82f6" strokeType="INSIDE" width="1308.0" />
-      <Label fx:id="textLabel" alignment="CENTER" layoutX="445.0" layoutY="196.0" maxWidth="1324.0" prefHeight="47.0" prefWidth="420.0" style="-fx-background-radius: 0; -fx-background-color: 0; -fx-border-width: 0; -fx-border-radius: 0;" text="An interactive ethics simulation game." textAlignment="CENTER" wrapText="true">
+      <Label fx:id="textLabel" alignment="CENTER" layoutX="-44.0" layoutY="195.0" maxWidth="3339.0" prefHeight="47.0" prefWidth="3339.0" style="-fx-background-radius: 0; -fx-background-color: 0; -fx-border-width: 0; -fx-border-radius: 0;" text="Sentinel AI presents Trial AI.                    An interactive ethics simulation game.                    Created By Shuaib, Jerry and Mathew.                    Sentinel AI presents Trial AI.                    An interactive ethics simulation game.                    Created By Shuaib, Jerry and Mathew.                    " textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="27.0" />
          </font></Label>

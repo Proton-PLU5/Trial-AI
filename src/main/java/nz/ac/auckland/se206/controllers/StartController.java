@@ -27,7 +27,7 @@ public class StartController implements TimableScene {
 
   @FXML
   private void initialize() {
-    textLabel.setLayoutX(445); // Center the text initially
+    textLabel.setLayoutX(-44); // Center the text initially
 
     AnimationTimer marqueTimer = new AnimationTimer() {
       private long lastUpdate = 0;
@@ -36,8 +36,8 @@ public class StartController implements TimableScene {
       public void handle(long now) {
         if (now - lastUpdate >= 10_000_000) { // Update every 10 milliseconds
           textLabel.setLayoutX(textLabel.getLayoutX() - 1);
-          if (textLabel.getLayoutX() < -420) { // Reset position when it goes off screen
-            textLabel.setLayoutX(1306); // Off-screen right position
+          if (textLabel.getLayoutX() < -1667) { // Reset position when it goes off screen
+            textLabel.setLayoutX(-44); // Off-screen right position
           }
           lastUpdate = now;
         }
