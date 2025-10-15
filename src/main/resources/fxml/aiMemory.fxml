@@ -58,20 +58,20 @@
       </AnchorPane>
       <GridPane layoutX="10.0" layoutY="685.0" prefHeight="44.0" prefWidth="616.0">
           <columnConstraints>
-              <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.00004069010416" minWidth="10.0" prefWidth="151.33331298828125" />
-              <ColumnConstraints hgrow="SOMETIMES" maxWidth="375.999979654948" minWidth="10.0" prefWidth="215.33337402343753" />
-              <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.66664632161456" minWidth="10.0" prefWidth="250.6666259765625" />
+              <ColumnConstraints hgrow="SOMETIMES" maxWidth="230.00004069010416" minWidth="10.0" prefWidth="182.5" />
+              <ColumnConstraints hgrow="SOMETIMES" maxWidth="375.999979654948" minWidth="10.0" prefWidth="230.5" />
+              <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.66664632161456" minWidth="10.0" prefWidth="203.0" />
           </columnConstraints>
           <rowConstraints>
               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           </rowConstraints>
           <children>
-              <Button fx:id="chatButton" mnemonicParsing="false" onAction="#onChatButtonPressed" prefHeight="46.0" prefWidth="144.0" stylesheets="@../css/style.css" text="Open chat">
+              <Button fx:id="chatButton" mnemonicParsing="false" onAction="#onChatButtonPressed" prefHeight="51.0" prefWidth="178.0" stylesheets="@../css/style.css" text="Open Chat">
                   <font>
                       <Font name="System Bold" size="18.0" />
                   </font>
               </Button>
-              <Button fx:id="goBackButton" mnemonicParsing="false" onAction="#onGoBackButtonPressed" prefHeight="46.0" prefWidth="209.0" stylesheets="@../css/style.css" text="Back to courtoom" GridPane.columnIndex="1">
+              <Button fx:id="goBackButton" mnemonicParsing="false" onAction="#onGoBackButtonPressed" prefHeight="51.0" prefWidth="282.0" stylesheets="@../css/style.css" text="Back to Courtoom" GridPane.columnIndex="1">
                   <font>
                       <Font name="System Bold" size="18.0" />
                   </font>
@@ -96,7 +96,7 @@
       </AnchorPane>
       <Pane fx:id="chatPanel" layoutX="218.0" layoutY="32.0" prefHeight="200.0" prefWidth="200.0" />
       <Rectangle fx:id="overlayRectangle" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="80.0" layoutX="380.0" layoutY="394.0" onMouseEntered="#interactableDone" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="95.0" />
-      <StackPane fx:id="notificationPane" layoutX="52.0" layoutY="641.0" prefHeight="35.0" prefWidth="0.0">
+      <StackPane fx:id="notificationPane" layoutX="80.0" layoutY="640.0" prefHeight="35.0" prefWidth="0.0">
          <children>
             <ImageView fitHeight="39.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                <image>

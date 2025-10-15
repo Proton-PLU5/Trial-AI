@@ -12,12 +12,12 @@
          <image>
             <Image url="@../../../../../../../Downloads/defendantFlash1.png" />
          </image></ImageView>
-      <AnchorPane fx:id="conversationPane" layoutX="75.0" layoutY="534.0" prefHeight="177.0" prefWidth="1139.0" stylesheets="@../css/style.css" AnchorPane.bottomAnchor="25.33333333333337" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="74.33333333333326" AnchorPane.topAnchor="534.0">
+      <AnchorPane fx:id="conversationPane" layoutX="31.0" layoutY="488.0" minHeight="135.0" prefHeight="183.0" prefWidth="1165.0" stylesheets="@../css/style.css" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="31.0">
          <children>
-            <Button fx:id="memoryButton" layoutX="23.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#handleMemoryButton" stylesheets="@../css/style.css" text="Go to memory" />
-            <Button fx:id="nextButton" layoutX="23.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#nextDrawing" prefHeight="45.0" prefWidth="93.0" stylesheets="@../css/style.css" text="Next" />
-            <Label fx:id="conversationRoleLabel" layoutX="23.0" layoutY="20.0" maxHeight="77.0" prefHeight="35.0" prefWidth="185.0" stylesheets="@../css/style.css" text="Security Bot" />
-            <Label fx:id="conversationTextLabel" layoutX="23.0" layoutY="68.0" prefHeight="40.0" prefWidth="1091.0" stylesheets="@../css/style.css" text="Label" />
+            <Label fx:id="conversationRoleLabel" layoutX="34.0" layoutY="20.0" prefHeight="47.0" prefWidth="161.0" text="Security Bot" />
+            <Label fx:id="conversationTextLabel" layoutX="34.0" layoutY="65.0" maxHeight="77.0" minHeight="77.0" prefHeight="77.0" prefWidth="1158.0" text="Placeholder" />
+            <Button fx:id="nextButton" layoutX="34.0" layoutY="153.0" mnemonicParsing="false" onMouseClicked="#nextDrawing" text="Continue" />
+            <Button fx:id="memoryButton" layoutX="34.0" layoutY="153.0" mnemonicParsing="false" onMouseClicked="#handleMemoryButton" stylesheets="@../css/style.css" text="Go to memory" />
          </children>
       </AnchorPane>
       <Label fx:id="timerLabel" alignment="CENTER" layoutX="1177.0" layoutY="620.0" maxHeight="83.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" stylesheets="@../css/style.css" text="00:00" textAlignment="CENTER" />
