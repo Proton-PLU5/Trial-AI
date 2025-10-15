@@ -45,6 +45,7 @@ public class Timer {
    * 
    * @param consumer
    * @return The current timer instance.
+   * 
    */
   public Timer addConsumer(Consumer<String> consumer) {
     this.consumers.add(consumer);
@@ -57,6 +58,7 @@ public class Timer {
    * 
    * @param countDown
    * @return The current timer instance.
+   * 
    */
   public Timer setCountDown(boolean countDown) {
     this.countDown = countDown;
