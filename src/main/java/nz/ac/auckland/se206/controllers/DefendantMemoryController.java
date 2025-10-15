@@ -145,6 +145,7 @@ public class DefendantMemoryController extends MemoryController {
    * Handles the "Submit PIN" button press event to check the entered pin.
    * 
    * @param event The action event triggered by clicking the submit pin button
+   * 
    */
   @FXML
   private void onSubmitPinPressed(ActionEvent event) {
@@ -172,6 +173,7 @@ public class DefendantMemoryController extends MemoryController {
    * Handles the "Clear" button press event to reset the pin.
    * 
    * @param event The action event triggered by clicking the clear button
+   * 
    */
   @FXML
   private void onClearButtonPressed(ActionEvent event) {
@@ -183,6 +185,7 @@ public class DefendantMemoryController extends MemoryController {
    * Handles the "Login" button press event to show the keypad pane.
    * 
    * @param event The action event triggered by clicking the login button
+   * 
    */
   @FXML
   private void onLoginButtonPressed(ActionEvent event) {
@@ -207,6 +210,7 @@ public class DefendantMemoryController extends MemoryController {
    * Creates the progress bar for the "scanning" feature.
    * 
    * @param event The mouse event triggered by pressing a character
+   * 
    */
   @FXML
   private void onTargetMousePressed(MouseEvent event) {
@@ -284,6 +288,7 @@ public class DefendantMemoryController extends MemoryController {
    * Stops the progress bar for the "scanning" feature.
    * 
    * @param event The mouse event triggered by releasing a character
+   * 
    */
   @FXML
   private void onTargetMouseReleased(MouseEvent event) {

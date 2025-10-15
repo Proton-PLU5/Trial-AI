@@ -2,6 +2,7 @@ package nz.ac.auckland.se206.controllers.flashback;
 
 import java.io.InputStream;
 import java.util.Stack;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -67,17 +68,17 @@ public abstract class FlashbackController implements TimableScene {
 
   /**
    * Abstract method to be implemented by child classes to setup their specific
-   * images
+   * images.
    */
   protected abstract void setupImages();
 
   protected abstract void initializeText();
 
-  /** Abstract method to handle navigation to memory scene */
+  /** Abstract method to handle navigation to memory scene. */
   protected abstract void handleMemoryButton();
 
   /**
-   * Add image path to the image stack
+   * Add image path to the image stack.
    *
    * @param imagePath The path of the image to be added
    */
@@ -90,7 +91,7 @@ public abstract class FlashbackController implements TimableScene {
   }
 
   /**
-   * Add text to the text stack
+   * Add text to the text stack.
    *
    * @param text The text to be added
    */
@@ -102,7 +103,7 @@ public abstract class FlashbackController implements TimableScene {
     conversationRoleLabel.setText(role);
   }
 
-  /** Navigate to next image */
+  /** Navigate to next image. */
   @FXML
   protected void nextDrawing() {
     // This method makes it so that the next flashback image appears
@@ -117,7 +118,7 @@ public abstract class FlashbackController implements TimableScene {
     }
   }
 
-  /** Show the currnt image at the top of the stack */
+  /** Show the currnt image at the top of the stack. */
   @FXML
   protected void showCurrentImage() {
     String path = imageStack.pop();
