@@ -291,6 +291,7 @@ public class HumanMemoryController extends MemoryController {
 
   @FXML
   private void handleItemMouseEntered(MouseEvent event) {
+    // If mouse hovers over item, add glow effect
     Node item = (Node) event.getSource();
     DropShadow glow = new DropShadow();
     glow.setColor(Color.web("#99cbff"));
