@@ -28,10 +28,9 @@ public class Timer {
   /**
    * The main constructor for the timer class.
    * 
-   * @param length     The duration the timer is to count
-   *                   for.
-   * @param timerLabel The label to update during the
-   *                   counting process.
+   * @param length        The duration the timer is to count for.
+   * @param finalConsumer A consumer to be executed when the timer ends.
+   * 
    */
   public Timer(int length, Consumer<Void> finalConsumer) {
     this.consumers = new ArrayList<>();
@@ -56,7 +55,8 @@ public class Timer {
   /**
    * Set whether the timer counts down or up.
    * 
-   * @param countDown
+   * @param countDown If true, the timer will count down; if false, it will count
+   *                  up.
    * @return The current timer instance.
    * 
    */
