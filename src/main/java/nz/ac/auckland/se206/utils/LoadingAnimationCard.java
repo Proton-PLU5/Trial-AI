@@ -57,9 +57,9 @@ public class LoadingAnimationCard extends Card {
 
     // Load images
     ImageView trolleyImage = loadImage("/trolley.png");
-    ImageView orangeJuiceImage = loadImage("/orangeJuice.png");
-    ImageView appleJuiceImage = loadImage("/appleJuice.png");
-    ImageView candyBarImage = loadImage("/candyBar.png");
+    ImageView orangeJuiceImage = loadImage("/orangeJuiceLoad.png");
+    ImageView appleJuiceImage = loadImage("/appleJuiceLoad.png");
+    ImageView candyBarImage = loadImage("/candyBarLoad.png");
 
     double imageScale = 2.5 - 0.75;
     double trolleyScale = 3.5 - 3.5 * 0.3;
