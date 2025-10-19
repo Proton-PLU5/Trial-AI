@@ -21,6 +21,8 @@ public class LoadingAnimationCard extends Card {
   }
 
   private ImageView loadImage(String path) {
+    // Load image from resources folder
+    // Update the height to 35 while preserving aspect ratio
     ImageView imageView = new ImageView(
         getClass().getResource("/images" + path).toExternalForm());
     imageView.setPreserveRatio(true);

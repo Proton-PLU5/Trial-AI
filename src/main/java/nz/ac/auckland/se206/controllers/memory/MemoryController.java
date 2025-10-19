@@ -506,6 +506,8 @@ public abstract class MemoryController implements TimableScene {
   }
 
   private void showLoadingAnimation() {
+    // Show loading animation card
+    // And add it to the conversation grid pane
     Platform.runLater(() -> {
       double cardWidth = conversationGridPane.getWidth() - 40;
       LoadingAnimationCard loadingCard = new LoadingAnimationCard("System", "Loading...", cardWidth);
