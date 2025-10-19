@@ -9,11 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
-import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -27,14 +24,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest.Model;
@@ -44,6 +35,8 @@ import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.utils.Card;
+import nz.ac.auckland.se206.utils.LoadingAnimationCard;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
 import nz.ac.auckland.se206.utils.Tuple;
@@ -100,8 +93,6 @@ public abstract class MemoryController implements TimableScene {
   @FXML
   private ImageView candyBarImage;
 
-  private Timeline loadingAnimation;
-
   // Chat visibility state
   private boolean isChatVisible = false;
   protected String roleOfCharacter = "";
@@ -115,6 +106,8 @@ public abstract class MemoryController implements TimableScene {
       + " messages you can talk about with the user,"
       + "then you should introduce yourself to the user with a short and concise message. "
       + "Otherwise, you should respond to the previous conversations.";
+
+  private LoadingAnimationCard loadingAnimationCard;
 
   // Constructor
   public MemoryController(String promptId) {
@@ -200,8 +193,7 @@ public abstract class MemoryController implements TimableScene {
 
           // Update the chat area with the AI's response
           Platform.runLater(() -> {
-            appendMessageToChat(roleOfCharacter, output);
-            hideLoadingAnimation();
+            loadingAnimationCard.finishLoadingAnimation(roleOfCharacter, output, conversationGridPane.getWidth() - 40);
             notificationSound.play();
             PauseTransition pt = new PauseTransition(Duration.millis(50));
             pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
@@ -240,42 +232,15 @@ public abstract class MemoryController implements TimableScene {
       message = message.replaceFirst("\n", "");
     }
 
-    // Create Text nodes for role (bold) and message (normal)
-    Text roleText = new Text(role + ":\n");
-    roleText.setFill(Color.WHITE);
-    roleText.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
-
-    Text messageText = new Text(message + "\n");
-    messageText.setFill(Color.WHITE);
-    messageText.setStyle("-fx-font-size: 16px;");
-
-    TextFlow textFlow = new TextFlow(roleText, messageText);
-    textFlow.setMaxWidth(conversationGridPane.getWidth() - 40);
-    textFlow.setStyle("-fx-padding: 15px;");
-
-    Paint colourToUse = Color.web("#00865d");
-    if (role.equals("User")) {
-      // To differentiate user messages for different characters
-      colourToUse = Color.web("#5599d9");
-    }
-
-    // Create a rectangle background which scales to the height of the textFlow
-    Rectangle background = new Rectangle();
-    background.setArcWidth(35);
-    background.setArcHeight(35);
-    background.setFill(colourToUse);
-    background.setWidth(textFlow.getMaxWidth() + 20);
-    background.setHeight(Region.USE_PREF_SIZE);
-    background.heightProperty().bind(textFlow.heightProperty().add(-15));
-
-    StackPane messageStack = new StackPane();
-    messageStack.getChildren().addAll(background, textFlow);
+    // Create a Card for the message
+    Card messageCard = new Card(role, message, conversationGridPane.getWidth() - 40);
+    messageCard.setUpCard();
 
     // Add the message to the next available row in the grid pane
     int nextRow = conversationGridPane.getRowCount();
-    conversationGridPane.add(messageStack, 0, nextRow);
-    GridPane.setHalignment(messageStack, HPos.LEFT);
-    GridPane.setValignment(messageStack, VPos.TOP);
+    conversationGridPane.add(messageCard, 0, nextRow);
+    GridPane.setHalignment(messageCard, HPos.LEFT);
+    GridPane.setValignment(messageCard, VPos.TOP);
   }
 
   /** Handles the "Go Back" button press event. */
@@ -542,83 +507,13 @@ public abstract class MemoryController implements TimableScene {
 
   private void showLoadingAnimation() {
     Platform.runLater(() -> {
-      loadingPane.setVisible(true);
+      double cardWidth = conversationGridPane.getWidth() - 40;
+      LoadingAnimationCard loadingCard = new LoadingAnimationCard("System", "Loading...", cardWidth);
+      conversationGridPane.add(loadingCard, 0, conversationGridPane.getRowCount());
+      GridPane.setHalignment(loadingCard, HPos.LEFT);
+      GridPane.setValignment(loadingCard, VPos.TOP);
 
-      double imageScale = 2.5;
-      double trolleyScale = 3.5;
-      trolleyImage.setScaleX(trolleyScale);
-      trolleyImage.setScaleY(trolleyScale);
-      orangeJuiceImage.setScaleX(imageScale);
-      orangeJuiceImage.setScaleY(imageScale);
-      appleJuiceImage.setScaleX(imageScale);
-      appleJuiceImage.setScaleY(imageScale);
-      candyBarImage.setScaleX(imageScale);
-      candyBarImage.setScaleY(imageScale);
-
-      trolleyImage.setTranslateX(0);
-      trolleyImage.setTranslateY(0);
-      orangeJuiceImage.setTranslateX(-50);
-      orangeJuiceImage.setTranslateY(0);
-      appleJuiceImage.setTranslateX(0);
-      appleJuiceImage.setTranslateY(0);
-      candyBarImage.setTranslateX(50);
-      candyBarImage.setTranslateY(0);
-      orangeJuiceImage.setOpacity(1);
-      appleJuiceImage.setOpacity(1);
-      candyBarImage.setOpacity(1);
-
-      loadingAnimation = new Timeline();
-      loadingAnimation.setCycleCount(Timeline.INDEFINITE);
-
-      double moveDistance = 150;
-
-      loadingAnimation.getKeyFrames().addAll(
-          new KeyFrame(Duration.ZERO,
-              new KeyValue(trolleyImage.translateXProperty(), 0, Interpolator.DISCRETE),
-              new KeyValue(orangeJuiceImage.opacityProperty(), 0, Interpolator.DISCRETE),
-              new KeyValue(appleJuiceImage.opacityProperty(), 1, Interpolator.DISCRETE),
-              new KeyValue(candyBarImage.opacityProperty(), 1, Interpolator.DISCRETE)),
-
-          new KeyFrame(Duration.seconds(0.6),
-              new KeyValue(trolleyImage.translateXProperty(), 0, Interpolator.DISCRETE),
-              new KeyValue(orangeJuiceImage.opacityProperty(), 0, Interpolator.DISCRETE)),
-
-          new KeyFrame(Duration.seconds(0.61),
-              new KeyValue(trolleyImage.translateXProperty(), moveDistance, Interpolator.DISCRETE),
-              new KeyValue(orangeJuiceImage.opacityProperty(), 1, Interpolator.DISCRETE),
-              new KeyValue(appleJuiceImage.opacityProperty(), 0, Interpolator.DISCRETE)),
-
-          new KeyFrame(Duration.seconds(1.2),
-              new KeyValue(trolleyImage.translateXProperty(), moveDistance, Interpolator.DISCRETE),
-              new KeyValue(appleJuiceImage.opacityProperty(), 0, Interpolator.DISCRETE)),
-
-          new KeyFrame(Duration.seconds(1.21),
-              new KeyValue(trolleyImage.translateXProperty(), moveDistance * 2, Interpolator.DISCRETE),
-              new KeyValue(appleJuiceImage.opacityProperty(), 1, Interpolator.DISCRETE),
-              new KeyValue(candyBarImage.opacityProperty(), 0, Interpolator.DISCRETE)),
-
-          new KeyFrame(Duration.seconds(1.8),
-              new KeyValue(trolleyImage.translateXProperty(), moveDistance * 2, Interpolator.DISCRETE),
-              new KeyValue(candyBarImage.opacityProperty(), 0, Interpolator.DISCRETE)),
-
-          new KeyFrame(Duration.seconds(1.81),
-              new KeyValue(trolleyImage.translateXProperty(), 0, Interpolator.DISCRETE),
-              new KeyValue(orangeJuiceImage.opacityProperty(), 0, Interpolator.DISCRETE),
-              new KeyValue(candyBarImage.opacityProperty(), 1, Interpolator.DISCRETE)));
-
-      loadingAnimation.play();
+      this.loadingAnimationCard = loadingCard;
     });
-  }
-
-  private void hideLoadingAnimation() {
-    if (loadingAnimation != null) {
-      loadingAnimation.stop();
-    }
-    loadingPane.setVisible(false);
-
-    trolleyImage.setTranslateX(0);
-    orangeJuiceImage.setOpacity(1);
-    appleJuiceImage.setOpacity(1);
-    candyBarImage.setOpacity(1);
   }
 }
