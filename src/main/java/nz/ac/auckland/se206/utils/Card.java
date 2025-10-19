@@ -1,6 +1,5 @@
 package nz.ac.auckland.se206.utils;
 
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -23,6 +22,7 @@ public class Card extends StackPane {
    * Creates and returns a Group containing the text elements of the card.
    * 
    * @return A Group containing the text elements of the card.
+   * 
    */
   public TextFlow getTextGroup() {
     // Create Text nodes for role (bold) and message (normal)
@@ -59,7 +59,7 @@ public class Card extends StackPane {
     background.setArcHeight(35);
     background.setFill(colourToUse);
     background.setWidth(textFlow.getMaxWidth() + 20);
-    background.setHeight(Region.USE_PREF_SIZE);
+    background.setHeight(USE_PREF_SIZE);
     background.heightProperty().bind(textFlow.heightProperty().add(-15));
 
     this.getChildren().addAll(background, textFlow);

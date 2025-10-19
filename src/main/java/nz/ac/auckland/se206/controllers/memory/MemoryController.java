@@ -193,7 +193,8 @@ public abstract class MemoryController implements TimableScene {
 
           // Update the chat area with the AI's response
           Platform.runLater(() -> {
-            loadingAnimationCard.finishLoadingAnimation(roleOfCharacter, output, conversationGridPane.getWidth() - 40);
+            loadingAnimationCard.finishLoadingAnimation(roleOfCharacter,
+                output, conversationGridPane.getWidth() - 40);
             notificationSound.play();
             PauseTransition pt = new PauseTransition(Duration.millis(50));
             pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
@@ -510,8 +511,10 @@ public abstract class MemoryController implements TimableScene {
     // And add it to the conversation grid pane
     Platform.runLater(() -> {
       double cardWidth = conversationGridPane.getWidth() - 40;
-      LoadingAnimationCard loadingCard = new LoadingAnimationCard("System", "Loading...", cardWidth);
-      conversationGridPane.add(loadingCard, 0, conversationGridPane.getRowCount());
+      LoadingAnimationCard loadingCard = new LoadingAnimationCard("System",
+          "Loading...", cardWidth);
+      conversationGridPane.add(loadingCard, 0,
+          conversationGridPane.getRowCount());
       GridPane.setHalignment(loadingCard, HPos.LEFT);
       GridPane.setValignment(loadingCard, VPos.TOP);
 
