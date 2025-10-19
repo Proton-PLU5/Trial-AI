@@ -18,11 +18,9 @@ public class Card extends StackPane {
     this.cardWidth = cardWidth;
   }
 
-  /**
+  /*
    * Creates and returns a Group containing the text elements of the card.
-   * 
-   * @return A Group containing the text elements of the card.
-   * 
+   * Returns A Group containing the text elements of the card.
    */
   public TextFlow getTextGroup() {
     // Create Text nodes for role (bold) and message (normal)
