@@ -21,16 +21,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest;
 import nz.ac.auckland.apiproxy.chat.openai.ChatCompletionRequest.Model;
@@ -40,6 +35,8 @@ import nz.ac.auckland.apiproxy.chat.openai.Choice;
 import nz.ac.auckland.apiproxy.config.ApiProxyConfig;
 import nz.ac.auckland.apiproxy.exceptions.ApiProxyException;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.utils.Card;
+import nz.ac.auckland.se206.utils.LoadingAnimationCard;
 import nz.ac.auckland.se206.utils.SceneManager;
 import nz.ac.auckland.se206.utils.TimableScene;
 import nz.ac.auckland.se206.utils.Tuple;
@@ -85,6 +82,17 @@ public abstract class MemoryController implements TimableScene {
   @FXML
   protected StackPane notificationPane;
 
+  @FXML
+  private AnchorPane loadingPane;
+  @FXML
+  private ImageView trolleyImage;
+  @FXML
+  private ImageView orangeJuiceImage;
+  @FXML
+  private ImageView appleJuiceImage;
+  @FXML
+  private ImageView candyBarImage;
+
   // Chat visibility state
   private boolean isChatVisible = false;
   protected String roleOfCharacter = "";
@@ -98,6 +106,8 @@ public abstract class MemoryController implements TimableScene {
       + " messages you can talk about with the user,"
       + "then you should introduce yourself to the user with a short and concise message. "
       + "Otherwise, you should respond to the previous conversations.";
+
+  private LoadingAnimationCard loadingAnimationCard;
 
   // Constructor
   public MemoryController(String promptId) {
@@ -183,7 +193,7 @@ public abstract class MemoryController implements TimableScene {
 
           // Update the chat area with the AI's response
           Platform.runLater(() -> {
-            appendMessageToChat(roleOfCharacter, output);
+            loadingAnimationCard.finishLoadingAnimation(roleOfCharacter, output, conversationGridPane.getWidth() - 40);
             notificationSound.play();
             PauseTransition pt = new PauseTransition(Duration.millis(50));
             pt.setOnFinished(e -> conversationScrollPane.setVvalue(1.0));
@@ -206,6 +216,7 @@ public abstract class MemoryController implements TimableScene {
       textArea.setDisable(true);
       textArea.setPromptText("Waiting for response...");
       sendButton.setDisable(true);
+      showLoadingAnimation();
     }
   }
 
@@ -221,42 +232,15 @@ public abstract class MemoryController implements TimableScene {
       message = message.replaceFirst("\n", "");
     }
 
-    // Create Text nodes for role (bold) and message (normal)
-    Text roleText = new Text(role + ":\n");
-    roleText.setFill(Color.WHITE);
-    roleText.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
-
-    Text messageText = new Text(message + "\n");
-    messageText.setFill(Color.WHITE);
-    messageText.setStyle("-fx-font-size: 16px;");
-
-    TextFlow textFlow = new TextFlow(roleText, messageText);
-    textFlow.setMaxWidth(conversationGridPane.getWidth() - 40);
-    textFlow.setStyle("-fx-padding: 15px;");
-
-    Paint colourToUse = Color.web("#00865d");
-    if (role.equals("User")) {
-      // To differentiate user messages for different characters
-      colourToUse = Color.web("#5599d9");
-    }
-
-    // Create a rectangle background which scales to the height of the textFlow
-    Rectangle background = new Rectangle();
-    background.setArcWidth(35);
-    background.setArcHeight(35);
-    background.setFill(colourToUse);
-    background.setWidth(textFlow.getMaxWidth() + 20);
-    background.setHeight(Region.USE_PREF_SIZE);
-    background.heightProperty().bind(textFlow.heightProperty().add(-15));
-
-    StackPane messageStack = new StackPane();
-    messageStack.getChildren().addAll(background, textFlow);
+    // Create a Card for the message
+    Card messageCard = new Card(role, message, conversationGridPane.getWidth() - 40);
+    messageCard.setUpCard();
 
     // Add the message to the next available row in the grid pane
     int nextRow = conversationGridPane.getRowCount();
-    conversationGridPane.add(messageStack, 0, nextRow);
-    GridPane.setHalignment(messageStack, HPos.LEFT);
-    GridPane.setValignment(messageStack, VPos.TOP);
+    conversationGridPane.add(messageCard, 0, nextRow);
+    GridPane.setHalignment(messageCard, HPos.LEFT);
+    GridPane.setValignment(messageCard, VPos.TOP);
   }
 
   /** Handles the "Go Back" button press event. */
@@ -519,5 +503,19 @@ public abstract class MemoryController implements TimableScene {
     }
     App.chatHistoryMap.add(new Tuple<String, String>("Context", interactableContext));
     System.out.println(App.getChatHistoryString());
+  }
+
+  private void showLoadingAnimation() {
+    // Show loading animation card
+    // And add it to the conversation grid pane
+    Platform.runLater(() -> {
+      double cardWidth = conversationGridPane.getWidth() - 40;
+      LoadingAnimationCard loadingCard = new LoadingAnimationCard("System", "Loading...", cardWidth);
+      conversationGridPane.add(loadingCard, 0, conversationGridPane.getRowCount());
+      GridPane.setHalignment(loadingCard, HPos.LEFT);
+      GridPane.setValignment(loadingCard, VPos.TOP);
+
+      this.loadingAnimationCard = loadingCard;
+    });
   }
 }
