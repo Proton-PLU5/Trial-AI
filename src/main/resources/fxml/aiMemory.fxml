@@ -40,16 +40,16 @@
                <font>
                   <Font size="19.0" />
                </font></Button>
-            <ScrollPane fx:id="conversationScrollPane" hbarPolicy="NEVER" layoutX="17.0" layoutY="43.0" prefHeight="423.0" prefWidth="516.0">
+            <ScrollPane fx:id="conversationScrollPane" hbarPolicy="NEVER" layoutX="17.0" layoutY="43.0" prefHeight="423.0" prefWidth="516.0" stylesheets="@../css/chatpane.css">
                <content>
-                  <GridPane fx:id="conversationGridPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="423.0" prefWidth="513.0">
+                  <GridPane fx:id="conversationGridPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="423.0" prefWidth="494.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                   </GridPane>
                </content>
             </ScrollPane>
-            <TextArea fx:id="textArea" layoutX="16.0" layoutY="471.0" prefHeight="60.0" prefWidth="417.0" promptText="Enter your message here!" style="-fx-font-size: 16;" wrapText="true">
+            <TextArea fx:id="textArea" layoutX="16.0" layoutY="471.0" prefHeight="60.0" prefWidth="417.0" promptText="Enter your message here!" style="-fx-font-size: 16;" wrapText="true" stylesheets="@../css/chatpane.css">
                <font>
                   <Font size="16.0" />
                </font>
