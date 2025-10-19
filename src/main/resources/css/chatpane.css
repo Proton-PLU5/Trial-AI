@@ -1,0 +1,71 @@
+/* ===== SCROLL BAR STYLING ===== */
+.scroll-bar {
+  -fx-background-color: #1e293b;
+  -fx-border-color: #334155;
+  -fx-border-width: 1px;
+  -fx-border-radius: 8px;
+  -fx-background-radius: 8px;
+}
+
+.scroll-bar .thumb {
+  -fx-background-color: #475569;
+  -fx-background-radius: 8px;
+  -fx-border-radius: 8px;
+}
+
+.scroll-bar .thumb:hover {
+  -fx-background-color: #64748b;
+}
+
+.scroll-bar .thumb:pressed {
+  -fx-background-color: #94a3b8;
+}
+
+.scroll-bar .track {
+  -fx-background-color: #1e293b;
+  -fx-background-radius: 8px;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+  -fx-background-color: #334155;
+  -fx-border-color: #475569;
+  -fx-background-radius: 6px;
+  -fx-border-radius: 6px;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+  -fx-background-color: #94a3b8;
+}
+
+/* ===== TEXT AREA STYLING (Chat Display) ===== */
+.text-area {
+  -fx-background-color: white;
+  -fx-border-color: white;
+  -fx-border-width: 2px;
+  -fx-border-radius: 12px;
+  -fx-background-radius: 12px;
+  -fx-text-fill: black;
+  -fx-font-family: "Consolas", "Courier New", monospace;
+  -fx-font-size: 13px;
+  -fx-control-inner-background: white;
+  -fx-highlight-fill: #1e40af;
+  -fx-highlight-text-fill: #ffffff;
+  -fx-prompt-text-fill: #64748b;
+  -fx-selection-bar: #1e40af;
+}
+
+.text-area .content {
+  -fx-background-color: white;
+  -fx-background-radius: 10px;
+}
+
+.text-area .scroll-pane {
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+}
+
+.text-area .scroll-pane .viewport {
+  -fx-background-color: white;
+}
