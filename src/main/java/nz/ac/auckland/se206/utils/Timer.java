@@ -41,9 +41,8 @@ public class Timer {
   /**
    * Add a consumer to be executed when the timer to update timer labels.
    *
-   * @param consumer
+   * @param consumer The consumer to execute when the timer updates.
    * @return The current timer instance.
-   * 
    */
   public Timer addConsumer(Consumer<String> consumer) {
     this.consumers.add(consumer);

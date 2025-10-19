@@ -54,6 +54,13 @@ public class AiMemoryController extends MemoryController {
   @Override
   @FXML
   protected void initialize() {
+    /*
+     * Set up initial code for the AI memory scene.
+     * This includes adding the timer consumer and
+     * setting up the xray effect.
+     * 
+     * As well as the title disappear animation.
+     */
     App.timer.addConsumer(getTimerConsumer());
     super.initialize();
     setupXrayEffect();
