@@ -1,5 +1,6 @@
 package nz.ac.auckland.se206.utils;
 
+import java.util.function.Consumer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
@@ -84,37 +85,37 @@ public class LoadingAnimationCard extends Card {
     // Animation keyframes
     // Move the imageviews to the next column.
     // By clearing and re-adding them, we can create a looping effect.
-    KeyFrame kf1 = new KeyFrame(Duration.seconds(duration), e -> {
+    // Helper to apply a new left-to-right order without duplicating code.
+    Consumer<ImageView[]> applyOrder = order -> {
       loadingPane.getChildren().clear();
-      loadingPane.add(candyBarImage, 0, 0);
-      loadingPane.add(trolleyImage, 1, 0);
-      loadingPane.add(orangeJuiceImage, 2, 0);
-      loadingPane.add(appleJuiceImage, 3, 0);
-    });
+      for (int i = 0; i < order.length; i++) {
+        loadingPane.add(order[i], i, 0);
+      }
+    };
 
-    KeyFrame kf2 = new KeyFrame(Duration.seconds(2 * duration), e -> {
-      loadingPane.getChildren().clear();
-      loadingPane.add(appleJuiceImage, 0, 0);
-      loadingPane.add(candyBarImage, 1, 0);
-      loadingPane.add(trolleyImage, 2, 0);
-      loadingPane.add(orangeJuiceImage, 3, 0);
-    });
+    KeyFrame kf1 = new KeyFrame(
+        Duration.seconds(duration),
+        e -> applyOrder.accept(
+            new ImageView[] { candyBarImage, trolleyImage,
+                orangeJuiceImage, appleJuiceImage }));
 
-    KeyFrame kf3 = new KeyFrame(Duration.seconds(3 * duration), e -> {
-      loadingPane.getChildren().clear();
-      loadingPane.add(orangeJuiceImage, 0, 0);
-      loadingPane.add(appleJuiceImage, 1, 0);
-      loadingPane.add(candyBarImage, 2, 0);
-      loadingPane.add(trolleyImage, 3, 0);
-    });
+    KeyFrame kf2 = new KeyFrame(
+        Duration.seconds(2 * duration),
+        e -> applyOrder.accept(
+            new ImageView[] { appleJuiceImage, candyBarImage,
+                trolleyImage, orangeJuiceImage }));
 
-    KeyFrame kf4 = new KeyFrame(Duration.seconds(4 * duration), e -> {
-      loadingPane.getChildren().clear();
-      loadingPane.add(trolleyImage, 0, 0);
-      loadingPane.add(orangeJuiceImage, 1, 0);
-      loadingPane.add(appleJuiceImage, 2, 0);
-      loadingPane.add(candyBarImage, 3, 0);
-    });
+    KeyFrame kf3 = new KeyFrame(
+        Duration.seconds(3 * duration),
+        e -> applyOrder.accept(
+            new ImageView[] { orangeJuiceImage, appleJuiceImage,
+                candyBarImage, trolleyImage }));
+
+    KeyFrame kf4 = new KeyFrame(
+        Duration.seconds(4 * duration),
+        e -> applyOrder.accept(
+            new ImageView[] { trolleyImage, orangeJuiceImage,
+                appleJuiceImage, candyBarImage }));
 
     loadingAnimation.getKeyFrames().addAll(kf1, kf2, kf3, kf4);
 
