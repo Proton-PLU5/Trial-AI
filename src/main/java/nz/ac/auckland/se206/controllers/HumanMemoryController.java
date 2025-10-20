@@ -128,6 +128,17 @@ public class HumanMemoryController extends MemoryController {
     itemMarkers.add(markerLine3);
     itemMarkers.add(markerLine4);
 
+    // Initial Effects
+    DropShadow glow = new DropShadow();
+    glow.setColor(Color.web("#99cbff"));
+    glow.setRadius(40);
+    glow.setSpread(0.45);
+
+    aisle1Item.setEffect(glow);
+    aisle2Item1.setEffect(glow);
+    aisle2Item2.setEffect(glow);
+    aisle3Item.setEffect(glow);
+
     aisle1Rectangle.setVisible(true);
     aisle2Rectangle.setVisible(true);
     aisle3Rectangle.setVisible(true);
