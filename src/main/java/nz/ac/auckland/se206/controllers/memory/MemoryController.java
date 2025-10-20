@@ -102,10 +102,11 @@ public abstract class MemoryController implements TimableScene {
 
   protected AudioClip notificationSound;
   protected String promptId = "";
-  protected final String initalPrompt = "If there are no previous"
-      + " messages you can talk about with the user,"
-      + "then you should introduce yourself to the user with a short and concise message. "
-      + "Otherwise, you should respond to the previous conversations.";
+  protected final String initalPrompt = "Make the first message you"
+      + " respond to this with be a"
+      + " short greeting in the role of the character,"
+      + " making sure to state your name and role as"
+      + " defendant/human witness/AI witness of this case.";
 
   private LoadingAnimationCard loadingAnimationCard;
 
