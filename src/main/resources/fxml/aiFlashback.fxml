@@ -16,6 +16,6 @@
             <Button fx:id="memoryButton" layoutX="34.0" layoutY="153.0" mnemonicParsing="false" onMouseClicked="#handleMemoryButton" stylesheets="@../css/style.css" text="Go to memory" />
          </children>
       </AnchorPane>
-      <Label fx:id="timerLabel" alignment="CENTER" layoutX="1297.0" layoutY="620.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" stylesheets="@../css/style.css" text="00:00" textAlignment="CENTER" />
+      <Label fx:id="timerLabel" alignment="CENTER" layoutX="1275.0" layoutY="628.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" stylesheets="@../css/style.css" text="00:00" textAlignment="CENTER" />
       </children>
 </AnchorPane>
