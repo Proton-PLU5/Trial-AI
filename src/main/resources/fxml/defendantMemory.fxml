@@ -274,31 +274,31 @@
             </TextArea>
             
             <!-- Loading Animation Pane -->
-            <AnchorPane fx:id="loadingPane" layoutX="100.0" layoutY="200.0" prefHeight="100.0" prefWidth="400.0" visible="false" style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 15; -fx-border-color: #3b82f6; -fx-border-width: 2; -fx-border-radius: 15;">
+            <AnchorPane fx:id="loadingPane" layoutX="100.0" layoutY="200.0" prefHeight="100.0" prefWidth="400.0" style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 15; -fx-border-color: #3b82f6; -fx-border-width: 2; -fx-border-radius: 15;" visible="false">
                <children>
                   <!-- Groceries - positioned where trolley will pass over them -->
-                  <ImageView fx:id="orangeJuiceImage" layoutX="130.0" layoutY="35.0" fitWidth="35.0" fitHeight="35.0" preserveRatio="true">
+                  <ImageView fx:id="orangeJuiceImage" fitHeight="35.0" fitWidth="35.0" layoutX="130.0" layoutY="35.0" preserveRatio="true">
                      <image>
-                        <Image url="@../images/orangeJuice.png"/>
+                        <Image url="@../images/orangeJuice.png" />
                      </image>
                   </ImageView>
                   
-                  <ImageView fx:id="appleJuiceImage" layoutX="210.0" layoutY="35.0" fitWidth="35.0" fitHeight="35.0" preserveRatio="true">
+                  <ImageView fx:id="appleJuiceImage" fitHeight="35.0" fitWidth="35.0" layoutX="210.0" layoutY="35.0" preserveRatio="true">
                      <image>
-                        <Image url="@../images/appleJuice.png"/>
+                        <Image url="@../images/appleJuice.png" />
                      </image>
                   </ImageView>
                   
-                  <ImageView fx:id="candyBarImage" layoutX="290.0" layoutY="35.0" fitWidth="35.0" fitHeight="35.0" preserveRatio="true">
+                  <ImageView fx:id="candyBarImage" fitHeight="35.0" fitWidth="35.0" layoutX="290.0" layoutY="35.0" preserveRatio="true">
                      <image>
-                        <Image url="@../images/candyBar.png"/>
+                        <Image url="@../images/candyBar.png" />
                      </image>
                   </ImageView>
                   
                   <!-- Trolley - starts at left, moves right -->
-                  <ImageView fx:id="trolleyImage" layoutX="30.0" layoutY="25.0" fitWidth="50.0" fitHeight="50.0" preserveRatio="true">
+                  <ImageView fx:id="trolleyImage" fitHeight="50.0" fitWidth="50.0" layoutX="30.0" layoutY="25.0" preserveRatio="true">
                      <image>
-                        <Image url="@../images/trolley.png"/>
+                        <Image url="@../images/trolley.png" />
                      </image>
                   </ImageView>
                </children>
@@ -315,7 +315,7 @@
             </ImageView>
          </children>
       </StackPane>
-        <Label fx:id="timerLabel" alignment="CENTER" layoutX="1197.0" layoutY="620.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" stylesheets="@../css/style.css" text="00:00">
+        <Label fx:id="timerLabel" alignment="CENTER" layoutX="1177.0" layoutY="628.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" stylesheets="@../css/style.css" text="00:00">
             <font>
                 <Font size="24.0" />
             </font>

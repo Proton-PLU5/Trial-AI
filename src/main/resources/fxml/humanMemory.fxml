@@ -79,7 +79,7 @@
          </children>
       </AnchorPane>
       <Polygon fx:id="shoppingCartHitbox" fill="#1f93ff00" layoutX="445.0" layoutY="241.0" points="-88.0, 498.8046875, 621.0, 498.8046875, 404.0, 277.0, 135.0, 277.0" stroke="TRANSPARENT" strokeType="INSIDE" visible="false" />
-        <Label fx:id="timerLabel" alignment="CENTER" layoutX="1297.0" layoutY="620.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" stylesheets="@../css/style.css" text="00:00">
+        <Label fx:id="timerLabel" alignment="CENTER" layoutX="1275.0" layoutY="628.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" stylesheets="@../css/style.css" text="00:00">
             <font>
                 <Font size="24.0" />
             </font>
