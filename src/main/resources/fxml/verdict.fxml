@@ -38,7 +38,7 @@
          </font>
       </Label>
       <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="350.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true" visible="false" />
-      <Label fx:id="timerLabel" layoutX="1297.0" layoutY="620.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" stylesheets="@../css/style.css" text="Label">
+      <Label fx:id="timerLabel" layoutX="1275.0" layoutY="628.0" maxHeight="100.0" maxWidth="100.0" minHeight="100.0" minWidth="100.0" prefHeight="100.0" prefWidth="100.0" stylesheets="@../css/style.css" text="Label">
          <font>
             <Font size="35.0" />
          </font></Label>
