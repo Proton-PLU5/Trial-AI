@@ -1,4 +1,7 @@
-# Sample JavaFX application using Proxy API
+# Trial AI
+An AI Ethics Simulation Game
+
+<img width="800" height="450" alt="ezgif-680b7941a495bf7e" src="https://github.com/user-attachments/assets/2b254007-0393-4dad-899f-528047ffa4d0" />
 
 ## To setup the API to access Chat Completions and TTS
 
